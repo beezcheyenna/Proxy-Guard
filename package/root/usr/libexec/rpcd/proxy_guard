@@ -1,0 +1,35 @@
+#!/usr/bin/lua
+package.path='/usr/lib/?.lua;'..package.path
+local json=require 'luci.jsonc'
+local core=require 'proxy-guard.core'
+local methods={raw_info={},raw_parse={},status={},logs={},apply={},clear_logs={},preflight={},setup_info={},setup_discover={},setup_confirm={},setup_cancel={},setup_previous={},setup_claim={}}
+if arg[1]=='list' then print('{"raw_info":{"ubus_rpc_session":""},"raw_parse":{"ubus_rpc_session":"","text":"","token":""},"status":{},"logs":{},"apply":{"ubus_rpc_session":"","confirm_flow":false,"raw_token":""},"clear_logs":{},"preflight":{"draft":""},"setup_info":{"ubus_rpc_session":""},"setup_discover":{"proxy_client":""},"setup_confirm":{"ubus_rpc_session":"","id":"","token":""},"setup_cancel":{"ubus_rpc_session":"","id":"","token":""},"setup_previous":{},"setup_claim":{"ubus_rpc_session":""}}'); os.exit(0) end
+if arg[1]~='call' or not methods[arg[2]] then print('{}'); os.exit(1) end
+if arg[2]=='raw_info' or arg[2]=='raw_parse' then
+    local ok,result=pcall(function()
+        local raw=require 'proxy-guard.raw'
+        local request=json.parse(io.read(262145) or '{}')
+        assert(type(request)=='table','raw_text_invalid')
+        if arg[2]=='raw_info' then return raw.info('proxy_guard',request.ubus_rpc_session) end
+        return raw.parse('proxy_guard',request.text,request.token,request.ubus_rpc_session)
+    end)
+    print(json.stringify(ok and result or {ok=false,error=tostring(result):match('([a-z_]+)$') or 'raw_validation_failed'}));os.exit(ok and 0 or 1)
+end
+if arg[2]=='apply' or arg[2]:match('^setup_') then
+    if arg[2]=='apply' and io.open('/var/run/proxy-guard/removing','r') then print('{"ok":false,"error":"setup_removing"}');os.exit(1) end
+    local rc=os.execute('umask 077; mkdir -p /var/lock; exec ucode /usr/lib/proxy-guard/setup-lock.uc '..core.quote(arg[2]));os.exit(rc==0 and 0 or 1)
+end
+if arg[2]=='preflight' then
+    local good,request=pcall(json.parse,io.read(20001) or '')
+    local draft=good and type(request)=='table' and request.draft
+    if type(draft)~='string' or #draft>16000 then print('{"ok":false,"error":"自检草稿无效"}');os.exit(1) end
+    local parsed,raw=pcall(json.parse,draft)
+    if not parsed or type(raw)~='table' then print('{"ok":false,"error":"自检草稿无效"}');os.exit(1) end
+    local ok,result=pcall(function() return require('proxy-guard.preflight').check(raw) end)
+    print(json.stringify(ok and result or {ok=false,error='无法完成本地自检'}));os.exit(ok and 0 or 1)
+end
+    local f=io.popen('/usr/libexec/proxy-guard '..arg[2]..' 2>/dev/null','r')
+    local out=f and f:read('*a') or ''
+    if f then f:close() end
+    local result=json.parse(out)
+    print(json.stringify(result or {ok=false,error='无法读取插件状态'}))

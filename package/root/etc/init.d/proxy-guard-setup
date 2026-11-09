@@ -1,0 +1,18 @@
+#!/bin/sh /etc/rc.common
+USE_PROCD=1
+START=17
+STOP=9
+start_service() {
+    umask 077
+    mkdir -p /var/lock /var/run/proxy-guard || return 1
+    # Early boot can restore UCI before netifd/nft is ready. Keep the
+    # independent watcher alive to complete a pending rule rollback.
+    if ! ucode /usr/lib/proxy-guard/setup-lock.uc boot >/dev/null 2>&1; then
+        logger -t proxy-guard -p daemon.warning setup_boot_recovery_pending
+    fi
+    procd_open_instance
+    procd_set_param command /usr/libexec/proxy-guard-setup-watch
+    procd_set_param respawn 3600 1 0
+    procd_close_instance
+}
+

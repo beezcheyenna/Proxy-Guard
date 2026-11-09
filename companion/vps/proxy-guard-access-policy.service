@@ -1,0 +1,25 @@
+[Unit]
+Description=Restore Proxy Guard VPS policy without dynamic permissions
+DefaultDependencies=no
+After=local-fs.target nftables.service
+Before=network-pre.target proxy-guard-access.service shutdown.target
+Wants=network-pre.target
+Conflicts=shutdown.target
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/proxy-guard-access/agent.py --config /etc/proxy-guard-access/agent.json --restore-policy
+RemainAfterExit=yes
+User=root
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/proxy-guard-access /run/proxy-guard-access
+StateDirectory=proxy-guard-access
+StateDirectoryMode=0700
+RuntimeDirectory=proxy-guard-access
+RuntimeDirectoryMode=0700
+RuntimeDirectoryPreserve=yes
+CapabilityBoundingSet=CAP_NET_ADMIN
+RestrictAddressFamilies=AF_INET AF_INET6 AF_NETLINK AF_UNIX
+[Install]
+WantedBy=multi-user.target

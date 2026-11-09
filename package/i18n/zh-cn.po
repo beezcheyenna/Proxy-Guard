@@ -1,0 +1,2745 @@
+# Generated from messages.tsv; use tools/build_translations.py.
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\nLanguage: zh-cn\n"
+
+msgid "("
+msgstr "（"
+
+msgid "(Beijing time)"
+msgstr "（北京时间）"
+
+msgid "(monitor only, no blocking)"
+msgstr "（仅监测，未阻断）"
+
+msgid ")"
+msgstr "）"
+
+msgid "); LAN and DNS remain available"
+msgstr "），局域网和 DNS 保留"
+
+msgid ","
+msgstr "、"
+
+msgid ", HTTP"
+msgstr "，HTTP "
+
+msgid "-- Please choose --"
+msgstr "-- 请选择 --"
+
+msgid "0 keeps emergency SSH open until household authorization is restored. Use 30 to 3600 for a timed window."
+msgstr "0 表示保持救援 SSH 开放，直到家庭 IP 授权恢复；30 至 3600 表示限时秒数。"
+
+msgid ":"
+msgstr "："
+
+msgid ";"
+msgstr "；"
+
+msgid "; access restored, monitoring"
+msgstr "；已联网，正在观察"
+
+msgid "; elapsed seconds:"
+msgstr "；已过秒数："
+
+msgid "; expected"
+msgstr "，预期 "
+
+msgid "; last event:"
+msgstr "；最近事件："
+
+msgid "; last read:"
+msgstr "；最近读取："
+
+msgid "; last restart:"
+msgstr "；最近重启原因："
+
+msgid "; monitors recovered after restart"
+msgstr "；重启后检测进程已恢复"
+
+msgid "; observation completed"
+msgstr "；观察已完成"
+
+msgid "; observed"
+msgstr "；检测到 "
+
+msgid "; restarts in this window:"
+msgstr "；本窗口重启次数："
+
+msgid "; seconds until retry:"
+msgstr "；重试剩余秒数："
+
+msgid "; superseded by a later recovery record"
+msgstr "；已由后续恢复记录接替"
+
+msgid "; wait resets:"
+msgstr "；等待重置次数："
+
+msgid "; waiting to restore access"
+msgstr "；等待恢复联网"
+
+msgid "A confirmation action is already being verified."
+msgstr "确认操作的结果正在核对中。"
+
+msgid "A maintenance operation is already pending."
+msgstr "已有维护操作正在执行。"
+
+msgid "A missing or failed remote health report withholds the local access permit. Local proxy checks remain required."
+msgstr "远端健康状态缺失或异常时，不发放本地联网许可；仍需通过本地代理验证。"
+
+msgid "A package operation is in progress. Try again when it finishes."
+msgstr "软件包操作正在进行，请完成后重试。"
+
+msgid "A required proxy client service stopped or restarted; protection triggered"
+msgstr "代理客户端的必需服务中断或重启，已触发快速保护"
+
+msgid "Accepts a plain-text IPv4 address or a Cloudflare trace response containing ip and colo. Requests always use the local SOCKS proxy; an unreachable service or unexpected exit counts as a failure."
+msgstr "支持纯文本 IPv4 或包含 ip、colo 的 Cloudflare trace 响应。请求始终通过本机 SOCKS 代理；验证服务不可达或出口不符都会计为失败。"
+
+msgid "Access is allowed during enhanced monitoring; a failure blocks it again"
+msgstr "敏感观察期间允许联网；再次失败会重新阻断"
+
+msgid "Access permit expired; Internet access is blocked pending proxy revalidation"
+msgstr "健康许可已过期，外网已阻断，重新确认代理状态"
+
+msgid "Access permit expired; awaiting proxy health verification"
+msgstr "放行许可已到期，等待重新确认代理状态"
+
+msgid "Access recovery"
+msgstr "恢复联网条件"
+
+msgid "Activation parameters are valid. The runtime environment is checked when applying."
+msgstr "启用参数校验通过，实际运行环境将在应用时检查。"
+
+msgid "Active kernel flowtables"
+msgstr "内核中生效的流量卸载"
+
+msgid "Add at least one address to an enabled static whitelist."
+msgstr "请为启用的静态白名单添加至少一个地址。"
+
+msgid "Address families"
+msgstr "地址类型"
+
+msgid "After recovery, allow Internet access while checking at one-second intervals during observation. Any failure blocks access and restarts the delay. Disabling observation still requires the original recovery checks."
+msgstr "恢复后放行联网，在观察期内以一秒间隔检测。任何失败都会阻断并重新等待。关闭观察期仍须满足原有恢复验证。"
+
+msgid "Agent HTTPS address through the proxy"
+msgstr "经代理访问的 Agent HTTPS 地址"
+
+msgid "Agent started"
+msgstr "Agent 已启动"
+
+msgid "All IPv6 sources on selected ingress devices"
+msgstr "所选入口上的所有 IPv6 来源"
+
+msgid "All configured services stop or restart"
+msgstr "全部已配置服务停止或重启"
+
+msgid "All configured services stopped"
+msgstr "全部已配置服务停止"
+
+msgid "All sources keeps standard resource limits active. Household and static addresses are allowed in whitelist mode and exempt from standard limits. Legacy bypass disables this rule protection."
+msgstr "所有来源仍执行标准资源限制。家庭和静态地址在白名单模式下获准访问，在标准模式下免于限制。旧版绕过选项会关闭此规则的保护。"
+
+msgid "All sources, resource limits apply"
+msgstr "所有来源，不豁免资源限制"
+
+msgid "All three services stop or restart"
+msgstr "三项全部停止或重启"
+
+msgid "All three services stopped"
+msgstr "三项服务均停止"
+
+msgid "Allow rebooting the VPS"
+msgstr "允许重启 VPS"
+
+msgid "Allow restarting the proxy core"
+msgstr "允许重启代理内核"
+
+msgid "Allowed LAN IPv4 networks"
+msgstr "允许访问的局域网 IPv4"
+
+msgid "Allowed LAN IPv6 networks"
+msgstr "允许访问的局域网 IPv6"
+
+msgid "Allowed or exempt sources"
+msgstr "允许或豁免的来源"
+
+msgid "Allowing time for checks to start"
+msgstr "等待检测启动"
+
+msgid "An error occurred while saving the form:"
+msgstr "保存表单时发生错误："
+
+msgid "An independent watchdog checks plugin heartbeats every five seconds using a clock unaffected by wall-clock adjustments. It restarts this plugin after persistent heartbeat or execution failures. Proxy outages and configuration errors do not trigger restart loops. Manual stop and disabling protection take precedence."
+msgstr "独立守护进程每五秒检查一次插件心跳，计时不受系统时钟调整影响。确认心跳或执行持续异常后，仅重启本插件。代理故障、配置错误不会触发反复重启；手动停止和关闭保护优先。"
+
+msgid "An nft flowtable is active; existing connections may bypass blocking. Check and disable flow offloading first."
+msgstr "运行中的防火墙仍存在 nft flowtable，无法保证阻断已有连接；请先核对并停用流量卸载"
+
+msgid "Analysis Agent connected"
+msgstr "分析 Agent 已连接"
+
+msgid "Analysis event"
+msgstr "分析事件"
+
+msgid "Analysis reports observations and suspicion only. A repeated payload does not identify the sender as GFW. Full packet capture and the honeypot are off by default and configured on the Agent."
+msgstr "分析结果仅表示观测和可疑行为。重复内容不能证明发送方是 GFW。完整抓包和蜜罐默认关闭，请在 Agent 上配置。"
+
+msgid "Another VPS policy change is awaiting confirmation."
+msgstr "另一项 VPS 策略变更正在等待确认。"
+
+msgid "Another configuration transaction is active"
+msgstr "另一次配置确认尚未结束"
+
+msgid "Another session is checking configuration"
+msgstr "其他登录会话正在检查配置"
+
+msgid "Another session is confirming the VPS policy."
+msgstr "另一会话正在确认 VPS 策略。"
+
+msgid "Another settings update is in progress; retry shortly."
+msgstr "另一项设置正在应用，请稍后重试。"
+
+msgid "Any interruption during sensitive recovery restarts the wait and stability timer. Disabling this option still requires the original consecutive recovery checks."
+msgstr "敏感恢复期间任何中断都会重新开始等待及稳定计时。关闭此项仍须满足原有连续恢复轮数。"
+
+msgid "Any service stops or restarts"
+msgstr "任意一项停止或重启"
+
+msgid "Apply failed"
+msgstr "提交失败"
+
+msgid "At boot or activation, block Internet access for protected devices while waiting for TCP, UDP and DNS to start, then keep blocking for the configured delay without external probes. Validate the proxy before restoring access and starting enhanced monitoring. This replaces the fixed startup grace period. Router-originated traffic, LAN and DNS remain available."
+msgstr "开机或启用保护时即阻断受保护设备的外网，等待 TCP、UDP、DNS 全部运行，再执行设定的阻断等待；此期间不做外网验证。随后验证代理，通过后放行并加强监测。不叠加固定开机等待；路由器本机、局域网和 DNS 通信保留。"
+
+msgid "At boot or activation, block protected devices until the selected client configured services start, then wait without external probes. Validate the proxy before restoring access and beginning enhanced monitoring. Router, LAN and DNS remain available."
+msgstr "开机或启用时先阻断受保护设备，等待所选客户端已配置服务启动，再进入不进行外网验证的等待期。代理验证成功后恢复联网并开始敏感观察；保留路由器、局域网及 DNS 访问。"
+
+msgid "Attempt interrupted; routine exit verification continues"
+msgstr "请求已中断；日常出口验证继续运行"
+
+msgid "Attention required"
+msgstr "需要处理"
+
+msgid "Authentication failed"
+msgstr "认证失败"
+
+msgid "Authorization updated"
+msgstr "授权已更新"
+
+msgid "Automatic client detection is ambiguous or unavailable. Select the client and verify the listener ports."
+msgstr "无法唯一识别代理客户端，请选择客户端并核对监听端口。"
+
+msgid "Automatic detection"
+msgstr "自动识别"
+
+msgid "Automatic recovery cooldown"
+msgstr "自动恢复冷却秒数"
+
+msgid "Automatic recovery counting window"
+msgstr "自动恢复统计窗口"
+
+msgid "Automatic recovery is off"
+msgstr "自动恢复已关闭"
+
+msgid "Automatic recovery limit"
+msgstr "自动恢复次数上限"
+
+msgid "Automatic recovery limit reached; retaining protection while waiting"
+msgstr "自动恢复已达到次数上限，保持现有保护并等待冷却"
+
+msgid "Automatic restart limit reached"
+msgstr "自动重启次数已达上限"
+
+msgid "Automatically restart unresponsive plugin monitors"
+msgstr "检测进程无响应时自动重启插件"
+
+msgid "Awaiting verification"
+msgstr "等待核验"
+
+msgid "Back"
+msgstr "上一步"
+
+msgid "Bandwidth threshold duration (seconds)"
+msgstr "带宽持续超限时长（秒）"
+
+msgid "Block Internet access on proxy failure"
+msgstr "代理故障时阻断外网"
+
+msgid "Block Internet access without external probes during this delay; local service monitoring continues. Disabling this option starts verification immediately."
+msgstr "等待期间阻断外网，不进行外网验证，继续监控本机服务。关闭此项后立即开始验证。"
+
+msgid "Block before recovery checks"
+msgstr "验证恢复前阻断等待"
+
+msgid "Block during startup and proxy failures"
+msgstr "开机及代理故障时阻断外网"
+
+msgid "Block these local ports as well, preventing devices with explicit SOCKS settings from bypassing protection."
+msgstr "阻断时同时拦截这些本机端口，防止已配置 SOCKS 的设备继续经它上网。"
+
+msgid "Blocking delay (seconds)"
+msgstr "阻断等待时间（秒）"
+
+msgid "Blocking is off"
+msgstr "未启用阻断"
+
+msgid "Boot protection is waiting for TCP, UDP and DNS"
+msgstr "开机保护等待 TCP、UDP、DNS 全部运行"
+
+msgid "Boot protection is waiting for the configured proxy client services"
+msgstr "开机保护等待代理客户端已配置的服务运行"
+
+msgid "Boot protection replaces this fixed startup grace period."
+msgstr "启用开机快速保护时，不使用此固定开机等待。"
+
+msgid "Boot protection started; waiting for TCP, UDP and DNS; Internet access remains blocked"
+msgstr "开机保护已启动，等待 TCP、UDP、DNS 全部运行；外网保持阻断"
+
+msgid "Boot service protection"
+msgstr "开机快速保护"
+
+msgid "Both heartbeats lost for (seconds)"
+msgstr "两路心跳同时失联时长（秒）"
+
+msgid "Bridge filtering"
+msgstr "桥接过滤"
+
+msgid "Bridged traffic enters the IP firewall and may affect switching; blocking is not enabled"
+msgstr "桥接流量进入 IP 防火墙，可能影响交换功能；暂不启用阻断"
+
+msgid "Bypass all protection (legacy behavior)"
+msgstr "绕过全部保护（兼容旧配置）"
+
+msgid "Bytes observed"
+msgstr "已观测流量（字节）"
+
+msgid "CPU (total)"
+msgstr "CPU（整机占比）"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Cannot calculate the schedule window"
+msgstr "无法计算定时窗口"
+
+msgid "Cannot commit this session's plugin configuration; check the session and write permissions"
+msgstr "无法提交当前会话中的插件配置，请检查会话和写入权限"
+
+msgid "Cannot complete self-check"
+msgstr "无法完成自检"
+
+msgid "Cannot open self-check journal lock"
+msgstr "无法打开自检日志锁"
+
+msgid "Cannot open the service protection log lock"
+msgstr "无法打开快速保护日志锁"
+
+msgid "Cannot read PassWall log; service and proxy checks continue"
+msgstr "无法读取 PassWall 日志；服务和代理检测仍在继续"
+
+msgid "Cannot read analysis status; retrying automatically."
+msgstr "无法读取分析状态，正在自动重试。"
+
+msgid "Cannot read client log; service and proxy checks continue"
+msgstr "无法读取客户端日志，继续检查服务和代理"
+
+msgid "Cannot read confirmation status. The VPS rollback timer continues."
+msgstr "无法读取确认状态，VPS 回退计时仍在继续。"
+
+msgid "Cannot read firewall rules"
+msgstr "无法读取防火墙规则"
+
+msgid "Cannot read plugin logs:"
+msgstr "无法读取插件日志："
+
+msgid "Cannot read plugin status"
+msgstr "无法读取插件状态"
+
+msgid "Cannot read plugin status or logs"
+msgstr "无法读取插件状态或日志"
+
+msgid "Cannot read status; protection cannot be confirmed:"
+msgstr "无法读取状态，不能据此判断网络已受保护："
+
+msgid "Cannot read synchronization status; retrying automatically."
+msgstr "无法读取同步状态，正在自动重试。"
+
+msgid "Cannot read this session's plugin configuration"
+msgstr "无法读取当前会话中的插件配置"
+
+msgid "Cannot remove plugin firewall rules"
+msgstr "无法删除插件防火墙规则"
+
+msgid "Cannot synchronize system firewall protection rules"
+msgstr "无法同步系统防火墙保护规则"
+
+msgid "Cannot verify active flow offloading"
+msgstr "无法核验运行中的流量卸载状态"
+
+msgid "Cannot verify firewall state"
+msgstr "无法核验防火墙"
+
+msgid "Cannot verify newly installed rules"
+msgstr "无法核验刚安装的规则"
+
+msgid "Cannot verify required nftables features; check the firewall and kernel modules"
+msgstr "无法核验所需的 nftables 内核功能，请检查防火墙和内核模块"
+
+msgid "Capture state"
+msgstr "抓包状态"
+
+msgid "Captured packets"
+msgstr "已捕获数据包"
+
+msgid "Changes take effect after Save & Apply. Stopping synchronization does not remove VPS rules. Dynamic authorizations expire; configured resource limits and SSH rescue remain in effect."
+msgstr "修改须保存并应用后才生效。停止同步不会撤销 VPS 规则；动态授权会到期，已配置的资源限制及 SSH 应急机制仍会保留。"
+
+msgid "Changes take effect after Save & Apply. When synchronization stops, dynamic leases expire; static and unrestricted rules remain on the VPS."
+msgstr "保存并应用后生效。停止同步后，动态许可到期失效；VPS 上的静态和不限制来源规则仍然保留。"
+
+msgid "Changing only logging options does not restart checks or reset permits. Logs are stored in memory, cleared on reboot, and also sent to the system log."
+msgstr "仅修改日志选项不会重启检测或重置联网许可。日志保存在内存中，重启后清空，同时写入系统日志。"
+
+msgid "Check configuration; automatic recovery is paused"
+msgstr "配置异常，自动恢复已暂停"
+
+msgid "Check interval"
+msgstr "检测间隔"
+
+msgid "Check local TCP, UDP and DNS services every second and block protected clients when the selected condition is met. Keep the existing SOCKS, HTTPS and exit IP checks. Traffic initiated by this router, LAN access and DNS remain available."
+msgstr "每秒检查本机 TCP、UDP、DNS 运行状态，满足所选条件时立即阻断受保护客户端。保留原有 SOCKS、HTTPS 和出口 IP 检测。本机主动联网、局域网和 DNS 继续保留。"
+
+msgid "Check local TCP, UDP and DNS services every second. If all three stop, block protected clients immediately. Keep the existing SOCKS, HTTPS and exit IP checks. Traffic initiated by this router, LAN access and DNS remain available."
+msgstr "每秒检查本机 TCP、UDP、DNS 运行状态。三项全部停止时立即阻断受保护客户端，保留原有 SOCKS、HTTPS 和出口 IP 检测。本机主动联网、局域网和 DNS 继续保留。"
+
+msgid "Check management readiness"
+msgstr "检查管理通道"
+
+msgid "Check plugin services"
+msgstr "请检查插件服务"
+
+msgid "Check round cancelled; keeping Internet blocked until revalidation"
+msgstr "检测轮次已取消，保持阻断并等待重新验证"
+
+msgid "Check settings and runtime environment"
+msgstr "检查配置与运行环境"
+
+msgid "Check target format must be https://domain/path|status_code"
+msgstr "检测目标格式须为 https://域名/路径|状态码"
+
+msgid "Check targets require an HTTPS domain without credentials or custom ports"
+msgstr "检测目标必须使用 HTTPS 域名，不支持认证信息或自定义端口"
+
+msgid "Check the access settings and connection."
+msgstr "请检查访问规则设置和连接。"
+
+msgid "Check the selected client every second using its configured TCP, UDP and DNS capabilities. Unconfigured capabilities are shown separately. Keep the existing real proxy checks and preserve router, LAN and DNS access."
+msgstr "每秒按所选客户端已配置的 TCP、UDP、DNS 能力检查，未配置的能力单独显示。保留真实代理验证及路由器、局域网和 DNS 访问。"
+
+msgid "Checking the VPS capability and applying a temporary policy..."
+msgstr "正在检查 VPS 能力并临时应用策略……"
+
+msgid "Checking the applied configuration and protection rules..."
+msgstr "正在自检已应用的配置和保护规则……"
+
+msgid "Checking unsaved settings without saving or probing the Internet..."
+msgstr "正在检查未保存的配置，不保存设置，也不发起外网检测……"
+
+msgid "Checks always use the SOCKS5 proxy on 127.0.0.1, with no direct fallback."
+msgstr "检测始终通过 127.0.0.1 上的 SOCKS5 代理，不会回退直连。"
+
+msgid "Checks and logging"
+msgstr "检测与日志"
+
+msgid "Choose IPv6 scope"
+msgstr "请选择 IPv6 范围"
+
+msgid "Choose a supported protection mode for this port rule."
+msgstr "请选择此端口规则支持的保护模式。"
+
+msgid "Choose an IPv6 protection scope explicitly."
+msgstr "请明确选择 IPv6 保护范围。"
+
+msgid "Choose any combination of days. An overnight window belongs to its start day: Monday 23:00–01:00 continues into Tuesday morning."
+msgstr "可任意勾选多天。跨午夜的窗口归开始当天，例如勾选星期一、23:00–01:00，会持续到星期二凌晨。"
+
+msgid "Choose the public address families to authorize dynamically. Removing a family revokes its dynamic lease after the VPS confirms the update; static rules remain independent."
+msgstr "选择动态授权的公网地址类型。取消某一类型后，VPS 确认更新时会撤销其动态授权；静态规则独立保留。"
+
+msgid "Clear logs"
+msgstr "清空日志"
+
+msgid "Client DNS listener could not be verified"
+msgstr "无法确认客户端 DNS 监听"
+
+msgid "Client SOCKS authentication could not be prepared"
+msgstr "无法准备客户端 SOCKS 认证"
+
+msgid "Client adapter is unavailable"
+msgstr "客户端适配器不可用"
+
+msgid "Client lifecycle log changed"
+msgstr "客户端运行日志发生变化"
+
+msgid "Client lifecycle log indicates a service or rule change; Internet access blocked pending recovery"
+msgstr "代理客户端日志显示服务或规则正在变更，已阻断并等待恢复"
+
+msgid "Client listener configuration could not be verified"
+msgstr "无法确认客户端监听配置"
+
+msgid "Client log monitoring is off"
+msgstr "客户端日志监视未开启"
+
+msgid "Client profile limit exceeded"
+msgstr "客户端配置数量超过限制"
+
+msgid "Client runtime configuration is unavailable"
+msgstr "无法读取客户端运行配置"
+
+msgid "Client startup and configured services are ready; verifying recovery without an extra delay"
+msgstr "代理客户端本轮运行完成且已配置服务正常，直接验证恢复，不叠加故障等待"
+
+msgid "Close"
+msgstr "关闭窗口"
+
+msgid "Cloudflare Worker and Tunnel"
+msgstr "Cloudflare Worker 与 Tunnel"
+
+msgid "Cloudflare data center"
+msgstr "Cloudflare 接入机房"
+
+msgid "Cloudflare event verification is off"
+msgstr "Cloudflare 事件验证已关闭"
+
+msgid "Cloudflare event verification:"
+msgstr "CF 事件核验: "
+
+msgid "Cloudflare reported a different exit; waiting for fresh exit verification"
+msgstr "CF 出口核验不一致，等待新的出口验证确认"
+
+msgid "Combined LAN exemptions must not cover the entire Internet"
+msgstr "局域网豁免合并后不能覆盖整个互联网"
+
+msgid "Concurrent connection limit"
+msgstr "并发连接数上限"
+
+msgid "Concurrent connection threshold exceeded"
+msgstr "并发连接数超过阈值"
+
+msgid "Configuration changed during UDP check; waiting for revalidation"
+msgstr "UDP 检查期间配置变化，等待重新验证"
+
+msgid "Configuration changed elsewhere. Reload it before saving."
+msgstr "配置已被其他页面修改，请重新载入后再保存。"
+
+msgid "Configuration changed elsewhere. Review saved settings and VPS state before applying again."
+msgstr "配置已被其他位置修改。再次应用前，请核对已保存设置和 VPS 状态。"
+
+msgid "Configuration format"
+msgstr "配置格式"
+
+msgid "Configuration is valid."
+msgstr "配置校验通过。"
+
+msgid "Configuration or environment error; protection is unverified"
+msgstr "配置或环境异常，保护效果未确认"
+
+msgid "Configuration or ingress device changed during checks; awaiting verification"
+msgstr "检测期间配置或入口设备已变化，等待重新核验"
+
+msgid "Configuration requires attention"
+msgstr "配置需要检查"
+
+msgid "Configuration snapshot expired. Reload the configuration."
+msgstr "配置快照已过期，请重新载入配置。"
+
+msgid "Configure 2–4 targets as https://domain/path|expected_status. Connections use the proxy. This does not test the health of every UDP service."
+msgstr "配置 2–4 个，格式：https://域名/路径|期望状态码。仅连接通过代理进行；不检查所有 UDP 业务的健康状态。"
+
+msgid "Configure between 1 and 16 DNS service ports"
+msgstr "配置 1 至 16 个 DNS 服务端口"
+
+msgid "Configure between 2 and 4 HTTPS check targets"
+msgstr "配置 2 至 4 个 HTTPS 检测目标"
+
+msgid "Configure observation ports and capture duration on the VPS Agent. Raw evidence and honeypots require Pro Max."
+msgstr "观察端口和采集时长在 VPS Agent 中配置。原始证据保存和诱捕服务需要 Pro Max。"
+
+msgid "Configured flow offloading"
+msgstr "配置中的流量卸载"
+
+msgid "Configured proxy client services are running; boot protection delay started"
+msgstr "代理客户端已配置的服务均已运行，开始开机保护等待"
+
+msgid "Configured proxy service interrupted"
+msgstr "已配置的代理服务发生中断"
+
+msgid "Confirm"
+msgstr "确认"
+
+msgid "Confirm VPS policy"
+msgstr "确认 VPS 策略"
+
+msgid "Confirm VPS policy changes before keeping them"
+msgstr "VPS 策略变更须确认后保留"
+
+msgid "Confirm protection settings"
+msgstr "确认保留保护配置"
+
+msgid "Confirm that the synchronization domain uses a direct connection."
+msgstr "请确认同步域名使用直连。"
+
+msgid "Confirm the IPv6 scope independently of IPv4."
+msgstr "请独立核对并确认 IPv6 范围。"
+
+msgid "Confirm the SSH management session in settings"
+msgstr "请在设置中确认已经验证 SSH 管理连接"
+
+msgid "Confirmation result is unknown. Checking again without repeating policy changes."
+msgstr "确认结果尚未核实，正在继续核对，不会重复修改策略。"
+
+msgid "Confirming consecutive failures"
+msgstr "连续失败确认中"
+
+msgid "Confirming proxy recovery"
+msgstr "代理恢复确认中"
+
+msgid "Confirming recovery"
+msgstr "恢复确认中"
+
+msgid "Connect by SSH from an authorized management address, then check again"
+msgstr "请从允许的管理地址建立 SSH 连接后重新检查"
+
+msgid "Connection burst allowance"
+msgstr "允许的突发连接数"
+
+msgid "Connection checks"
+msgstr "连接检测"
+
+msgid "Connection settings"
+msgstr "连接设置"
+
+msgid "Connectivity monitor delayed"
+msgstr "网络检测延迟"
+
+msgid "Connectivity monitor heartbeat expired"
+msgstr "连通性检测进程心跳超时"
+
+msgid "Consecutive failed rounds"
+msgstr "连续失败轮数"
+
+msgid "Consecutive successful rounds for recovery"
+msgstr "连续恢复轮数"
+
+msgid "Continue"
+msgstr "继续"
+
+msgid "Control channel"
+msgstr "控制通道"
+
+msgid "Control heartbeat age (seconds)"
+msgstr "距上次控制心跳（秒）"
+
+msgid "Control request timeout (seconds)"
+msgstr "控制请求超时（秒）"
+
+msgid "Control service HTTPS address"
+msgstr "控制服务 HTTPS 地址"
+
+msgid "Current protection reason"
+msgstr "当前保护原因"
+
+msgid "Current recovery event"
+msgstr "当前恢复事件"
+
+msgid "DNS redirect destination ports"
+msgstr "DNS 重定向目标端口"
+
+msgid "DNS service port"
+msgstr "DNS 服务端口"
+
+msgid "DNS service ports must not overlap proxy ingress ports"
+msgstr "DNS 服务端口不能与代理入口端口重叠"
+
+msgid "Days of the week"
+msgstr "星期"
+
+msgid "Default port protection mode"
+msgstr "默认端口保护模式"
+
+msgid "Default template"
+msgstr "默认模板"
+
+msgid "Default: 53. Enter the actual port if existing DNS redirection uses another port. Only requests and replies redirected to local or allowed LAN DNS are exempt. DNS settings are unchanged. Do not overlap proxy ingress ports."
+msgstr "默认 53。若现有 DNS 重定向使用其他端口，请填写实际端口；只保留重定向到本机或允许的局域网 DNS 的请求和回包，不修改 DNS 配置。不能与代理入口端口重叠。"
+
+msgid "Delay before checks (seconds)"
+msgstr "开始检测前等待（秒）"
+
+msgid "Deny unlisted inbound connections"
+msgstr "默认拒绝未列出的入站连接"
+
+msgid "Detailed check logs"
+msgstr "详细检测日志"
+
+msgid "Detect one installed client automatically. When several are installed, select the client to monitor. This does not modify the client configuration."
+msgstr "仅安装一个客户端时自动识别；安装多个时须指定监视对象。不会修改客户端配置。"
+
+msgid "Device ID"
+msgstr "设备标识"
+
+msgid "Device secret"
+msgstr "设备密钥"
+
+msgid "Direct HTTPS to Agent"
+msgstr "通过 HTTPS 直连 Agent"
+
+msgid "Disabled"
+msgstr "已关闭"
+
+msgid "Discover listening services automatically"
+msgstr "自动发现监听服务"
+
+msgid "Discovered listeners"
+msgstr "发现的监听服务"
+
+msgid "Discovered listeners are candidates only; add a service rule to manage a port. Unrestricted rules add no source restriction and do not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
+msgstr "发现的监听端口仅作为候选，添加服务规则后才纳入管理。“不限来源”不会覆盖系统防火墙规则。动态规则尚未同步的地址族仍被阻断。"
+
+msgid "Discovery lists candidate ports only. Whitelist mode requires an authorized source; standard mode applies resource limits; observe mode records without blocking. Unrestricted rules keep the original system firewall behavior."
+msgstr "发现功能仅列出候选端口。白名单模式检查来源授权；标准模式限制资源使用；观察模式只记录、不阻断。“不限来源”仍沿用系统防火墙规则。"
+
+msgid "Dismiss"
+msgstr "关闭"
+
+msgid "Do not match IPv6 sources"
+msgstr "不匹配 IPv6 来源"
+
+msgid "Download configuration"
+msgstr "下载配置"
+
+msgid "Download local analysis report"
+msgstr "下载本地分析报告"
+
+msgid "Download report"
+msgstr "下载报告"
+
+msgid "Dynamic lease duration (seconds)"
+msgstr "动态许可有效期（秒）"
+
+msgid "Each rule has its own mode, sources, thresholds and timers. Ports grouped in one rule share these settings. Create separate rules for different settings."
+msgstr "每条规则均可单独设置模式、允许来源、阈值和时间。同一规则中的端口共用这些设置；需要不同设置时，请拆分为独立规则。"
+
+msgid "Edit the complete UCI configuration for this plugin. Save stages changes; Save & Apply validates and activates them. Existing secret values are preserved by placeholders."
+msgstr "可编辑本插件的完整 UCI 配置。保存仅暂存更改；保存并应用会校验并启用。已有敏感值以占位符保留。"
+
+msgid "Emergency access active"
+msgstr "应急管理入口已启用"
+
+msgid "Emergency source scope"
+msgstr "应急入口允许的来源"
+
+msgid "Enable VPS access rules"
+msgstr "启用 VPS 访问规则"
+
+msgid "Enable after Save & Apply"
+msgstr "保存并应用后启用"
+
+msgid "Enable boot protection"
+msgstr "启用开机保护"
+
+msgid "Enable emergency SSH access"
+msgstr "启用 SSH 应急访问"
+
+msgid "Enable enhanced monitoring after recovery"
+msgstr "恢复联网后加强监测"
+
+msgid "Enable protection"
+msgstr "启用保护功能"
+
+msgid "Enable proxy-path heartbeat"
+msgstr "启用独立代理链路心跳"
+
+msgid "Enable scheduled protection"
+msgstr "启用定时保护"
+
+msgid "Enable the matching action locally and on the VPS Agent first."
+msgstr "请先在本插件和 VPS Agent 中允许对应操作。"
+
+msgid "Enabled"
+msgstr "已启用"
+
+msgid "Enabled service rules must not overlap on the same protocol."
+msgstr "同一协议的已启用服务规则不能包含重叠端口。"
+
+msgid "End time"
+msgstr "结束时间"
+
+msgid "Enhanced checks are running; waiting for continuous stability"
+msgstr "正在敏感检测，等待连续稳定"
+
+msgid "Enhanced checks are running; waiting for proxy verification"
+msgstr "正在敏感检测，等待代理验证通过"
+
+msgid "Enhanced checks found an interruption; restarting the wait and stability checks"
+msgstr "敏感检测发现中断，重新等待并确认稳定状态"
+
+msgid "Enhanced monitoring after recovery"
+msgstr "恢复后敏感观察"
+
+msgid "Enhanced monitoring completed"
+msgstr "稳定观察结束"
+
+msgid "Enhanced monitoring duration (seconds)"
+msgstr "加强监测时间（秒）"
+
+msgid "Enhanced observation period (seconds)"
+msgstr "敏感观察时间（秒）"
+
+msgid "Enter 0 to keep rescue open, or an integer from 30 to 3600 seconds."
+msgstr "填写 0 以持续开放救援，或填写 30 至 3600 的整数秒数。"
+
+msgid "Enter IPv6 addresses or prefixes, or explicitly choose no IPv6 matching."
+msgstr "请填写 IPv6 地址或前缀，或明确选择不匹配 IPv6。"
+
+msgid "Enter a DNS target before enabling UDP checks"
+msgstr "启用 UDP 检查须填写自己的 DNS 目标"
+
+msgid "Enter a Worker HTTPS root URL without a path or credentials."
+msgstr "请输入 Worker 的 HTTPS 根地址，不含路径或登录信息。"
+
+msgid "Enter a control-service HTTPS root URL without a path or credentials."
+msgstr "请输入控制服务的 HTTPS 根地址，不含路径或凭据。"
+
+msgid "Enter a valid HH:MM:SS time"
+msgstr "请输入有效的 HH:MM:SS"
+
+msgid "Enter a valid device ID."
+msgstr "请输入有效的设备标识。"
+
+msgid "Enter manually"
+msgstr "手动填写"
+
+msgid "Enter ports from 1 to 65535, or a port range."
+msgstr "请输入 1 至 65535 的端口或端口范围。"
+
+msgid "Enter the paired device secret."
+msgstr "请输入配对的设备密钥。"
+
+msgid "Enter the secret for the independent proxy heartbeat."
+msgstr "请填写独立代理心跳的认证密钥。"
+
+msgid "Enter valid IPv4 or IPv6 addresses or CIDR networks."
+msgstr "请输入有效的 IPv4、IPv6 地址或 CIDR 网段。"
+
+msgid "Enter your actual proxy exit IPv4 before enabling. A different exit or an unreachable verification service is treated as a failure."
+msgstr "启用前请填写实际的代理出口 IPv4。出口不符或验证服务不可达都会算作失败。"
+
+msgid "Event log"
+msgstr "事件日志"
+
+msgid "Every day"
+msgstr "每天"
+
+msgid "Exit IP verification is disabled"
+msgstr "未启用出口 IP 校验"
+
+msgid "Exit IP verification is optional. Pro can import an expected address from the VPS in General settings."
+msgstr "出口 IP 校验为可选功能。Pro 可在基本设置中从 VPS 导入预期地址。"
+
+msgid "Exit has not been checked"
+msgstr "出口尚未检测"
+
+msgid "Exit mismatch; protection requires verification"
+msgstr "出口不匹配；需核验保护状态"
+
+msgid "Exit verification HTTPS URL"
+msgstr "出口验证 HTTPS 地址"
+
+msgid "Exit verification result:"
+msgstr "出口验证: "
+
+msgid "Exit verification:"
+msgstr "出口验证："
+
+msgid "Expected IPv4 source"
+msgstr "预期 IPv4 来源"
+
+msgid "Expected exit must be an IPv4 address"
+msgstr "预期出口必须填写一个 IPv4 地址"
+
+msgid "Expected proxy exit IPv4"
+msgstr "预期代理出口 IPv4"
+
+msgid "Failed"
+msgstr "失败"
+
+msgid "Failed to clear logs"
+msgstr "清空失败"
+
+msgid "Failed to save"
+msgstr "保存失败"
+
+msgid "Failure protection and recovery"
+msgstr "故障保护与恢复"
+
+msgid "Failure threshold"
+msgstr "失败次数"
+
+msgid "Fallback bandwidth (bytes per second)"
+msgstr "回落连接带宽上限（字节/秒）"
+
+msgid "Fallback bandwidth monitoring needs a trusted data source configured on the VPS Agent."
+msgstr "回落带宽监测尚需在 VPS Agent 配置可信数据源。"
+
+msgid "Fallback bandwidth per direction (bytes per second)"
+msgstr "回落连接单向带宽上限（字节/秒）"
+
+msgid "Fast checks are not ready; Internet access remains blocked"
+msgstr "快速检查尚未就绪，保持外网阻断"
+
+msgid "Fast checks cannot renew the firewall permit"
+msgstr "快速检查无法更新防火墙许可"
+
+msgid "Firewall compatibility"
+msgstr "防火墙兼容性"
+
+msgid "Firewall update failed"
+msgstr "防火墙更新失败"
+
+msgid "Flow offloading is enabled; blocking existing connections cannot be guaranteed. System settings are unchanged."
+msgstr "当前启用了流量卸载，无法保证阻断已有连接；插件不会擅自修改系统设置"
+
+msgid "For a single-device trial, also limit its IPv6 addresses or explicitly empty this list. ::/0 includes all IPv6 sources on the ingress devices."
+msgstr "单设备试验须同时限制该设备的 IPv6 地址，或明确清空此列表；::/0 表示入口上的所有 IPv6 来源。"
+
+msgid "For a single-device trial, specify its IPv6 addresses or prefixes separately. ::/0 matches all IPv6 sources routed through selected ingress devices. Use the IPv6 switch to exclude this family explicitly."
+msgstr "测试单台设备时，请单独填写其 IPv6 地址或前缀。::/0 匹配经所选入口路由的全部 IPv6 来源；如需排除 IPv6，请明确关闭 IPv6 保护开关。"
+
+msgid "For example, br-lan. Use existing, enabled layer-3 devices, not switch ports within a bridge. WireGuard and Docker are not included automatically."
+msgstr "例如 br-lan，须为存在且已启用的三层设备，不能填写网桥下的交换端口。不自动包含 WireGuard、Docker。"
+
+msgid "Friday"
+msgstr "星期五"
+
+msgid "General settings"
+msgstr "基本设置"
+
+msgid "HTTPS check targets"
+msgstr "HTTPS 检测目标"
+
+msgid "HTTPS connectivity checks"
+msgstr "HTTPS 连通性检测"
+
+msgid "Heartbeat waiting time"
+msgstr "异常心跳等待秒数"
+
+msgid "Historical probe-length cluster observed"
+msgstr "观察到历史探测长度组合"
+
+msgid "Historical replay matches"
+msgstr "历史重放特征匹配次数"
+
+msgid "Historical replay pattern matched"
+msgstr "匹配到历史重放特征"
+
+msgid "HomeProxy TUN IPv6 UDP compatibility"
+msgstr "HomeProxy TUN 的 IPv6 UDP 兼容性"
+
+msgid "Honeypot TCP connections"
+msgstr "蜜罐 TCP 连接"
+
+msgid "Honeypot UDP connections"
+msgstr "蜜罐 UDP 连接"
+
+msgid "Honeypot connection"
+msgstr "蜜罐连接"
+
+msgid "Honeypot started"
+msgstr "蜜罐已启动"
+
+msgid "Household IP and static whitelist"
+msgstr "家庭公网 IP 和静态白名单"
+
+msgid "Household public IP"
+msgstr "家庭公网 IP"
+
+msgid "I have checked the IPv6 scope independently of IPv4"
+msgstr "我已独立核对 IPv6 范围"
+
+msgid "I have confirmed the Worker domain uses a direct connection"
+msgstr "我已确认 Worker 域名走直连"
+
+msgid "I have confirmed the control service uses a direct connection"
+msgstr "我已确认控制服务通过直连访问"
+
+msgid "I have verified an authorized SSH management session"
+msgstr "我已从允许的管理地址验证 SSH 连接"
+
+msgid "IP filtering"
+msgstr "IP 来源限制"
+
+msgid "IPv4"
+msgstr "IPv4"
+
+msgid "IPv4 and IPv6"
+msgstr "IPv4 和 IPv6"
+
+msgid "IPv4 and IPv6 scopes are independent. Selecting one IPv4 device does not select the same device in IPv6. All-source IPv6 matching includes other devices routed through these ingress interfaces; no IPv6 matching leaves that traffic unprotected."
+msgstr "IPv4 与 IPv6 范围独立。选择一台 IPv4 设备不会自动选中它的 IPv6 地址。匹配所有 IPv6 会包含经所选入口路由的其他设备；不匹配 IPv6 则该类流量不受保护。"
+
+msgid "IPv4 hints from panel configuration"
+msgstr "面板配置中的 IPv4 地址提示"
+
+msgid "IPv6"
+msgstr "IPv6"
+
+msgid "IPv6 covers all sources on the selected devices"
+msgstr "IPv6 范围包含所选入口的全部来源"
+
+msgid "IPv6 matching is independent of IPv4. Turning this off leaves IPv6 traffic outside plugin protection."
+msgstr "IPv6 匹配范围与 IPv4 独立。关闭此项后，IPv6 流量不在本插件保护范围内。"
+
+msgid "IPv6 prefixes reported by selected interfaces"
+msgstr "所选接口报告的 IPv6 前缀"
+
+msgid "IPv6 protection scope"
+msgstr "IPv6 保护范围"
+
+msgid "IPv6 traffic is outside this protection scope"
+msgstr "IPv6 不在本次保护范围内"
+
+msgid "Import expected IPv4 from VPS"
+msgstr "从 VPS 导入预期 IPv4"
+
+msgid "Independent proxy heartbeat"
+msgstr "独立代理链路心跳"
+
+msgid "Ingress device does not exist:"
+msgstr "入口设备不存在："
+
+msgid "Ingress device is not enabled:"
+msgstr "入口设备尚未启用："
+
+msgid "Ingress devices"
+msgstr "入口设备"
+
+msgid "Interface and panel addresses, and the VPS default-route address, may differ from the proxy exit. This import does not verify proxy traffic."
+msgstr "网卡地址、面板地址及 VPS 默认路由出口可能与代理出口不同。本次导入不代表已核验代理流量。"
+
+msgid "Interface is down"
+msgstr "接口尚未启用"
+
+msgid "Interface is up"
+msgstr "接口已启用"
+
+msgid "Interface not ready; protection coverage is unverified"
+msgstr "接口尚未就绪，保护覆盖范围未确认"
+
+msgid "Internet access"
+msgstr "上网情况"
+
+msgid "Internet access allowed"
+msgstr "已允许联网"
+
+msgid "Internet access blocked"
+msgstr "外网已阻断"
+
+msgid "Internet access is blocked for protected devices"
+msgstr "受保护设备外网已阻断"
+
+msgid "Internet blocked"
+msgstr "已阻断外网"
+
+msgid "Internet blocked; validation starts in"
+msgstr "外网已阻断，距离开始验证还有 "
+
+msgid "Internet remains blocked during the waiting period; external checks have not started"
+msgstr "等待期间外网仍在阻断，尚未开始外网验证"
+
+msgid "Internet restored; enhanced monitoring:"
+msgstr "已恢复联网，加强监测中："
+
+msgid "Internet restored; observation begins"
+msgstr "已恢复联网，开始观察"
+
+msgid "Interrupted; not repeated automatically"
+msgstr "操作中断，不会自动重复执行"
+
+msgid "Interruption detected"
+msgstr "检测到中断"
+
+msgid "Interval after each check round (seconds)"
+msgstr "每轮结束后的检测间隔（秒）"
+
+msgid "Invalid HTTPS URL"
+msgstr "HTTPS 地址无效"
+
+msgid "Invalid UCI syntax or configuration values."
+msgstr "UCI 语法或配置值无效。"
+
+msgid "Invalid UDP query domain"
+msgstr "UDP 查询域名无效"
+
+msgid "Invalid UTC offset"
+msgstr "UTC 时区偏移无效"
+
+msgid "Invalid check domain"
+msgstr "检测域名无效"
+
+msgid "Invalid configuration; changes were not committed:"
+msgstr "配置无效，未提交："
+
+msgid "Invalid firewall response format"
+msgstr "防火墙返回格式无效"
+
+msgid "Invalid ingress device MAC:"
+msgstr "入口设备 MAC 无效："
+
+msgid "Invalid ingress device name"
+msgstr "入口设备名无效"
+
+msgid "Invalid login session"
+msgstr "登录会话无效"
+
+msgid "Invalid mode"
+msgstr "模式无效"
+
+msgid "Invalid plugin configuration type"
+msgstr "插件配置类型无效"
+
+msgid "Invalid protection setting; explicitly set it to 0 or 1"
+msgstr "总开关无效，必须明确设置为 0 或 1"
+
+msgid "Invalid request format"
+msgstr "请求格式无效"
+
+msgid "Invalid schedule repeat mode"
+msgstr "定时重复方式无效"
+
+msgid "Invalid schedule switch"
+msgstr "定时开关无效"
+
+msgid "Invalid schedule weekday"
+msgstr "定时星期无效"
+
+msgid "Invalid self-check draft"
+msgstr "自检草稿无效"
+
+msgid "Invalid self-check or UDP switch"
+msgstr "自检或 UDP 开关无效"
+
+msgid "Invalid service control state"
+msgstr "服务控制状态无效"
+
+msgid "Invalid service protection switch"
+msgstr "快速保护开关无效"
+
+msgid "Invalid service protection trigger"
+msgstr "快速保护触发条件无效"
+
+msgid "Invalid setup response"
+msgstr "配置引导响应无效"
+
+msgid "Invalid status or log response"
+msgstr "状态或日志返回格式无效"
+
+msgid "Keep Internet access blocked during this delay. Disabling this option starts enhanced checks immediately."
+msgstr "等待期间持续阻断外网。关闭此项后立即开始敏感检测。"
+
+msgid "Keep VPS policy"
+msgstr "保留 VPS 策略"
+
+msgid "Keep scheduled protection enabled"
+msgstr "保留定时保护"
+
+msgid "Keep these settings"
+msgstr "确认保留此配置"
+
+msgid "LAN IPv4"
+msgstr "局域网 IPv4"
+
+msgid "LAN IPv6"
+msgstr "局域网 IPv6"
+
+msgid "LAN ingress devices"
+msgstr "局域网入口设备"
+
+msgid "Last Cloudflare event verification"
+msgstr "最近一次 Cloudflare 事件验证"
+
+msgid "Last attempt"
+msgstr "上次尝试"
+
+msgid "Last check:"
+msgstr "最后检测："
+
+msgid "Last completed check"
+msgstr "上次检查完成时间"
+
+msgid "Latest connectivity check"
+msgstr "最近一次连通性检测"
+
+msgid "Lease expires"
+msgstr "许可到期时间"
+
+msgid "Leave empty to keep the paired device secret."
+msgstr "留空以保留已配对的设备密钥。"
+
+msgid "Leave empty to keep the paired secret."
+msgstr "留空则保留已配对的密钥。"
+
+msgid "Limit concurrent connections"
+msgstr "限制并发连接数"
+
+msgid "Limit new connection rate"
+msgstr "限制新连接速率"
+
+msgid "Limit verified fallback bandwidth"
+msgstr "限制已确认回落连接的带宽"
+
+msgid "Link-local, multicast and the router's own management addresses remain accessible."
+msgstr "链路本地地址、多播和路由器本机管理地址始终保留。"
+
+msgid "Load default template"
+msgstr "载入默认模板"
+
+msgid "Load previous confirmed settings"
+msgstr "载入上次确认的配置"
+
+msgid "Local SOCKS listener"
+msgstr "本地 SOCKS 监听"
+
+msgid "Local SOCKS port"
+msgstr "本机 SOCKS 端口"
+
+msgid "Local diagnostic report"
+msgstr "本地诊断报告"
+
+msgid "Local protection could not be prepared; the remote action was not sent."
+msgstr "本地保护未能就绪，尚未发送远程操作。"
+
+msgid "Local protection was enabled before remote maintenance; awaiting verification."
+msgstr "远程维护前已启用本地保护，等待重新验证"
+
+msgid "Local proxy ingress ports"
+msgstr "本机代理入口端口"
+
+msgid "Local proxy port"
+msgstr "本机代理端口"
+
+msgid "Local self-check could not complete"
+msgstr "无法完成本地自检"
+
+msgid "Local settings were restored or synchronization stopped. The remote policy still needs verification."
+msgstr "本地配置已恢复或同步已停止，仍需核对远端策略。"
+
+msgid "Log records were missed"
+msgstr "日志记录存在读取缺口"
+
+msgid "Log size"
+msgstr "日志大小"
+
+msgid "Log time is invalid or outdated; it cannot confirm recovery"
+msgstr "日志时间无效或过旧，不能据此确认恢复"
+
+msgid "Logical processors"
+msgstr "逻辑处理器数"
+
+msgid "Logs in RAM"
+msgstr "内存中的日志"
+
+msgid "Low"
+msgstr "低"
+
+msgid "Maintenance operation"
+msgstr "维护操作状态"
+
+msgid "Maintenance record storage needs attention; restart actions are disabled."
+msgstr "维护操作记录异常，远程重启已停用；代理保护继续运行。"
+
+msgid "Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."
+msgstr "开机后代理首次就绪时额外请求一次，每次中断恢复后再请求一次。同一次中断的多个信号会合并，不设每日定时，也不连续轮询。Cloudflare 超时不会替代必需的日常出口验证；出口不匹配时需要保护。"
+
+msgid "Manage SSH access"
+msgstr "由插件管理 SSH 访问"
+
+msgid "Management IP addresses or networks"
+msgstr "预设管理 IP 或网段"
+
+msgid "Management addresses and last household IP"
+msgstr "预设管理地址及最后认证的家庭 IP"
+
+msgid "Management check"
+msgstr "管理通道检查"
+
+msgid "Management protection active"
+msgstr "管理访问保护已生效"
+
+msgid "Maximum restarts within the window"
+msgstr "统计窗口内最多重启次数"
+
+msgid "Maximum size per log file (KiB)"
+msgstr "每份记录上限（KiB）"
+
+msgid "Medium"
+msgstr "中"
+
+msgid "Memory (RSS)"
+msgstr "内存（RSS）"
+
+msgid "Minimum heartbeat timeout (seconds)"
+msgstr "心跳超时下限（秒）"
+
+msgid "Minimum successful targets per round"
+msgstr "每轮最少成功目标数"
+
+msgid "Minimum time between restarts (seconds)"
+msgstr "两次自动重启的最短间隔（秒）"
+
+msgid "Monday"
+msgstr "星期一"
+
+msgid "Monitor PassWall service status"
+msgstr "监测 PassWall 服务状态"
+
+msgid "Monitor client services and lifecycle logs"
+msgstr "监视客户端服务及启停日志"
+
+msgid "Monitor only"
+msgstr "仅监测"
+
+msgid "Monitor only: log failures without blocking"
+msgstr "仅监测：记录故障，不阻断"
+
+msgid "Monitor proxy client services"
+msgstr "监视代理客户端服务"
+
+msgid "Monitor service stopped"
+msgstr "检测服务已停止"
+
+msgid "Monitor stopped; protection mode keeps blocking. Disable protection in settings to restore access."
+msgstr "检测服务停止；保护模式保留阻断，关闭保护请使用总开关"
+
+msgid "Monitoring enabled; no blocking rules added"
+msgstr "仅监测已开启，不添加阻断规则"
+
+msgid "Monitoring new log entries"
+msgstr "正在监测新增日志"
+
+msgid "Monitoring only; Internet access allowed"
+msgstr "仅监测，不限制联网"
+
+msgid "Monitoring only; checks resume in"
+msgstr "仅监测；将在 "
+
+msgid "Monitoring only; confirming proxy recovery"
+msgstr "仅监测；正在确认代理恢复"
+
+msgid "Monitoring only; no access restrictions"
+msgstr "仅监测，不设置联网限制"
+
+msgid "Monitoring only; observing proxy stability:"
+msgstr "仅监测；正在观察代理稳定性："
+
+msgid "Multiple active profiles require verification"
+msgstr "检测到多个运行配置，需要核验"
+
+msgid "Multiple clients found; select one"
+msgstr "检测到多个客户端，请选择一个"
+
+msgid "Needs attention"
+msgstr "需要处理（状态）"
+
+msgid "Network check status expired; waiting and confirming stability again"
+msgstr "网络检测状态已过期，重新等待并确认稳定状态"
+
+msgid "New connection cooldown (seconds)"
+msgstr "暂停接受新连接的时长（秒）"
+
+msgid "New connection rate exceeded"
+msgstr "新连接速率超过阈值"
+
+msgid "New connections per second"
+msgstr "每秒允许的新连接数"
+
+msgid "New connections temporarily limited"
+msgstr "已临时限制该来源的新连接"
+
+msgid "Next"
+msgstr "下一步"
+
+msgid "No Cloudflare event check yet"
+msgstr "尚无 Cloudflare 事件验证记录"
+
+msgid "No analysis events"
+msgstr "暂无分析事件"
+
+msgid "No completed checks yet"
+msgstr "尚无已完成的检测"
+
+msgid "No eligible LAN device was found. Configure the existing network first; this wizard does not create interfaces."
+msgstr "未找到可用的局域网入口。请先配置现有网络；引导不会创建接口。"
+
+msgid "No log entries"
+msgstr "暂无日志"
+
+msgid "No protection: bypass enabled"
+msgstr "未执行保护：已启用绕过"
+
+msgid "No recovery event recorded"
+msgstr "暂无恢复事件"
+
+msgid "No recovery is pending"
+msgstr "当前无需等待恢复"
+
+msgid "No schedule is prefilled. Set the time and repeat pattern before enabling scheduled protection. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. With service protection enabled, the window ends into enhanced monitoring without an extra delay; otherwise recovery checks are required."
+msgstr "默认不预填定时计划。启用定时保护前，请设置时间和重复方式。阻断需要开启总开关并选择保护模式。DNS、局域网与管理访问继续保留。启用服务监视时，定时结束直接进入敏感监测，不额外等待；否则仍需恢复验证。"
+
+msgid "No supported proxy client found"
+msgstr "未发现支持的代理客户端"
+
+msgid "No usable IPv4 candidate exists for this source. Check the Agent settings or enter the expected address manually."
+msgstr "此来源暂无可用的 IPv4 候选，请检查 Agent 设置或手动填写预期地址。"
+
+msgid "Non-loopback TCP listeners and unconnected UDP sockets receive household-IP restrictions. Explicit service rules take precedence. This does not scan the Internet or cover Docker forwarding."
+msgstr "为非回环地址上的 TCP 监听服务和未连接的 UDP 套接字添加家庭公网 IP 限制；显式服务规则优先。此功能只读取本机状态，不扫描互联网，也不覆盖 Docker 转发端口。"
+
+msgid "Not available"
+msgstr "暂无"
+
+msgid "Not configured"
+msgstr "尚未配置"
+
+msgid "Not running"
+msgstr "未运行"
+
+msgid "Observation window (seconds)"
+msgstr "统计时间窗口（秒）"
+
+msgid "Observe only"
+msgstr "仅观察并记录"
+
+msgid "Observed proxy exit"
+msgstr "检测到的代理出口"
+
+msgid "On boot or initial activation, keep protected clients blocked until TCP, UDP and DNS are all running, then use the delay and continuous stability settings below. Any interruption restarts qualification. The fixed startup wait is replaced. Router-originated traffic, LAN and DNS remain available. Blocking requires protection mode."
+msgstr "开机或首次启用时先阻断受保护客户端，等待 TCP、UDP、DNS 全部运行，再执行下方的等待和连续稳定验证。中断会重新验证，不再叠加固定开机等待。路由器自身联网、局域网和 DNS 保留；实际阻断需要保护模式。"
+
+msgid "On proxy failure, block Internet traffic in both directions for selected devices where traffic actually passes through this router or proxy. LAN access remains available. Return traffic bypassing this device cannot be blocked. Disabled on first install; start with monitoring, then test one device."
+msgstr "代理故障时，双向阻断指定设备实际经过本机路由或代理的外网收发，保留局域网访问。绕过本机的回程无法拦截。首次安装默认关闭，建议先仅监测、再单设备验证。"
+
+msgid "Only add ports you intend to filter. Selecting a panel, API, or subscription port filters that service too. Services sharing the same IP, protocol, and port cannot be separated by URL path or SNI here. SSH has separate settings."
+msgstr "只添加确实要过滤的端口。面板、API 或订阅端口一旦加入，也会按规则过滤；共用同一 IP、协议和端口的服务无法在这里按 URL 路径或 SNI 分开。SSH 请使用独立设置。"
+
+msgid "Only enabled service rules restrict their selected ports. Other ports remain under the existing system firewall. SSH is not managed unless you add a rule."
+msgstr "仅限制已启用服务规则选定的端口。其他端口沿用系统原有防火墙规则；只有添加规则后才管理 SSH。"
+
+msgid "Only selected service ports are managed. Other ports keep the existing system firewall policy. SSH management is separate and disabled by default."
+msgstr "仅管理选定的服务端口；其他端口沿用系统原有防火墙规则。SSH 单独管理，默认关闭。"
+
+msgid "Only the session that applied this policy can confirm it."
+msgstr "只有应用本次策略的会话才能确认。"
+
+msgid "Only traffic passing through this router can be protected. Settings take effect only after Save & Apply."
+msgstr "仅保护实际经过本机的流量。配置须点击“保存并应用”才会生效。"
+
+msgid "Open until household authorization is restored"
+msgstr "保持开放，直到家庭 IP 授权恢复"
+
+msgid "Operating mode"
+msgstr "工作模式"
+
+msgid "Operation failed"
+msgstr "操作失败"
+
+msgid "Option \"%s\" contains an invalid input value."
+msgstr "选项“%s”的输入值无效。"
+
+msgid "Optional check: send a DNS-format UDP request through local SOCKS5 UDP ASSOCIATE. Requires luci-lib-nixio and a proxy with UDP support; never falls back to a direct connection. Failure counts as a failed check round. The result covers only this target, not every UDP service."
+msgstr "可选检测：通过本机 SOCKS5 UDP ASSOCIATE 发送 DNS 格式的 UDP 请求，需安装 luci-lib-nixio 且代理支持 UDP；不会回退到直连。失败计为本轮检测失败。结果仅代表指定目标的 UDP 通路，不代表所有 UDP 业务。"
+
+msgid "Optional. When off, connectivity checks continue without requiring or comparing an expected exit address."
+msgstr "可选。关闭后继续检测连通性，无需填写或比较预期出口地址。"
+
+msgid "Packet capture failed"
+msgstr "抓包失败"
+
+msgid "Packet capture started"
+msgstr "抓包已开始"
+
+msgid "Packet capture stopped"
+msgstr "抓包已停止"
+
+msgid "PassWall TCP, UDP and DNS have all stopped; service protection triggered"
+msgstr "PassWall 的 TCP、UDP、DNS 均未运行，已触发快速保护"
+
+msgid "PassWall log changed"
+msgstr "PassWall 日志变更"
+
+msgid "PassWall log monitoring is off"
+msgstr "PassWall 日志监视未开启"
+
+msgid "PassWall log reports service or rule changes; access blocked pending recovery"
+msgstr "PassWall 日志显示服务或规则正在变更，已阻断并等待恢复"
+
+msgid "PassWall runtime log"
+msgstr "PassWall 运行日志"
+
+msgid "PassWall service protection"
+msgstr "PassWall 快速保护"
+
+msgid "PassWall service protection is waiting"
+msgstr "PassWall 快速保护等待中"
+
+msgid "PassWall services"
+msgstr "PassWall 运行情况"
+
+msgid "PassWall startup and all three services are ready; verify recovery without an extra delay"
+msgstr "PassWall 本轮运行完成且三项服务正常，直接验证恢复，不叠加故障等待"
+
+msgid "Passed"
+msgstr "通过"
+
+msgid "Pattern confidence"
+msgstr "特征匹配置信度"
+
+msgid "Per-port modes are not supported by the connected service. Update the VPS Agent and, if used, the Cloudflare Worker before applying."
+msgstr "当前连接的服务不支持按端口选择模式。请先更新 VPS Agent；使用 Cloudflare 时还需更新 Worker，再应用配置。"
+
+msgid "Per-target timeout"
+msgstr "单目标超时"
+
+msgid "Please verify"
+msgstr "请核对"
+
+msgid "Plugin configuration not found"
+msgstr "找不到插件配置"
+
+msgid "Plugin heartbeat failed; retaining protection and queuing a plugin restart"
+msgstr "插件心跳异常，已保持保护并排队重新启动本插件"
+
+msgid "Plugin is being uninstalled; configuration was not committed"
+msgstr "插件正在卸载，未提交配置"
+
+msgid "Plugin is busy; this operation was not performed. Try again later."
+msgstr "插件正在执行其他操作，本次操作未执行，请稍后重试"
+
+msgid "Plugin is disabled"
+msgstr "插件未启用"
+
+msgid "Plugin monitoring processes are responding again"
+msgstr "插件检测进程已恢复响应"
+
+msgid "Plugin monitors are responding"
+msgstr "插件检测运行正常"
+
+msgid "Plugin recovery in progress; waiting for a new proxy check"
+msgstr "插件自动恢复中，等待新的代理验证"
+
+msgid "Plugin resource usage"
+msgstr "插件资源占用"
+
+msgid "Plugin rule cleanup is incomplete"
+msgstr "插件规则未清理完成"
+
+msgid "Plugin self-check"
+msgstr "插件自检"
+
+msgid "Plugin self-check and recovery"
+msgstr "插件自检与恢复"
+
+msgid "Policy confirmation data could not be read. Review saved settings and VPS state."
+msgstr "无法读取策略确认记录，请核对已保存配置和 VPS 当前状态。"
+
+msgid "Policy revision confirmed"
+msgstr "策略版本已确认"
+
+msgid "Port protection mode"
+msgstr "端口保护模式"
+
+msgid "Port ranges must not overlap."
+msgstr "端口范围不能重叠。"
+
+msgid "Ports"
+msgstr "端口"
+
+msgid "Possible failure"
+msgstr "疑似故障"
+
+msgid "Prepare changes"
+msgstr "准备更改"
+
+msgid "Prepare to remove VPS rules"
+msgstr "准备解除 VPS 规则"
+
+msgid "Prepare to turn off this plugin VPS port rules and SSH management while synchronization remains enabled. Save & Apply, then confirm the VPS change. After the VPS confirms removal you may stop synchronization. The system firewall remains in effect."
+msgstr "准备关闭本插件的 VPS 端口规则和 SSH 托管，同时保留同步。请保存并应用，再确认 VPS 变更。VPS 确认解除后可以停止同步；原系统防火墙仍然生效。"
+
+msgid "Preserve VPS-initiated connections and their replies. Incoming service connections require an explicit rule or a discovered dynamic rule. Existing inbound connections lose access when authorization expires."
+msgstr "保留 VPS 主动建立的连接及其返回流量。外部发起的业务连接需要显式规则或自动发现的动态授权规则；授权过期后，已有入站连接也会被阻断。"
+
+msgid "Preset"
+msgstr "预设方案"
+
+msgid "Preview service rules"
+msgstr "预览端口规则"
+
+msgid "Previous exit mismatch; routine verification has since passed"
+msgstr "此前出口不匹配；日常验证现已重新通过"
+
+msgid "Previous restart did not complete"
+msgstr "上一次插件重启未完成"
+
+msgid "Probe observation"
+msgstr "探测行为观察"
+
+msgid "Process count"
+msgstr "进程数"
+
+msgid "Protect IPv6 traffic"
+msgstr "保护 IPv6 流量"
+
+msgid "Protect: block Internet traffic in both directions on failure"
+msgstr "保护：故障时双向阻断外网"
+
+msgid "Protected IPv4"
+msgstr "保护 IPv4"
+
+msgid "Protected IPv4 addresses"
+msgstr "保护 IPv4 地址"
+
+msgid "Protected IPv6"
+msgstr "保护 IPv6"
+
+msgid "Protected IPv6 addresses"
+msgstr "保护 IPv6 地址"
+
+msgid "Protected devices can access the Internet"
+msgstr "受保护设备正常联网"
+
+msgid "Protected source addresses are required"
+msgstr "必须指定保护源地址"
+
+msgid "Protection disabled; this plugin's blocking rules were removed"
+msgstr "保护已关闭，已撤销插件自己的阻断规则"
+
+msgid "Protection enabled; waiting for the proxy. LAN access remains available."
+msgstr "保护已开启，等待代理就绪；局域网访问继续保留"
+
+msgid "Protection events stay here. Frequent website checks are listed separately below."
+msgstr "这里保留保护事件，频繁的网站检查结果单独放在下方。"
+
+msgid "Protection is disabled"
+msgstr "保护已关闭"
+
+msgid "Protection is disabled; no recovery is pending"
+msgstr "保护已关闭，无需等待恢复"
+
+msgid "Protection is disabled; schedules will not run"
+msgstr "总开关关闭，定时保护不执行"
+
+msgid "Protection is off"
+msgstr "保护已关闭（状态）"
+
+msgid "Protection is turned off"
+msgstr "保护功能已关闭"
+
+msgid "Protection mode"
+msgstr "代理端口保护方式"
+
+msgid "Protection preset"
+msgstr "保护预设方案"
+
+msgid "Protection rules are missing; protection cannot be confirmed"
+msgstr "保护规则缺失，不能确认已受保护"
+
+msgid "Protection rules changed during checks; awaiting verification"
+msgstr "检测期间保护规则已变化，等待重新核验"
+
+msgid "Protection scope"
+msgstr "保护范围"
+
+msgid "Protection setup wizard"
+msgstr "保护设置引导"
+
+msgid "Protection status"
+msgstr "当前保护状态"
+
+msgid "Protection status needs verification"
+msgstr "保护状态待核验"
+
+msgid "Protocol"
+msgstr "协议"
+
+msgid "Proxy Guard"
+msgstr "代理连接保护"
+
+msgid "Proxy Guard Radar"
+msgstr "Proxy Guard Radar"
+
+msgid "Proxy check failed"
+msgstr "代理检测失败"
+
+msgid "Proxy check passed"
+msgstr "代理检测正常"
+
+msgid "Proxy client"
+msgstr "代理客户端"
+
+msgid "Proxy client forwarding mode"
+msgstr "代理客户端转发模式"
+
+msgid "Proxy client runtime log"
+msgstr "代理客户端运行日志"
+
+msgid "Proxy client services"
+msgstr "代理客户端服务"
+
+msgid "Proxy exit verification failed: unexpected exit or unreachable verification service"
+msgstr "代理出口验证失败：出口不符或验证服务不可达"
+
+msgid "Proxy failure (monitor only)"
+msgstr "代理故障（仅监测）"
+
+msgid "Proxy healthy"
+msgstr "代理正常"
+
+msgid "Proxy heartbeat age (seconds)"
+msgstr "距上次代理心跳（秒）"
+
+msgid "Proxy heartbeat interval (seconds)"
+msgstr "代理链路心跳间隔（秒）"
+
+msgid "Proxy heartbeat secret"
+msgstr "代理链路心跳密钥"
+
+msgid "Proxy probes passed; waiting for service protection to confirm access"
+msgstr "代理探测已通过，等待快速保护确认放行"
+
+msgid "Proxy programs stopped"
+msgstr "代理程序已停止"
+
+msgid "Proxy rules are being loaded"
+msgstr "正在加载代理规则"
+
+msgid "Proxy rules removed"
+msgstr "代理规则已删除"
+
+msgid "Proxy startup failed"
+msgstr "代理启动失败"
+
+msgid "Proxy verification passed; access restored with enhanced monitoring"
+msgstr "代理验证通过，已放行并进入敏感观察"
+
+msgid "Public Internet"
+msgstr "公网任意来源"
+
+msgid "Public access remaining (seconds)"
+msgstr "公网应急开放剩余时间（秒）"
+
+msgid "Public emergency window (seconds)"
+msgstr "公网应急开放时长（秒）"
+
+msgid "Queued"
+msgstr "等待执行"
+
+msgid "REALITY configuration check"
+msgstr "REALITY 配置检查"
+
+msgid "Raw UCI configuration"
+msgstr "原始 UCI 配置"
+
+msgid "Read PassWall log every (seconds)"
+msgstr "日志检查间隔（秒）"
+
+msgid "Read client log every (seconds)"
+msgstr "客户端日志读取间隔（秒）"
+
+msgid "Read new lifecycle events from /tmp/log/passwall.log and combine them with TCP, UDP, DNS and proxy checks. Recognize audited upstream messages in Simplified Chinese, Traditional Chinese, English, Russian and Persian, independently of the page language. Initial log recovery skips the extra blocking delay; failures during enhanced monitoring still use the configured delay. Other forks and future messages require separate verification."
+msgstr "读取 /tmp/log/passwall.log 的新增运行事件，与 TCP、UDP、DNS 状态和代理验证共同判断。按上游实际消息识别简体中文、繁体中文、英语、俄语和波斯语，不受页面语言影响。日志恢复后的首次验证不追加阻断等待；加强监测期间再失败仍执行设定的阻断等待。未知分支或未来新增日志需另行核对。"
+
+msgid "Read only added log data, every 1–10 seconds. Local service checks continue every second. Apply changes with Save & Apply."
+msgstr "每 1–10 秒只读取新增日志。本机服务仍每秒检查一次。更改后须点击“保存并应用”。"
+
+msgid "Read saved VPS connection"
+msgstr "通过已保存的 VPS 连接读取"
+
+msgid "Read the selected client lifecycle log using audited source-specific messages and timestamps. Log recovery still requires healthy configured services and a real proxy check. Initial recovery skips the extra delay; failures during enhanced monitoring retain the configured delay."
+msgstr "按已核对源码的消息与时间戳读取所选客户端运行日志。日志恢复后仍须确认服务正常并完成真实代理验证。首次恢复跳过额外等待，敏感观察期间失败仍执行配置的等待。"
+
+msgid "Read-only check: settings have not been saved or applied, and proxy Internet connectivity has not been tested."
+msgstr "这是只读检查，尚未保存或应用配置，也未验证代理能否连接外网。"
+
+msgid "Ready"
+msgstr "已就绪"
+
+msgid "Reboot VPS"
+msgstr "重启 VPS"
+
+msgid "Recent connectivity check details"
+msgstr "最近的连接检测详情"
+
+msgid "Recent security events"
+msgstr "最近安全事件"
+
+msgid "Rechecking a delayed heartbeat"
+msgstr "正在复核延迟的心跳"
+
+msgid "Recommended. The VPS restores its previous selected-port policy if a changed policy is not confirmed. Disabling this applies changes immediately."
+msgstr "建议开启。变更后的策略未确认时，VPS 会恢复原来的指定端口策略。关闭后将立即应用变更。"
+
+msgid "Recovery checks begin"
+msgstr "开始恢复验证"
+
+msgid "Recovery history"
+msgstr "恢复过程记录"
+
+msgid "Recovery threshold"
+msgstr "恢复次数"
+
+msgid "Recovery verification timeout (seconds)"
+msgstr "恢复确认超时时间（秒）"
+
+msgid "Recovery verified"
+msgstr "已确认恢复"
+
+msgid "Recovery was not verified before the timeout."
+msgstr "超时前未能确认恢复，请查看实际运行状态。"
+
+msgid "Reduce the number of rules or whitelist addresses."
+msgstr "请减少规则或白名单地址的数量。"
+
+msgid "Reload this page before enabling protection."
+msgstr "启用保护前请重新载入此页面。"
+
+msgid "Remote maintenance"
+msgstr "远程维护"
+
+msgid "Remote maintenance is in progress; Internet protection remains active."
+msgstr "远程维护进行中，保持外网保护"
+
+msgid "Remove VPS rules"
+msgstr "解除 VPS 规则"
+
+msgid "Repeat"
+msgstr "重复"
+
+msgid "Repeated TCP prefix across connections"
+msgstr "不同连接出现相同 TCP 前缀"
+
+msgid "Repeated TCP prefixes"
+msgstr "重复 TCP 前缀"
+
+msgid "Repeated connection attempts"
+msgstr "短时间内多次连接尝试"
+
+msgid "Repeated plugin execution errors"
+msgstr "插件连续发生执行异常"
+
+msgid "Replace the editor draft with the default template? Changes take effect after Save & Apply."
+msgstr "将编辑区草稿替换为默认模板？更改需要保存并应用才会生效。"
+
+msgid "Replayed control request rejected"
+msgstr "已拒绝重放的控制请求"
+
+msgid "Request accepted"
+msgstr "远端已接收请求"
+
+msgid "Require VPS service health before restoring access"
+msgstr "恢复联网前必须确认 VPS 服务正常"
+
+msgid "Require continuous stability before restoring access"
+msgstr "连续稳定后恢复联网"
+
+msgid "Required nftables kernel features"
+msgstr "所需的 nftables 内核功能"
+
+msgid "Required only when exit IP verification is enabled. A different exit or an unreachable verification service is treated as a failure."
+msgstr "仅在启用出口 IP 校验时必填。出口不符或验证服务不可达均视为检测失败。"
+
+msgid "Required stability (seconds)"
+msgstr "连续稳定时间（秒）"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Resolve the reported error before protection can be confirmed"
+msgstr "请先处理上述错误，才能确认保护有效"
+
+msgid "Resource statistics are disabled or awaiting the first sample"
+msgstr "资源统计已关闭，或正在等待首次采样"
+
+msgid "Resource threshold exceeded"
+msgstr "资源使用超过阈值"
+
+msgid "Restart cancelled"
+msgstr "重启已取消"
+
+msgid "Restart counting window (seconds)"
+msgstr "重启次数统计窗口（秒）"
+
+msgid "Restart proxy core"
+msgstr "重启代理内核"
+
+msgid "Restarting"
+msgstr "正在重启"
+
+msgid "Restarting this plugin"
+msgstr "正在重启本插件"
+
+msgid "Restore Internet access after proxy validation. During enhanced monitoring, start each round one second after the previous round completes; request time is additional. Any failed round blocks access and restarts the delay. Disabling enhanced monitoring still requires recovery validation."
+msgstr "代理验证通过后恢复联网。加强监测期间，每轮检测完成后等待一秒再开始下一轮，请求耗时另计；任意一轮失败即阻断并重新执行等待。关闭加强监测仍须通过恢复验证。"
+
+msgid "Restore defaults and set up again"
+msgstr "恢复默认并重新引导"
+
+msgid "Restore previous VPS policy"
+msgstr "恢复之前的 VPS 策略"
+
+msgid "Restore previous settings"
+msgstr "恢复之前的配置"
+
+msgid "Restrict listed ports only"
+msgstr "仅限制指定端口"
+
+msgid "Result unknown"
+msgstr "操作结果尚未确认"
+
+msgid "Retained events"
+msgstr "保留的事件"
+
+msgid "Retrieved at:"
+msgstr "读取时间："
+
+msgid "Review VPS address candidates"
+msgstr "核对 VPS 地址候选"
+
+msgid "Review restored settings"
+msgstr "核对已载入的配置"
+
+msgid "Review settings"
+msgstr "核对最终配置"
+
+msgid "Routine exit verification uses ipify by default. Accepts a plain-text IPv4 address or a compatible trace response. Requests always use the local SOCKS proxy. Keep Cloudflare trace out of recurring targets to avoid frequent Cloudflare requests."
+msgstr "日常出口验证默认使用 ipify。支持纯文本 IPv4 或兼容的 trace 响应，请求始终经过本机 SOCKS 代理。请勿将 Cloudflare trace 填入日常检测目标，以免频繁请求 Cloudflare。"
+
+msgid "Rule sets cleared"
+msgstr "规则集合已清空"
+
+msgid "Rules can only be cleaned up during uninstall"
+msgstr "仅允许在卸载流程中清理规则"
+
+msgid "Rules changed during UDP check"
+msgstr "UDP 检查期间规则变化"
+
+msgid "Rules, configuration and runtime state are not yet verified as consistent"
+msgstr "规则、配置或运行状态尚未核验一致"
+
+msgid "Run setup wizard"
+msgstr "重新运行设置引导"
+
+msgid "Running"
+msgstr "运行中"
+
+msgid "Runtime log check interval"
+msgstr "运行日志检查间隔"
+
+msgid "Runtime state is missing; awaiting monitor verification"
+msgstr "运行状态缺失，等待检测服务重新核验"
+
+msgid "SOCKS port"
+msgstr "SOCKS 端口"
+
+msgid "SSH authentication settings remain unchanged. Access is managed only after both heartbeats and an authorized SSH session are verified."
+msgstr "插件不会修改 SSH 认证设置；只有两路心跳及授权管理会话均验证通过后，才接管访问限制。"
+
+msgid "SSH management"
+msgstr "SSH 管理访问"
+
+msgid "SSH on TCP port 22 is enabled without IP filtering by default. Unrestricted mode adds no source restriction and does not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
+msgstr "SSH/TCP 22 默认启用且不限制来源 IP。不限制来源模式不会覆盖系统防火墙；动态规则对尚未同步的地址类型保持阻断。"
+
+msgid "SSH port"
+msgstr "SSH 服务端口"
+
+msgid "SSH rescue requires an independent HTTPS heartbeat through the proxy."
+msgstr "SSH 应急访问需要经代理发送、独立于控制通道的 HTTPS 心跳。"
+
+msgid "Sample plugin resources every five seconds. CPU usage is a percentage of the combined capacity of all online logical processors; 100% means all of them are fully used. Memory is the sum of process RSS and may include shared pages more than once. Sampling stores no history on flash. Heartbeat monitoring continues when resource sampling is off."
+msgstr "每五秒采样一次。CPU 按所有在线逻辑处理器的总容量计算，100% 表示全部处理器满负载。内存为各进程 RSS 之和，共享内存页可能重复计入。统计历史不写入闪存，关闭资源统计不影响心跳监测。"
+
+msgid "Sampling"
+msgstr "采样中"
+
+msgid "Saturday"
+msgstr "星期六"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Save & Apply"
+msgstr "保存并应用"
+
+msgid "Schedule"
+msgstr "定时规则"
+
+msgid "Schedule permit is missing system time"
+msgstr "定时许可缺少系统时间"
+
+msgid "Schedule start and end times must differ"
+msgstr "定时开始和结束时间不能相同"
+
+msgid "Schedule time must use HH:MM:SS"
+msgstr "定时时间须为 HH:MM:SS"
+
+msgid "Schedule time must use HH:MM:SS (00:00:00 to 23:59:59)"
+msgstr "定时时间须为 HH:MM:SS（00:00:00 至 23:59:59）"
+
+msgid "Schedule weekdays must not repeat"
+msgstr "定时星期不能重复"
+
+msgid "Schedule window ended; counting recovery successes again"
+msgstr "定时窗口已结束，重新累计代理恢复次数"
+
+msgid "Schedule:"
+msgstr "定时："
+
+msgid "Scheduled protection"
+msgstr "定时保护"
+
+msgid "Scheduled protection active"
+msgstr "定时保护中"
+
+msgid "Scheduled protection ended; access restored with enhanced monitoring and no failure delay"
+msgstr "定时保护结束，已放行并进入敏感观察，不执行故障等待"
+
+msgid "Scheduled protection ended; still waiting for this fault to recover"
+msgstr "定时保护已结束，仍等待本轮故障恢复"
+
+msgid "Scheduled protection is off"
+msgstr "定时保护未启用"
+
+msgid "Scheduled protection window"
+msgstr "定时保护窗口 "
+
+msgid "Scheduled window ended"
+msgstr "定时保护结束"
+
+msgid "Scheduled window ended; observation begins"
+msgstr "定时结束，开始观察"
+
+msgid "Scheduled window started; checks resume after it ends"
+msgstr "进入定时保护窗口，等待窗口结束后重新检测"
+
+msgid "Scope and exceptions"
+msgstr "保护范围与放行例外"
+
+msgid "Select a bridge device, not a switch port:"
+msgstr "请选择网桥设备，不能选择交换端口："
+
+msgid "Select at least one LAN ingress device"
+msgstr "请至少选择一个局域网入口设备"
+
+msgid "Select at least one day"
+msgstr "请至少勾选一天"
+
+msgid "Select between one and eight ingress devices"
+msgstr "至少选择一个入口设备，最多 8 个"
+
+msgid "Selected address families authorized"
+msgstr "所选地址类型已授权"
+
+msgid "Selected proxy client is not installed"
+msgstr "所选代理客户端尚未安装"
+
+msgid "Self-check execution failed"
+msgstr "自检执行异常"
+
+msgid "Self-check heartbeat is delayed; check plugin services"
+msgstr "自检心跳延迟，请检查插件服务"
+
+msgid "Self-check is waiting for its first update"
+msgstr "自检等待首次更新"
+
+msgid "Self-check passed. Seconds remaining to confirm:"
+msgstr "自检通过，请确认保留。剩余秒数："
+
+msgid "Self-check validates configuration and real rule state. A proxy outage keeps protection blocked; it does not disable protection."
+msgstr "自检核验配置和实际规则状态。代理断线时保持阻断，不会因此关闭保护。"
+
+msgid "Sender attribution is unknown"
+msgstr "无法确认发送者归属"
+
+msgid "Service control state needs verification"
+msgstr "需要检查服务控制状态"
+
+msgid "Service failure trigger"
+msgstr "服务故障触发条件"
+
+msgid "Service monitor heartbeat expired"
+msgstr "本地服务监视进程心跳超时"
+
+msgid "Service monitor interrupted"
+msgstr "服务监视中断"
+
+msgid "Service monitor status is unavailable; awaiting verification"
+msgstr "快速状态尚未就绪，等待核验"
+
+msgid "Service monitoring is disabled"
+msgstr "服务监测未启用"
+
+msgid "Service name"
+msgstr "服务名称"
+
+msgid "Service not started"
+msgstr "服务尚未启动"
+
+msgid "Service or proxy interruption"
+msgstr "服务或代理中断"
+
+msgid "Service or proxy interruption detected; waiting and confirming stability again"
+msgstr "检测到服务或代理中断，重新等待并确认稳定状态"
+
+msgid "Service protection"
+msgstr "快速保护"
+
+msgid "Service protection delay"
+msgstr "快速保护等待秒数"
+
+msgid "Service protection delay finished; starting enhanced checks"
+msgstr "快速保护等待结束，开始敏感检测"
+
+msgid "Service protection observation finished; normal check frequency restored"
+msgstr "快速保护观察结束，已恢复日常检测频率"
+
+msgid "Service protection stability duration"
+msgstr "快速保护稳定秒数"
+
+msgid "Service protection trigger"
+msgstr "快速保护触发条件"
+
+msgid "Service ready"
+msgstr "服务已就绪"
+
+msgid "Service restart requested"
+msgstr "收到服务重启请求"
+
+msgid "Service rule preview"
+msgstr "端口规则预览"
+
+msgid "Service unavailable"
+msgstr "服务不可用"
+
+msgid "Services"
+msgstr "服务规则"
+
+msgid "Set up later"
+msgstr "稍后设置"
+
+msgid "Settings changed during synchronization; waiting for the next update."
+msgstr "同步期间设置已变化，等待下一次更新。"
+
+msgid "Settings were restored:"
+msgstr "配置已回退："
+
+msgid "Show plugin resource use"
+msgstr "显示插件资源占用"
+
+msgid "Sign out and sign in again to load raw editor permissions."
+msgstr "请退出 LuCI 后重新登录，以加载原始编辑器权限。"
+
+msgid "Sign out of LuCI and sign in again to use updated permissions."
+msgstr "权限已更新，请退出 LuCI 后重新登录。"
+
+msgid "Some damaged log entries were skipped:"
+msgstr "已跳过部分损坏的日志记录："
+
+msgid "Specify IPv6 addresses or prefixes"
+msgstr "指定 IPv6 地址或前缀"
+
+msgid "Standard resource protection"
+msgstr "标准防滥用"
+
+msgid "Start time"
+msgstr "开始时间"
+
+msgid "Startup"
+msgstr "开机启动"
+
+msgid "Startup completed"
+msgstr "本轮启动已完成"
+
+msgid "Startup grace deadline (seconds since boot)"
+msgstr "开机等待结束时间（启动后秒数）"
+
+msgid "Startup log and services indicate recovery"
+msgstr "日志和服务已恢复"
+
+msgid "Startup wait"
+msgstr "启动等待"
+
+msgid "Startup wait begins"
+msgstr "开始开机等待"
+
+msgid "Static IP addresses or networks"
+msgstr "静态 IP 地址或网段"
+
+msgid "Static whitelist"
+msgstr "静态白名单"
+
+msgid "Status refreshes automatically every second. Last update:"
+msgstr "状态每秒自动刷新，上次更新："
+
+msgid "Status updates are delayed; retrying automatically. Protection cannot be confirmed."
+msgstr "状态更新延迟，正在自动重试，暂时无法确认保护状态。"
+
+msgid "Stopped by user"
+msgstr "用户已停止服务"
+
+msgid "Success"
+msgstr "成功"
+
+msgid "Success status code"
+msgstr "成功状态码"
+
+msgid "Sunday"
+msgstr "星期日"
+
+msgid "Synchronization failed; check the direct connection, device secret and Worker status."
+msgstr "同步失败，请检查直连、设备密钥和 Worker 状态。"
+
+msgid "Synchronization failed; check the direct connection, device secret and control service."
+msgstr "同步失败，请检查直连路径、设备密钥和控制服务。"
+
+msgid "Synchronization interval (seconds)"
+msgstr "同步间隔（秒）"
+
+msgid "Synchronization is off"
+msgstr "同步已关闭"
+
+msgid "Synchronization is off. The following VPS policy is last known state, not a current confirmation. Rules may remain active and dynamic authorizations expire."
+msgstr "同步已关闭。以下 VPS 策略是最后已知状态，并非当前确认结果。规则可能仍在生效，动态授权会到期。"
+
+msgid "Synchronization needs attention"
+msgstr "同步需要检查"
+
+msgid "Synchronization stopped"
+msgstr "同步已停止"
+
+msgid "Synchronization updates are delayed; protection cannot be confirmed."
+msgstr "同步状态更新延迟，暂时无法确认保护状态。"
+
+msgid "Synchronize with the VPS"
+msgstr "同步到 VPS"
+
+msgid "Synchronize your household public IP and inspect VPS service health through direct HTTPS or Cloudflare. Proxy traffic connects directly to the VPS."
+msgstr "通过 HTTPS 直连或 Cloudflare 同步家庭公网 IP，并检查 VPS 服务健康状态。代理业务仍直接连接 VPS。"
+
+msgid "Synchronize your household public IP through a Cloudflare Worker and Tunnel. Proxy traffic continues to connect directly to the VPS."
+msgstr "通过 Cloudflare Worker 和 Tunnel 同步家庭公网 IP；代理流量继续直连 VPS。"
+
+msgid "Synchronizing with the VPS"
+msgstr "正在与 VPS 同步"
+
+msgid "System clock"
+msgstr "系统时间"
+
+msgid "System clock changed; checking proxy health again"
+msgstr "系统时间发生跳变，重新确认代理状态"
+
+msgid "System firewall is busy; try again shortly"
+msgstr "系统防火墙正忙，稍后重试"
+
+msgid "System time is invalid; Internet access remains blocked"
+msgstr "系统时间尚未有效，保持外网阻断"
+
+msgid "System time is invalid; the schedule cannot be verified. Internet access remains blocked."
+msgstr "系统时间尚未有效，无法确认定时窗口；保持外网阻断"
+
+msgid "TCP, UDP and DNS are running; boot protection delay started"
+msgstr "TCP、UDP、DNS 已全部运行，开始开机保护等待"
+
+msgid "The Agent denied this action; check its local permissions and credentials."
+msgstr "Agent 已拒绝该操作，请检查其本地授权及认证密钥。"
+
+msgid "The SSH port must not overlap a managed proxy service."
+msgstr "SSH 端口不能与已管理的代理服务端口重叠。"
+
+msgid "The SSH rescue timeout must allow two heartbeat intervals plus the request timeout."
+msgstr "SSH 应急等待时间须覆盖两次心跳间隔及请求超时时间。"
+
+msgid "The VPS Agent must also explicitly allow each action. A request being accepted does not mean recovery is complete."
+msgstr "每项操作还需 VPS Agent 明确允许；收到请求不代表已经完成恢复。"
+
+msgid "The VPS did not confirm the requested inbound policy and address families."
+msgstr "VPS 未确认请求的入站策略和地址类型。"
+
+msgid "The VPS owns this timer. Closing this page, losing the control link or rebooting before confirmation does not keep an unconfirmed policy."
+msgstr "计时由 VPS 执行。关闭网页、控制链路失联或确认前重启，都不会将未确认的策略保留下来。"
+
+msgid "The Worker did not confirm this update."
+msgstr "Worker 未确认本次更新。"
+
+msgid "The Worker observed the proxy exit. Configure a direct connection before synchronizing."
+msgstr "Worker 识别到了代理出口，请配置直连后再同步。"
+
+msgid "The connected Agent does not enable Pro Max analysis"
+msgstr "当前 Agent 未启用 Pro Max 分析"
+
+msgid "The control request must bypass the proxy. Configure direct routing before enabling synchronization. A detected proxy exit is rejected."
+msgstr "控制请求必须绕过代理。请先配置直连，再启用同步；检测到代理出口时会拒绝授权。"
+
+msgid "The control service did not confirm this update."
+msgstr "控制服务未确认本次更新。"
+
+msgid "The control service observed the proxy exit. Configure a direct connection before synchronizing."
+msgstr "控制服务看到的是代理出口，请先配置直连再同步。"
+
+msgid "The effective timeout also allows for a complete check round and the access permit lifetime, so it may exceed this minimum."
+msgstr "实际超时阈值还会覆盖一轮完整检测及联网许可的有效期，因此可能长于此下限。"
+
+msgid "The lease must be at least twice the synchronization interval."
+msgstr "许可有效期至少为同步间隔的两倍。"
+
+msgid "The listener list is limited; unlisted inbound traffic remains subject to the configured policy."
+msgstr "监听列表有显示上限；其余入站流量仍按配置策略处理。"
+
+msgid "The listener list is truncated. Discovery does not change access rules."
+msgstr "监听列表已截断。发现功能不会更改访问规则。"
+
+msgid "The original 06:00 maintenance window is prefilled. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. After the window, consecutive successful checks are required again."
+msgstr "已预填原六点维护窗口。仅在总开关开启且为保护模式时阻断受保护外网；DNS、局域网和管理访问继续保留。窗口结束后重新满足连续恢复轮数才放行。"
+
+msgid "The previous VPS policy was restored after an unconfirmed change."
+msgstr "上次未确认的 VPS 策略变更已回退。"
+
+msgid "The previous settings are loaded into the form. Review them and use Save & Apply to activate them."
+msgstr "之前的配置已载入表单。请核对后点击“保存并应用”使其生效。"
+
+msgid "The proxy has remained stable; restoring access and gradually reducing check frequency"
+msgstr "代理已连续稳定，恢复放行并逐步降低检测频率"
+
+msgid "The request result is unknown; checking operation status without repeating it."
+msgstr "请求结果尚未确认，正在查询状态，不会重复执行操作。"
+
+msgid "The router restores the previous configuration if you do not confirm. Closing this page does not stop the rollback timer."
+msgstr "未按时确认将自动恢复之前的配置；关闭网页不会停止回退计时。"
+
+msgid "The selected SSH port is not owned by a verified SSH service"
+msgstr "尚未确认指定端口由 SSH 服务监听"
+
+msgid "The service monitor was interrupted; revalidating proxy stability"
+msgstr "快速检查进程曾中断，重新确认稳定状态"
+
+msgid "The synchronization process is not updating its status."
+msgstr "同步进程未更新状态。"
+
+msgid "These legacy options are ignored:"
+msgstr "以下旧选项不生效： "
+
+msgid "These networks remain reachable during failures. Do not enter 0.0.0.0/0."
+msgstr "故障时仍可访问这些网段；不要填写 0.0.0.0/0。"
+
+msgid "This configuration could not be read. A default template is shown for review."
+msgstr "无法读取此配置。当前显示默认模板，请仔细检查。"
+
+msgid "This interrupts proxy access. Local protection is prepared before the request is sent."
+msgstr "此操作会中断代理连接。启用保护模式时，会先准备本地阻断，再发送请求。"
+
+msgid "This prepares default plugin settings for review. Existing protection continues until you Save & Apply."
+msgstr "将默认配置载入引导供你核对；保存并应用前，现有保护继续运行。"
+
+msgid "This preview has not been applied. Unselected ports keep the existing system firewall policy."
+msgstr "此处仅为预览，尚未应用。未选端口继续沿用系统原有防火墙规则。"
+
+msgid "This report contains only state names and measurements. It excludes IP addresses, URLs, configuration and raw logs. Review it before sharing. Nothing is uploaded."
+msgstr "报告仅包含状态名称和测量值，不含 IP、URL、配置和原始日志。分享前请查看内容，不会自动上传。"
+
+msgid "This request must bypass the proxy. The plugin does not change PassWall or routing settings. A detected proxy exit is rejected."
+msgstr "请求必须绕过代理。本插件不会修改 PassWall 或路由设置；检测到代理出口时将拒绝同步。"
+
+msgid "This sing-box version has a confirmed TUN IPv6 UDP fault; use a verified forwarding mode or a fixed core"
+msgstr "此 sing-box 版本已复现 TUN IPv6 UDP 故障；请选择已验证的转发模式或修复后的内核"
+
+msgid "Thursday"
+msgstr "星期四"
+
+msgid "Time and weekdays use the selected fixed UTC offset. Router time zone is unchanged; daylight saving time is not automatic. The default is UTC+00:00."
+msgstr "按所选 UTC 偏移计算时间和星期；不会修改路由器时区，也不自动切换夏令时。默认使用 UTC+00:00。"
+
+msgid "Time zone"
+msgstr "时区"
+
+msgid "Timeout per target (seconds)"
+msgstr "每个目标的超时（秒）"
+
+msgid "Too many local proxy ports"
+msgstr "本机代理端口过多"
+
+msgid "Traffic bypassing this router cannot be protected; validate the actual topology"
+msgstr "绕过本机的流量无法保护，请核对实际拓扑"
+
+msgid "Tuesday"
+msgstr "星期二"
+
+msgid "UCI syntax checked. Activation parameters have not been verified."
+msgstr "UCI 语法已检查，尚未核验启用参数。"
+
+msgid "UCI syntax is valid, but activation parameters are incomplete or invalid. Check required fields, numbers, sources and ports."
+msgstr "UCI 语法有效，但启用参数缺失或无效。请检查必填项、数值、来源和端口。"
+
+msgid "UDP check port"
+msgstr "UDP 检查端口"
+
+msgid "UDP check support library"
+msgstr "UDP 检测扩展库"
+
+msgid "UDP check target IPv4"
+msgstr "UDP 检测目标 IPv4"
+
+msgid "UDP check target port"
+msgstr "UDP 检测目标端口"
+
+msgid "UDP check timeout"
+msgstr "UDP 检查超时"
+
+msgid "UDP check timeout (seconds)"
+msgstr "UDP 检测超时（秒）"
+
+msgid "UDP checks require luci-lib-nixio matching the firmware; install it or disable UDP checks"
+msgstr "UDP 检查需要匹配固件的 luci-lib-nixio，请先安装或关闭 UDP 检查"
+
+msgid "UDP proxy path check"
+msgstr "UDP 代理通路检测"
+
+msgid "UDP proxy path check is disabled"
+msgstr "UDP 代理通路检测未启用"
+
+msgid "UDP query domain"
+msgstr "UDP 查询域名"
+
+msgid "UDP target must be an IPv4 address"
+msgstr "UDP 检查目标须为 IPv4 地址"
+
+msgid "UTC offset must be between -12:00 and +14:00"
+msgstr "UTC 时区偏移须在 -12:00 至 +14:00 之间"
+
+msgid "UTC offset must use ±HH:MM with minutes 00, 15, 30 or 45"
+msgstr "UTC 时区偏移须为 ±HH:MM，分钟为 00、15、30 或 45"
+
+msgid "Unable to complete setup"
+msgstr "无法完成保护配置"
+
+msgid "Unable to read VPS address candidates"
+msgstr "无法读取 VPS 地址候选"
+
+msgid "Unavailable"
+msgstr "不可用"
+
+msgid "Unavailable; routine exit verification continues"
+msgstr "暂时不可用；日常出口验证继续运行"
+
+msgid "Unknown"
+msgstr "未知"
+
+msgid "Unknown state"
+msgstr "状态未知"
+
+msgid "Unrecognized options are preserved but may have no effect:"
+msgstr "未识别的选项会保留，但可能不生效： "
+
+msgid "Unrestricted"
+msgstr "不限制来源"
+
+msgid "Unrestricted bypasses filtering for this rule. Whitelist mode uses allowed sources; standard mode enforces limits; observe mode records threshold events without blocking."
+msgstr "不限制表示此规则不进行过滤。仅白名单模式按允许来源放行；标准模式执行限制；仅观察模式记录超限事件，不阻断连接。"
+
+msgid "Unsaved Changes"
+msgstr "待应用更改"
+
+msgid "Unsaved changes"
+msgstr "未保存更改"
+
+msgid "Unsupported ingress device type:"
+msgstr "不支持的入口设备类型："
+
+msgid "Unsupported proxy client"
+msgstr "不支持的代理客户端"
+
+msgid "Update the VPS Agent and Cloudflare Worker before using the new source options."
+msgstr "使用新的来源选项前，请更新 VPS Agent 和 Cloudflare Worker。"
+
+msgid "Update the VPS Agent and Worker to use policy confirmation."
+msgstr "使用策略确认功能前，请更新 VPS Agent 和 Worker。"
+
+msgid "Update the VPS Agent and control service to the matching protocol version."
+msgstr "请将 VPS Agent 和控制服务更新到匹配的协议版本。"
+
+msgid "Use 192.0.2.100/32 for a single-device trial, or 192.0.2.0/24 for the subnet."
+msgstr "单设备试验可填写 192.0.2.100/32；整网段可填写 192.0.2.0/24。"
+
+msgid "Use HH:MM:SS in the selected time zone. Overnight windows are supported. Keep the router clock accurate; start and end must differ."
+msgstr "格式 HH:MM:SS，使用上方所选时区，支持跨午夜。需确保路由器系统时间准确；开始和结束时间不能相同。"
+
+msgid "Use an Agent HTTPS endpoint reached through the local SOCKS proxy, separately from the control channel."
+msgstr "填写经本机 SOCKS 代理访问的 Agent HTTPS 地址；它必须独立于控制通道。"
+
+msgid "Use default mode"
+msgstr "使用默认模式"
+
+msgid "Use detected client listener ports"
+msgstr "使用识别到的客户端监听端口"
+
+msgid "Use template"
+msgstr "使用模板"
+
+msgid "Use this address"
+msgstr "使用此地址"
+
+msgid "Use verified SOCKS, proxy listener and DNS redirect exception ports for this plugin. Keep this off to use manual ports. Client, DNS, route and NAT settings are not changed."
+msgstr "为本插件使用已核实的 SOCKS、代理入口及 DNS 重定向例外端口。关闭后使用手动端口；不修改客户端、DNS、路由或 NAT 配置。"
+
+msgid "User cleared the plugin logs"
+msgstr "用户清空插件日志"
+
+msgid "Uses the saved Pro connection. Importing an address only edits this form; Save & Apply is still required."
+msgstr "使用已保存的 Pro 连接。导入仅修改表单，仍须保存并应用才会生效。"
+
+msgid "VPS access readiness"
+msgstr "VPS 访问就绪状态"
+
+msgid "VPS access rules"
+msgstr "VPS 访问规则"
+
+msgid "VPS access rules are off"
+msgstr "VPS 访问规则已关闭"
+
+msgid "VPS address read timed out"
+msgstr "读取 VPS 地址超时"
+
+msgid "VPS confirmation window (seconds)"
+msgstr "VPS 确认窗口（秒）"
+
+msgid "VPS confirmed protection bypass for:"
+msgstr "VPS 已确认以下规则绕过保护： "
+
+msgid "VPS confirmed the update"
+msgstr "VPS 已确认更新"
+
+msgid "VPS default-route measurement"
+msgstr "VPS 默认路由出口实测"
+
+msgid "VPS firewall policy restored"
+msgstr "VPS 防火墙策略已恢复"
+
+msgid "VPS firewall verification failed"
+msgstr "VPS 防火墙核验失败"
+
+msgid "VPS health check interval (seconds)"
+msgstr "VPS 健康检查间隔（秒）"
+
+msgid "VPS health status is unavailable"
+msgstr "VPS 健康状态不可用"
+
+msgid "VPS inbound policy"
+msgstr "VPS 入站策略"
+
+msgid "VPS policy applied. Seconds remaining to confirm:"
+msgstr "VPS 策略已临时应用，确认剩余秒数： "
+
+msgid "VPS policy does not match selected-port protection; update the Agent."
+msgstr "VPS 策略与指定端口保护不一致，请更新 Agent。"
+
+msgid "VPS policy is waiting for confirmation"
+msgstr "VPS 策略等待确认"
+
+msgid "VPS policy was restored. Review the reloaded settings."
+msgstr "VPS 策略已恢复，请检查重新载入的设置。"
+
+msgid "VPS public interface address"
+msgstr "VPS 网卡公网地址"
+
+msgid "VPS service health"
+msgstr "VPS 服务健康状态"
+
+msgid "VPS service monitor failed"
+msgstr "VPS 服务监视异常"
+
+msgid "VPS service rules"
+msgstr "VPS 服务规则"
+
+msgid "VPS service verification failed"
+msgstr "VPS 服务验证失败"
+
+msgid "VPS services"
+msgstr "VPS 服务"
+
+msgid "VPS services are ready"
+msgstr "VPS 服务已就绪"
+
+msgid "Validate configuration"
+msgstr "校验配置"
+
+msgid "Validating the proxy before restoring access"
+msgstr "正在验证代理，验证通过后恢复联网"
+
+msgid "Verified fallback bandwidth threshold exceeded"
+msgstr "已确认的回落连接持续超过带宽阈值"
+
+msgid "Verify UDP through the proxy"
+msgstr "通过代理验证 UDP"
+
+msgid "Verify proxy exit IPv4"
+msgstr "校验代理出口 IPv4"
+
+msgid "Verify with Cloudflare after startup or an interruption"
+msgstr "启动或中断恢复后使用 Cloudflare 核验"
+
+msgid "Verifying recovery"
+msgstr "正在确认恢复"
+
+msgid "View sanitized diagnostic report"
+msgstr "查看脱敏诊断报告"
+
+msgid "Wait before enhanced checks"
+msgstr "敏感检测前等待"
+
+msgid "Wait briefly before starting another maintenance operation."
+msgstr "请稍后再发起新的维护操作。"
+
+msgid "Wait until the VPS finishes applying the policy."
+msgstr "请等待 VPS 完成策略应用。"
+
+msgid "Waiting before another restart"
+msgstr "等待自动恢复冷却"
+
+msgid "Waiting for LAN interface"
+msgstr "等待局域网接口就绪"
+
+msgid "Waiting for PassWall startup to finish and all three services to recover"
+msgstr "等待 PassWall 本轮启动完成及三项服务恢复"
+
+msgid "Waiting for TCP, UDP and DNS to start"
+msgstr "等待 TCP、UDP、DNS 全部启动"
+
+msgid "Waiting for a fresh Agent report"
+msgstr "等待新的 Agent 报告"
+
+msgid "Waiting for a fresh household IP authorization"
+msgstr "等待当前家庭 IP 完成认证"
+
+msgid "Waiting for both authenticated heartbeats"
+msgstr "等待两路认证心跳均正常"
+
+msgid "Waiting for client startup and configured services to recover"
+msgstr "等待客户端本轮启动及已配置服务恢复"
+
+msgid "Waiting for configured proxy services to start"
+msgstr "等待已配置的代理服务启动"
+
+msgid "Waiting for local proxy service protection"
+msgstr "本地代理服务保护等待中"
+
+msgid "Waiting for management verification"
+msgstr "等待管理通道验证"
+
+msgid "Waiting for proxy startup"
+msgstr "等待代理启动"
+
+msgid "Waiting for proxy verification before restoring access"
+msgstr "等待代理验证通过后恢复联网"
+
+msgid "Waiting for startup"
+msgstr "等待开机服务"
+
+msgid "Waiting for the VPS to confirm the result."
+msgstr "正在等待 VPS 确认处理结果。"
+
+msgid "Waiting for the required successful proxy checks"
+msgstr "等待代理检测达到恢复条件"
+
+msgid "Waiting for the scheduled window to end"
+msgstr "等待定时保护窗口结束"
+
+msgid "Waiting for this PassWall startup and TCP, UDP and DNS recovery"
+msgstr "等待 PassWall 本轮运行完成及 TCP、UDP、DNS 恢复"
+
+msgid "Waiting for this restart to finish"
+msgstr "等待本轮重启结束"
+
+msgid "Waiting to synchronize"
+msgstr "等待同步"
+
+msgid "Waiting to verify after proxy recovery"
+msgstr "等待代理恢复后验证"
+
+msgid "Warning: a timed window closes public access when it expires. If your IP has changed and no allowed management source is reachable, you may lose SSH access. An unlimited window keeps SSH publicly reachable during the outage; SSH authentication and the system firewall still apply."
+msgstr "警告：限时结束会收回临时公网放行。若当前 IP 已变化，且没有可用的允许管理来源，可能无法重新登录 SSH。持续开放会延长 SSH 公网暴露时间；SSH 身份验证和系统防火墙仍然生效。"
+
+msgid "Watch PassWall runtime log"
+msgstr "监视 PassWall 运行日志"
+
+msgid "Watch proxy client runtime log"
+msgstr "监视代理客户端运行日志"
+
+msgid "Wednesday"
+msgstr "星期三"
+
+msgid "Weekly (choose days)"
+msgstr "每周（勾选星期）"
+
+msgid "Weekly schedules require between one and seven days"
+msgstr "每周定时须选择至少一天，最多七天"
+
+msgid "Whitelist mode requires household or static authorized sources."
+msgstr "仅白名单模式须设置家庭授权或静态允许来源。"
+
+msgid "Whitelist only"
+msgstr "仅允许白名单"
+
+msgid "Worker HTTPS address"
+msgstr "Worker HTTPS 地址"
+
+msgid "allows at most 64 entries"
+msgstr " 最多 64 项"
+
+msgid "contains an invalid address"
+msgstr " 地址无效"
+
+msgid "is outside the allowed range"
+msgstr " 超出允许范围"
+
+msgid "processes; memory log bytes:"
+msgstr " 个进程；内存日志字节数："
+
+msgid "seconds"
+msgstr " 秒"
+
+msgid "· Boot protection"
+msgstr " · 开机保护"
+
+msgid "· Enhanced monitoring:"
+msgstr " · 敏感观察："
+
+msgid "· Gradually returning to the normal check interval"
+msgstr " · 正在逐步恢复日常检测间隔"
+
+msgid "· Monitor only; no blocking"
+msgstr " · 仅监测，不执行阻断"
+
+msgid "· No recent update from the monitor"
+msgstr " · 检测服务长时间没有更新"
+
+msgid "· Stable:"
+msgstr " · 已稳定："
+
+msgid "· Waiting before checks:"
+msgstr " · 检测前等待："
+
+msgid "· Waiting for all three services before starting the delay"
+msgstr " · 等待三项服务全部运行后开始计时"
+
+msgid "· Within the scheduled window"
+msgstr " · 当前处于窗口内"

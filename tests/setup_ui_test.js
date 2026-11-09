@@ -1,0 +1,51 @@
+const fs=require('fs'),assert=require('assert');
+const root=process.env.PG_SOURCE||process.cwd();
+let modal=[],calls=[],draft={enabled:'0',mode:'monitor',interfaces:['br-lan'],passwall_watch:'0',exit_check:'0',schedule_enabled:'0',proxy_client:'auto',socks_port:'1070'};
+const discovery={ok:true,client:{available:true,client:'passwall2',socks_port:1080,proxy_ports:[1041],dns_ports:[15353]},interfaces:[{name:'lan',device:'br-lan',up:true,recommended:true,sources4:['192.0.2.0/24'],sources6:[],local4:['192.0.2.0/24'],local6:[]},{name:'guest',device:'br-guest',up:true,recommended:false,sources4:['198.51.100.0/24'],sources6:[],local4:['198.51.100.0/24'],local6:[]}]};
+function E(tag,attrs={},children=[]){
+ const node={tag,attrs,children,id:attrs.id,value:attrs.value===undefined?'':String(attrs.value),checked:attrs.checked!=null,disabled:attrs.disabled!=null,textContent:'',addEventListener(){}};
+ if(tag==='textarea')node.value=children.join('');
+ if(tag==='select'){const selected=children.filter(x=>x.attrs.selected!=null);node.value=(selected.at(-1)||children[0]).value;}
+ return node;
+}
+const ui={showModal:(title,body)=>{modal=body;},hideModal(){}};
+const profiles={auto:discovery.client,passwall2:discovery.client,nikki:{available:true,client:'nikki',socks_port:1080,proxy_ports:[7891,7892],dns_ports:[1053]}};
+const rpc={declare:definition=>(...args)=>{calls.push(definition.method);return Promise.resolve(definition.method==='setup_discover'?{...discovery,client:profiles[args[0]||'auto']||{available:false,client:args[0]}}:{ok:true,wizard_complete:true});}};
+const pgI18n={runtime:x=>x,modal:(_ui,title,body)=>{modal=body;}};
+const pg=new Function('baseclass','ui','rpc','poll','uci','pgI18n','_','E',fs.readFileSync(root+'/package/root/www/luci-static/resources/proxy_guard_setup.js','utf8'))({extend:x=>x},ui,rpc,{add(){}},{get:()=>draft},pgI18n,x=>x,E);
+pg.info={wizard_complete:true};pg.view={showActionError:e=>{throw e;},handleSaveApply:()=>{throw Error('unexpected apply');}};
+function button(label){let found;function visit(v){if(!v||typeof v!=='object')return;if(v.tag==='button'&&v.children[0]===label)found=v;for(const x of v.children||[])visit(x);}for(const row of modal)visit(row);assert(found,label);return found;}
+(async()=>{
+ await pg.open(false);
+ assert(!button('Next').disabled,'available LAN must allow Next');
+ assert(pg.inputs['br-lan'].checked&&!pg.inputs['br-guest'].checked,'false checked must be omitted, not emitted as an HTML attribute');
+ await button('Next').attrs.click();
+ assert.equal(pg.step,1);
+ assert.equal(pg.mode.value,'monitor','false selected attributes must not select the last option');
+ assert(!pg.enable.checked&&!pg.watch.checked&&!pg.schedule.checked,'rerun must preserve disabled flags');
+ pg.enable.checked=true;pg.watch.checked=false;pg.socks.value='12345';pg.client.value='nikki';
+ await button('Next').attrs.click();
+ assert.equal(pg.step,2);assert(!pg.exitCheck.checked,'optional exit validation defaults off');
+ assert.equal(pg.inputs.proxy_ports.value,'7891\n7892','selected client, rather than initial auto client, supplies proxy ports');
+ assert(pg.inputs.dns_ports.value.includes('1053'),'selected client supplies DNS exception ports');
+ pg.inputs.proxy_ports.value='45000';pg.inputs.sources4.value='192.0.2.99/32';
+ pg.expected.value='203.0.113.9';
+ await button('Back').attrs.click();
+ assert.equal(pg.step,1);assert.equal(pg.socks.value,'12345');assert.equal(pg.client.value,'nikki');assert(pg.enable.checked&&!pg.watch.checked,'Back must retain prior choices');
+ await button('Next').attrs.click();assert.equal(pg.expected.value,'203.0.113.9','Back retains current scope/IP edits');
+ assert.equal(pg.inputs.proxy_ports.value,'45000','Back retains manually reviewed ports');
+ await button('Back').attrs.click();await button('Back').attrs.click();await button('Next').attrs.click();await button('Next').attrs.click();
+ assert.equal(pg.inputs.sources4.value,'192.0.2.99/32','unchanged device selection retains manually reviewed scope');
+ assert.equal(pg.inputs.proxy_ports.value,'45000','unchanged client selection retains manually reviewed ports');
+ await button('Next').attrs.click();assert.equal(pg.step,2,'IPv6 review is mandatory before proceeding');assert.match(pg.wizardError.textContent,/IPv6/);
+ pg.ipv6Mode.value='none';pg.ipv6Acknowledge.checked=true;
+ await button('Next').attrs.click();assert.equal(pg.step,3);assert(!button('Save & Apply').disabled);
+ assert(calls.length>=3&&calls.every(x=>x==='setup_discover'),'wizard navigation only reads discovery and never saves or activates protection');
+ pg.reset=true;pg.step=1;pg.draft.mode='guard';pg.draft.boot_guard='1';pg.renderWizard();assert.equal(pg.mode.value,'boot','Back retains chosen preset during a factory setup too');
+ await pg.open(true);await button('Next').attrs.click();pg.client.value='nikki';await button('Next').attrs.click();await button('Back').attrs.click();assert.equal(pg.socks.value,'1080','selecting another client follows its detected SOCKS port unless manually overridden');
+ discovery.interfaces=[];await pg.open(false);assert(button('Next').disabled,'no eligible LAN must block navigation without throwing');
+ pg.active={id:'x',token:'y',owned:true,phase:'checking'};pg.showTransaction();assert(pg.confirmButton.disabled);
+ pg.active.phase='confirming';pg.active.remaining=30;pg.renderTransaction();assert(!pg.confirmButton.disabled);
+ pg.active.owned=false;pg.renderTransaction();assert(pg.confirmButton.disabled&&pg.cancelButton.disabled);
+ console.log('PASS wizard DOM boolean attributes, interface/preset defaults, backward navigation, draft-only changes, and confirmation gating');
+})().catch(e=>{console.error(e);process.exit(1);});

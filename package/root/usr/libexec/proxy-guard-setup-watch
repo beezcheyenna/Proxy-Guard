@@ -1,0 +1,38 @@
+#!/bin/sh
+umask 077
+pro_actions_ready() {
+    [ ! -e /var/run/proxy-guard-access/installing ] && [ ! -e /var/run/proxy-guard-access/updating ] && [ ! -e /var/run/proxy-guard/removing ]
+}
+while :; do
+    # A first-enable commit may die before the Pro service is enabled. Keep
+    # local recovery independent of that service, with no network requests.
+    if pro_actions_ready && [ -f /etc/proxy-guard-access/trial/pending.json ] && [ -x /usr/libexec/proxy-guard-access ]; then
+        /usr/libexec/proxy-guard-access recover_trial >/dev/null 2>&1 || true
+    fi
+    if pro_actions_ready && [ -x /etc/init.d/proxy-guard-access ] && mv /var/run/proxy-guard-access/trial-reload /var/run/proxy-guard-access/trial-reload.running 2>/dev/null; then
+        rm -f /var/run/proxy-guard-access/trial-reload.running
+        /etc/init.d/proxy-guard-access restart >/dev/null 2>&1 </dev/null &
+    fi
+    if pro_actions_ready && [ -x /usr/libexec/proxy-guard-access ] && mv /var/run/proxy-guard-access/egress-request /var/run/proxy-guard-access/egress-request.running 2>/dev/null; then
+        rm -f /var/run/proxy-guard-access/egress-request.running
+        /usr/libexec/proxy-guard-access egress >/dev/null 2>&1 </dev/null &
+    fi
+    if mv /var/run/proxy-guard/setup-apply-request /var/run/proxy-guard/setup-apply-request.running 2>/dev/null; then
+        read -r pg_setup_generation < /var/run/proxy-guard/setup-apply-request.running
+        rm -f /var/run/proxy-guard/setup-apply-request.running
+        case "$pg_setup_generation" in
+            ''|*[!a-zA-Z0-9-]*) ;;
+            *) /etc/init.d/proxy-guard apply_config "$pg_setup_generation" >/dev/null 2>&1 </dev/null & ;;
+        esac
+    fi
+    if [ -e /etc/proxy-guard/setup/pending.json ]; then
+        ucode /usr/lib/proxy-guard/setup-lock.uc tick >/dev/null 2>&1
+        sleep 1
+    else
+        if [ -f /etc/proxy-guard/setup/confirmed ] && ! cmp -s /etc/config/proxy_guard /etc/proxy-guard/setup/confirmed; then
+            ucode /usr/lib/proxy-guard/setup-lock.uc observe >/dev/null 2>&1
+        fi
+        sleep 3
+    fi
+done
+

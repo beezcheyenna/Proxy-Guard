@@ -1,0 +1,12 @@
+#!/bin/sh
+# Installation must not report success before rpcd's asynchronous reload settles.
+set -eu
+case "${1:-}" in proxy_guard|proxy_guard_access|proxy_guard_radar) ;; *) exit 2;; esac
+pg_rpc_attempt=0
+while [ "$pg_rpc_attempt" -lt 10 ]; do
+    if ubus -t 1 list "$1" 2>/dev/null | grep -qx "$1"; then exit 0; fi
+    pg_rpc_attempt=$((pg_rpc_attempt + 1))
+    sleep 1
+done
+printf '%s\n' "Proxy Guard: RPC object $1 did not register after installation." >&2
+exit 1

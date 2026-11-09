@@ -1,0 +1,469 @@
+{
+  "upstream": [
+    {
+      "repo": "openwrt-passwall",
+      "commit": "5e2bbfa8e6a32f7e54a7fe29891a28fb05439e52",
+      "archive_sha256": "e3e6d83698b2033ffa44af447d637730bddf5757b6b0dfa99d0bb5cd6ae4d39d",
+      "source": "https://github.com/Openwrt-Passwall/openwrt-passwall/tree/5e2bbfa8e6a32f7e54a7fe29891a28fb05439e52"
+    },
+    {
+      "repo": "openwrt-passwall2",
+      "commit": "896c586a27c9a7c0b9e3d75b631965dea86b9945",
+      "archive_sha256": "d0d1c5625abd3727957b1e6b8047f77f66ed09d0b06f1a7715d050a6dc5d2d13",
+      "source": "https://github.com/Openwrt-Passwall/openwrt-passwall2/tree/896c586a27c9a7c0b9e3d75b631965dea86b9945"
+    }
+  ],
+  "languages": [
+    "en",
+    "fa",
+    "ru",
+    "zh-cn",
+    "zh-tw"
+  ],
+  "cases": [
+    {
+      "language": "en",
+      "message": "Restart the service and apply the new rules.",
+      "kind": "restart",
+      "source": "Restart the service and apply the new rules."
+    },
+    {
+      "language": "en",
+      "message": "Failed or timed out waiting for subscription/rule updates. Restart cancelled.",
+      "kind": "cancelled",
+      "source": "Failed or timed out waiting for subscription/rule updates. Restart cancelled."
+    },
+    {
+      "language": "en",
+      "message": "Delete nftables rules is complete.",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "en",
+      "message": "Delete iptables rules is complete.",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "en",
+      "message": "Clear NFTSet.",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "en",
+      "message": "Clear IPSet.",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "en",
+      "message": "Clearing and closing related programs and cache complete.",
+      "kind": "stopped",
+      "source": "Clearing and closing related programs and cache complete."
+    },
+    {
+      "language": "en",
+      "message": "Starting to load nftables firewall rules...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "en",
+      "message": "Starting to load iptables firewall rules...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "en",
+      "message": "Running complete!",
+      "kind": "complete",
+      "source": "Running complete!"
+    },
+    {
+      "language": "fa",
+      "message": "راه‌اندازی مجدد سرویس و اعمال قوانین جدید.",
+      "kind": "restart",
+      "source": "Restart the service and apply the new rules."
+    },
+    {
+      "language": "fa",
+      "message": "انتظار برای به‌روزرسانی اشتراک/قوانین ناموفق بود یا مهلت آن به پایان رسید. راه‌اندازی مجدد لغو شد.",
+      "kind": "cancelled",
+      "source": "Failed or timed out waiting for subscription/rule updates. Restart cancelled."
+    },
+    {
+      "language": "fa",
+      "message": "حذف قوانین nftables کامل شد.",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "fa",
+      "message": "حذف قوانین iptables کامل شد.",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "fa",
+      "message": "پاک کردن NFTSet.",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "fa",
+      "message": "پاک کردن IPSet.",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "fa",
+      "message": "پاک‌سازی و بستن برنامه‌های مرتبط و کش کامل شد.",
+      "kind": "stopped",
+      "source": "Clearing and closing related programs and cache complete."
+    },
+    {
+      "language": "fa",
+      "message": "شروع بارگذاری قوانین فایروال nftables...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "fa",
+      "message": "شروع بارگذاری قوانین فایروال iptables...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "fa",
+      "message": "اجرا کامل شد!",
+      "kind": "complete",
+      "source": "Running complete!"
+    },
+    {
+      "language": "ru",
+      "message": "Перезапуск службы для применения новых правил.",
+      "kind": "restart",
+      "source": "Restart the service and apply the new rules."
+    },
+    {
+      "language": "ru",
+      "message": "Ошибка или превышено время ожидания обновления подписок/правил. Перезапуск отменён.",
+      "kind": "cancelled",
+      "source": "Failed or timed out waiting for subscription/rule updates. Restart cancelled."
+    },
+    {
+      "language": "ru",
+      "message": "Удаление правил nftables завершено.",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "ru",
+      "message": "Удаление правил iptables завершено.",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "ru",
+      "message": "Очистка NFTSet.",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "ru",
+      "message": "Очистка IPSet.",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "ru",
+      "message": "Очистка и завершение связанных процессов и кэша завершена.",
+      "kind": "stopped",
+      "source": "Clearing and closing related programs and cache complete."
+    },
+    {
+      "language": "ru",
+      "message": "Начало загрузки правил фаервола nftables...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "ru",
+      "message": "Начало загрузки правил фаервола iptables...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "ru",
+      "message": "Выполнение завершено!",
+      "kind": "complete",
+      "source": "Running complete!"
+    },
+    {
+      "language": "zh-cn",
+      "message": "重启服务，应用新的规则。",
+      "kind": "restart",
+      "source": "Restart the service and apply the new rules."
+    },
+    {
+      "language": "zh-cn",
+      "message": "等待订阅/规则更新失败或超时，已取消重启。",
+      "kind": "cancelled",
+      "source": "Failed or timed out waiting for subscription/rule updates. Restart cancelled."
+    },
+    {
+      "language": "zh-cn",
+      "message": "删除 nftables 规则完成。",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "zh-cn",
+      "message": "删除 iptables 规则完成。",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "zh-cn",
+      "message": "清除 NFTSet。",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "zh-cn",
+      "message": "清除 IPSet。",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "zh-cn",
+      "message": "清空并关闭相关程序和缓存完成。",
+      "kind": "stopped",
+      "source": "Clearing and closing related programs and cache complete."
+    },
+    {
+      "language": "zh-cn",
+      "message": "开始加载 nftables 防火墙规则...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "zh-cn",
+      "message": "开始加载 iptables 防火墙规则...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "zh-cn",
+      "message": "运行完成！",
+      "kind": "complete",
+      "source": "Running complete!"
+    },
+    {
+      "language": "zh-tw",
+      "message": "重啟服務，應用新的規則。",
+      "kind": "restart",
+      "source": "Restart the service and apply the new rules."
+    },
+    {
+      "language": "zh-tw",
+      "message": "等待訂閱/規則更新失敗或逾時，已取消重新啟動。",
+      "kind": "cancelled",
+      "source": "Failed or timed out waiting for subscription/rule updates. Restart cancelled."
+    },
+    {
+      "language": "zh-tw",
+      "message": "刪除 nftables 規則完成。",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "zh-tw",
+      "message": "刪除 iptables 規則完成。",
+      "kind": "rules_removed",
+      "source": "Delete %s rules is complete."
+    },
+    {
+      "language": "zh-tw",
+      "message": "清除 NFTSet。",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "zh-tw",
+      "message": "清除 IPSet。",
+      "kind": "sets_cleared",
+      "source": "Clear %s."
+    },
+    {
+      "language": "zh-tw",
+      "message": "清空並關閉相關程序和缓存完成。",
+      "kind": "stopped",
+      "source": "Clearing and closing related programs and cache complete."
+    },
+    {
+      "language": "zh-tw",
+      "message": "開始加载 nftables 防火墙規則...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "zh-tw",
+      "message": "開始加载 iptables 防火墙規則...",
+      "kind": "rules_loading",
+      "source": "Starting to load %s firewall rules..."
+    },
+    {
+      "language": "zh-tw",
+      "message": "運行完成！",
+      "kind": "complete",
+      "source": "Running complete!"
+    },
+    {
+      "language": "legacy",
+      "message": "重启服务，应用新的规则。",
+      "kind": "restart",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "删除 nftables 规则完成。",
+      "kind": "rules_removed",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "删除 iptables 规则完成。",
+      "kind": "rules_removed",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "清空 NFTSet。",
+      "kind": "sets_cleared",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "清空 IPSet。",
+      "kind": "sets_cleared",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "清空并关闭相关程序和缓存完成。",
+      "kind": "stopped",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "开始加载 nftables 防火墙规则...",
+      "kind": "rules_loading",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "开始加载 iptables 防火墙规则...",
+      "kind": "rules_loading",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "全局节点启动失败，停止服务。",
+      "kind": "start_failed",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "DNS 启动失败，停止服务。",
+      "kind": "start_failed",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "运行完成！",
+      "kind": "complete",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "运行完成!",
+      "kind": "complete",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "等待订阅/规则更新结束失败或超时，取消重启.",
+      "kind": "cancelled",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Restart the service and apply the new rules.",
+      "kind": "restart",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Failed or timed out waiting for subscription/rule updates. Restart cancelled.",
+      "kind": "cancelled",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Delete nftables rules is complete.",
+      "kind": "rules_removed",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Delete iptables rules is complete.",
+      "kind": "rules_removed",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Clear NFTSet.",
+      "kind": "sets_cleared",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Clear IPSet.",
+      "kind": "sets_cleared",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Clearing and closing related programs and cache complete.",
+      "kind": "stopped",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Starting to load nftables firewall rules...",
+      "kind": "rules_loading",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Starting to load iptables firewall rules...",
+      "kind": "rules_loading",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "legacy",
+      "message": "Running complete!",
+      "kind": "complete",
+      "source": "fixed-language PassWall or prior canonical English"
+    },
+    {
+      "language": "zh-cn",
+      "message": "防火墙规则加载完成！",
+      "kind": "rules_ready",
+      "source": "PassWall nftables.sh / iptables.sh"
+    }
+  ]
+}

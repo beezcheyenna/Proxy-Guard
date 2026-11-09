@@ -1,0 +1,41 @@
+#!/usr/bin/lua
+-- Migrate only recognized defaults; preserve custom endpoints and timing.
+-- Do not commit unrelated pending CLI edits from /tmp/.uci during install.
+local uci=require('uci').cursor()
+-- Absolute load bypasses all delta search paths; changing savedir alone does not.
+local loaded,why=uci:load('/etc/config/proxy_guard')
+assert(loaded,why)
+local raw=uci:get_all('proxy_guard','main')
+if type(raw)~='table' then os.exit(0) end
+local google={['https://www.google.com/generate_204|204']=true,
+ ['https://www.gstatic.com/generate_204|204']=true}
+local old_cf={['https://cp.cloudflare.com/generate_204|204']=true,
+ ['https://www.cloudflare.com/cdn-cgi/trace|200']=true}
+local targets=raw.targets
+local defaults=type(targets)=='table' and #targets==2 and
+ ((google[targets[1]] and old_cf[targets[2]]) or (old_cf[targets[1]] and google[targets[2]]))
+local changed=false
+local function set(key,value)
+ assert(uci:set('proxy_guard','main',key,value));changed=true
+end
+if defaults then
+ set('targets',{'https://www.gstatic.com/generate_204|204','https://www.google.com/generate_204|204'})
+end
+if raw.exit_url=='https://www.cloudflare.com/cdn-cgi/trace' then
+ set('exit_url','https://api.ipify.org/')
+end
+if raw.setup_complete==nil then set('setup_complete','1') end
+if raw.exit_check==nil then set('exit_check',raw.expected_exit4 and raw.expected_exit4~='' and '1' or '0') end
+if raw.proxy_client==nil and raw.passwall_watch=='1' then set('proxy_client','passwall') end
+if raw.cf_event_check==nil then set('cf_event_check','1') end
+-- Private builds carry an exact old-to-new migration map. Public exports omit
+-- this file entirely; arbitrary user exits are never replaced.
+local map=io.open('/usr/share/proxy-guard/private-exit-migration','r')
+if map then
+ for line in map:lines() do
+  local old,new=line:match('^(%d+%.%d+%.%d+%.%d+) (%d+%.%d+%.%d+%.%d+)$')
+  if old and raw.expected_exit4==old then set('expected_exit4',new);break end
+ end
+ map:close()
+end
+if changed then assert(uci:commit('proxy_guard')) end

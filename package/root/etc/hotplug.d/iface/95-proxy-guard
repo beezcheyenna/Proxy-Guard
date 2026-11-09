@@ -1,0 +1,29 @@
+#!/bin/sh
+# netifd events update configured ingress devices, never restart networking.
+case "$ACTION" in ifup|ifdown|ifupdate) ;; *) exit 0 ;; esac
+# netifd deliberately omits DEVICE from ifdown events. Resolve the configured
+# device without requiring that the disappearing interface still exists.
+if [ -z "$DEVICE" ]; then
+    case "$INTERFACE" in ''|*[!a-zA-Z0-9_-]*) exit 0 ;; esac
+    DEVICE="$(uci -q get "network.$INTERFACE.device")"
+    if [ -z "$DEVICE" ]; then
+        if [ "$(uci -q get "network.$INTERFACE.type")" = bridge ]; then
+            DEVICE="br-$INTERFACE"
+        else
+            DEVICE="$(uci -q get "network.$INTERFACE.ifname")"
+        fi
+    fi
+fi
+case "$DEVICE" in ''|*[!a-zA-Z0-9_.-]*) exit 0 ;; esac
+[ ! -e /var/run/proxy-guard/stopped ] && [ ! -e /var/run/proxy-guard/removing ] || exit 0
+[ "$(uci -q get proxy_guard.main.enabled)" = 1 ] || exit 0
+[ "$(uci -q get proxy_guard.main.mode)" = guard ] || exit 0
+set -f
+for pg_device in $(uci -q get proxy_guard.main.interfaces); do
+    if [ "$pg_device" = "$DEVICE" ]; then
+        # A busy worker safely retries from its next ordinary tick.
+        /usr/libexec/proxy-guard try_apply >/dev/null 2>&1 || :
+        break
+    fi
+done
+exit 0

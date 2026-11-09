@@ -1,0 +1,10 @@
+--- a/stack_system.go
++++ b/stack_system.go
+@@ -375,6 +375,7 @@
+ 	case header.TCPProtocolNumber:
+ 		writeBack, err = s.processIPv6TCP(ipHdr, ipHdr.Payload())
+ 	case header.UDPProtocolNumber:
++		writeBack = false
+ 		err = s.processIPv6UDP(ipHdr, ipHdr.Payload())
+ 	case header.ICMPv6ProtocolNumber:
+ 		err = s.processIPv6ICMP(ipHdr, ipHdr.Payload())

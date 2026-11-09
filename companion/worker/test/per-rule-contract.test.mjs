@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {once} from 'node:events';
+import {createInterface} from 'node:readline';
+import {fileURLToPath} from 'node:url';
+import worker from '../src/index.mjs';
+test('Worker and actual Agent preserve independent TCP/UDP modes and exact acknowledgements',async t=>{
+ const child=spawn('python3',['-B',fileURLToPath(new URL('./agent_fixture.py',import.meta.url))],{stdio:['ignore','pipe','inherit']});
+ const lines=createInterface({input:child.stdout});t.after(()=>{child.kill('SIGTERM');lines.close();});
+ const [line]=await Promise.race([once(lines,'line'),once(child,'exit').then(([c])=>{throw Error('Agent exited '+c);})]);
+ const base='http://127.0.0.1:'+JSON.parse(line).port,token='d'.repeat(40);
+ const env={DEVICE_ID:'home',DEVICE_TOKEN:token,AGENT_SECRET:'a'.repeat(40),VPS_API:{fetch:(url,init)=>fetch(base+new URL(url).pathname,init)}};
+ const send=(path,body)=>worker.fetch(new Request('https://worker.example'+path,{method:'POST',headers:{authorization:'Bearer '+token,'cf-connecting-ip':'8.8.8.8','content-type':'application/json'},body:JSON.stringify(body)}),env);
+ const common={name:'Fixture',enabled:true,ports:['18443'],source_mode:'dynamic',sources:[]};
+ const policy={device_id:'home',observed_ip:'8.8.8.8',policy_enabled:true,mode:'standard',revision:2,ttl:120,rules:[{...common,id:'tcp',protocol:'tcp',mode:'whitelist'},{...common,id:'udp',protocol:'udp',mode:'observe'}]};
+ const reply=await send('/v1/sync',policy),data=await reply.json();assert.equal(reply.status,200,JSON.stringify(data));
+ assert.equal(data.policy.per_rule_modes,true);assert.deepEqual(data.policy.rule_modes,{tcp:'whitelist',udp:'observe'});
+ const status=await(await send('/v1/status',{})).json();assert.deepEqual(status.ingress.rule_modes,data.policy.rule_modes);
+ const bad=await send('/v1/sync',{...policy,revision:3,rules:[{...common,id:'tcp',protocol:'tcp',mode:'bad'}]});assert.ok(bad.status>=400);
+ const unchanged=await(await send('/v1/status',{})).json();assert.equal(unchanged.revision,2);assert.deepEqual(unchanged.ingress.rule_modes,data.policy.rule_modes);
+});

@@ -1,0 +1,128 @@
+#!/bin/sh /etc/rc.common
+# These variables are consumed by OpenWrt rc.common.
+# shellcheck disable=SC2034
+USE_PROCD=1
+# shellcheck disable=SC2034
+START=18
+# shellcheck disable=SC2034
+STOP=10
+
+extra_command "recover_config" "Recover a stale plugin only if the control generation still matches"
+
+extra_command "apply_config" "Apply an explicit save unless a later stop cancelled it"
+
+start_service() {
+    [ ! -e /var/run/proxy-guard/removing ] || return 1
+    mkdir -p /var/run/proxy-guard || return 1
+    chmod 700 /var/run/proxy-guard || return 1
+    rm -f /var/run/proxy-guard/stopped
+    cut -d ' ' -f 1 /proc/uptime > /var/run/proxy-guard/service-start-uptime
+    if [ -e /var/run/proxy-guard/recovery-hold.json ]; then
+        rm -f /var/run/proxy-guard/status.json /var/run/proxy-guard/fast.json
+    fi
+    /usr/libexec/proxy-guard apply >/dev/null 2>&1
+    rm -f /var/run/proxy-guard/recovery-hold.json
+    procd_open_instance
+    procd_set_param command /usr/libexec/proxy-guard daemon
+    procd_set_param respawn 3600 5 5
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_close_instance
+    procd_open_instance fast_watch
+    procd_set_param command /usr/libexec/proxy-guard fast_watch
+    procd_set_param respawn 3600 5 5
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_close_instance
+    procd_open_instance supervisor
+    procd_set_param command /usr/libexec/proxy-guard supervisor
+    procd_set_param respawn 3600 5 5
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_close_instance
+}
+
+recover_config() {
+    procd_lock
+    pg_current_generation="$(cat /var/run/proxy-guard/control-generation 2>/dev/null)"
+    [ -n "$pg_current_generation" ] || pg_current_generation=initial
+    [ "${1:-}" = "$pg_current_generation" ] || return 0
+    /usr/libexec/proxy-guard recovery_check "$pg_current_generation" >/dev/null 2>&1 || return 0
+    ucode /usr/lib/proxy-guard/quiesce.uc || return 1
+    restart
+}
+
+# Ordinary saves may defer to the running worker. An explicit off cannot:
+# the worker holding the lock may be the fault the user is trying to escape.
+proxy_guard_apply_running() {
+    if /usr/libexec/proxy-guard try_apply >/dev/null 2>&1; then
+        return 0
+    else
+        pg_apply_rc=$?
+    fi
+    [ "$pg_apply_rc" -eq 75 ] || return "$pg_apply_rc"
+    [ "$(uci -q get proxy_guard.main.enabled)" = 0 ] || return 0
+    # Only verified plugin processes are terminated; never unlink the lock.
+    ucode /usr/lib/proxy-guard/quiesce.uc || return 1
+    # SIGKILL delivery can race the first retry. Keep the procd lock bounded
+    # while those exact workers close their inherited file descriptors.
+    pg_apply_attempt=0
+    while :; do
+        if /usr/libexec/proxy-guard try_apply >/dev/null 2>&1; then
+            return 0
+        else
+            pg_apply_rc=$?
+        fi
+        [ "$pg_apply_rc" -eq 75 ] || return "$pg_apply_rc"
+        pg_apply_attempt=$((pg_apply_attempt + 1))
+        [ "$pg_apply_attempt" -lt 20 ] || return 75
+        ucode -e 'sleep(100)'
+    done
+}
+
+reload_service() {
+    # procd config-change events may arrive after stop. Only an explicit save
+    # or start may start a stopped service; a delayed reload must not do so.
+    if service_running; then
+        # A running worker re-reads UCI on every tick. Do not hold procd's
+        # service lock waiting behind a hung worker: recovery needs that lock.
+        proxy_guard_apply_running
+    else
+        return 0
+    fi
+}
+
+apply_config() {
+    procd_lock
+    pg_current_generation="$(cat /var/run/proxy-guard/control-generation 2>/dev/null)"
+    [ -n "$pg_current_generation" ] || pg_current_generation=initial
+    [ "${1:-}" = "$pg_current_generation" ] || return 0
+    [ ! -e /var/run/proxy-guard/removing ] || return 1
+    if service_running; then
+        # A running worker re-reads UCI on every tick. Do not hold procd's
+        # service lock waiting behind a hung worker: recovery needs that lock.
+        proxy_guard_apply_running
+    else
+        start
+    fi
+}
+
+stop_service() {
+    # Serialized by rc.common's procd lock. Invalidate requests captured before
+    # this stop, including an RPC whose UCI commit has not finished yet.
+    mkdir -p /var/run/proxy-guard || return 1
+    chmod 700 /var/run/proxy-guard || return 1
+    touch /var/run/proxy-guard/stopped || return 1
+    pg_next_generation="$(cat /proc/sys/kernel/random/uuid)" || return 1
+    [ -n "$pg_next_generation" ] || return 1
+    printf '%s\n' "$pg_next_generation" > /var/run/proxy-guard/control-generation.new || return 1
+    mv /var/run/proxy-guard/control-generation.new /var/run/proxy-guard/control-generation || return 1
+    # rc.common invokes stop_service before procd_kill. A stalled descendant
+    # can otherwise retain the main lock while stop waits behind its own worker.
+    ucode /usr/lib/proxy-guard/quiesce.uc || return 1
+    /usr/libexec/proxy-guard stop >/dev/null 2>&1
+}
+
+service_triggers() {
+    procd_add_reload_trigger proxy_guard
+}

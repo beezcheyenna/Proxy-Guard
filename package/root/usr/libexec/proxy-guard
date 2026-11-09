@@ -1,0 +1,61 @@
+#!/bin/sh
+set -eu
+umask 077
+case "${1:-}" in
+    supervisor)
+        mkdir -p /var/run/proxy-guard
+        printf '%s\n' "$$" > /var/run/proxy-guard/supervisor.pid
+        failures=0
+        while [ ! -e /var/run/proxy-guard/removing ] && [ ! -e /var/run/proxy-guard/stopped ]; do
+            if "$0" supervise >/dev/null 2>&1; then failures=0; else failures=$((failures + 1)); fi
+            [ "$failures" -lt 3 ] || exit 1
+            sleep 5
+        done
+        ;;
+    recovery_check)
+        [ "$#" -eq 2 ] || exit 2
+        exec lua /usr/lib/proxy-guard/main.lua recovery_check "$2"
+        ;;
+    daemon)
+        mkdir -p /var/run/proxy-guard
+        printf '%s\n' "$$" > /var/run/proxy-guard/daemon.pid
+        while [ ! -e /var/run/proxy-guard/removing ]; do
+            "$0" tick >/dev/null 2>&1 || true
+            if [ -e /var/run/proxy-guard/fast-poll ]; then sleep 1; else sleep 5; fi
+        done
+        ;;
+    fast_watch)
+        mkdir -p /var/run/proxy-guard /var/lock
+        chmod 700 /var/run/proxy-guard
+        printf '%s\n' "$$" > /var/run/proxy-guard/fast_watch.pid
+        exec ucode /usr/lib/proxy-guard/fast-watch.uc
+        ;;
+    tick|apply|try_apply|clear_logs|stop|cleanup|supervise|maintenance)
+        mkdir -p /var/run/proxy-guard /var/lock
+        chmod 700 /var/run/proxy-guard
+        # BusyBox flock lacks -w. OpenWrt provides ucode via our dependencies.
+        if command -v ucode >/dev/null 2>&1; then
+            exec ucode /usr/lib/proxy-guard/locked.uc "$1"
+        fi
+        # Compatibility with non-OpenWrt test/development environments.
+        wait_seconds=120
+        action="$1"
+        if [ "$action" = try_apply ]; then wait_seconds=0; action=apply; fi
+        [ "$1" != clear_logs ] || wait_seconds=2
+        lock_path=/var/lock/proxy-guard.lock
+        if [ "$1" = supervise ]; then lock_path=/var/lock/proxy-guard-supervision.lock; wait_seconds=0; fi
+        if flock -w "$wait_seconds" -E 75 "$lock_path" lua /usr/lib/proxy-guard/main.lua "$action"; then
+            exit 0
+        else
+            code=$?
+            if [ "$code" = 75 ]; then
+                printf '%s\n' '{"ok":false,"error":"插件正在执行其他操作，本次操作未执行，请稍后重试"}'
+            fi
+            exit "$code"
+        fi
+        ;;
+    status|logs)
+        exec lua /usr/lib/proxy-guard/main.lua "$1"
+        ;;
+    *) exit 2 ;;
+esac

@@ -1,0 +1,31 @@
+[Unit]
+Description=Proxy Guard VPS access policy receiver
+After=network.target nftables.service proxy-guard-access-policy.service
+Requires=proxy-guard-access-policy.service
+StartLimitIntervalSec=600
+StartLimitBurst=5
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/proxy-guard-access/agent.py --config /etc/proxy-guard-access/agent.json
+Restart=on-failure
+RestartSec=3
+User=root
+UMask=0077
+StateDirectory=proxy-guard-access
+StateDirectoryMode=0700
+RuntimeDirectory=proxy-guard-access
+RuntimeDirectoryMode=0700
+RuntimeDirectoryPreserve=yes
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/proxy-guard-access /run/proxy-guard-access
+ProtectHome=true
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+# Process/socket ownership checks need read access across service UIDs.
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_RAW CAP_DAC_READ_SEARCH CAP_SYS_PTRACE
+KillMode=control-group
+RestrictAddressFamilies=AF_INET AF_INET6 AF_NETLINK AF_UNIX
+[Install]
+WantedBy=multi-user.target

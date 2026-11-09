@@ -1,0 +1,65 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {once} from 'node:events';
+import {createInterface} from 'node:readline';
+import {fileURLToPath} from 'node:url';
+import {readFileSync,writeFileSync,unlinkSync} from 'node:fs';
+import worker,{sign} from '../src/index.mjs';
+const token='d'.repeat(40),secret='a'.repeat(40);
+const headers={authorization:'Bearer '+token,'cf-connecting-ip':'8.8.8.8','content-type':'application/json'};
+const rule={id:'proxy',name:'Fixture',enabled:true,protocol:'both',ports:['18443'],source_mode:'dynamic',sources:[]};
+const basePolicy={device_id:'home',observed_ip:'8.8.8.8',policy_enabled:true,mode:'standard',revision:1,ttl:900,rules:[rule]};
+test('Policy confirmation rejects an old Agent before forwarding a modifying sync',async()=>{
+ const paths=[];
+ const env={DEVICE_ID:'home',DEVICE_TOKEN:token,AGENT_SECRET:secret,VPS_API:{fetch:async(url,init)=>{paths.push(new URL(url).pathname);assert.equal(init.headers['x-pg-signature'],await sign(secret,init.body));return Response.json({ok:true,protocol:3,edition:'pro',agent_ready:true,revision:1,health:{configured:true,ok:true,stale:false},leases:{},ingress:{enabled:true,mode:'standard',address_families:[4],ssh:{}}});}}};
+ const r=await worker.fetch(new Request('https://worker.example/v1/sync',{method:'POST',headers,body:JSON.stringify({...basePolicy,policy_trial:{id:crypto.randomUUID(),seconds:60}})}),env);
+ assert.ok(r.status>=400);assert.deepEqual(paths,['/v1/status']);
+});
+test('Actual Agent HTTP policy confirmation, rollback, replay protection and offline workerd',async t=>{
+ const child=spawn('python3',['-B',fileURLToPath(new URL('./agent_fixture.py',import.meta.url))],{stdio:['ignore','pipe','inherit']});
+ const lines=createInterface({input:child.stdout});t.after(()=>{child.kill('SIGTERM');lines.close();});
+ const [line]=await Promise.race([once(lines,'line'),once(child,'exit').then(([c])=>{throw Error('Agent exited '+c);})]);
+ const info=JSON.parse(line),base='http://127.0.0.1:'+info.port,calls=[];
+ const env={DEVICE_ID:'home',DEVICE_TOKEN:token,AGENT_SECRET:secret,VPS_API:{fetch:async(url,init)=>{calls.push({path:new URL(url).pathname,init});return fetch(base+new URL(url).pathname,init);}}};
+ const send=(path,body={})=>worker.fetch(new Request('https://worker.example'+path,{method:'POST',headers,body:JSON.stringify(body)}),env);
+ const decode=async(r,status=200)=>{const d=await r.json();assert.equal(r.status,status,JSON.stringify(d));return d;};
+ await decode(await send('/v1/sync',basePolicy));
+ let id=crypto.randomUUID(),candidate={...basePolicy,revision:2,mode:'whitelist',policy_trial:{id,seconds:60}};
+ let d=await decode(await send('/v1/sync',candidate));
+ assert.equal(d.policy_trial.phase,'confirming');assert.equal(d.policy_trial.id,id);assert.ok(d.policy_trial.remaining>0);
+ d=await decode(await send('/v1/status'));
+ assert.equal(d.ingress.policy_confirmation,true);assert.equal(d.ingress.source_modes_v2,true);assert.deepEqual(d.ingress.rule_effects,{proxy:'whitelist'});
+ assert.ok(!JSON.stringify(d).includes('previous'));assert.ok(!JSON.stringify(d).includes('candidate_hash'));
+ const cancel={device_id:'home',trial_id:id,revision:2};
+ assert.ok((await send('/v1/policy-cancel',{...cancel,trial_id:crypto.randomUUID()})).status>=400);
+ d=await decode(await send('/v1/policy-cancel',cancel));assert.equal(d.policy_trial.phase,'rolled_back');
+ const signed=calls.at(-1);
+ assert.equal((await fetch(base+signed.path,{...signed.init,signal:AbortSignal.timeout(8000)})).status,403,'a captured cancellation cannot be replayed');
+ d=await decode(await send('/v1/status'));assert.equal(d.ingress.mode,'standard');assert.equal(d.revision,2);assert.ok(d.leases['4'].expires_in>0);
+ await decode(await send('/v1/policy-cancel',cancel));
+ assert.ok((await send('/v1/sync',candidate)).status>=400,'rolled-back revision cannot reapply candidate');
+ id=crypto.randomUUID();candidate={...candidate,revision:3,rules:[{...rule,source_mode:'all',mode:'standard'}],policy_trial:{id,seconds:60}};
+ d=await decode(await send('/v1/sync',candidate));assert.equal(d.policy.rule_effects.proxy,'standard');
+ d=await decode(await send('/v1/policy-confirm',{device_id:'home',trial_id:id,revision:3}));assert.equal(d.policy_trial.phase,'confirmed');
+ await decode(await send('/v1/policy-confirm',{device_id:'home',trial_id:id,revision:3}));
+ d=await decode(await send('/v1/status'));assert.equal(d.ingress.rule_effects.proxy,'standard');assert.equal(d.policy_trial.phase,'confirmed');
+ const {Miniflare,convertV4MiniflareOptions}=await import('miniflare');
+ const mf=new Miniflare(convertV4MiniflareOptions({modules:true,script:readFileSync(new URL('../src/index.mjs',import.meta.url),'utf8'),compatibilityDate:'2026-10-30',bindings:{DEVICE_ID:'home',DEVICE_TOKEN:token,AGENT_SECRET:secret},serviceBindings:{VPS_API:async req=>fetch(base+new URL(req.url).pathname,{method:req.method,headers:req.headers,body:await req.text()})}}));
+ try{
+  const dispatch=(path,body)=>mf.dispatchFetch('https://worker.example'+path,{method:'POST',headers,body:JSON.stringify(body)});
+  const next=crypto.randomUUID();d=await decode(await dispatch('/v1/sync',{...basePolicy,mode:'observe',revision:4,policy_trial:{id:next,seconds:60}}));assert.equal(d.policy_trial.phase,'confirming');
+  d=await decode(await dispatch('/v1/policy-cancel',{device_id:'home',trial_id:next,revision:4}));assert.equal(d.policy_trial.phase,'rolled_back');
+  d=await decode(await dispatch('/v1/status',{}));assert.equal(d.ingress.rule_effects.proxy,'standard');assert.equal(d.revision,4);
+ const restoring=crypto.randomUUID();await decode(await dispatch('/v1/sync',{...basePolicy,mode:'observe',revision:5,policy_trial:{id:restoring,seconds:60}}));
+ writeFileSync(info.directory+'/fail-nft','injected');
+ const failed=await dispatch('/v1/policy-cancel',{device_id:'home',trial_id:restoring,revision:5});assert.equal(failed.status,502);assert.equal((await failed.json()).code,'policy_trial_result_unknown');
+ d=await decode(await dispatch('/v1/status',{}));assert.equal(d.policy_trial.phase,'restoring');assert.equal(d.agent_ready,false);
+ assert.ok((await dispatch('/v1/policy-confirm',{device_id:'home',trial_id:restoring,revision:5})).status>=400,'failed restoration cannot be confirmed as candidate policy');
+ unlinkSync(info.directory+'/fail-nft');
+ const deadline=Date.now()+18000;
+ do{await new Promise(r=>setTimeout(r,500));d=await decode(await dispatch('/v1/status',{}));}while(d.policy_trial.phase==='restoring'&&Date.now()<deadline);
+ assert.equal(d.policy_trial.phase,'rolled_back');assert.equal(d.policy_trial.reason,'user_cancelled');assert.equal(d.ingress.rule_effects.proxy,'standard');
+ }finally{await mf.dispose();}
+
+});

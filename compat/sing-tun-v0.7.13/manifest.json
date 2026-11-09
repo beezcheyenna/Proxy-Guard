@@ -1,0 +1,22 @@
+{
+  "component": "github.com/sagernet/sing-tun",
+  "version": "v0.7.13",
+  "parent": "Sing-box v1.12.25",
+  "source": "https://github.com/SagerNet/sing-tun/blob/v0.7.13/stack_system.go",
+  "license": "GPL-3.0-or-later",
+  "original_stack_system_sha256": "89688a86e20c68ad0c48437b244dce543ecc0d3867644292647b442965adce26",
+  "patched_stack_system_sha256": "801038da4a04281e4402997a07ff87e6c8de64ddd6feb0300e7eca10bb7b50e4",
+  "patch_sha256": "43deff990cdc23c46b3cb12ae8950ecca8fe64c8c03e9cda3499367a17b1e2aa",
+  "validation": {
+    "offline_control_vs_fixed": "passed",
+    "original_duplicate_requests": 9,
+    "fixed_duplicate_requests": 0,
+    "fixed_ipv6_udp_echoes": "9/9 at 8/512/1200 bytes",
+    "complete_homeproxy_tun_system": "passed on ImmortalWrt 24.10.4 x86_64 with fixed core and Proxy Guard 0.2.1-2",
+    "istoreos24": "pending",
+    "binary_architecture": "linux/amd64",
+    "binary_version": "1.12.25-pg.1",
+    "fixed_binary_sha256": "af957029641ea35358cbd90350cfe6095f2b11322760b374f90cb1c5fa8a284f"
+  },
+  "automatic_installation": false
+}

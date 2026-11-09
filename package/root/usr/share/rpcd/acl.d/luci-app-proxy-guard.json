@@ -1,0 +1,36 @@
+{
+  "luci-app-proxy-guard": {
+    "description": "Configure proxy connection protection and read its status",
+    "read": {
+      "uci": [
+        "proxy_guard"
+      ],
+      "ubus": {
+        "proxy_guard": [
+          "status",
+          "logs",
+          "preflight",
+          "setup_info",
+          "setup_discover",
+          "raw_info"
+        ]
+      }
+    },
+    "write": {
+      "uci": [
+        "proxy_guard"
+      ],
+      "ubus": {
+        "proxy_guard": [
+          "apply",
+          "clear_logs",
+          "setup_confirm",
+          "setup_cancel",
+          "setup_previous",
+          "setup_claim",
+          "raw_parse"
+        ]
+      }
+    }
+  }
+}

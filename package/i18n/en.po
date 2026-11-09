@@ -1,0 +1,2748 @@
+# Generated from messages.tsv; use tools/build_translations.py.
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\nLanguage: en\n"
+
+msgid "("
+msgstr " ("
+
+msgid "(Beijing time)"
+msgstr " (Beijing time)"
+
+msgid "(monitor only, no blocking)"
+msgstr " (monitor only, no blocking)"
+
+msgid ")"
+msgstr ")"
+
+msgid "); LAN and DNS remain available"
+msgstr "); LAN and DNS remain available"
+
+msgid ","
+msgstr ", "
+
+msgid ", HTTP"
+msgstr ", HTTP "
+
+msgid "-- Please choose --"
+msgstr "-- Please choose --"
+
+msgid "0 keeps emergency SSH open until household authorization is restored. Use 30 to 3600 for a timed window."
+msgstr "0 keeps emergency SSH open until household authorization is restored. Use 30 to 3600 for a timed window."
+
+msgid ":"
+msgstr ": "
+
+msgid ";"
+msgstr "; "
+
+msgid "; access restored, monitoring"
+msgstr "; access restored, monitoring"
+
+msgid "; elapsed seconds:"
+msgstr "; elapsed seconds: "
+
+msgid "; expected"
+msgstr "; expected "
+
+msgid "; last event:"
+msgstr "; last event: "
+
+msgid "; last read:"
+msgstr "; last read: "
+
+msgid "; last restart:"
+msgstr "; last restart: "
+
+msgid "; monitors recovered after restart"
+msgstr "; monitors recovered after restart"
+
+msgid "; observation completed"
+msgstr "; observation completed"
+
+msgid "; observed"
+msgstr "; observed "
+
+msgid "; restarts in this window:"
+msgstr "; restarts in this window: "
+
+msgid "; seconds until retry:"
+msgstr "; seconds until retry: "
+
+msgid "; superseded by a later recovery record"
+msgstr "; superseded by a later recovery record"
+
+msgid "; wait resets:"
+msgstr "; wait resets: "
+
+msgid "; waiting to restore access"
+msgstr "; waiting to restore access"
+
+msgid "A confirmation action is already being verified."
+msgstr "A confirmation action is already being verified."
+
+msgid "A maintenance operation is already pending."
+msgstr "A maintenance operation is already pending."
+
+msgid "A missing or failed remote health report withholds the local access permit. Local proxy checks remain required."
+msgstr "A missing or failed remote health report withholds the local access permit. Local proxy checks remain required."
+
+msgid "A package operation is in progress. Try again when it finishes."
+msgstr "A package operation is in progress. Try again when it finishes."
+
+msgid "A required proxy client service stopped or restarted; protection triggered"
+msgstr "A required proxy client service stopped or restarted; protection triggered"
+
+msgid "Accepts a plain-text IPv4 address or a Cloudflare trace response containing ip and colo. Requests always use the local SOCKS proxy; an unreachable service or unexpected exit counts as a failure."
+msgstr "Accepts a plain-text IPv4 address or a Cloudflare trace response containing ip and colo. Requests always use the local SOCKS proxy; an unreachable service or unexpected exit counts as a failure."
+
+msgid "Access is allowed during enhanced monitoring; a failure blocks it again"
+msgstr "Access is allowed during enhanced monitoring; a failure blocks it again"
+
+msgid "Access permit expired; Internet access is blocked pending proxy revalidation"
+msgstr "Access permit expired; Internet access is blocked pending proxy revalidation"
+
+msgid "Access permit expired; awaiting proxy health verification"
+msgstr "Access permit expired; awaiting proxy health verification"
+
+msgid "Access recovery"
+msgstr "Access recovery"
+
+msgid "Activation parameters are valid. The runtime environment is checked when applying."
+msgstr "Activation parameters are valid. The runtime environment is checked when applying."
+
+msgid "Active kernel flowtables"
+msgstr "Active kernel flowtables"
+
+msgid "Add at least one address to an enabled static whitelist."
+msgstr "Add at least one address to an enabled static whitelist."
+
+msgid "Address families"
+msgstr "Address families"
+
+msgid "After recovery, allow Internet access while checking at one-second intervals during observation. Any failure blocks access and restarts the delay. Disabling observation still requires the original recovery checks."
+msgstr "After recovery, allow Internet access while checking at one-second intervals during observation. Any failure blocks access and restarts the delay. Disabling observation still requires the original recovery checks."
+
+msgid "Agent HTTPS address through the proxy"
+msgstr "Agent HTTPS address through the proxy"
+
+msgid "Agent started"
+msgstr "Agent started"
+
+msgid "All IPv6 sources on selected ingress devices"
+msgstr "All IPv6 sources on selected ingress devices"
+
+msgid "All configured services stop or restart"
+msgstr "All configured services stop or restart"
+
+msgid "All configured services stopped"
+msgstr "All configured services stopped"
+
+msgid "All sources keeps standard resource limits active. Household and static addresses are allowed in whitelist mode and exempt from standard limits. Legacy bypass disables this rule protection."
+msgstr "All sources keeps standard resource limits active. Household and static addresses are allowed in whitelist mode and exempt from standard limits. Legacy bypass disables this rule protection."
+
+msgid "All sources, resource limits apply"
+msgstr "All sources, resource limits apply"
+
+msgid "All three services stop or restart"
+msgstr "All three services stop or restart"
+
+msgid "All three services stopped"
+msgstr "All three services stopped"
+
+msgid "Allow rebooting the VPS"
+msgstr "Allow rebooting the VPS"
+
+msgid "Allow restarting the proxy core"
+msgstr "Allow restarting the proxy core"
+
+msgid "Allowed LAN IPv4 networks"
+msgstr "Allowed LAN IPv4 networks"
+
+msgid "Allowed LAN IPv6 networks"
+msgstr "Allowed LAN IPv6 networks"
+
+msgid "Allowed or exempt sources"
+msgstr "Allowed or exempt sources"
+
+msgid "Allowing time for checks to start"
+msgstr "Allowing time for checks to start"
+
+msgid "An error occurred while saving the form:"
+msgstr "An error occurred while saving the form:"
+
+msgid "An independent watchdog checks plugin heartbeats every five seconds using a clock unaffected by wall-clock adjustments. It restarts this plugin after persistent heartbeat or execution failures. Proxy outages and configuration errors do not trigger restart loops. Manual stop and disabling protection take precedence."
+msgstr "An independent watchdog checks plugin heartbeats every five seconds using a clock unaffected by wall-clock adjustments. It restarts this plugin after persistent heartbeat or execution failures. Proxy outages and configuration errors do not trigger restart loops. Manual stop and disabling protection take precedence."
+
+msgid "An nft flowtable is active; existing connections may bypass blocking. Check and disable flow offloading first."
+msgstr "An nft flowtable is active; existing connections may bypass blocking. Check and disable flow offloading first."
+
+msgid "Analysis Agent connected"
+msgstr "Analysis Agent connected"
+
+msgid "Analysis event"
+msgstr "Analysis event"
+
+msgid "Analysis reports observations and suspicion only. A repeated payload does not identify the sender as GFW. Full packet capture and the honeypot are off by default and configured on the Agent."
+msgstr "Analysis reports observations and suspicion only. A repeated payload does not identify the sender as GFW. Full packet capture and the honeypot are off by default and configured on the Agent."
+
+msgid "Another VPS policy change is awaiting confirmation."
+msgstr "Another VPS policy change is awaiting confirmation."
+
+msgid "Another configuration transaction is active"
+msgstr "Another configuration transaction is active"
+
+msgid "Another session is checking configuration"
+msgstr "Another session is checking configuration"
+
+msgid "Another session is confirming the VPS policy."
+msgstr "Another session is confirming the VPS policy."
+
+msgid "Another settings update is in progress; retry shortly."
+msgstr "Another settings update is in progress; retry shortly."
+
+msgid "Any interruption during sensitive recovery restarts the wait and stability timer. Disabling this option still requires the original consecutive recovery checks."
+msgstr "Any interruption during sensitive recovery restarts the wait and stability timer. Disabling this option still requires the original consecutive recovery checks."
+
+msgid "Any service stops or restarts"
+msgstr "Any service stops or restarts"
+
+msgid "Apply failed"
+msgstr "Apply failed"
+
+msgid "At boot or activation, block Internet access for protected devices while waiting for TCP, UDP and DNS to start, then keep blocking for the configured delay without external probes. Validate the proxy before restoring access and starting enhanced monitoring. This replaces the fixed startup grace period. Router-originated traffic, LAN and DNS remain available."
+msgstr "At boot or activation, block Internet access for protected devices while waiting for TCP, UDP and DNS to start, then keep blocking for the configured delay without external probes. Validate the proxy before restoring access and starting enhanced monitoring. This replaces the fixed startup grace period. Router-originated traffic, LAN and DNS remain available."
+
+msgid "At boot or activation, block protected devices until the selected client configured services start, then wait without external probes. Validate the proxy before restoring access and beginning enhanced monitoring. Router, LAN and DNS remain available."
+msgstr "At boot or activation, block protected devices until the selected client configured services start, then wait without external probes. Validate the proxy before restoring access and beginning enhanced monitoring. Router, LAN and DNS remain available."
+
+msgid "Attempt interrupted; routine exit verification continues"
+msgstr "Attempt interrupted; routine exit verification continues"
+
+msgid "Attention required"
+msgstr "Attention required"
+
+msgid "Authentication failed"
+msgstr "Authentication failed"
+
+msgid "Authorization updated"
+msgstr "Authorization updated"
+
+msgid "Automatic client detection is ambiguous or unavailable. Select the client and verify the listener ports."
+msgstr "Automatic client detection is ambiguous or unavailable. Select the client and verify the listener ports."
+
+msgid "Automatic detection"
+msgstr "Automatic detection"
+
+msgid "Automatic recovery cooldown"
+msgstr "Automatic recovery cooldown"
+
+msgid "Automatic recovery counting window"
+msgstr "Automatic recovery counting window"
+
+msgid "Automatic recovery is off"
+msgstr "Automatic recovery is off"
+
+msgid "Automatic recovery limit"
+msgstr "Automatic recovery limit"
+
+msgid "Automatic recovery limit reached; retaining protection while waiting"
+msgstr "Automatic recovery limit reached; retaining protection while waiting"
+
+msgid "Automatic restart limit reached"
+msgstr "Automatic restart limit reached"
+
+msgid "Automatically restart unresponsive plugin monitors"
+msgstr "Automatically restart unresponsive plugin monitors"
+
+msgid "Awaiting verification"
+msgstr "Awaiting verification"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Bandwidth threshold duration (seconds)"
+msgstr "Bandwidth threshold duration (seconds)"
+
+msgid "Block Internet access on proxy failure"
+msgstr "Block Internet access on proxy failure"
+
+msgid "Block Internet access without external probes during this delay; local service monitoring continues. Disabling this option starts verification immediately."
+msgstr "Block Internet access without external probes during this delay; local service monitoring continues. Disabling this option starts verification immediately."
+
+msgid "Block before recovery checks"
+msgstr "Block before recovery checks"
+
+msgid "Block during startup and proxy failures"
+msgstr "Block during startup and proxy failures"
+
+msgid "Block these local ports as well, preventing devices with explicit SOCKS settings from bypassing protection."
+msgstr "Block these local ports as well, preventing devices with explicit SOCKS settings from bypassing protection."
+
+msgid "Blocking delay (seconds)"
+msgstr "Blocking delay (seconds)"
+
+msgid "Blocking is off"
+msgstr "Blocking is off"
+
+msgid "Boot protection is waiting for TCP, UDP and DNS"
+msgstr "Boot protection is waiting for TCP, UDP and DNS"
+
+msgid "Boot protection is waiting for the configured proxy client services"
+msgstr "Boot protection is waiting for the configured proxy client services"
+
+msgid "Boot protection replaces this fixed startup grace period."
+msgstr "Boot protection replaces this fixed startup grace period."
+
+msgid "Boot protection started; waiting for TCP, UDP and DNS; Internet access remains blocked"
+msgstr "Boot protection started; waiting for TCP, UDP and DNS; Internet access remains blocked"
+
+msgid "Boot service protection"
+msgstr "Boot service protection"
+
+msgid "Both heartbeats lost for (seconds)"
+msgstr "Both heartbeats lost for (seconds)"
+
+msgid "Bridge filtering"
+msgstr "Bridge filtering"
+
+msgid "Bridged traffic enters the IP firewall and may affect switching; blocking is not enabled"
+msgstr "Bridged traffic enters the IP firewall and may affect switching; blocking is not enabled"
+
+msgid "Bypass all protection (legacy behavior)"
+msgstr "Bypass all protection (legacy behavior)"
+
+msgid "Bytes observed"
+msgstr "Bytes observed"
+
+msgid "CPU (total)"
+msgstr "CPU (total)"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Cannot calculate the schedule window"
+msgstr "Cannot calculate the schedule window"
+
+msgid "Cannot commit this session's plugin configuration; check the session and write permissions"
+msgstr "Cannot commit this session's plugin configuration; check the session and write permissions"
+
+msgid "Cannot complete self-check"
+msgstr "Cannot complete self-check"
+
+msgid "Cannot open self-check journal lock"
+msgstr "Cannot open self-check journal lock"
+
+msgid "Cannot open the service protection log lock"
+msgstr "Cannot open the service protection log lock"
+
+msgid "Cannot read PassWall log; service and proxy checks continue"
+msgstr "Cannot read PassWall log; service and proxy checks continue"
+
+msgid "Cannot read analysis status; retrying automatically."
+msgstr "Cannot read analysis status; retrying automatically."
+
+msgid "Cannot read client log; service and proxy checks continue"
+msgstr "Cannot read client log; service and proxy checks continue"
+
+msgid "Cannot read confirmation status. The VPS rollback timer continues."
+msgstr "Cannot read confirmation status. The VPS rollback timer continues."
+
+msgid "Cannot read firewall rules"
+msgstr "Cannot read firewall rules"
+
+msgid "Cannot read plugin logs:"
+msgstr "Cannot read plugin logs: "
+
+msgid "Cannot read plugin status"
+msgstr "Cannot read plugin status"
+
+msgid "Cannot read plugin status or logs"
+msgstr "Cannot read plugin status or logs"
+
+msgid "Cannot read status; protection cannot be confirmed:"
+msgstr "Cannot read status; protection cannot be confirmed: "
+
+msgid "Cannot read synchronization status; retrying automatically."
+msgstr "Cannot read synchronization status; retrying automatically."
+
+msgid "Cannot read this session's plugin configuration"
+msgstr "Cannot read this session's plugin configuration"
+
+msgid "Cannot remove plugin firewall rules"
+msgstr "Cannot remove plugin firewall rules"
+
+msgid "Cannot synchronize system firewall protection rules"
+msgstr "Cannot synchronize system firewall protection rules"
+
+msgid "Cannot verify active flow offloading"
+msgstr "Cannot verify active flow offloading"
+
+msgid "Cannot verify firewall state"
+msgstr "Cannot verify firewall state"
+
+msgid "Cannot verify newly installed rules"
+msgstr "Cannot verify newly installed rules"
+
+msgid "Cannot verify required nftables features; check the firewall and kernel modules"
+msgstr "Cannot verify required nftables features; check the firewall and kernel modules"
+
+msgid "Capture state"
+msgstr "Capture state"
+
+msgid "Captured packets"
+msgstr "Captured packets"
+
+msgid "Changes take effect after Save & Apply. Stopping synchronization does not remove VPS rules. Dynamic authorizations expire; configured resource limits and SSH rescue remain in effect."
+msgstr "Changes take effect after Save & Apply. Stopping synchronization does not remove VPS rules. Dynamic authorizations expire; configured resource limits and SSH rescue remain in effect."
+
+msgid "Changes take effect after Save & Apply. When synchronization stops, dynamic leases expire; static and unrestricted rules remain on the VPS."
+msgstr "Changes take effect after Save & Apply. When synchronization stops, dynamic leases expire; static and unrestricted rules remain on the VPS."
+
+msgid "Changing only logging options does not restart checks or reset permits. Logs are stored in memory, cleared on reboot, and also sent to the system log."
+msgstr "Changing only logging options does not restart checks or reset permits. Logs are stored in memory, cleared on reboot, and also sent to the system log."
+
+msgid "Check configuration; automatic recovery is paused"
+msgstr "Check configuration; automatic recovery is paused"
+
+msgid "Check interval"
+msgstr "Check interval"
+
+msgid "Check local TCP, UDP and DNS services every second and block protected clients when the selected condition is met. Keep the existing SOCKS, HTTPS and exit IP checks. Traffic initiated by this router, LAN access and DNS remain available."
+msgstr "Check local TCP, UDP and DNS services every second and block protected clients when the selected condition is met. Keep the existing SOCKS, HTTPS and exit IP checks. Traffic initiated by this router, LAN access and DNS remain available."
+
+msgid "Check local TCP, UDP and DNS services every second. If all three stop, block protected clients immediately. Keep the existing SOCKS, HTTPS and exit IP checks. Traffic initiated by this router, LAN access and DNS remain available."
+msgstr "Check local TCP, UDP and DNS services every second. If all three stop, block protected clients immediately. Keep the existing SOCKS, HTTPS and exit IP checks. Traffic initiated by this router, LAN access and DNS remain available."
+
+msgid "Check management readiness"
+msgstr "Check management readiness"
+
+msgid "Check plugin services"
+msgstr "Check plugin services"
+
+msgid "Check round cancelled; keeping Internet blocked until revalidation"
+msgstr "Check round cancelled; keeping Internet blocked until revalidation"
+
+msgid "Check settings and runtime environment"
+msgstr "Check settings and runtime environment"
+
+msgid "Check target format must be https://domain/path|status_code"
+msgstr "Check target format must be https://domain/path|status_code"
+
+msgid "Check targets require an HTTPS domain without credentials or custom ports"
+msgstr "Check targets require an HTTPS domain without credentials or custom ports"
+
+msgid "Check the access settings and connection."
+msgstr "Check the access settings and connection."
+
+msgid "Check the selected client every second using its configured TCP, UDP and DNS capabilities. Unconfigured capabilities are shown separately. Keep the existing real proxy checks and preserve router, LAN and DNS access."
+msgstr "Check the selected client every second using its configured TCP, UDP and DNS capabilities. Unconfigured capabilities are shown separately. Keep the existing real proxy checks and preserve router, LAN and DNS access."
+
+msgid "Checking the VPS capability and applying a temporary policy..."
+msgstr "Checking the VPS capability and applying a temporary policy..."
+
+msgid "Checking the applied configuration and protection rules..."
+msgstr "Checking the applied configuration and protection rules..."
+
+msgid "Checking unsaved settings without saving or probing the Internet..."
+msgstr "Checking unsaved settings without saving or probing the Internet..."
+
+msgid "Checks always use the SOCKS5 proxy on 127.0.0.1, with no direct fallback."
+msgstr "Checks always use the SOCKS5 proxy on 127.0.0.1, with no direct fallback."
+
+msgid "Checks and logging"
+msgstr "Checks and logging"
+
+msgid "Choose IPv6 scope"
+msgstr "Choose IPv6 scope"
+
+msgid "Choose a supported protection mode for this port rule."
+msgstr "Choose a supported protection mode for this port rule."
+
+msgid "Choose an IPv6 protection scope explicitly."
+msgstr "Choose an IPv6 protection scope explicitly."
+
+msgid "Choose any combination of days. An overnight window belongs to its start day: Monday 23:00–01:00 continues into Tuesday morning."
+msgstr "Choose any combination of days. An overnight window belongs to its start day: Monday 23:00–01:00 continues into Tuesday morning."
+
+msgid "Choose the public address families to authorize dynamically. Removing a family revokes its dynamic lease after the VPS confirms the update; static rules remain independent."
+msgstr "Choose the public address families to authorize dynamically. Removing a family revokes its dynamic lease after the VPS confirms the update; static rules remain independent."
+
+msgid "Clear logs"
+msgstr "Clear logs"
+
+msgid "Client DNS listener could not be verified"
+msgstr "Client DNS listener could not be verified"
+
+msgid "Client SOCKS authentication could not be prepared"
+msgstr "Client SOCKS authentication could not be prepared"
+
+msgid "Client adapter is unavailable"
+msgstr "Client adapter is unavailable"
+
+msgid "Client lifecycle log changed"
+msgstr "Client lifecycle log changed"
+
+msgid "Client lifecycle log indicates a service or rule change; Internet access blocked pending recovery"
+msgstr "Client lifecycle log indicates a service or rule change; Internet access blocked pending recovery"
+
+msgid "Client listener configuration could not be verified"
+msgstr "Client listener configuration could not be verified"
+
+msgid "Client log monitoring is off"
+msgstr "Client log monitoring is off"
+
+msgid "Client profile limit exceeded"
+msgstr "Client profile limit exceeded"
+
+msgid "Client runtime configuration is unavailable"
+msgstr "Client runtime configuration is unavailable"
+
+msgid "Client startup and configured services are ready; verifying recovery without an extra delay"
+msgstr "Client startup and configured services are ready; verifying recovery without an extra delay"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Cloudflare Worker and Tunnel"
+msgstr "Cloudflare Worker and Tunnel"
+
+msgid "Cloudflare data center"
+msgstr "Cloudflare data center"
+
+msgid "Cloudflare event verification is off"
+msgstr "Cloudflare event verification is off"
+
+msgid "Cloudflare event verification:"
+msgstr "Cloudflare event verification: "
+
+msgid "Cloudflare reported a different exit; waiting for fresh exit verification"
+msgstr "Cloudflare reported a different exit; waiting for fresh exit verification"
+
+msgid "Combined LAN exemptions must not cover the entire Internet"
+msgstr "Combined LAN exemptions must not cover the entire Internet"
+
+msgid "Concurrent connection limit"
+msgstr "Concurrent connection limit"
+
+msgid "Concurrent connection threshold exceeded"
+msgstr "Concurrent connection threshold exceeded"
+
+msgid "Configuration changed during UDP check; waiting for revalidation"
+msgstr "Configuration changed during UDP check; waiting for revalidation"
+
+msgid "Configuration changed elsewhere. Reload it before saving."
+msgstr "Configuration changed elsewhere. Reload it before saving."
+
+msgid "Configuration changed elsewhere. Review saved settings and VPS state before applying again."
+msgstr "Configuration changed elsewhere. Review saved settings and VPS state before applying again."
+
+msgid "Configuration format"
+msgstr "Configuration format"
+
+msgid "Configuration is valid."
+msgstr "Configuration is valid."
+
+msgid "Configuration or environment error; protection is unverified"
+msgstr "Configuration or environment error; protection is unverified"
+
+msgid "Configuration or ingress device changed during checks; awaiting verification"
+msgstr "Configuration or ingress device changed during checks; awaiting verification"
+
+msgid "Configuration requires attention"
+msgstr "Configuration requires attention"
+
+msgid "Configuration snapshot expired. Reload the configuration."
+msgstr "Configuration snapshot expired. Reload the configuration."
+
+msgid "Configure 2–4 targets as https://domain/path|expected_status. Connections use the proxy. This does not test the health of every UDP service."
+msgstr "Configure 2–4 targets as https://domain/path|expected_status. Connections use the proxy. This does not test the health of every UDP service."
+
+msgid "Configure between 1 and 16 DNS service ports"
+msgstr "Configure between 1 and 16 DNS service ports"
+
+msgid "Configure between 2 and 4 HTTPS check targets"
+msgstr "Configure between 2 and 4 HTTPS check targets"
+
+msgid "Configure observation ports and capture duration on the VPS Agent. Raw evidence and honeypots require Pro Max."
+msgstr "Configure observation ports and capture duration on the VPS Agent. Raw evidence and honeypots require Pro Max."
+
+msgid "Configured flow offloading"
+msgstr "Configured flow offloading"
+
+msgid "Configured proxy client services are running; boot protection delay started"
+msgstr "Configured proxy client services are running; boot protection delay started"
+
+msgid "Configured proxy service interrupted"
+msgstr "Configured proxy service interrupted"
+
+msgid "Confirm"
+msgstr "Confirm"
+
+msgid "Confirm VPS policy"
+msgstr "Confirm VPS policy"
+
+msgid "Confirm VPS policy changes before keeping them"
+msgstr "Confirm VPS policy changes before keeping them"
+
+msgid "Confirm protection settings"
+msgstr "Confirm protection settings"
+
+msgid "Confirm that the synchronization domain uses a direct connection."
+msgstr "Confirm that the synchronization domain uses a direct connection."
+
+msgid "Confirm the IPv6 scope independently of IPv4."
+msgstr "Confirm the IPv6 scope independently of IPv4."
+
+msgid "Confirm the SSH management session in settings"
+msgstr "Confirm the SSH management session in settings"
+
+msgid "Confirmation result is unknown. Checking again without repeating policy changes."
+msgstr "Confirmation result is unknown. Checking again without repeating policy changes."
+
+msgid "Confirming consecutive failures"
+msgstr "Confirming consecutive failures"
+
+msgid "Confirming proxy recovery"
+msgstr "Confirming proxy recovery"
+
+msgid "Confirming recovery"
+msgstr "Confirming recovery"
+
+msgid "Connect by SSH from an authorized management address, then check again"
+msgstr "Connect by SSH from an authorized management address, then check again"
+
+msgid "Connection burst allowance"
+msgstr "Connection burst allowance"
+
+msgid "Connection checks"
+msgstr "Connection checks"
+
+msgid "Connection settings"
+msgstr "Connection settings"
+
+msgid "Connectivity monitor delayed"
+msgstr "Connectivity monitor delayed"
+
+msgid "Connectivity monitor heartbeat expired"
+msgstr "Connectivity monitor heartbeat expired"
+
+msgid "Consecutive failed rounds"
+msgstr "Consecutive failed rounds"
+
+msgid "Consecutive successful rounds for recovery"
+msgstr "Consecutive successful rounds for recovery"
+
+msgid "Continue"
+msgstr "Continue"
+
+msgid "Control channel"
+msgstr "Control channel"
+
+msgid "Control heartbeat age (seconds)"
+msgstr "Control heartbeat age (seconds)"
+
+msgid "Control request timeout (seconds)"
+msgstr "Control request timeout (seconds)"
+
+msgid "Control service HTTPS address"
+msgstr "Control service HTTPS address"
+
+msgid "Current protection reason"
+msgstr "Current protection reason"
+
+msgid "Current recovery event"
+msgstr "Current recovery event"
+
+msgid "DNS redirect destination ports"
+msgstr "DNS redirect destination ports"
+
+msgid "DNS service port"
+msgstr "DNS service port"
+
+msgid "DNS service ports must not overlap proxy ingress ports"
+msgstr "DNS service ports must not overlap proxy ingress ports"
+
+msgid "Days of the week"
+msgstr "Days of the week"
+
+msgid "Default port protection mode"
+msgstr "Default port protection mode"
+
+msgid "Default template"
+msgstr "Default template"
+
+msgid "Default: 53. Enter the actual port if existing DNS redirection uses another port. Only requests and replies redirected to local or allowed LAN DNS are exempt. DNS settings are unchanged. Do not overlap proxy ingress ports."
+msgstr "Default: 53. Enter the actual port if existing DNS redirection uses another port. Only requests and replies redirected to local or allowed LAN DNS are exempt. DNS settings are unchanged. Do not overlap proxy ingress ports."
+
+msgid "Delay before checks (seconds)"
+msgstr "Delay before checks (seconds)"
+
+msgid "Deny unlisted inbound connections"
+msgstr "Deny unlisted inbound connections"
+
+msgid "Detailed check logs"
+msgstr "Detailed check logs"
+
+msgid "Detect one installed client automatically. When several are installed, select the client to monitor. This does not modify the client configuration."
+msgstr "Detect one installed client automatically. When several are installed, select the client to monitor. This does not modify the client configuration."
+
+msgid "Device ID"
+msgstr "Device ID"
+
+msgid "Device secret"
+msgstr "Device secret"
+
+msgid "Direct HTTPS to Agent"
+msgstr "Direct HTTPS to Agent"
+
+msgid "Disabled"
+msgstr "Disabled"
+
+msgid "Discover listening services automatically"
+msgstr "Discover listening services automatically"
+
+msgid "Discovered listeners"
+msgstr "Discovered listeners"
+
+msgid "Discovered listeners are candidates only; add a service rule to manage a port. Unrestricted rules add no source restriction and do not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
+msgstr "Discovered listeners are candidates only; add a service rule to manage a port. Unrestricted rules add no source restriction and do not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
+
+msgid "Discovery lists candidate ports only. Whitelist mode requires an authorized source; standard mode applies resource limits; observe mode records without blocking. Unrestricted rules keep the original system firewall behavior."
+msgstr "Discovery lists candidate ports only. Whitelist mode requires an authorized source; standard mode applies resource limits; observe mode records without blocking. Unrestricted rules keep the original system firewall behavior."
+
+msgid "Dismiss"
+msgstr "Dismiss"
+
+msgid "Do not match IPv6 sources"
+msgstr "Do not match IPv6 sources"
+
+msgid "Download configuration"
+msgstr "Download configuration"
+
+msgid "Download local analysis report"
+msgstr "Download local analysis report"
+
+msgid "Download report"
+msgstr "Download report"
+
+msgid "Dynamic lease duration (seconds)"
+msgstr "Dynamic lease duration (seconds)"
+
+msgid "Each rule has its own mode, sources, thresholds and timers. Ports grouped in one rule share these settings. Create separate rules for different settings."
+msgstr "Each rule has its own mode, sources, thresholds and timers. Ports grouped in one rule share these settings. Create separate rules for different settings."
+
+msgid "Edit the complete UCI configuration for this plugin. Save stages changes; Save & Apply validates and activates them. Existing secret values are preserved by placeholders."
+msgstr "Edit the complete UCI configuration for this plugin. Save stages changes; Save & Apply validates and activates them. Existing secret values are preserved by placeholders."
+
+msgid "Emergency access active"
+msgstr "Emergency access active"
+
+msgid "Emergency source scope"
+msgstr "Emergency source scope"
+
+msgid "Enable VPS access rules"
+msgstr "Enable VPS access rules"
+
+msgid "Enable after Save & Apply"
+msgstr "Enable after Save & Apply"
+
+msgid "Enable boot protection"
+msgstr "Enable boot protection"
+
+msgid "Enable emergency SSH access"
+msgstr "Enable emergency SSH access"
+
+msgid "Enable enhanced monitoring after recovery"
+msgstr "Enable enhanced monitoring after recovery"
+
+msgid "Enable protection"
+msgstr "Enable protection"
+
+msgid "Enable proxy-path heartbeat"
+msgstr "Enable proxy-path heartbeat"
+
+msgid "Enable scheduled protection"
+msgstr "Enable scheduled protection"
+
+msgid "Enable the matching action locally and on the VPS Agent first."
+msgstr "Enable the matching action locally and on the VPS Agent first."
+
+msgid "Enabled"
+msgstr "Enabled"
+
+msgid "Enabled service rules must not overlap on the same protocol."
+msgstr "Enabled service rules must not overlap on the same protocol."
+
+msgid "End time"
+msgstr "End time"
+
+msgid "Enhanced checks are running; waiting for continuous stability"
+msgstr "Enhanced checks are running; waiting for continuous stability"
+
+msgid "Enhanced checks are running; waiting for proxy verification"
+msgstr "Enhanced checks are running; waiting for proxy verification"
+
+msgid "Enhanced checks found an interruption; restarting the wait and stability checks"
+msgstr "Enhanced checks found an interruption; restarting the wait and stability checks"
+
+msgid "Enhanced monitoring after recovery"
+msgstr "Enhanced monitoring after recovery"
+
+msgid "Enhanced monitoring completed"
+msgstr "Enhanced monitoring completed"
+
+msgid "Enhanced monitoring duration (seconds)"
+msgstr "Enhanced monitoring duration (seconds)"
+
+msgid "Enhanced observation period (seconds)"
+msgstr "Enhanced observation period (seconds)"
+
+msgid "Enter 0 to keep rescue open, or an integer from 30 to 3600 seconds."
+msgstr "Enter 0 to keep rescue open, or an integer from 30 to 3600 seconds."
+
+msgid "Enter IPv6 addresses or prefixes, or explicitly choose no IPv6 matching."
+msgstr "Enter IPv6 addresses or prefixes, or explicitly choose no IPv6 matching."
+
+msgid "Enter a DNS target before enabling UDP checks"
+msgstr "Enter a DNS target before enabling UDP checks"
+
+msgid "Enter a Worker HTTPS root URL without a path or credentials."
+msgstr "Enter a Worker HTTPS root URL without a path or credentials."
+
+msgid "Enter a control-service HTTPS root URL without a path or credentials."
+msgstr "Enter a control-service HTTPS root URL without a path or credentials."
+
+msgid "Enter a valid HH:MM:SS time"
+msgstr "Enter a valid HH:MM:SS time"
+
+msgid "Enter a valid device ID."
+msgstr "Enter a valid device ID."
+
+msgid "Enter manually"
+msgstr "Enter manually"
+
+msgid "Enter ports from 1 to 65535, or a port range."
+msgstr "Enter ports from 1 to 65535, or a port range."
+
+msgid "Enter the paired device secret."
+msgstr "Enter the paired device secret."
+
+msgid "Enter the secret for the independent proxy heartbeat."
+msgstr "Enter the secret for the independent proxy heartbeat."
+
+msgid "Enter valid IPv4 or IPv6 addresses or CIDR networks."
+msgstr "Enter valid IPv4 or IPv6 addresses or CIDR networks."
+
+msgid "Enter your actual proxy exit IPv4 before enabling. A different exit or an unreachable verification service is treated as a failure."
+msgstr "Enter your actual proxy exit IPv4 before enabling. A different exit or an unreachable verification service is treated as a failure."
+
+msgid "Event log"
+msgstr "Event log"
+
+msgid "Every day"
+msgstr "Every day"
+
+msgid "Exit IP verification is disabled"
+msgstr "Exit IP verification is disabled"
+
+msgid "Exit IP verification is optional. Pro can import an expected address from the VPS in General settings."
+msgstr "Exit IP verification is optional. Pro can import an expected address from the VPS in General settings."
+
+msgid "Exit has not been checked"
+msgstr "Exit has not been checked"
+
+msgid "Exit mismatch; protection requires verification"
+msgstr "Exit mismatch; protection requires verification"
+
+msgid "Exit verification HTTPS URL"
+msgstr "Exit verification HTTPS URL"
+
+msgid "Exit verification result:"
+msgstr "Exit verification result: "
+
+msgid "Exit verification:"
+msgstr "Exit verification: "
+
+msgid "Expected IPv4 source"
+msgstr "Expected IPv4 source"
+
+msgid "Expected exit must be an IPv4 address"
+msgstr "Expected exit must be an IPv4 address"
+
+msgid "Expected proxy exit IPv4"
+msgstr "Expected proxy exit IPv4"
+
+msgid "Failed"
+msgstr "Failed"
+
+msgid "Failed to clear logs"
+msgstr "Failed to clear logs"
+
+msgid "Failed to save"
+msgstr "Failed to save"
+
+msgid "Failure protection and recovery"
+msgstr "Failure protection and recovery"
+
+msgid "Failure threshold"
+msgstr "Failure threshold"
+
+msgid "Fallback bandwidth (bytes per second)"
+msgstr "Fallback bandwidth (bytes per second)"
+
+msgid "Fallback bandwidth monitoring needs a trusted data source configured on the VPS Agent."
+msgstr "Fallback bandwidth monitoring needs a trusted data source configured on the VPS Agent."
+
+msgid "Fallback bandwidth per direction (bytes per second)"
+msgstr "Fallback bandwidth per direction (bytes per second)"
+
+msgid "Fast checks are not ready; Internet access remains blocked"
+msgstr "Fast checks are not ready; Internet access remains blocked"
+
+msgid "Fast checks cannot renew the firewall permit"
+msgstr "Fast checks cannot renew the firewall permit"
+
+msgid "Firewall compatibility"
+msgstr "Firewall compatibility"
+
+msgid "Firewall update failed"
+msgstr "Firewall update failed"
+
+msgid "Flow offloading is enabled; blocking existing connections cannot be guaranteed. System settings are unchanged."
+msgstr "Flow offloading is enabled; blocking existing connections cannot be guaranteed. System settings are unchanged."
+
+msgid "For a single-device trial, also limit its IPv6 addresses or explicitly empty this list. ::/0 includes all IPv6 sources on the ingress devices."
+msgstr "For a single-device trial, also limit its IPv6 addresses or explicitly empty this list. ::/0 includes all IPv6 sources on the ingress devices."
+
+msgid "For a single-device trial, specify its IPv6 addresses or prefixes separately. ::/0 matches all IPv6 sources routed through selected ingress devices. Use the IPv6 switch to exclude this family explicitly."
+msgstr "For a single-device trial, specify its IPv6 addresses or prefixes separately. ::/0 matches all IPv6 sources routed through selected ingress devices. Use the IPv6 switch to exclude this family explicitly."
+
+msgid "For example, br-lan. Use existing, enabled layer-3 devices, not switch ports within a bridge. WireGuard and Docker are not included automatically."
+msgstr "For example, br-lan. Use existing, enabled layer-3 devices, not switch ports within a bridge. WireGuard and Docker are not included automatically."
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "General settings"
+msgstr "General settings"
+
+msgid "HTTPS check targets"
+msgstr "HTTPS check targets"
+
+msgid "HTTPS connectivity checks"
+msgstr "HTTPS connectivity checks"
+
+msgid "Heartbeat waiting time"
+msgstr "Heartbeat waiting time"
+
+msgid "Historical probe-length cluster observed"
+msgstr "Historical probe-length cluster observed"
+
+msgid "Historical replay matches"
+msgstr "Historical replay matches"
+
+msgid "Historical replay pattern matched"
+msgstr "Historical replay pattern matched"
+
+msgid "HomeProxy TUN IPv6 UDP compatibility"
+msgstr "HomeProxy TUN IPv6 UDP compatibility"
+
+msgid "Honeypot TCP connections"
+msgstr "Honeypot TCP connections"
+
+msgid "Honeypot UDP connections"
+msgstr "Honeypot UDP connections"
+
+msgid "Honeypot connection"
+msgstr "Honeypot connection"
+
+msgid "Honeypot started"
+msgstr "Honeypot started"
+
+msgid "Household IP and static whitelist"
+msgstr "Household IP and static whitelist"
+
+msgid "Household public IP"
+msgstr "Household public IP"
+
+msgid "I have checked the IPv6 scope independently of IPv4"
+msgstr "I have checked the IPv6 scope independently of IPv4"
+
+msgid "I have confirmed the Worker domain uses a direct connection"
+msgstr "I have confirmed the Worker domain uses a direct connection"
+
+msgid "I have confirmed the control service uses a direct connection"
+msgstr "I have confirmed the control service uses a direct connection"
+
+msgid "I have verified an authorized SSH management session"
+msgstr "I have verified an authorized SSH management session"
+
+msgid "IP filtering"
+msgstr "IP filtering"
+
+msgid "IPv4"
+msgstr "IPv4"
+
+msgid "IPv4 and IPv6"
+msgstr "IPv4 and IPv6"
+
+msgid "IPv4 and IPv6 scopes are independent. Selecting one IPv4 device does not select the same device in IPv6. All-source IPv6 matching includes other devices routed through these ingress interfaces; no IPv6 matching leaves that traffic unprotected."
+msgstr "IPv4 and IPv6 scopes are independent. Selecting one IPv4 device does not select the same device in IPv6. All-source IPv6 matching includes other devices routed through these ingress interfaces; no IPv6 matching leaves that traffic unprotected."
+
+msgid "IPv4 hints from panel configuration"
+msgstr "IPv4 hints from panel configuration"
+
+msgid "IPv6"
+msgstr "IPv6"
+
+msgid "IPv6 covers all sources on the selected devices"
+msgstr "IPv6 covers all sources on the selected devices"
+
+msgid "IPv6 matching is independent of IPv4. Turning this off leaves IPv6 traffic outside plugin protection."
+msgstr "IPv6 matching is independent of IPv4. Turning this off leaves IPv6 traffic outside plugin protection."
+
+msgid "IPv6 prefixes reported by selected interfaces"
+msgstr "IPv6 prefixes reported by selected interfaces"
+
+msgid "IPv6 protection scope"
+msgstr "IPv6 protection scope"
+
+msgid "IPv6 traffic is outside this protection scope"
+msgstr "IPv6 traffic is outside this protection scope"
+
+msgid "Import expected IPv4 from VPS"
+msgstr "Import expected IPv4 from VPS"
+
+msgid "Independent proxy heartbeat"
+msgstr "Independent proxy heartbeat"
+
+msgid "Ingress device does not exist:"
+msgstr "Ingress device does not exist: "
+
+msgid "Ingress device is not enabled:"
+msgstr "Ingress device is not enabled: "
+
+msgid "Ingress devices"
+msgstr "Ingress devices"
+
+msgid "Interface and panel addresses, and the VPS default-route address, may differ from the proxy exit. This import does not verify proxy traffic."
+msgstr "Interface and panel addresses, and the VPS default-route address, may differ from the proxy exit. This import does not verify proxy traffic."
+
+msgid "Interface is down"
+msgstr "Interface is down"
+
+msgid "Interface is up"
+msgstr "Interface is up"
+
+msgid "Interface not ready; protection coverage is unverified"
+msgstr "Interface not ready; protection coverage is unverified"
+
+msgid "Internet access"
+msgstr "Internet access"
+
+msgid "Internet access allowed"
+msgstr "Internet access allowed"
+
+msgid "Internet access blocked"
+msgstr "Internet access blocked"
+
+msgid "Internet access is blocked for protected devices"
+msgstr "Internet access is blocked for protected devices"
+
+msgid "Internet blocked"
+msgstr "Internet blocked"
+
+msgid "Internet blocked; validation starts in"
+msgstr "Internet blocked; validation starts in "
+
+msgid "Internet remains blocked during the waiting period; external checks have not started"
+msgstr "Internet remains blocked during the waiting period; external checks have not started"
+
+msgid "Internet restored; enhanced monitoring:"
+msgstr "Internet restored; enhanced monitoring: "
+
+msgid "Internet restored; observation begins"
+msgstr "Internet restored; observation begins"
+
+msgid "Interrupted; not repeated automatically"
+msgstr "Interrupted; not repeated automatically"
+
+msgid "Interruption detected"
+msgstr "Interruption detected"
+
+msgid "Interval after each check round (seconds)"
+msgstr "Interval after each check round (seconds)"
+
+msgid "Invalid HTTPS URL"
+msgstr "Invalid HTTPS URL"
+
+msgid "Invalid UCI syntax or configuration values."
+msgstr "Invalid UCI syntax or configuration values."
+
+msgid "Invalid UDP query domain"
+msgstr "Invalid UDP query domain"
+
+msgid "Invalid UTC offset"
+msgstr "Invalid UTC offset"
+
+msgid "Invalid check domain"
+msgstr "Invalid check domain"
+
+msgid "Invalid configuration; changes were not committed:"
+msgstr "Invalid configuration; changes were not committed: "
+
+msgid "Invalid firewall response format"
+msgstr "Invalid firewall response format"
+
+msgid "Invalid ingress device MAC:"
+msgstr "Invalid ingress device MAC: "
+
+msgid "Invalid ingress device name"
+msgstr "Invalid ingress device name"
+
+msgid "Invalid login session"
+msgstr "Invalid login session"
+
+msgid "Invalid mode"
+msgstr "Invalid mode"
+
+msgid "Invalid plugin configuration type"
+msgstr "Invalid plugin configuration type"
+
+msgid "Invalid protection setting; explicitly set it to 0 or 1"
+msgstr "Invalid protection setting; explicitly set it to 0 or 1"
+
+msgid "Invalid request format"
+msgstr "Invalid request format"
+
+msgid "Invalid schedule repeat mode"
+msgstr "Invalid schedule repeat mode"
+
+msgid "Invalid schedule switch"
+msgstr "Invalid schedule switch"
+
+msgid "Invalid schedule weekday"
+msgstr "Invalid schedule weekday"
+
+msgid "Invalid self-check draft"
+msgstr "Invalid self-check draft"
+
+msgid "Invalid self-check or UDP switch"
+msgstr "Invalid self-check or UDP switch"
+
+msgid "Invalid service control state"
+msgstr "Invalid service control state"
+
+msgid "Invalid service protection switch"
+msgstr "Invalid service protection switch"
+
+msgid "Invalid service protection trigger"
+msgstr "Invalid service protection trigger"
+
+msgid "Invalid setup response"
+msgstr "Invalid setup response"
+
+msgid "Invalid status or log response"
+msgstr "Invalid status or log response"
+
+msgid "Keep Internet access blocked during this delay. Disabling this option starts enhanced checks immediately."
+msgstr "Keep Internet access blocked during this delay. Disabling this option starts enhanced checks immediately."
+
+msgid "Keep VPS policy"
+msgstr "Keep VPS policy"
+
+msgid "Keep scheduled protection enabled"
+msgstr "Keep scheduled protection enabled"
+
+msgid "Keep these settings"
+msgstr "Keep these settings"
+
+msgid "LAN IPv4"
+msgstr "LAN IPv4"
+
+msgid "LAN IPv6"
+msgstr "LAN IPv6"
+
+msgid "LAN ingress devices"
+msgstr "LAN ingress devices"
+
+msgid "Last Cloudflare event verification"
+msgstr "Last Cloudflare event verification"
+
+msgid "Last attempt"
+msgstr "Last attempt"
+
+msgid "Last check:"
+msgstr "Last check: "
+
+msgid "Last completed check"
+msgstr "Last completed check"
+
+msgid "Latest connectivity check"
+msgstr "Latest connectivity check"
+
+msgid "Lease expires"
+msgstr "Lease expires"
+
+msgid "Leave empty to keep the paired device secret."
+msgstr "Leave empty to keep the paired device secret."
+
+msgid "Leave empty to keep the paired secret."
+msgstr "Leave empty to keep the paired secret."
+
+msgid "Limit concurrent connections"
+msgstr "Limit concurrent connections"
+
+msgid "Limit new connection rate"
+msgstr "Limit new connection rate"
+
+msgid "Limit verified fallback bandwidth"
+msgstr "Limit verified fallback bandwidth"
+
+msgid "Link-local, multicast and the router's own management addresses remain accessible."
+msgstr "Link-local, multicast and the router's own management addresses remain accessible."
+
+msgid "Load default template"
+msgstr "Load default template"
+
+msgid "Load previous confirmed settings"
+msgstr "Load previous confirmed settings"
+
+msgid "Local SOCKS listener"
+msgstr "Local SOCKS listener"
+
+msgid "Local SOCKS port"
+msgstr "Local SOCKS port"
+
+msgid "Local diagnostic report"
+msgstr "Local diagnostic report"
+
+msgid "Local protection could not be prepared; the remote action was not sent."
+msgstr "Local protection could not be prepared; the remote action was not sent."
+
+msgid "Local protection was enabled before remote maintenance; awaiting verification."
+msgstr "Local protection was enabled before remote maintenance; awaiting verification."
+
+msgid "Local proxy ingress ports"
+msgstr "Local proxy ingress ports"
+
+msgid "Local proxy port"
+msgstr "Local proxy port"
+
+msgid "Local self-check could not complete"
+msgstr "Local self-check could not complete"
+
+msgid "Local settings were restored or synchronization stopped. The remote policy still needs verification."
+msgstr "Local settings were restored or synchronization stopped. The remote policy still needs verification."
+
+msgid "Log records were missed"
+msgstr "Log records were missed"
+
+msgid "Log size"
+msgstr "Log size"
+
+msgid "Log time is invalid or outdated; it cannot confirm recovery"
+msgstr "Log time is invalid or outdated; it cannot confirm recovery"
+
+msgid "Logical processors"
+msgstr "Logical processors"
+
+msgid "Logs in RAM"
+msgstr "Logs in RAM"
+
+msgid "Low"
+msgstr "Low"
+
+msgid "Maintenance operation"
+msgstr "Maintenance operation"
+
+msgid "Maintenance record storage needs attention; restart actions are disabled."
+msgstr "Maintenance record storage needs attention; restart actions are disabled."
+
+msgid "Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."
+msgstr "Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."
+
+msgid "Manage SSH access"
+msgstr "Manage SSH access"
+
+msgid "Management IP addresses or networks"
+msgstr "Management IP addresses or networks"
+
+msgid "Management addresses and last household IP"
+msgstr "Management addresses and last household IP"
+
+msgid "Management check"
+msgstr "Management check"
+
+msgid "Management protection active"
+msgstr "Management protection active"
+
+msgid "Maximum restarts within the window"
+msgstr "Maximum restarts within the window"
+
+msgid "Maximum size per log file (KiB)"
+msgstr "Maximum size per log file (KiB)"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Memory (RSS)"
+msgstr "Memory (RSS)"
+
+msgid "Minimum heartbeat timeout (seconds)"
+msgstr "Minimum heartbeat timeout (seconds)"
+
+msgid "Minimum successful targets per round"
+msgstr "Minimum successful targets per round"
+
+msgid "Minimum time between restarts (seconds)"
+msgstr "Minimum time between restarts (seconds)"
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "Monitor PassWall service status"
+msgstr "Monitor PassWall service status"
+
+msgid "Monitor client services and lifecycle logs"
+msgstr "Monitor client services and lifecycle logs"
+
+msgid "Monitor only"
+msgstr "Monitor only"
+
+msgid "Monitor only: log failures without blocking"
+msgstr "Monitor only: log failures without blocking"
+
+msgid "Monitor proxy client services"
+msgstr "Monitor proxy client services"
+
+msgid "Monitor service stopped"
+msgstr "Monitor service stopped"
+
+msgid "Monitor stopped; protection mode keeps blocking. Disable protection in settings to restore access."
+msgstr "Monitor stopped; protection mode keeps blocking. Disable protection in settings to restore access."
+
+msgid "Monitoring enabled; no blocking rules added"
+msgstr "Monitoring enabled; no blocking rules added"
+
+msgid "Monitoring new log entries"
+msgstr "Monitoring new log entries"
+
+msgid "Monitoring only; Internet access allowed"
+msgstr "Monitoring only; Internet access allowed"
+
+msgid "Monitoring only; checks resume in"
+msgstr "Monitoring only; checks resume in "
+
+msgid "Monitoring only; confirming proxy recovery"
+msgstr "Monitoring only; confirming proxy recovery"
+
+msgid "Monitoring only; no access restrictions"
+msgstr "Monitoring only; no access restrictions"
+
+msgid "Monitoring only; observing proxy stability:"
+msgstr "Monitoring only; observing proxy stability: "
+
+msgid "Multiple active profiles require verification"
+msgstr "Multiple active profiles require verification"
+
+msgid "Multiple clients found; select one"
+msgstr "Multiple clients found; select one"
+
+msgid "Needs attention"
+msgstr "Needs attention"
+
+msgid "Network check status expired; waiting and confirming stability again"
+msgstr "Network check status expired; waiting and confirming stability again"
+
+msgid "New connection cooldown (seconds)"
+msgstr "New connection cooldown (seconds)"
+
+msgid "New connection rate exceeded"
+msgstr "New connection rate exceeded"
+
+msgid "New connections per second"
+msgstr "New connections per second"
+
+msgid "New connections temporarily limited"
+msgstr "New connections temporarily limited"
+
+msgid "Next"
+msgstr "Next"
+
+msgid "No Cloudflare event check yet"
+msgstr "No Cloudflare event check yet"
+
+msgid "No analysis events"
+msgstr "No analysis events"
+
+msgid "No completed checks yet"
+msgstr "No completed checks yet"
+
+msgid "No eligible LAN device was found. Configure the existing network first; this wizard does not create interfaces."
+msgstr "No eligible LAN device was found. Configure the existing network first; this wizard does not create interfaces."
+
+msgid "No log entries"
+msgstr "No log entries"
+
+msgid "No protection: bypass enabled"
+msgstr "No protection: bypass enabled"
+
+msgid "No recovery event recorded"
+msgstr "No recovery event recorded"
+
+msgid "No recovery is pending"
+msgstr "No recovery is pending"
+
+msgid "No schedule is prefilled. Set the time and repeat pattern before enabling scheduled protection. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. With service protection enabled, the window ends into enhanced monitoring without an extra delay; otherwise recovery checks are required."
+msgstr "No schedule is prefilled. Set the time and repeat pattern before enabling scheduled protection. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. With service protection enabled, the window ends into enhanced monitoring without an extra delay; otherwise recovery checks are required."
+
+msgid "No supported proxy client found"
+msgstr "No supported proxy client found"
+
+msgid "No usable IPv4 candidate exists for this source. Check the Agent settings or enter the expected address manually."
+msgstr "No usable IPv4 candidate exists for this source. Check the Agent settings or enter the expected address manually."
+
+msgid "Non-loopback TCP listeners and unconnected UDP sockets receive household-IP restrictions. Explicit service rules take precedence. This does not scan the Internet or cover Docker forwarding."
+msgstr "Non-loopback TCP listeners and unconnected UDP sockets receive household-IP restrictions. Explicit service rules take precedence. This does not scan the Internet or cover Docker forwarding."
+
+msgid "Not available"
+msgstr "Not available"
+
+msgid "Not configured"
+msgstr "Not configured"
+
+msgid "Not running"
+msgstr "Not running"
+
+msgid "Observation window (seconds)"
+msgstr "Observation window (seconds)"
+
+msgid "Observe only"
+msgstr "Observe only"
+
+msgid "Observed proxy exit"
+msgstr "Observed proxy exit"
+
+msgid "On boot or initial activation, keep protected clients blocked until TCP, UDP and DNS are all running, then use the delay and continuous stability settings below. Any interruption restarts qualification. The fixed startup wait is replaced. Router-originated traffic, LAN and DNS remain available. Blocking requires protection mode."
+msgstr "On boot or initial activation, keep protected clients blocked until TCP, UDP and DNS are all running, then use the delay and continuous stability settings below. Any interruption restarts qualification. The fixed startup wait is replaced. Router-originated traffic, LAN and DNS remain available. Blocking requires protection mode."
+
+msgid "On proxy failure, block Internet traffic in both directions for selected devices where traffic actually passes through this router or proxy. LAN access remains available. Return traffic bypassing this device cannot be blocked. Disabled on first install; start with monitoring, then test one device."
+msgstr "On proxy failure, block Internet traffic in both directions for selected devices where traffic actually passes through this router or proxy. LAN access remains available. Return traffic bypassing this device cannot be blocked. Disabled on first install; start with monitoring, then test one device."
+
+msgid "Only add ports you intend to filter. Selecting a panel, API, or subscription port filters that service too. Services sharing the same IP, protocol, and port cannot be separated by URL path or SNI here. SSH has separate settings."
+msgstr "Only add ports you intend to filter. Selecting a panel, API, or subscription port filters that service too. Services sharing the same IP, protocol, and port cannot be separated by URL path or SNI here. SSH has separate settings."
+
+msgid "Only enabled service rules restrict their selected ports. Other ports remain under the existing system firewall. SSH is not managed unless you add a rule."
+msgstr "Only enabled service rules restrict their selected ports. Other ports remain under the existing system firewall. SSH is not managed unless you add a rule."
+
+msgid "Only selected service ports are managed. Other ports keep the existing system firewall policy. SSH management is separate and disabled by default."
+msgstr "Only selected service ports are managed. Other ports keep the existing system firewall policy. SSH management is separate and disabled by default."
+
+msgid "Only the session that applied this policy can confirm it."
+msgstr "Only the session that applied this policy can confirm it."
+
+msgid "Only traffic passing through this router can be protected. Settings take effect only after Save & Apply."
+msgstr "Only traffic passing through this router can be protected. Settings take effect only after Save & Apply."
+
+msgid "Open until household authorization is restored"
+msgstr "Open until household authorization is restored"
+
+msgid "Operating mode"
+msgstr "Operating mode"
+
+msgid "Operation failed"
+msgstr "Operation failed"
+
+msgid "Option \"%s\" contains an invalid input value."
+msgstr "Option \"%s\" contains an invalid input value."
+
+msgid "Optional check: send a DNS-format UDP request through local SOCKS5 UDP ASSOCIATE. Requires luci-lib-nixio and a proxy with UDP support; never falls back to a direct connection. Failure counts as a failed check round. The result covers only this target, not every UDP service."
+msgstr "Optional check: send a DNS-format UDP request through local SOCKS5 UDP ASSOCIATE. Requires luci-lib-nixio and a proxy with UDP support; never falls back to a direct connection. Failure counts as a failed check round. The result covers only this target, not every UDP service."
+
+msgid "Optional. When off, connectivity checks continue without requiring or comparing an expected exit address."
+msgstr "Optional. When off, connectivity checks continue without requiring or comparing an expected exit address."
+
+msgid "Packet capture failed"
+msgstr "Packet capture failed"
+
+msgid "Packet capture started"
+msgstr "Packet capture started"
+
+msgid "Packet capture stopped"
+msgstr "Packet capture stopped"
+
+msgid "PassWall TCP, UDP and DNS have all stopped; service protection triggered"
+msgstr "PassWall TCP, UDP and DNS have all stopped; service protection triggered"
+
+msgid "PassWall log changed"
+msgstr "PassWall log changed"
+
+msgid "PassWall log monitoring is off"
+msgstr "PassWall log monitoring is off"
+
+msgid "PassWall log reports service or rule changes; access blocked pending recovery"
+msgstr "PassWall log reports service or rule changes; access blocked pending recovery"
+
+msgid "PassWall runtime log"
+msgstr "PassWall runtime log"
+
+msgid "PassWall service protection"
+msgstr "PassWall service protection"
+
+msgid "PassWall service protection is waiting"
+msgstr "PassWall service protection is waiting"
+
+msgid "PassWall services"
+msgstr "PassWall services"
+
+msgid "PassWall startup and all three services are ready; verify recovery without an extra delay"
+msgstr "PassWall startup and all three services are ready; verify recovery without an extra delay"
+
+msgid "Passed"
+msgstr "Passed"
+
+msgid "Pattern confidence"
+msgstr "Pattern confidence"
+
+msgid "Per-port modes are not supported by the connected service. Update the VPS Agent and, if used, the Cloudflare Worker before applying."
+msgstr "Per-port modes are not supported by the connected service. Update the VPS Agent and, if used, the Cloudflare Worker before applying."
+
+msgid "Per-target timeout"
+msgstr "Per-target timeout"
+
+msgid "Please verify"
+msgstr "Please verify"
+
+msgid "Plugin configuration not found"
+msgstr "Plugin configuration not found"
+
+msgid "Plugin heartbeat failed; retaining protection and queuing a plugin restart"
+msgstr "Plugin heartbeat failed; retaining protection and queuing a plugin restart"
+
+msgid "Plugin is being uninstalled; configuration was not committed"
+msgstr "Plugin is being uninstalled; configuration was not committed"
+
+msgid "Plugin is busy; this operation was not performed. Try again later."
+msgstr "Plugin is busy; this operation was not performed. Try again later."
+
+msgid "Plugin is disabled"
+msgstr "Plugin is disabled"
+
+msgid "Plugin monitoring processes are responding again"
+msgstr "Plugin monitoring processes are responding again"
+
+msgid "Plugin monitors are responding"
+msgstr "Plugin monitors are responding"
+
+msgid "Plugin recovery in progress; waiting for a new proxy check"
+msgstr "Plugin recovery in progress; waiting for a new proxy check"
+
+msgid "Plugin resource usage"
+msgstr "Plugin resource usage"
+
+msgid "Plugin rule cleanup is incomplete"
+msgstr "Plugin rule cleanup is incomplete"
+
+msgid "Plugin self-check"
+msgstr "Plugin self-check"
+
+msgid "Plugin self-check and recovery"
+msgstr "Plugin self-check and recovery"
+
+msgid "Policy confirmation data could not be read. Review saved settings and VPS state."
+msgstr "Policy confirmation data could not be read. Review saved settings and VPS state."
+
+msgid "Policy revision confirmed"
+msgstr "Policy revision confirmed"
+
+msgid "Port protection mode"
+msgstr "Port protection mode"
+
+msgid "Port ranges must not overlap."
+msgstr "Port ranges must not overlap."
+
+msgid "Ports"
+msgstr "Ports"
+
+msgid "Possible failure"
+msgstr "Possible failure"
+
+msgid "Prepare changes"
+msgstr "Prepare changes"
+
+msgid "Prepare to remove VPS rules"
+msgstr "Prepare to remove VPS rules"
+
+msgid "Prepare to turn off this plugin VPS port rules and SSH management while synchronization remains enabled. Save & Apply, then confirm the VPS change. After the VPS confirms removal you may stop synchronization. The system firewall remains in effect."
+msgstr "Prepare to turn off this plugin VPS port rules and SSH management while synchronization remains enabled. Save & Apply, then confirm the VPS change. After the VPS confirms removal you may stop synchronization. The system firewall remains in effect."
+
+msgid "Preserve VPS-initiated connections and their replies. Incoming service connections require an explicit rule or a discovered dynamic rule. Existing inbound connections lose access when authorization expires."
+msgstr "Preserve VPS-initiated connections and their replies. Incoming service connections require an explicit rule or a discovered dynamic rule. Existing inbound connections lose access when authorization expires."
+
+msgid "Preset"
+msgstr "Preset"
+
+msgid "Preview service rules"
+msgstr "Preview service rules"
+
+msgid "Previous exit mismatch; routine verification has since passed"
+msgstr "Previous exit mismatch; routine verification has since passed"
+
+msgid "Previous restart did not complete"
+msgstr "Previous restart did not complete"
+
+msgid "Probe observation"
+msgstr "Probe observation"
+
+msgid "Process count"
+msgstr "Process count"
+
+msgid "Protect IPv6 traffic"
+msgstr "Protect IPv6 traffic"
+
+msgid "Protect: block Internet traffic in both directions on failure"
+msgstr "Protect: block Internet traffic in both directions on failure"
+
+msgid "Protected IPv4"
+msgstr "Protected IPv4"
+
+msgid "Protected IPv4 addresses"
+msgstr "Protected IPv4 addresses"
+
+msgid "Protected IPv6"
+msgstr "Protected IPv6"
+
+msgid "Protected IPv6 addresses"
+msgstr "Protected IPv6 addresses"
+
+msgid "Protected devices can access the Internet"
+msgstr "Protected devices can access the Internet"
+
+msgid "Protected source addresses are required"
+msgstr "Protected source addresses are required"
+
+msgid "Protection disabled; this plugin's blocking rules were removed"
+msgstr "Protection disabled; this plugin's blocking rules were removed"
+
+msgid "Protection enabled; waiting for the proxy. LAN access remains available."
+msgstr "Protection enabled; waiting for the proxy. LAN access remains available."
+
+msgid "Protection events stay here. Frequent website checks are listed separately below."
+msgstr "Protection events stay here. Frequent website checks are listed separately below."
+
+msgid "Protection is disabled"
+msgstr "Protection is disabled"
+
+msgid "Protection is disabled; no recovery is pending"
+msgstr "Protection is disabled; no recovery is pending"
+
+msgid "Protection is disabled; schedules will not run"
+msgstr "Protection is disabled; schedules will not run"
+
+msgid "Protection is off"
+msgstr "Protection is off"
+
+msgid "Protection is turned off"
+msgstr "Protection is turned off"
+
+msgid "Protection mode"
+msgstr "Protection mode"
+
+msgid "Protection preset"
+msgstr "Protection preset"
+
+msgid "Protection rules are missing; protection cannot be confirmed"
+msgstr "Protection rules are missing; protection cannot be confirmed"
+
+msgid "Protection rules changed during checks; awaiting verification"
+msgstr "Protection rules changed during checks; awaiting verification"
+
+msgid "Protection scope"
+msgstr "Protection scope"
+
+msgid "Protection setup wizard"
+msgstr "Protection setup wizard"
+
+msgid "Protection status"
+msgstr "Protection status"
+
+msgid "Protection status needs verification"
+msgstr "Protection status needs verification"
+
+msgid "Protocol"
+msgstr "Protocol"
+
+msgid "Proxy Guard"
+msgstr "Proxy Guard"
+
+msgid "Proxy Guard Radar"
+msgstr "Proxy Guard Radar"
+
+msgid "Proxy check failed"
+msgstr "Proxy check failed"
+
+msgid "Proxy check passed"
+msgstr "Proxy check passed"
+
+msgid "Proxy client"
+msgstr "Proxy client"
+
+msgid "Proxy client forwarding mode"
+msgstr "Proxy client forwarding mode"
+
+msgid "Proxy client runtime log"
+msgstr "Proxy client runtime log"
+
+msgid "Proxy client services"
+msgstr "Proxy client services"
+
+msgid "Proxy exit verification failed: unexpected exit or unreachable verification service"
+msgstr "Proxy exit verification failed: unexpected exit or unreachable verification service"
+
+msgid "Proxy failure (monitor only)"
+msgstr "Proxy failure (monitor only)"
+
+msgid "Proxy healthy"
+msgstr "Proxy healthy"
+
+msgid "Proxy heartbeat age (seconds)"
+msgstr "Proxy heartbeat age (seconds)"
+
+msgid "Proxy heartbeat interval (seconds)"
+msgstr "Proxy heartbeat interval (seconds)"
+
+msgid "Proxy heartbeat secret"
+msgstr "Proxy heartbeat secret"
+
+msgid "Proxy probes passed; waiting for service protection to confirm access"
+msgstr "Proxy probes passed; waiting for service protection to confirm access"
+
+msgid "Proxy programs stopped"
+msgstr "Proxy programs stopped"
+
+msgid "Proxy rules are being loaded"
+msgstr "Proxy rules are being loaded"
+
+msgid "Proxy rules removed"
+msgstr "Proxy rules removed"
+
+msgid "Proxy startup failed"
+msgstr "Proxy startup failed"
+
+msgid "Proxy verification passed; access restored with enhanced monitoring"
+msgstr "Proxy verification passed; access restored with enhanced monitoring"
+
+msgid "Public Internet"
+msgstr "Public Internet"
+
+msgid "Public access remaining (seconds)"
+msgstr "Public access remaining (seconds)"
+
+msgid "Public emergency window (seconds)"
+msgstr "Public emergency window (seconds)"
+
+msgid "Queued"
+msgstr "Queued"
+
+msgid "REALITY configuration check"
+msgstr "REALITY configuration check"
+
+msgid "Raw UCI configuration"
+msgstr "Raw UCI configuration"
+
+msgid "Read PassWall log every (seconds)"
+msgstr "Read PassWall log every (seconds)"
+
+msgid "Read client log every (seconds)"
+msgstr "Read client log every (seconds)"
+
+msgid "Read new lifecycle events from /tmp/log/passwall.log and combine them with TCP, UDP, DNS and proxy checks. Recognize audited upstream messages in Simplified Chinese, Traditional Chinese, English, Russian and Persian, independently of the page language. Initial log recovery skips the extra blocking delay; failures during enhanced monitoring still use the configured delay. Other forks and future messages require separate verification."
+msgstr "Read new lifecycle events from /tmp/log/passwall.log and combine them with TCP, UDP, DNS and proxy checks. Recognize audited upstream messages in Simplified Chinese, Traditional Chinese, English, Russian and Persian, independently of the page language. Initial log recovery skips the extra blocking delay; failures during enhanced monitoring still use the configured delay. Other forks and future messages require separate verification."
+
+msgid "Read only added log data, every 1–10 seconds. Local service checks continue every second. Apply changes with Save & Apply."
+msgstr "Read only added log data, every 1–10 seconds. Local service checks continue every second. Apply changes with Save & Apply."
+
+msgid "Read saved VPS connection"
+msgstr "Read saved VPS connection"
+
+msgid "Read the selected client lifecycle log using audited source-specific messages and timestamps. Log recovery still requires healthy configured services and a real proxy check. Initial recovery skips the extra delay; failures during enhanced monitoring retain the configured delay."
+msgstr "Read the selected client lifecycle log using audited source-specific messages and timestamps. Log recovery still requires healthy configured services and a real proxy check. Initial recovery skips the extra delay; failures during enhanced monitoring retain the configured delay."
+
+msgid "Read-only check: settings have not been saved or applied, and proxy Internet connectivity has not been tested."
+msgstr "Read-only check: settings have not been saved or applied, and proxy Internet connectivity has not been tested."
+
+msgid "Ready"
+msgstr "Ready"
+
+msgid "Reboot VPS"
+msgstr "Reboot VPS"
+
+msgid "Recent connectivity check details"
+msgstr "Recent connectivity check details"
+
+msgid "Recent security events"
+msgstr "Recent security events"
+
+msgid "Rechecking a delayed heartbeat"
+msgstr "Rechecking a delayed heartbeat"
+
+msgid "Recommended. The VPS restores its previous selected-port policy if a changed policy is not confirmed. Disabling this applies changes immediately."
+msgstr "Recommended. The VPS restores its previous selected-port policy if a changed policy is not confirmed. Disabling this applies changes immediately."
+
+msgid "Recovery checks begin"
+msgstr "Recovery checks begin"
+
+msgid "Recovery history"
+msgstr "Recovery history"
+
+msgid "Recovery threshold"
+msgstr "Recovery threshold"
+
+msgid "Recovery verification timeout (seconds)"
+msgstr "Recovery verification timeout (seconds)"
+
+msgid "Recovery verified"
+msgstr "Recovery verified"
+
+msgid "Recovery was not verified before the timeout."
+msgstr "Recovery was not verified before the timeout."
+
+msgid "Reduce the number of rules or whitelist addresses."
+msgstr "Reduce the number of rules or whitelist addresses."
+
+msgid "Reload this page before enabling protection."
+msgstr "Reload this page before enabling protection."
+
+msgid "Remote maintenance"
+msgstr "Remote maintenance"
+
+msgid "Remote maintenance is in progress; Internet protection remains active."
+msgstr "Remote maintenance is in progress; Internet protection remains active."
+
+msgid "Remove VPS rules"
+msgstr "Remove VPS rules"
+
+msgid "Repeat"
+msgstr "Repeat"
+
+msgid "Repeated TCP prefix across connections"
+msgstr "Repeated TCP prefix across connections"
+
+msgid "Repeated TCP prefixes"
+msgstr "Repeated TCP prefixes"
+
+msgid "Repeated connection attempts"
+msgstr "Repeated connection attempts"
+
+msgid "Repeated plugin execution errors"
+msgstr "Repeated plugin execution errors"
+
+msgid "Replace the editor draft with the default template? Changes take effect after Save & Apply."
+msgstr "Replace the editor draft with the default template? Changes take effect after Save & Apply."
+
+msgid "Replayed control request rejected"
+msgstr "Replayed control request rejected"
+
+msgid "Request accepted"
+msgstr "Request accepted"
+
+msgid "Require VPS service health before restoring access"
+msgstr "Require VPS service health before restoring access"
+
+msgid "Require continuous stability before restoring access"
+msgstr "Require continuous stability before restoring access"
+
+msgid "Required nftables kernel features"
+msgstr "Required nftables kernel features"
+
+msgid "Required only when exit IP verification is enabled. A different exit or an unreachable verification service is treated as a failure."
+msgstr "Required only when exit IP verification is enabled. A different exit or an unreachable verification service is treated as a failure."
+
+msgid "Required stability (seconds)"
+msgstr "Required stability (seconds)"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Resolve the reported error before protection can be confirmed"
+msgstr "Resolve the reported error before protection can be confirmed"
+
+msgid "Resource statistics are disabled or awaiting the first sample"
+msgstr "Resource statistics are disabled or awaiting the first sample"
+
+msgid "Resource threshold exceeded"
+msgstr "Resource threshold exceeded"
+
+msgid "Restart cancelled"
+msgstr "Restart cancelled"
+
+msgid "Restart counting window (seconds)"
+msgstr "Restart counting window (seconds)"
+
+msgid "Restart proxy core"
+msgstr "Restart proxy core"
+
+msgid "Restarting"
+msgstr "Restarting"
+
+msgid "Restarting this plugin"
+msgstr "Restarting this plugin"
+
+msgid "Restore Internet access after proxy validation. During enhanced monitoring, start each round one second after the previous round completes; request time is additional. Any failed round blocks access and restarts the delay. Disabling enhanced monitoring still requires recovery validation."
+msgstr "Restore Internet access after proxy validation. During enhanced monitoring, start each round one second after the previous round completes; request time is additional. Any failed round blocks access and restarts the delay. Disabling enhanced monitoring still requires recovery validation."
+
+msgid "Restore defaults and set up again"
+msgstr "Restore defaults and set up again"
+
+msgid "Restore previous VPS policy"
+msgstr "Restore previous VPS policy"
+
+msgid "Restore previous settings"
+msgstr "Restore previous settings"
+
+msgid "Restrict listed ports only"
+msgstr "Restrict listed ports only"
+
+msgid "Result unknown"
+msgstr "Result unknown"
+
+msgid "Retained events"
+msgstr "Retained events"
+
+msgid "Retrieved at:"
+msgstr "Retrieved at: "
+
+msgid "Review VPS address candidates"
+msgstr "Review VPS address candidates"
+
+msgid "Review restored settings"
+msgstr "Review restored settings"
+
+msgid "Review settings"
+msgstr "Review settings"
+
+msgid "Routine exit verification uses ipify by default. Accepts a plain-text IPv4 address or a compatible trace response. Requests always use the local SOCKS proxy. Keep Cloudflare trace out of recurring targets to avoid frequent Cloudflare requests."
+msgstr "Routine exit verification uses ipify by default. Accepts a plain-text IPv4 address or a compatible trace response. Requests always use the local SOCKS proxy. Keep Cloudflare trace out of recurring targets to avoid frequent Cloudflare requests."
+
+msgid "Rule sets cleared"
+msgstr "Rule sets cleared"
+
+msgid "Rules can only be cleaned up during uninstall"
+msgstr "Rules can only be cleaned up during uninstall"
+
+msgid "Rules changed during UDP check"
+msgstr "Rules changed during UDP check"
+
+msgid "Rules, configuration and runtime state are not yet verified as consistent"
+msgstr "Rules, configuration and runtime state are not yet verified as consistent"
+
+msgid "Run setup wizard"
+msgstr "Run setup wizard"
+
+msgid "Running"
+msgstr "Running"
+
+msgid "Runtime log check interval"
+msgstr "Runtime log check interval"
+
+msgid "Runtime state is missing; awaiting monitor verification"
+msgstr "Runtime state is missing; awaiting monitor verification"
+
+msgid "SOCKS port"
+msgstr "SOCKS port"
+
+msgid "SSH authentication settings remain unchanged. Access is managed only after both heartbeats and an authorized SSH session are verified."
+msgstr "SSH authentication settings remain unchanged. Access is managed only after both heartbeats and an authorized SSH session are verified."
+
+msgid "SSH management"
+msgstr "SSH management"
+
+msgid "SSH on TCP port 22 is enabled without IP filtering by default. Unrestricted mode adds no source restriction and does not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
+msgstr "SSH on TCP port 22 is enabled without IP filtering by default. Unrestricted mode adds no source restriction and does not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
+
+msgid "SSH port"
+msgstr "SSH port"
+
+msgid "SSH rescue requires an independent HTTPS heartbeat through the proxy."
+msgstr "SSH rescue requires an independent HTTPS heartbeat through the proxy."
+
+msgid "Sample plugin resources every five seconds. CPU usage is a percentage of the combined capacity of all online logical processors; 100% means all of them are fully used. Memory is the sum of process RSS and may include shared pages more than once. Sampling stores no history on flash. Heartbeat monitoring continues when resource sampling is off."
+msgstr "Sample plugin resources every five seconds. CPU usage is a percentage of the combined capacity of all online logical processors; 100% means all of them are fully used. Memory is the sum of process RSS and may include shared pages more than once. Sampling stores no history on flash. Heartbeat monitoring continues when resource sampling is off."
+
+msgid "Sampling"
+msgstr "Sampling"
+
+msgid "Saturday"
+msgstr "Saturday"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Save & Apply"
+msgstr "Save & Apply"
+
+msgid "Schedule"
+msgstr "Schedule"
+
+msgid "Schedule permit is missing system time"
+msgstr "Schedule permit is missing system time"
+
+msgid "Schedule start and end times must differ"
+msgstr "Schedule start and end times must differ"
+
+msgid "Schedule time must use HH:MM:SS"
+msgstr "Schedule time must use HH:MM:SS"
+
+msgid "Schedule time must use HH:MM:SS (00:00:00 to 23:59:59)"
+msgstr "Schedule time must use HH:MM:SS (00:00:00 to 23:59:59)"
+
+msgid "Schedule weekdays must not repeat"
+msgstr "Schedule weekdays must not repeat"
+
+msgid "Schedule window ended; counting recovery successes again"
+msgstr "Schedule window ended; counting recovery successes again"
+
+msgid "Schedule:"
+msgstr "Schedule: "
+
+msgid "Scheduled protection"
+msgstr "Scheduled protection"
+
+msgid "Scheduled protection active"
+msgstr "Scheduled protection active"
+
+msgid "Scheduled protection ended; access restored with enhanced monitoring and no failure delay"
+msgstr "Scheduled protection ended; access restored with enhanced monitoring and no failure delay"
+
+msgid "Scheduled protection ended; still waiting for this fault to recover"
+msgstr "Scheduled protection ended; still waiting for this fault to recover"
+
+msgid "Scheduled protection is off"
+msgstr "Scheduled protection is off"
+
+msgid "Scheduled protection window"
+msgstr "Scheduled protection window "
+
+msgid "Scheduled window ended"
+msgstr "Scheduled window ended"
+
+msgid "Scheduled window ended; observation begins"
+msgstr "Scheduled window ended; observation begins"
+
+msgid "Scheduled window started; checks resume after it ends"
+msgstr "Scheduled window started; checks resume after it ends"
+
+msgid "Scope and exceptions"
+msgstr "Scope and exceptions"
+
+msgid "Select a bridge device, not a switch port:"
+msgstr "Select a bridge device, not a switch port: "
+
+msgid "Select at least one LAN ingress device"
+msgstr "Select at least one LAN ingress device"
+
+msgid "Select at least one day"
+msgstr "Select at least one day"
+
+msgid "Select between one and eight ingress devices"
+msgstr "Select between one and eight ingress devices"
+
+msgid "Selected address families authorized"
+msgstr "Selected address families authorized"
+
+msgid "Selected proxy client is not installed"
+msgstr "Selected proxy client is not installed"
+
+msgid "Self-check execution failed"
+msgstr "Self-check execution failed"
+
+msgid "Self-check heartbeat is delayed; check plugin services"
+msgstr "Self-check heartbeat is delayed; check plugin services"
+
+msgid "Self-check is waiting for its first update"
+msgstr "Self-check is waiting for its first update"
+
+msgid "Self-check passed. Seconds remaining to confirm:"
+msgstr "Self-check passed. Seconds remaining to confirm: "
+
+msgid "Self-check validates configuration and real rule state. A proxy outage keeps protection blocked; it does not disable protection."
+msgstr "Self-check validates configuration and real rule state. A proxy outage keeps protection blocked; it does not disable protection."
+
+msgid "Sender attribution is unknown"
+msgstr "Sender attribution is unknown"
+
+msgid "Service control state needs verification"
+msgstr "Service control state needs verification"
+
+msgid "Service failure trigger"
+msgstr "Service failure trigger"
+
+msgid "Service monitor heartbeat expired"
+msgstr "Service monitor heartbeat expired"
+
+msgid "Service monitor interrupted"
+msgstr "Service monitor interrupted"
+
+msgid "Service monitor status is unavailable; awaiting verification"
+msgstr "Service monitor status is unavailable; awaiting verification"
+
+msgid "Service monitoring is disabled"
+msgstr "Service monitoring is disabled"
+
+msgid "Service name"
+msgstr "Service name"
+
+msgid "Service not started"
+msgstr "Service not started"
+
+msgid "Service or proxy interruption"
+msgstr "Service or proxy interruption"
+
+msgid "Service or proxy interruption detected; waiting and confirming stability again"
+msgstr "Service or proxy interruption detected; waiting and confirming stability again"
+
+msgid "Service protection"
+msgstr "Service protection"
+
+msgid "Service protection delay"
+msgstr "Service protection delay"
+
+msgid "Service protection delay finished; starting enhanced checks"
+msgstr "Service protection delay finished; starting enhanced checks"
+
+msgid "Service protection observation finished; normal check frequency restored"
+msgstr "Service protection observation finished; normal check frequency restored"
+
+msgid "Service protection stability duration"
+msgstr "Service protection stability duration"
+
+msgid "Service protection trigger"
+msgstr "Service protection trigger"
+
+msgid "Service ready"
+msgstr "Service ready"
+
+msgid "Service restart requested"
+msgstr "Service restart requested"
+
+msgid "Service rule preview"
+msgstr "Service rule preview"
+
+msgid "Service unavailable"
+msgstr "Service unavailable"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Set up later"
+msgstr "Set up later"
+
+msgid "Settings changed during synchronization; waiting for the next update."
+msgstr "Settings changed during synchronization; waiting for the next update."
+
+msgid "Settings were restored:"
+msgstr "Settings were restored: "
+
+msgid "Show plugin resource use"
+msgstr "Show plugin resource use"
+
+msgid "Sign out and sign in again to load raw editor permissions."
+msgstr "Sign out and sign in again to load raw editor permissions."
+
+msgid "Sign out of LuCI and sign in again to use updated permissions."
+msgstr "Sign out of LuCI and sign in again to use updated permissions."
+
+msgid "Some damaged log entries were skipped:"
+msgstr "Some damaged log entries were skipped: "
+
+msgid "Specify IPv6 addresses or prefixes"
+msgstr "Specify IPv6 addresses or prefixes"
+
+msgid "Standard resource protection"
+msgstr "Standard resource protection"
+
+msgid "Start time"
+msgstr "Start time"
+
+msgid "Startup"
+msgstr "Startup"
+
+msgid "Startup completed"
+msgstr "Startup completed"
+
+msgid "Startup grace deadline (seconds since boot)"
+msgstr "Startup grace deadline (seconds since boot)"
+
+msgid "Startup log and services indicate recovery"
+msgstr "Startup log and services indicate recovery"
+
+msgid "Startup wait"
+msgstr "Startup wait"
+
+msgid "Startup wait begins"
+msgstr "Startup wait begins"
+
+msgid "Static IP addresses or networks"
+msgstr "Static IP addresses or networks"
+
+msgid "Static whitelist"
+msgstr "Static whitelist"
+
+msgid "Status refreshes automatically every second. Last update:"
+msgstr "Status refreshes automatically every second. Last update: "
+
+msgid "Status updates are delayed; retrying automatically. Protection cannot be confirmed."
+msgstr "Status updates are delayed; retrying automatically. Protection cannot be confirmed."
+
+msgid "Stopped by user"
+msgstr "Stopped by user"
+
+msgid "Success"
+msgstr "Success"
+
+msgid "Success status code"
+msgstr "Success status code"
+
+msgid "Sunday"
+msgstr "Sunday"
+
+msgid "Synchronization failed; check the direct connection, device secret and Worker status."
+msgstr "Synchronization failed; check the direct connection, device secret and Worker status."
+
+msgid "Synchronization failed; check the direct connection, device secret and control service."
+msgstr "Synchronization failed; check the direct connection, device secret and control service."
+
+msgid "Synchronization interval (seconds)"
+msgstr "Synchronization interval (seconds)"
+
+msgid "Synchronization is off"
+msgstr "Synchronization is off"
+
+msgid "Synchronization is off. The following VPS policy is last known state, not a current confirmation. Rules may remain active and dynamic authorizations expire."
+msgstr "Synchronization is off. The following VPS policy is last known state, not a current confirmation. Rules may remain active and dynamic authorizations expire."
+
+msgid "Synchronization needs attention"
+msgstr "Synchronization needs attention"
+
+msgid "Synchronization stopped"
+msgstr "Synchronization stopped"
+
+msgid "Synchronization updates are delayed; protection cannot be confirmed."
+msgstr "Synchronization updates are delayed; protection cannot be confirmed."
+
+msgid "Synchronize with the VPS"
+msgstr "Synchronize with the VPS"
+
+msgid "Synchronize your household public IP and inspect VPS service health through direct HTTPS or Cloudflare. Proxy traffic connects directly to the VPS."
+msgstr "Synchronize your household public IP and inspect VPS service health through direct HTTPS or Cloudflare. Proxy traffic connects directly to the VPS."
+
+msgid "Synchronize your household public IP through a Cloudflare Worker and Tunnel. Proxy traffic continues to connect directly to the VPS."
+msgstr "Synchronize your household public IP through a Cloudflare Worker and Tunnel. Proxy traffic continues to connect directly to the VPS."
+
+msgid "Synchronizing with the VPS"
+msgstr "Synchronizing with the VPS"
+
+msgid "System clock"
+msgstr "System clock"
+
+msgid "System clock changed; checking proxy health again"
+msgstr "System clock changed; checking proxy health again"
+
+msgid "System firewall is busy; try again shortly"
+msgstr "System firewall is busy; try again shortly"
+
+msgid "System time is invalid; Internet access remains blocked"
+msgstr "System time is invalid; Internet access remains blocked"
+
+msgid "System time is invalid; the schedule cannot be verified. Internet access remains blocked."
+msgstr "System time is invalid; the schedule cannot be verified. Internet access remains blocked."
+
+msgid "TCP, UDP and DNS are running; boot protection delay started"
+msgstr "TCP, UDP and DNS are running; boot protection delay started"
+
+msgid "The Agent denied this action; check its local permissions and credentials."
+msgstr "The Agent denied this action; check its local permissions and credentials."
+
+msgid "The SSH port must not overlap a managed proxy service."
+msgstr "The SSH port must not overlap a managed proxy service."
+
+msgid "The SSH rescue timeout must allow two heartbeat intervals plus the request timeout."
+msgstr "The SSH rescue timeout must allow two heartbeat intervals plus the request timeout."
+
+msgid "The VPS Agent must also explicitly allow each action. A request being accepted does not mean recovery is complete."
+msgstr "The VPS Agent must also explicitly allow each action. A request being accepted does not mean recovery is complete."
+
+msgid "The VPS did not confirm the requested inbound policy and address families."
+msgstr "The VPS did not confirm the requested inbound policy and address families."
+
+msgid "The VPS owns this timer. Closing this page, losing the control link or rebooting before confirmation does not keep an unconfirmed policy."
+msgstr "The VPS owns this timer. Closing this page, losing the control link or rebooting before confirmation does not keep an unconfirmed policy."
+
+msgid "The Worker did not confirm this update."
+msgstr "The Worker did not confirm this update."
+
+msgid "The Worker observed the proxy exit. Configure a direct connection before synchronizing."
+msgstr "The Worker observed the proxy exit. Configure a direct connection before synchronizing."
+
+msgid "The connected Agent does not enable Pro Max analysis"
+msgstr "The connected Agent does not enable Pro Max analysis"
+
+msgid "The control request must bypass the proxy. Configure direct routing before enabling synchronization. A detected proxy exit is rejected."
+msgstr "The control request must bypass the proxy. Configure direct routing before enabling synchronization. A detected proxy exit is rejected."
+
+msgid "The control service did not confirm this update."
+msgstr "The control service did not confirm this update."
+
+msgid "The control service observed the proxy exit. Configure a direct connection before synchronizing."
+msgstr "The control service observed the proxy exit. Configure a direct connection before synchronizing."
+
+msgid "The effective timeout also allows for a complete check round and the access permit lifetime, so it may exceed this minimum."
+msgstr "The effective timeout also allows for a complete check round and the access permit lifetime, so it may exceed this minimum."
+
+msgid "The lease must be at least twice the synchronization interval."
+msgstr "The lease must be at least twice the synchronization interval."
+
+msgid "The listener list is limited; unlisted inbound traffic remains subject to the configured policy."
+msgstr "The listener list is limited; unlisted inbound traffic remains subject to the configured policy."
+
+msgid "The listener list is truncated. Discovery does not change access rules."
+msgstr "The listener list is truncated. Discovery does not change access rules."
+
+msgid "The original 06:00 maintenance window is prefilled. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. After the window, consecutive successful checks are required again."
+msgstr "The original 06:00 maintenance window is prefilled. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. After the window, consecutive successful checks are required again."
+
+msgid "The previous VPS policy was restored after an unconfirmed change."
+msgstr "The previous VPS policy was restored after an unconfirmed change."
+
+msgid "The previous settings are loaded into the form. Review them and use Save & Apply to activate them."
+msgstr "The previous settings are loaded into the form. Review them and use Save & Apply to activate them."
+
+msgid "The proxy has remained stable; restoring access and gradually reducing check frequency"
+msgstr "The proxy has remained stable; restoring access and gradually reducing check frequency"
+
+msgid "The request result is unknown; checking operation status without repeating it."
+msgstr "The request result is unknown; checking operation status without repeating it."
+
+msgid "The router restores the previous configuration if you do not confirm. Closing this page does not stop the rollback timer."
+msgstr "The router restores the previous configuration if you do not confirm. Closing this page does not stop the rollback timer."
+
+msgid "The selected SSH port is not owned by a verified SSH service"
+msgstr "The selected SSH port is not owned by a verified SSH service"
+
+msgid "The service monitor was interrupted; revalidating proxy stability"
+msgstr "The service monitor was interrupted; revalidating proxy stability"
+
+msgid "The synchronization process is not updating its status."
+msgstr "The synchronization process is not updating its status."
+
+msgid "These legacy options are ignored:"
+msgstr "These legacy options are ignored: "
+
+msgid "These networks remain reachable during failures. Do not enter 0.0.0.0/0."
+msgstr "These networks remain reachable during failures. Do not enter 0.0.0.0/0."
+
+msgid "This configuration could not be read. A default template is shown for review."
+msgstr "This configuration could not be read. A default template is shown for review."
+
+msgid "This interrupts proxy access. Local protection is prepared before the request is sent."
+msgstr "This interrupts proxy access. Local protection is prepared before the request is sent."
+
+msgid "This prepares default plugin settings for review. Existing protection continues until you Save & Apply."
+msgstr "This prepares default plugin settings for review. Existing protection continues until you Save & Apply."
+
+msgid "This preview has not been applied. Unselected ports keep the existing system firewall policy."
+msgstr "This preview has not been applied. Unselected ports keep the existing system firewall policy."
+
+msgid "This report contains only state names and measurements. It excludes IP addresses, URLs, configuration and raw logs. Review it before sharing. Nothing is uploaded."
+msgstr "This report contains only state names and measurements. It excludes IP addresses, URLs, configuration and raw logs. Review it before sharing. Nothing is uploaded."
+
+msgid "This request must bypass the proxy. The plugin does not change PassWall or routing settings. A detected proxy exit is rejected."
+msgstr "This request must bypass the proxy. The plugin does not change PassWall or routing settings. A detected proxy exit is rejected."
+
+msgid "This sing-box version has a confirmed TUN IPv6 UDP fault; use a verified forwarding mode or a fixed core"
+msgstr "This sing-box version has a confirmed TUN IPv6 UDP fault; use a verified forwarding mode or a fixed core"
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Time and weekdays use the selected fixed UTC offset. Router time zone is unchanged; daylight saving time is not automatic. The default is UTC+00:00."
+msgstr "Time and weekdays use the selected fixed UTC offset. Router time zone is unchanged; daylight saving time is not automatic. The default is UTC+00:00."
+
+msgid "Time zone"
+msgstr "Time zone"
+
+msgid "Timeout per target (seconds)"
+msgstr "Timeout per target (seconds)"
+
+msgid "Too many local proxy ports"
+msgstr "Too many local proxy ports"
+
+msgid "Traffic bypassing this router cannot be protected; validate the actual topology"
+msgstr "Traffic bypassing this router cannot be protected; validate the actual topology"
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "UCI syntax checked. Activation parameters have not been verified."
+msgstr "UCI syntax checked. Activation parameters have not been verified."
+
+msgid "UCI syntax is valid, but activation parameters are incomplete or invalid. Check required fields, numbers, sources and ports."
+msgstr "UCI syntax is valid, but activation parameters are incomplete or invalid. Check required fields, numbers, sources and ports."
+
+msgid "UDP check port"
+msgstr "UDP check port"
+
+msgid "UDP check support library"
+msgstr "UDP check support library"
+
+msgid "UDP check target IPv4"
+msgstr "UDP check target IPv4"
+
+msgid "UDP check target port"
+msgstr "UDP check target port"
+
+msgid "UDP check timeout"
+msgstr "UDP check timeout"
+
+msgid "UDP check timeout (seconds)"
+msgstr "UDP check timeout (seconds)"
+
+msgid "UDP checks require luci-lib-nixio matching the firmware; install it or disable UDP checks"
+msgstr "UDP checks require luci-lib-nixio matching the firmware; install it or disable UDP checks"
+
+msgid "UDP proxy path check"
+msgstr "UDP proxy path check"
+
+msgid "UDP proxy path check is disabled"
+msgstr "UDP proxy path check is disabled"
+
+msgid "UDP query domain"
+msgstr "UDP query domain"
+
+msgid "UDP target must be an IPv4 address"
+msgstr "UDP target must be an IPv4 address"
+
+msgid "UTC offset must be between -12:00 and +14:00"
+msgstr "UTC offset must be between -12:00 and +14:00"
+
+msgid "UTC offset must use ±HH:MM with minutes 00, 15, 30 or 45"
+msgstr "UTC offset must use ±HH:MM with minutes 00, 15, 30 or 45"
+
+msgid "Unable to complete setup"
+msgstr "Unable to complete setup"
+
+msgid "Unable to read VPS address candidates"
+msgstr "Unable to read VPS address candidates"
+
+msgid "Unavailable"
+msgstr "Unavailable"
+
+msgid "Unavailable; routine exit verification continues"
+msgstr "Unavailable; routine exit verification continues"
+
+msgid "Unknown"
+msgstr "Unknown"
+
+msgid "Unknown state"
+msgstr "Unknown state"
+
+msgid "Unrecognized options are preserved but may have no effect:"
+msgstr "Unrecognized options are preserved but may have no effect: "
+
+msgid "Unrestricted"
+msgstr "Unrestricted"
+
+msgid "Unrestricted bypasses filtering for this rule. Whitelist mode uses allowed sources; standard mode enforces limits; observe mode records threshold events without blocking."
+msgstr "Unrestricted bypasses filtering for this rule. Whitelist mode uses allowed sources; standard mode enforces limits; observe mode records threshold events without blocking."
+
+msgid "Unsaved Changes"
+msgstr "Unsaved Changes"
+
+msgid "Unsaved changes"
+msgstr "Unsaved changes"
+
+msgid "Unsupported ingress device type:"
+msgstr "Unsupported ingress device type: "
+
+msgid "Unsupported proxy client"
+msgstr "Unsupported proxy client"
+
+msgid "Update the VPS Agent and Cloudflare Worker before using the new source options."
+msgstr "Update the VPS Agent and Cloudflare Worker before using the new source options."
+
+msgid "Update the VPS Agent and Worker to use policy confirmation."
+msgstr "Update the VPS Agent and Worker to use policy confirmation."
+
+msgid "Update the VPS Agent and control service to the matching protocol version."
+msgstr "Update the VPS Agent and control service to the matching protocol version."
+
+msgid "Use 192.0.2.100/32 for a single-device trial, or 192.0.2.0/24 for the subnet."
+msgstr "Use 192.0.2.100/32 for a single-device trial, or 192.0.2.0/24 for the subnet."
+
+msgid "Use HH:MM:SS in the selected time zone. Overnight windows are supported. Keep the router clock accurate; start and end must differ."
+msgstr "Use HH:MM:SS in the selected time zone. Overnight windows are supported. Keep the router clock accurate; start and end must differ."
+
+msgid "Use an Agent HTTPS endpoint reached through the local SOCKS proxy, separately from the control channel."
+msgstr "Use an Agent HTTPS endpoint reached through the local SOCKS proxy, separately from the control channel."
+
+msgid "Use default mode"
+msgstr "Use default mode"
+
+msgid "Use detected client listener ports"
+msgstr "Use detected client listener ports"
+
+msgid "Use template"
+msgstr "Use template"
+
+msgid "Use this address"
+msgstr "Use this address"
+
+msgid "Use verified SOCKS, proxy listener and DNS redirect exception ports for this plugin. Keep this off to use manual ports. Client, DNS, route and NAT settings are not changed."
+msgstr "Use verified SOCKS, proxy listener and DNS redirect exception ports for this plugin. Keep this off to use manual ports. Client, DNS, route and NAT settings are not changed."
+
+msgid "User cleared the plugin logs"
+msgstr "User cleared the plugin logs"
+
+msgid "Uses the saved Pro connection. Importing an address only edits this form; Save & Apply is still required."
+msgstr "Uses the saved Pro connection. Importing an address only edits this form; Save & Apply is still required."
+
+msgid "VPS access readiness"
+msgstr "VPS access readiness"
+
+msgid "VPS access rules"
+msgstr "VPS access rules"
+
+msgid "VPS access rules are off"
+msgstr "VPS access rules are off"
+
+msgid "VPS address read timed out"
+msgstr "VPS address read timed out"
+
+msgid "VPS confirmation window (seconds)"
+msgstr "VPS confirmation window (seconds)"
+
+msgid "VPS confirmed protection bypass for:"
+msgstr "VPS confirmed protection bypass for: "
+
+msgid "VPS confirmed the update"
+msgstr "VPS confirmed the update"
+
+msgid "VPS default-route measurement"
+msgstr "VPS default-route measurement"
+
+msgid "VPS firewall policy restored"
+msgstr "VPS firewall policy restored"
+
+msgid "VPS firewall verification failed"
+msgstr "VPS firewall verification failed"
+
+msgid "VPS health check interval (seconds)"
+msgstr "VPS health check interval (seconds)"
+
+msgid "VPS health status is unavailable"
+msgstr "VPS health status is unavailable"
+
+msgid "VPS inbound policy"
+msgstr "VPS inbound policy"
+
+msgid "VPS policy applied. Seconds remaining to confirm:"
+msgstr "VPS policy applied. Seconds remaining to confirm: "
+
+msgid "VPS policy does not match selected-port protection; update the Agent."
+msgstr "VPS policy does not match selected-port protection; update the Agent."
+
+msgid "VPS policy is waiting for confirmation"
+msgstr "VPS policy is waiting for confirmation"
+
+msgid "VPS policy was restored. Review the reloaded settings."
+msgstr "VPS policy was restored. Review the reloaded settings."
+
+msgid "VPS public interface address"
+msgstr "VPS public interface address"
+
+msgid "VPS service health"
+msgstr "VPS service health"
+
+msgid "VPS service monitor failed"
+msgstr "VPS service monitor failed"
+
+msgid "VPS service rules"
+msgstr "VPS service rules"
+
+msgid "VPS service verification failed"
+msgstr "VPS service verification failed"
+
+msgid "VPS services"
+msgstr "VPS services"
+
+msgid "VPS services are ready"
+msgstr "VPS services are ready"
+
+msgid "Validate configuration"
+msgstr "Validate configuration"
+
+msgid "Validating the proxy before restoring access"
+msgstr "Validating the proxy before restoring access"
+
+msgid "Verified fallback bandwidth threshold exceeded"
+msgstr "Verified fallback bandwidth threshold exceeded"
+
+msgid "Verify UDP through the proxy"
+msgstr "Verify UDP through the proxy"
+
+msgid "Verify proxy exit IPv4"
+msgstr "Verify proxy exit IPv4"
+
+msgid "Verify with Cloudflare after startup or an interruption"
+msgstr "Verify with Cloudflare after startup or an interruption"
+
+msgid "Verifying recovery"
+msgstr "Verifying recovery"
+
+msgid "View sanitized diagnostic report"
+msgstr "View sanitized diagnostic report"
+
+msgid "Wait before enhanced checks"
+msgstr "Wait before enhanced checks"
+
+msgid "Wait briefly before starting another maintenance operation."
+msgstr "Wait briefly before starting another maintenance operation."
+
+msgid "Wait until the VPS finishes applying the policy."
+msgstr "Wait until the VPS finishes applying the policy."
+
+msgid "Waiting before another restart"
+msgstr "Waiting before another restart"
+
+msgid "Waiting for LAN interface"
+msgstr "Waiting for LAN interface"
+
+msgid "Waiting for PassWall startup to finish and all three services to recover"
+msgstr "Waiting for PassWall startup to finish and all three services to recover"
+
+msgid "Waiting for TCP, UDP and DNS to start"
+msgstr "Waiting for TCP, UDP and DNS to start"
+
+msgid "Waiting for a fresh Agent report"
+msgstr "Waiting for a fresh Agent report"
+
+msgid "Waiting for a fresh household IP authorization"
+msgstr "Waiting for a fresh household IP authorization"
+
+msgid "Waiting for both authenticated heartbeats"
+msgstr "Waiting for both authenticated heartbeats"
+
+msgid "Waiting for client startup and configured services to recover"
+msgstr "Waiting for client startup and configured services to recover"
+
+msgid "Waiting for configured proxy services to start"
+msgstr "Waiting for configured proxy services to start"
+
+msgid "Waiting for local proxy service protection"
+msgstr "Waiting for local proxy service protection"
+
+msgid "Waiting for management verification"
+msgstr "Waiting for management verification"
+
+msgid "Waiting for proxy startup"
+msgstr "Waiting for proxy startup"
+
+msgid "Waiting for proxy verification before restoring access"
+msgstr "Waiting for proxy verification before restoring access"
+
+msgid "Waiting for startup"
+msgstr "Waiting for startup"
+
+msgid "Waiting for the VPS to confirm the result."
+msgstr "Waiting for the VPS to confirm the result."
+
+msgid "Waiting for the required successful proxy checks"
+msgstr "Waiting for the required successful proxy checks"
+
+msgid "Waiting for the scheduled window to end"
+msgstr "Waiting for the scheduled window to end"
+
+msgid "Waiting for this PassWall startup and TCP, UDP and DNS recovery"
+msgstr "Waiting for this PassWall startup and TCP, UDP and DNS recovery"
+
+msgid "Waiting for this restart to finish"
+msgstr "Waiting for this restart to finish"
+
+msgid "Waiting to synchronize"
+msgstr "Waiting to synchronize"
+
+msgid "Waiting to verify after proxy recovery"
+msgstr "Waiting to verify after proxy recovery"
+
+msgid "Warning: a timed window closes public access when it expires. If your IP has changed and no allowed management source is reachable, you may lose SSH access. An unlimited window keeps SSH publicly reachable during the outage; SSH authentication and the system firewall still apply."
+msgstr "Warning: a timed window closes public access when it expires. If your IP has changed and no allowed management source is reachable, you may lose SSH access. An unlimited window keeps SSH publicly reachable during the outage; SSH authentication and the system firewall still apply."
+
+msgid "Watch PassWall runtime log"
+msgstr "Watch PassWall runtime log"
+
+msgid "Watch proxy client runtime log"
+msgstr "Watch proxy client runtime log"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "Weekly (choose days)"
+msgstr "Weekly (choose days)"
+
+msgid "Weekly schedules require between one and seven days"
+msgstr "Weekly schedules require between one and seven days"
+
+msgid "Whitelist mode requires household or static authorized sources."
+msgstr "Whitelist mode requires household or static authorized sources."
+
+msgid "Whitelist only"
+msgstr "Whitelist only"
+
+msgid "Worker HTTPS address"
+msgstr "Worker HTTPS address"
+
+msgid "allows at most 64 entries"
+msgstr " allows at most 64 entries"
+
+msgid "contains an invalid address"
+msgstr " contains an invalid address"
+
+msgid "is outside the allowed range"
+msgstr " is outside the allowed range"
+
+msgid "processes; memory log bytes:"
+msgstr " processes; memory log bytes: "
+
+msgid "proxy-guard-language-name"
+msgstr "English"
+
+msgid "seconds"
+msgstr " seconds"
+
+msgid "· Boot protection"
+msgstr " · Boot protection"
+
+msgid "· Enhanced monitoring:"
+msgstr " · Enhanced monitoring: "
+
+msgid "· Gradually returning to the normal check interval"
+msgstr " · Gradually returning to the normal check interval"
+
+msgid "· Monitor only; no blocking"
+msgstr " · Monitor only; no blocking"
+
+msgid "· No recent update from the monitor"
+msgstr " · No recent update from the monitor"
+
+msgid "· Stable:"
+msgstr " · Stable: "
+
+msgid "· Waiting before checks:"
+msgstr " · Waiting before checks: "
+
+msgid "· Waiting for all three services before starting the delay"
+msgstr " · Waiting for all three services before starting the delay"
+
+msgid "· Within the scheduled window"
+msgstr " · Within the scheduled window"

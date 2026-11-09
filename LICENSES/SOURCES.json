@@ -1,0 +1,150 @@
+{
+  "checked_on": "2026-11-06",
+  "sources": [
+    {
+      "name": "Apache-2.0.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/Apache-2.0.txt",
+      "bytes": 10280,
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "ok": true,
+      "path": "LICENSES/Apache-2.0.txt"
+    },
+    {
+      "name": "GPL-2.0-only.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/GPL-2.0-only.txt",
+      "bytes": 17337,
+      "sha256": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3",
+      "ok": true,
+      "path": "LICENSES/GPL-2.0-only.txt"
+    },
+    {
+      "name": "GPL-3.0-only.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/GPL-3.0-only.txt",
+      "bytes": 34674,
+      "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0",
+      "ok": true,
+      "path": "LICENSES/GPL-3.0-only.txt"
+    },
+    {
+      "name": "LGPL-2.1-only.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/LGPL-2.1-only.txt",
+      "bytes": 26001,
+      "sha256": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
+      "ok": true,
+      "path": "LICENSES/LGPL-2.1-only.txt"
+    },
+    {
+      "name": "LGPL-3.0-or-later.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/LGPL-3.0-or-later.txt",
+      "bytes": 42098,
+      "sha256": "996af0513df21f7496288951c41428a03c174e9e4a9d63665c57d670f845ccb1",
+      "ok": true,
+      "path": "LICENSES/LGPL-3.0-or-later.txt"
+    },
+    {
+      "name": "ISC.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/ISC.txt",
+      "bytes": 737,
+      "sha256": "521c6f0ed8e64736684f89843d16a4df6b4b7449acbcfc6ca6630a3037ca8c53",
+      "ok": true,
+      "path": "LICENSES/ISC.txt"
+    },
+    {
+      "name": "0BSD.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/0BSD.txt",
+      "bytes": 643,
+      "sha256": "e3f18c71e10d673590eb9856c1d79dd3b4b0d65404efb5e8584dbede7edd608b",
+      "ok": true,
+      "path": "LICENSES/0BSD.txt"
+    },
+    {
+      "name": "CC0-1.0.txt",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/CC0-1.0.txt",
+      "bytes": 7048,
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "ok": true,
+      "path": "LICENSES/CC0-1.0.txt"
+    },
+    {
+      "name": "OpenClash-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/vernesong/OpenClash/e553e82e01c697aefbe1555261a503f425e00ccd/LICENSE",
+      "bytes": 1071,
+      "sha256": "bf598f1d704d1a9adbef8eb382b63aee036b500ad11e673f6e5f9e15dda7885d",
+      "ok": true,
+      "path": "LICENSES/UPSTREAM/OpenClash-LICENSE.txt"
+    },
+    {
+      "name": "PassWall-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/Openwrt-Passwall/openwrt-passwall/5e2bbfa8e6a32f7e54a7fe29891a28fb05439e52/LICENSE",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "ok": true,
+      "path": "LICENSES/UPSTREAM/PassWall-LICENSE.txt"
+    },
+    {
+      "name": "PassWall2-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/Openwrt-Passwall/openwrt-passwall2/896c586a27c9a7c0b9e3d75b631965dea86b9945/LICENSE",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "ok": true,
+      "path": "LICENSES/UPSTREAM/PassWall2-LICENSE.txt"
+    },
+    {
+      "name": "Nikki-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/nikkinikki-org/OpenWrt-nikki/78e1a751d55ed0762811f054ee699049473da7b8/LICENSE",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "ok": true,
+      "path": "LICENSES/UPSTREAM/Nikki-LICENSE.txt"
+    },
+    {
+      "name": "HomeProxy-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/immortalwrt/homeproxy/fadaa676104f59ff6ace480a780a258d846d0aec/LICENSE",
+      "bytes": 17992,
+      "sha256": "32b1062f7da84967e7019d01ab805935caa7ab7321a7ced0e30ebe75e5df1670",
+      "ok": true,
+      "path": "LICENSES/UPSTREAM/HomeProxy-LICENSE.txt"
+    },
+    {
+      "name": "LuCI-NOTICE.txt",
+      "url": "https://raw.githubusercontent.com/openwrt/luci/openwrt-24.10/NOTICE",
+      "bytes": 356,
+      "sha256": "155aef176044b85fdc2ac495c71cd631ed46a8164c0eb9afd28da850335ffa04",
+      "ok": true,
+      "path": "LICENSES/UPSTREAM/LuCI-NOTICE.txt"
+    },
+    {
+      "name": "ucode-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/jow-/ucode/master/LICENSE",
+      "bytes": 759,
+      "sha256": "c4957033b46cc769409cb422ba058f3da2e000b685793bab2b2a76275b8d90db",
+      "ok": true,
+      "path": "LICENSES/UPSTREAM/ucode-LICENSE.txt"
+    },
+    {
+      "name": "UCI-Lua-header.txt",
+      "url": "https://raw.githubusercontent.com/openwrt/uci/master/lua/uci.c",
+      "bytes": 524,
+      "sha256": "549714e4b9e7c40fae33cb4f738b00981537c36152c999c77953889934fa9d1d",
+      "ok": true,
+      "path": "LICENSES/UPSTREAM/UCI-Lua-header.txt"
+    },
+    {
+      "name": "UCI-lib-header.txt",
+      "url": "https://raw.githubusercontent.com/openwrt/uci/master/libuci.c",
+      "bytes": 575,
+      "sha256": "beaf0072874cb66e4c2867758c7d04e0a1f99b2326c24e26b848fbf0ee72d8a4",
+      "ok": true,
+      "path": "LICENSES/UPSTREAM/UCI-lib-header.txt"
+    },
+    {
+      "name": "Sing-tun-LICENSE.txt",
+      "path": "LICENSES/UPSTREAM/Sing-tun-LICENSE.txt",
+      "url": "https://github.com/SagerNet/sing-tun/tree/v0.7.13",
+      "sha256": "2f02b7486bcfa90d115c71a20437f3906b6fd5bef81c5dc0efd341399e89d0fd",
+      "bytes": 674,
+      "ok": true,
+      "origin": "Existing optional compatibility directory"
+    }
+  ]
+}

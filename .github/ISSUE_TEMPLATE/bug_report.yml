@@ -1,0 +1,67 @@
+name: Non-security bug / 普通问题
+description: Report a non-security problem with sanitized information. 安全漏洞请先私发邮件。
+title: '[Bug] '
+body:
+- type: markdown
+  attributes:
+    value: '**Security reports are private / 安全漏洞请先私下反馈**
+
+
+      Email [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com) for VPS, authentication, SSH
+      or protection-bypass vulnerabilities. Do not post unpatched exploit details, live deployment IPs
+      or credentials here.
+
+
+      涉及 VPS、认证、SSH 或保护绕过的漏洞，请先发邮件，不要在此公开未修复利用细节、真实部署 IP 或凭据。
+
+
+      **日本語:** 脆弱性の詳細は公開せず、上記メールアドレスへ先に連絡してください。
+
+      **Русский:** Об уязвимостях сначала сообщайте непублично на указанный адрес.
+
+      **فارسی:** آسیب‌پذیری را ابتدا خصوصی به ایمیل بالا گزارش دهید.
+
+
+      This form creates a public issue in a public repository. Checking a box does not make it private.
+      See `SECURITY.md` and its translations. / 公开仓库中的此表单会生成公开 Issue，勾选确认不会让它变为私密。'
+- type: checkboxes
+  id: public-safety
+  attributes:
+    label: Public-reporting check / 公开反馈确认
+    options:
+    - label: This is a non-security issue with no credentials, real deployment IPs or exploitable details.
+        / 这是普通问题，不含凭据、真实部署 IP 或可利用的漏洞细节。
+      required: true
+- type: input
+  id: versions
+  attributes:
+    label: Component and versions / 组件与版本
+    description: Standard, Pro, Agent or Worker, with the actual version. / 填写实际使用的普通版、Pro、Agent 或 Worker
+      版本。
+  validations:
+    required: true
+- type: textarea
+  id: environment
+  attributes:
+    label: Environment / 使用环境
+    description: Firmware or Linux distribution, kernel, architecture, proxy client and mode. Do not include
+      live IPs or secrets. / 固件或发行版、内核、架构、代理客户端和模式；勿填真实 IP 或密钥。
+  validations:
+    required: true
+- type: textarea
+  id: reproduction
+  attributes:
+    label: Steps, expected and actual behavior / 复现、预期与实际行为
+    description: Use an authorized test environment. Describe network paths with documentation addresses.
+      / 在获授权的测试环境复现，用文档地址描述路径。
+  validations:
+    required: true
+- type: textarea
+  id: logs
+  attributes:
+    label: Optional redacted logs / 可选脱敏日志
+    description: Minimal necessary excerpts only; no full production config, HAR, tokens, passwords or
+      private keys. / 仅贴必要片段，不要提交完整生产配置、HAR、token、密码或私钥。
+    render: text
+  validations:
+    required: false

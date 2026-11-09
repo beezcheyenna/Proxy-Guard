@@ -1,0 +1,12 @@
+#!/usr/bin/lua
+-- Invalidate only the applied-code stamp, retaining the previous rule definition.
+local json=require 'luci.jsonc'
+local path='/var/run/proxy-guard/firewall.json'
+local f=io.open(path,'r');if not f then os.exit(0) end
+local text=f:read(262145);f:close()
+if #text>262144 then os.exit(0) end
+local ok,state=pcall(json.parse,text)
+if not ok or type(state)~='table' then os.exit(0) end
+state.stamp='pending-package-refresh'
+f=assert(io.open(path..'.new','w'));assert(f:write(json.stringify(state)));assert(f:close());assert(os.rename(path..'.new',path))
+

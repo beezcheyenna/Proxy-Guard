@@ -1,0 +1,33 @@
+{
+  "admin/services/proxy-guard": {
+    "title": "Proxy Guard",
+    "order": 96,
+    "action": {
+      "type": "view",
+      "path": "proxy-guard/overview"
+    },
+    "depends": {
+      "acl": [
+        "luci-app-proxy-guard"
+      ],
+      "uci": {
+        "proxy_guard": true
+      }
+    }
+  },
+  "admin/services/proxy-guard-raw": {
+    "order": 97,
+    "action": {
+      "type": "view",
+      "path": "proxy-guard/raw"
+    },
+    "depends": {
+      "acl": [
+        "luci-app-proxy-guard"
+      ],
+      "uci": {
+        "proxy_guard": true
+      }
+    }
+  }
+}

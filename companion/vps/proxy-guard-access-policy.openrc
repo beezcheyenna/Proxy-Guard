@@ -1,0 +1,18 @@
+#!/sbin/openrc-run
+description="Restore selected-port Proxy Guard policy before managed proxy services"
+umask=0077
+depend() {
+    need localmount
+    after modules nftables firewall
+    before proxy-guard-access
+}
+start() {
+    checkpath -d -m 0700 /run/proxy-guard-access /var/lib/proxy-guard-access || return 1
+    ebegin "Restoring Proxy Guard selected-port policy"
+    /usr/bin/python3 /opt/proxy-guard-access/agent.py --config /etc/proxy-guard-access/agent.json --restore-policy
+    eend $?
+}
+stop() {
+    # Retain rules across service stops; only explicit uninstall removes them.
+    return 0
+}

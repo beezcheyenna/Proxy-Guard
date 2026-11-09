@@ -1,0 +1,286 @@
+{
+  "schema": 1,
+  "checked_on": "2026-11-07",
+  "own_code_license": "MIT",
+  "scope": "Application source and component provenance; original code MIT, upstream material retains its terms; no runtime restructuring or blanket legal clearance.",
+  "components": [
+    {
+      "name": "LuCI, luci-lib-jsonc, luci-lib-nixio",
+      "role": "runtime libraries/UI",
+      "license_declared": "Apache-2.0",
+      "evidence_url": "https://github.com/openwrt/luci/tree/openwrt-24.10",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "Lua",
+      "role": "interpreter",
+      "license_declared": "MIT",
+      "evidence_url": "https://www.lua.org/license.html",
+      "distribution": "Provided by firmware; installed-version terms apply"
+    },
+    {
+      "name": "ucode, ucode-mod-fs, ucode-mod-uci",
+      "role": "interpreter and bindings",
+      "license_declared": "ISC for ucode; underlying libraries retain their terms",
+      "evidence_url": "https://github.com/jow-/ucode/blob/master/LICENSE",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "libuci",
+      "role": "configuration library",
+      "license_declared": "LGPL-2.1 per checked file header",
+      "evidence_url": "https://github.com/openwrt/uci/blob/master/libuci.c",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "libuci-lua",
+      "role": "in-process Lua binding loaded with require('uci')",
+      "license_declared": "GPL v2 per checked lua/uci.c header; distinct from libuci",
+      "evidence_url": "https://github.com/openwrt/uci/blob/16ff0badbde7e17ec3bd1f827ffe45922956cf86/lua/uci.c",
+      "distribution": "Provided by firmware; not bundled",
+      "review_note": "The checked IPK metadata says LGPL-2.1 while this file says GPL v2. Record both. Existing architecture retained; no blanket exception, infringement finding or legal clearance asserted."
+    },
+    {
+      "name": "nftables / Linux Netfilter",
+      "role": "external rule loader and kernel packet filtering",
+      "license_declared": "See actual upstream version and per-file GPL notices",
+      "evidence_url": "https://netfilter.org/projects/nftables/",
+      "distribution": "Provided separately; no kernel/program binary bundled"
+    },
+    {
+      "name": "curl",
+      "role": "external SOCKS/HTTPS probe",
+      "license_declared": "curl license",
+      "evidence_url": "https://curl.se/docs/copyright.html",
+      "distribution": "Provided separately; not bundled"
+    },
+    {
+      "name": "CA bundle",
+      "role": "TLS trust store",
+      "license_declared": "See actual firmware CA package and certificate notices",
+      "evidence_url": "https://github.com/openwrt/openwrt/tree/openwrt-24.10/package/system/ca-certificates",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "Ruby/YAML",
+      "role": "optional OpenClash configuration parsing",
+      "license_declared": "Installed Ruby and incorporated-library terms",
+      "evidence_url": "https://www.ruby-lang.org/en/about/license.txt",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "Python 3 standard library",
+      "role": "VPS Agent interpreter/runtime",
+      "license_declared": "Python license agreement and incorporated upstream notices",
+      "evidence_url": "https://docs.python.org/3/license.html",
+      "distribution": "Provided by Linux distribution; no interpreter or pip package bundled"
+    },
+    {
+      "name": "systemd / OpenRC / iproute2",
+      "role": "external Linux service and network utilities",
+      "license_declared": "See actual component/version and per-file terms",
+      "evidence_url": "https://github.com/systemd/systemd",
+      "distribution": "Provided by Linux distribution; not bundled"
+    },
+    {
+      "name": "cloudflared",
+      "role": "optional separate tunnel connector",
+      "license_declared": "Apache-2.0",
+      "evidence_url": "https://github.com/cloudflare/cloudflared/blob/master/LICENSE",
+      "distribution": "Installed separately; no connector binary bundled"
+    },
+    {
+      "name": "Xray / sing-box / Mihomo / 3x-ui",
+      "role": "configuration, status and authorized management integration targets",
+      "license_declared": "Each upstream retains its own license; no blanket application of MIT",
+      "evidence_urls": [
+        "https://github.com/XTLS/Xray-core",
+        "https://github.com/SagerNet/sing-box",
+        "https://github.com/MetaCubeX/mihomo",
+        "https://github.com/MHSanaei/3x-ui"
+      ],
+      "distribution": "Separate programs/panels; source and binaries not bundled in LuCI IPKs"
+    },
+    {
+      "name": "firewall4",
+      "role": "external OpenWrt system component",
+      "license_declared": [
+        "PKG_LICENSE:=ISC"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/openwrt/openwrt/openwrt-24.10/package/network/config/firewall4/Makefile",
+      "evidence_sha256": "f9ae968c6d8257e9c76c4c83f060c723c95e20b2bf202981bd1d9e970d754ade",
+      "version_scope": "OpenWrt openwrt-24.10 recipe, not a claim about installed-device bytes",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "netifd",
+      "role": "external OpenWrt system component",
+      "license_declared": [
+        "PKG_LICENSE:=GPL-2.0",
+        "PKG_LICENSE_FILES:="
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/openwrt/openwrt/openwrt-24.10/package/network/config/netifd/Makefile",
+      "evidence_sha256": "317b71345f662ed02d4d16d39076428180ef23096164cddc76f7dcdef4ffbbc4",
+      "version_scope": "OpenWrt openwrt-24.10 recipe, not a claim about installed-device bytes",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "rpcd",
+      "role": "external OpenWrt system component",
+      "license_declared": [
+        "PKG_LICENSE:=ISC",
+        "PKG_LICENSE_FILES:="
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/openwrt/openwrt/openwrt-24.10/package/system/rpcd/Makefile",
+      "evidence_sha256": "63667768914f69f2dc52d1f5ad652b594a45cadef1a9940f1c955dfaae65340d",
+      "version_scope": "OpenWrt openwrt-24.10 recipe, not a claim about installed-device bytes",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "ubus",
+      "role": "external OpenWrt system component",
+      "license_declared": [
+        "PKG_LICENSE:=LGPL-2.1",
+        "PKG_LICENSE_FILES:="
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/openwrt/openwrt/openwrt-24.10/package/system/ubus/Makefile",
+      "evidence_sha256": "de64039644a2a5a081a8477253854c335dcf9d9ff6e2f0461c53a882f42eedf6",
+      "version_scope": "OpenWrt openwrt-24.10 recipe, not a claim about installed-device bytes",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "procd",
+      "role": "external OpenWrt system component",
+      "license_declared": [
+        "PKG_LICENSE:=GPL-2.0",
+        "PKG_LICENSE_FILES:="
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/openwrt/openwrt/openwrt-24.10/package/system/procd/Makefile",
+      "evidence_sha256": "8bc8dee7e3abfc95590544016c38590681c7ee3ffb43433eaab2ede86721ccf4",
+      "version_scope": "OpenWrt openwrt-24.10 recipe, not a claim about installed-device bytes",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "uci",
+      "role": "external OpenWrt system component",
+      "license_declared": [
+        "PKG_LICENSE:=LGPL-2.1",
+        "PKG_LICENSE_FILES:="
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/openwrt/openwrt/openwrt-24.10/package/system/uci/Makefile",
+      "evidence_sha256": "31048bcd6d786bfd94571353ab1c6a0c9f2754bf45fdc4c0af63cec2e3b101bb",
+      "version_scope": "OpenWrt openwrt-24.10 recipe, not a claim about installed-device bytes",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "busybox",
+      "role": "external OpenWrt system component",
+      "license_declared": [
+        "PKG_LICENSE:=GPL-2.0",
+        "PKG_LICENSE_FILES:=LICENSE archival/libarchive/bz/LICENSE"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/openwrt/openwrt/openwrt-24.10/package/utils/busybox/Makefile",
+      "evidence_sha256": "cc8719657f8b3861c8697cef1ad8c697af5288c0a3969ef0afc33d264e355bbc",
+      "version_scope": "OpenWrt openwrt-24.10 recipe, not a claim about installed-device bytes",
+      "distribution": "Provided by firmware; not bundled"
+    },
+    {
+      "name": "PassWall",
+      "role": "integration plus reproduced lifecycle message identifiers/translations",
+      "revision": "5e2bbfa8e6a32f7e54a7fe29891a28fb05439e52",
+      "license_declared": "GPL v3; preserve upstream version grant",
+      "evidence_url": "https://github.com/Openwrt-Passwall/openwrt-passwall/tree/5e2bbfa8e6a32f7e54a7fe29891a28fb05439e52",
+      "license_file": "LICENSES/UPSTREAM/PassWall-LICENSE.txt",
+      "distribution": "Message material is included; whole upstream scripts/cores are not bundled",
+      "source_artifacts": [
+        "package/root/usr/lib/proxy-guard/passwall-log.uc",
+        "tests/passwall_log_corpus.json"
+      ],
+      "upstream_archive_provenance": [
+        {
+          "repo": "openwrt-passwall",
+          "commit": "5e2bbfa8e6a32f7e54a7fe29891a28fb05439e52",
+          "archive_sha256": "e3e6d83698b2033ffa44af447d637730bddf5757b6b0dfa99d0bb5cd6ae4d39d",
+          "source": "https://github.com/Openwrt-Passwall/openwrt-passwall/tree/5e2bbfa8e6a32f7e54a7fe29891a28fb05439e52"
+        }
+      ]
+    },
+    {
+      "name": "PassWall2",
+      "role": "integration plus reproduced lifecycle message identifiers/translations",
+      "revision": "896c586a27c9a7c0b9e3d75b631965dea86b9945",
+      "license_declared": "GPL v3; preserve upstream version grant",
+      "evidence_url": "https://github.com/Openwrt-Passwall/openwrt-passwall2/tree/896c586a27c9a7c0b9e3d75b631965dea86b9945",
+      "license_file": "LICENSES/UPSTREAM/PassWall2-LICENSE.txt",
+      "distribution": "Message material is included; whole upstream scripts/cores are not bundled",
+      "source_artifacts": [
+        "package/root/usr/lib/proxy-guard/passwall-log.uc",
+        "tests/passwall_log_corpus.json"
+      ],
+      "upstream_archive_provenance": [
+        {
+          "repo": "openwrt-passwall2",
+          "commit": "896c586a27c9a7c0b9e3d75b631965dea86b9945",
+          "archive_sha256": "d0d1c5625abd3727957b1e6b8047f77f66ed09d0b06f1a7715d050a6dc5d2d13",
+          "source": "https://github.com/Openwrt-Passwall/openwrt-passwall2/tree/896c586a27c9a7c0b9e3d75b631965dea86b9945"
+        }
+      ]
+    },
+    {
+      "name": "OpenClash",
+      "role": "integration plus reproduced lifecycle message identifiers/translations",
+      "revision": "e553e82e01c697aefbe1555261a503f425e00ccd",
+      "license_declared": "MIT in root license; per-file notices also apply",
+      "evidence_url": "https://github.com/vernesong/OpenClash/tree/e553e82e01c697aefbe1555261a503f425e00ccd",
+      "license_file": "LICENSES/UPSTREAM/OpenClash-LICENSE.txt",
+      "distribution": "Message material is included; whole upstream scripts/cores are not bundled",
+      "source_artifacts": [
+        "package/root/usr/lib/proxy-guard/passwall-log.uc",
+        "tests/passwall_log_corpus.json"
+      ],
+      "upstream_archive_provenance": []
+    },
+    {
+      "name": "Nikki",
+      "role": "integration plus reproduced lifecycle message identifiers/translations",
+      "revision": "78e1a751d55ed0762811f054ee699049473da7b8",
+      "license_declared": "GPL-3.0-or-later (upstream recipe GPL3.0+)",
+      "evidence_url": "https://github.com/nikkinikki-org/OpenWrt-nikki/tree/78e1a751d55ed0762811f054ee699049473da7b8",
+      "license_file": "LICENSES/UPSTREAM/Nikki-LICENSE.txt",
+      "distribution": "Message material is included; whole upstream scripts/cores are not bundled",
+      "source_artifacts": [
+        "package/root/usr/lib/proxy-guard/passwall-log.uc",
+        "tests/passwall_log_corpus.json"
+      ],
+      "upstream_archive_provenance": []
+    },
+    {
+      "name": "HomeProxy",
+      "role": "integration plus reproduced lifecycle message identifiers/translations",
+      "revision": "fadaa676104f59ff6ace480a780a258d846d0aec",
+      "license_declared": "GPL-2.0-only in root/etc/init.d/homeproxy at the pinned revision",
+      "evidence_url": "https://github.com/immortalwrt/homeproxy/tree/fadaa676104f59ff6ace480a780a258d846d0aec",
+      "license_file": "LICENSES/UPSTREAM/HomeProxy-LICENSE.txt",
+      "distribution": "Message material is included; whole upstream scripts/cores are not bundled",
+      "source_artifacts": [
+        "package/root/usr/lib/proxy-guard/passwall-log.uc",
+        "tests/passwall_log_corpus.json"
+      ],
+      "upstream_archive_provenance": []
+    },
+    {
+      "name": "SagerNet/sing-tun",
+      "role": "optional source compatibility patch",
+      "version": "v0.7.13",
+      "license_declared": "GPL-3.0-or-later",
+      "evidence_url": "https://github.com/SagerNet/sing-tun/tree/v0.7.13",
+      "distribution": "Optional source patch included; not automatically installed and no compiled core bundled.",
+      "source_artifacts": [
+        "compat/sing-tun-v0.7.13/"
+      ]
+    }
+  ],
+  "worker_lockfile_inventory": "companion/worker/THIRD_PARTY_DEPENDENCIES.json",
+  "license_sources": "LICENSES/SOURCES.json",
+  "runtime_evidence_note": "References fetched from named upstreams; firmware-installed versions were not queried."
+}

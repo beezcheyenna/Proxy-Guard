@@ -1,0 +1,3 @@
+# No generated fragment exists on a fresh, disabled install.
+# Preserve existing permits without extending their deadlines.
+include "/etc/proxy-guard/fw4-guard*.nft"

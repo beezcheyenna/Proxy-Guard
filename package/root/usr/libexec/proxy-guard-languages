@@ -1,0 +1,12 @@
+#!/usr/bin/lua
+-- Register catalogs without consuming global CLI or other LuCI session deltas.
+assert(os.execute('umask 077; mkdir -p /var/run/proxy-guard/language-uci')==0)
+local cursor=require('uci').cursor('/etc/config','/var/run/proxy-guard/language-uci')
+assert(cursor:load('/etc/config/luci'),'Cannot load LuCI language settings')
+if not cursor:get('luci','languages') then assert(cursor:section('luci','internal','languages',{})) end
+for name,label in pairs({en='English',zh_cn='简体中文 (Chinese)',ja='日本語 (Japanese)',ru='Русский (Russian)',fa='فارسی (Persian)'}) do
+ if cursor:get('luci','languages',name)==nil then assert(cursor:set('luci','languages',name,label)) end
+end
+assert(cursor:commit('luci'),'Cannot register LuCI catalogs')
+os.remove('/var/run/proxy-guard/language-uci')
+
