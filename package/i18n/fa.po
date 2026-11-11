@@ -26,9 +26,6 @@ msgstr ", HTTP "
 msgid "-- Please choose --"
 msgstr "-- لطفاً انتخاب کنید --"
 
-msgid "0 keeps emergency SSH open until household authorization is restored. Use 30 to 3600 for a timed window."
-msgstr "مقدار 0 دسترسی اضطراری SSH را تا بازیابی مجوز IP خانگی باز نگه می‌دارد. برای محدودیت زمانی، 30 تا 3600 ثانیه تعیین کنید."
-
 msgid ":"
 msgstr ": "
 
@@ -77,15 +74,6 @@ msgstr "؛ دفعات شروع دوبارهٔ انتظار: "
 msgid "; waiting to restore access"
 msgstr "؛ در انتظار برقراری دسترسی"
 
-msgid "A confirmation action is already being verified."
-msgstr "نتیجهٔ یک اقدام تأیید در حال بررسی است."
-
-msgid "A maintenance operation is already pending."
-msgstr "یک عملیات نگهداری از قبل در انتظار اجراست."
-
-msgid "A missing or failed remote health report withholds the local access permit. Local proxy checks remain required."
-msgstr "نبودن گزارش سلامت راه دور یا ناموفق‌بودن آن، مانع صدور مجوز دسترسی محلی می‌شود. بررسی‌های محلی پراکسی همچنان الزامی‌اند."
-
 msgid "A package operation is in progress. Try again when it finishes."
 msgstr "عملیات بسته در حال انجام است. پس از پایان آن دوباره تلاش کنید."
 
@@ -113,20 +101,8 @@ msgstr "پارامترهای فعال‌سازی معتبر هستند. محیط
 msgid "Active kernel flowtables"
 msgstr "جدول‌های فعال تخلیهٔ جریان در هسته"
 
-msgid "Add at least one address to an enabled static whitelist."
-msgstr "حداقل یک آدرس را به یک لیست سفید استاتیک فعال اضافه کنید."
-
-msgid "Address families"
-msgstr "خانواده‌های نشانی"
-
 msgid "After recovery, allow Internet access while checking at one-second intervals during observation. Any failure blocks access and restarts the delay. Disabling observation still requires the original recovery checks."
 msgstr "پس از بازیابی، دسترسی به اینترنت برقرار می‌شود و در دورهٔ پایش دقیق، بررسی‌ها با فاصلهٔ یک ثانیه انجام می‌شوند. هر خطا دسترسی را مسدود می‌کند و دورهٔ انتظار را از نو آغاز می‌کند. غیرفعال‌کردن این دوره، بررسی‌های معمول بازیابی را حذف نمی‌کند."
-
-msgid "Agent HTTPS address through the proxy"
-msgstr "نشانی HTTPS عامل از طریق پراکسی"
-
-msgid "Agent started"
-msgstr "Agent راه‌اندازی شد"
 
 msgid "All IPv6 sources on selected ingress devices"
 msgstr "همهٔ مبدأهای IPv6 در رابط‌های ورودی انتخاب‌شده"
@@ -137,32 +113,17 @@ msgstr "توقف یا راه‌اندازی مجدد همهٔ سرویس‌ها�
 msgid "All configured services stopped"
 msgstr "همهٔ سرویس‌های پیکربندی‌شده متوقف شده‌اند"
 
-msgid "All sources keeps standard resource limits active. Household and static addresses are allowed in whitelist mode and exempt from standard limits. Legacy bypass disables this rule protection."
-msgstr "برای همهٔ مبدأها محدودیت منابع استاندارد فعال می‌ماند. نشانی‌های خانگی و ثابت در حالت فهرست مجاز اجازهٔ دسترسی دارند و در حالت استاندارد معاف‌اند. گزینهٔ قدیمی دور زدن، حفاظت این قاعده را غیرفعال می‌کند."
-
-msgid "All sources, resource limits apply"
-msgstr "همهٔ مبدأها، با اعمال محدودیت منابع"
-
 msgid "All three services stop or restart"
 msgstr "توقف یا راه‌اندازی مجدد هر سه سرویس"
 
 msgid "All three services stopped"
 msgstr "هر سه سرویس متوقف شد"
 
-msgid "Allow rebooting the VPS"
-msgstr "اجازهٔ راه‌اندازی مجدد VPS"
-
-msgid "Allow restarting the proxy core"
-msgstr "اجازهٔ راه‌اندازی مجدد هستهٔ پراکسی"
-
 msgid "Allowed LAN IPv4 networks"
 msgstr "شبکه‌های IPv4 مجاز در شبکهٔ محلی"
 
 msgid "Allowed LAN IPv6 networks"
 msgstr "شبکه‌های IPv6 مجاز در شبکهٔ محلی"
-
-msgid "Allowed or exempt sources"
-msgstr "مبدأهای مجاز یا معاف از محدودیت"
 
 msgid "Allowing time for checks to start"
 msgstr "در انتظار شروع بررسی‌ها"
@@ -176,29 +137,14 @@ msgstr "پایشگر مستقل هر پنج ثانیه پیام سلامت اف�
 msgid "An nft flowtable is active; existing connections may bypass blocking. Check and disable flow offloading first."
 msgstr "یک flowtable در nft فعال است؛ اتصال‌های موجود ممکن است مسدودسازی را دور بزنند. ابتدا تخلیهٔ جریان را بررسی و غیرفعال کنید."
 
-msgid "Analysis Agent connected"
-msgstr "عامل تحلیل متصل شد"
-
 msgid "Analysis event"
 msgstr "رویداد تحلیل"
-
-msgid "Analysis reports observations and suspicion only. A repeated payload does not identify the sender as GFW. Full packet capture and the honeypot are off by default and configured on the Agent."
-msgstr "تحلیل فقط مشاهدات و موارد مشکوک را گزارش می‌کند. تکرار محتوای بسته، فرستنده را به‌عنوان GFW شناسایی نمی‌کند. ضبط کامل بسته و honeypot به‌طور پیش‌فرض غیرفعال‌اند و در Agent تنظیم می‌شوند."
-
-msgid "Another VPS policy change is awaiting confirmation."
-msgstr "تغییر دیگری در سیاست VPS در انتظار تأیید است."
 
 msgid "Another configuration transaction is active"
 msgstr "تأیید پیکربندی دیگری در حال انجام است"
 
 msgid "Another session is checking configuration"
 msgstr "نشست دیگری در حال بررسی پیکربندی است"
-
-msgid "Another session is confirming the VPS policy."
-msgstr "نشست دیگری در حال تأیید سیاست VPS است."
-
-msgid "Another settings update is in progress; retry shortly."
-msgstr "به‌روزرسانی دیگری برای تنظیمات در حال انجام است؛ کمی بعد دوباره تلاش کنید."
 
 msgid "Any interruption during sensitive recovery restarts the wait and stability timer. Disabling this option still requires the original consecutive recovery checks."
 msgstr "هر اختلال در دورهٔ پایش دقیق، زمان انتظار و شمارش پایداری را از نو آغاز می‌کند. حتی با غیرفعال‌کردن این گزینه، بررسی‌های موفق متوالی برای بازیابی لازم‌اند."
@@ -260,8 +206,8 @@ msgstr "در انتظار بررسی"
 msgid "Back"
 msgstr "قبلی"
 
-msgid "Bandwidth threshold duration (seconds)"
-msgstr "مدت عبور از آستانهٔ پهنای باند (ثانیه)"
+msgid "Backup HTTPS URL for exit verification"
+msgstr "نشانی پشتیبان HTTPS برای اعتبارسنجی خروجی"
 
 msgid "Block Internet access on proxy failure"
 msgstr "مسدود کردن دسترسی به اینترنت هنگام اختلال پراکسی"
@@ -299,20 +245,11 @@ msgstr "حفاظت هنگام راه‌اندازی آغاز شد؛ در انت�
 msgid "Boot service protection"
 msgstr "حفاظت سرویس هنگام راه‌اندازی"
 
-msgid "Both heartbeats lost for (seconds)"
-msgstr "مدت قطع هم‌زمان هر دو پیام سلامت (ثانیه)"
-
 msgid "Bridge filtering"
 msgstr "فیلترگذاری پل شبکه"
 
 msgid "Bridged traffic enters the IP firewall and may affect switching; blocking is not enabled"
 msgstr "ترافیک پل وارد دیوار آتش IP می‌شود و ممکن است بر سوییچینگ اثر بگذارد؛ مسدودسازی فعال نشده است"
-
-msgid "Bypass all protection (legacy behavior)"
-msgstr "دور زدن همهٔ حفاظت‌ها (سازگاری با تنظیمات قدیمی)"
-
-msgid "Bytes observed"
-msgstr "ترافیک مشاهده‌شده (بایت)"
 
 msgid "CPU (total)"
 msgstr "CPU (مجموع)"
@@ -344,9 +281,6 @@ msgstr "خواندن وضعیت تحلیل ممکن نیست؛ تلاش مجدد
 msgid "Cannot read client log; service and proxy checks continue"
 msgstr "خواندن گزارش کلاینت ممکن نیست؛ بررسی سرویس و پراکسی ادامه دارد"
 
-msgid "Cannot read confirmation status. The VPS rollback timer continues."
-msgstr "خواندن وضعیت تأیید ممکن نیست. زمان‌سنج بازگردانی VPS همچنان فعال است."
-
 msgid "Cannot read firewall rules"
 msgstr "خواندن قواعد دیوار آتش ممکن نیست"
 
@@ -361,9 +295,6 @@ msgstr "خواندن وضعیت یا گزارش‌های افزونه ممکن �
 
 msgid "Cannot read status; protection cannot be confirmed:"
 msgstr "نمی توان وضعیت را خواند؛ حفاظت را نمی توان تایید کرد: "
-
-msgid "Cannot read synchronization status; retrying automatically."
-msgstr "خواندن وضعیت همگام‌سازی ممکن نیست؛ تلاش مجدد به‌صورت خودکار انجام می‌شود."
 
 msgid "Cannot read this session's plugin configuration"
 msgstr "خواندن پیکربندی افزونه برای این نشست ممکن نیست"
@@ -392,12 +323,6 @@ msgstr "وضعیت ضبط بسته"
 msgid "Captured packets"
 msgstr "بسته های ضبط شده"
 
-msgid "Changes take effect after Save & Apply. Stopping synchronization does not remove VPS rules. Dynamic authorizations expire; configured resource limits and SSH rescue remain in effect."
-msgstr "تغییرات پس از «ذخیره و اعمال» اجرا می‌شوند. توقف همگام‌سازی قواعد VPS را حذف نمی‌کند. مجوزهای پویا منقضی می‌شوند؛ محدودیت منابع و دسترسی اضطراری SSH طبق تنظیمات باقی می‌مانند."
-
-msgid "Changes take effect after Save & Apply. When synchronization stops, dynamic leases expire; static and unrestricted rules remain on the VPS."
-msgstr "تغییرات پس از «ذخیره و اعمال» اجرا می‌شوند. با توقف همگام‌سازی، مجوزهای پویا منقضی می‌شوند؛ قواعد ثابت و بدون محدودیت روی VPS باقی می‌مانند."
-
 msgid "Changing only logging options does not restart checks or reset permits. Logs are stored in memory, cleared on reboot, and also sent to the system log."
 msgstr "تغییر گزینه‌های گزارش‌گیری به‌تنهایی، بررسی‌ها را دوباره راه‌اندازی نمی‌کند و مجوزها را بازنشانی نمی‌کند. گزارش‌ها در حافظه‌اند، با راه‌اندازی مجدد پاک می‌شوند و به گزارش سیستم نیز فرستاده می‌شوند."
 
@@ -412,9 +337,6 @@ msgstr "سرویس‌های محلی TCP، UDP و DNS هر ثانیه بررسی
 
 msgid "Check local TCP, UDP and DNS services every second. If all three stop, block protected clients immediately. Keep the existing SOCKS, HTTPS and exit IP checks. Traffic initiated by this router, LAN access and DNS remain available."
 msgstr "سرویس‌های محلی TCP، UDP و DNS هر ثانیه بررسی می‌شوند. اگر هر سه متوقف شوند، اینترنت کلاینت‌های تحت حفاظت بی‌درنگ مسدود می‌شود. بررسی‌های موجود SOCKS، HTTPS و IP خروجی ادامه دارند. ترافیک خود روتر، دسترسی شبکهٔ محلی و DNS حفظ می‌شود."
-
-msgid "Check management readiness"
-msgstr "بررسی آمادگی مسیر مدیریت"
 
 msgid "Check plugin services"
 msgstr "بررسی سرویس‌های افزونه"
@@ -431,14 +353,8 @@ msgstr "قالب مقصد بررسی باید https://domain/path|status_code ب
 msgid "Check targets require an HTTPS domain without credentials or custom ports"
 msgstr "مقصد بررسی باید دامنهٔ HTTPS بدون اطلاعات ورود یا درگاه سفارشی باشد"
 
-msgid "Check the access settings and connection."
-msgstr "تنظیمات دسترسی و اتصال را بررسی کنید."
-
 msgid "Check the selected client every second using its configured TCP, UDP and DNS capabilities. Unconfigured capabilities are shown separately. Keep the existing real proxy checks and preserve router, LAN and DNS access."
 msgstr "کلاینت انتخابی هر ثانیه بر اساس قابلیت‌های پیکربندی‌شدهٔ TCP، UDP و DNS بررسی می‌شود. قابلیت‌های پیکربندی‌نشده جدا نمایش داده می‌شوند. بررسی واقعی پراکسی همچنان انجام می‌شود و دسترسی خود روتر، شبکهٔ محلی و DNS حفظ می‌شود."
-
-msgid "Checking the VPS capability and applying a temporary policy..."
-msgstr "در حال بررسی قابلیت‌های VPS و اعمال موقت سیاست…"
 
 msgid "Checking the applied configuration and protection rules..."
 msgstr "در حال بررسی پیکربندی اعمال‌شده و قواعد حفاظتی…"
@@ -455,17 +371,11 @@ msgstr "بررسی‌ها و گزارش‌گیری"
 msgid "Choose IPv6 scope"
 msgstr "محدودهٔ IPv6 را انتخاب کنید"
 
-msgid "Choose a supported protection mode for this port rule."
-msgstr "برای این قانون پورت، یک حالت حفاظت پشتیبانی‌شده انتخاب کنید."
-
 msgid "Choose an IPv6 protection scope explicitly."
 msgstr "محدودهٔ حفاظت IPv6 را به‌طور مشخص انتخاب کنید."
 
 msgid "Choose any combination of days. An overnight window belongs to its start day: Monday 23:00–01:00 continues into Tuesday morning."
 msgstr "هر ترکیبی از روزها را انتخاب کنید. بازهٔ عبوری از نیمه‌شب متعلق به روز آغاز است؛ مثلاً دوشنبه 23:00–01:00 تا صبح سه‌شنبه ادامه دارد."
-
-msgid "Choose the public address families to authorize dynamically. Removing a family revokes its dynamic lease after the VPS confirms the update; static rules remain independent."
-msgstr "خانواده‌های نشانی عمومی را برای مجازسازی پویا انتخاب کنید. حذف یک خانواده، پس از تأیید VPS مجوز پویای آن را لغو می‌کند؛ قواعد ثابت مستقل‌اند."
 
 msgid "Clear logs"
 msgstr "پاک‌کردن گزارش‌ها"
@@ -503,9 +413,6 @@ msgstr "راه‌اندازی کلاینت و سرویس‌های پیکربند
 msgid "Close"
 msgstr "بستن"
 
-msgid "Cloudflare Worker and Tunnel"
-msgstr "Cloudflare Worker و Tunnel"
-
 msgid "Cloudflare data center"
 msgstr "مرکز دادهٔ Cloudflare"
 
@@ -521,20 +428,11 @@ msgstr "Cloudflare یک خروجی متفاوت را گزارش کرد؛ انت�
 msgid "Combined LAN exemptions must not cover the entire Internet"
 msgstr "مجموع استثناهای شبکهٔ محلی نباید کل اینترنت را پوشش دهد"
 
-msgid "Concurrent connection limit"
-msgstr "سقف اتصال‌های هم‌زمان"
-
-msgid "Concurrent connection threshold exceeded"
-msgstr "تعداد اتصال‌های هم‌زمان از آستانه گذشته است"
-
 msgid "Configuration changed during UDP check; waiting for revalidation"
 msgstr "پیکربندی هنگام بررسی UDP تغییر کرد؛ در انتظار اعتبارسنجی دوباره"
 
 msgid "Configuration changed elsewhere. Reload it before saving."
 msgstr "تنظیمات در صفحه‌ای دیگر تغییر کرده‌اند. پیش از ذخیره، آن‌ها را دوباره بارگیری کنید."
-
-msgid "Configuration changed elsewhere. Review saved settings and VPS state before applying again."
-msgstr "تنظیمات در جای دیگری تغییر کرده‌اند. پیش از اعمال مجدد، تنظیمات ذخیره‌شده و وضعیت VPS را بررسی کنید."
 
 msgid "Configuration format"
 msgstr "قالب پیکربندی"
@@ -563,9 +461,6 @@ msgstr "از 1 تا 16 درگاه سرویس DNS تعیین کنید"
 msgid "Configure between 2 and 4 HTTPS check targets"
 msgstr "از 2 تا 4 مقصد بررسی HTTPS تعیین کنید"
 
-msgid "Configure observation ports and capture duration on the VPS Agent. Raw evidence and honeypots require Pro Max."
-msgstr "درگاه‌های مشاهده و مدت ضبط را در VPS Agent تعیین کنید. شواهد خام و honeypot به Pro Max نیاز دارند."
-
 msgid "Configured flow offloading"
 msgstr "تخلیهٔ جریان در تنظیمات"
 
@@ -578,26 +473,11 @@ msgstr "سرویس پراکسی پیکربندی‌شده قطع شده است"
 msgid "Confirm"
 msgstr "تأیید"
 
-msgid "Confirm VPS policy"
-msgstr "تأیید سیاست VPS"
-
-msgid "Confirm VPS policy changes before keeping them"
-msgstr "حفظ تغییرات سیاست VPS تنها پس از تأیید"
-
 msgid "Confirm protection settings"
 msgstr "تأیید تنظیمات حفاظتی"
 
-msgid "Confirm that the synchronization domain uses a direct connection."
-msgstr "تأیید کنید که دامنهٔ همگام‌سازی از اتصال مستقیم استفاده می‌کند."
-
 msgid "Confirm the IPv6 scope independently of IPv4."
 msgstr "محدودهٔ IPv6 را مستقل از IPv4 بررسی و تأیید کنید."
-
-msgid "Confirm the SSH management session in settings"
-msgstr "تایید جلسه مدیریت SSH در تنظیمات"
-
-msgid "Confirmation result is unknown. Checking again without repeating policy changes."
-msgstr "نتیجهٔ تأیید مشخص نیست. بررسی بدون تکرار تغییر سیاست ادامه دارد."
 
 msgid "Confirming consecutive failures"
 msgstr "در حال تأیید خطاهای متوالی"
@@ -608,17 +488,8 @@ msgstr "در حال تأیید بازیابی پراکسی"
 msgid "Confirming recovery"
 msgstr "در حال تأیید بازیابی"
 
-msgid "Connect by SSH from an authorized management address, then check again"
-msgstr "از نشانی مدیریتی مجاز با SSH متصل شوید و سپس دوباره بررسی کنید"
-
-msgid "Connection burst allowance"
-msgstr "ظرفیت اتصال‌های ناگهانی"
-
 msgid "Connection checks"
 msgstr "بررسی‌های اتصال"
-
-msgid "Connection settings"
-msgstr "تنظیمات اتصال"
 
 msgid "Connectivity monitor delayed"
 msgstr "به‌روزرسانی پایش اتصال تأخیر دارد"
@@ -634,18 +505,6 @@ msgstr "تعداد بررسی‌های موفق متوالی برای بازیا
 
 msgid "Continue"
 msgstr "ادامه"
-
-msgid "Control channel"
-msgstr "کانال کنترل"
-
-msgid "Control heartbeat age (seconds)"
-msgstr "زمان سپری‌شده از آخرین پیام سلامت کنترل (ثانیه)"
-
-msgid "Control request timeout (seconds)"
-msgstr "مهلت درخواست کنترل (ثانیه)"
-
-msgid "Control service HTTPS address"
-msgstr "نشانی HTTPS سرویس کنترل"
 
 msgid "Current protection reason"
 msgstr "دلیل حفاظت فعلی"
@@ -665,9 +524,6 @@ msgstr "درگاه‌های سرویس DNS نباید با درگاه‌های �
 msgid "Days of the week"
 msgstr "روزهای هفته"
 
-msgid "Default port protection mode"
-msgstr "حالت پیش‌فرض حفاظت پورت"
-
 msgid "Default template"
 msgstr "الگوی پیش‌فرض"
 
@@ -686,29 +542,14 @@ msgstr "گزارش‌های تفصیلی بررسی"
 msgid "Detect one installed client automatically. When several are installed, select the client to monitor. This does not modify the client configuration."
 msgstr "یک کلاینت نصب‌شده خودکار شناسایی می‌شود. اگر چند کلاینت نصب است، یکی را برای پایش انتخاب کنید. پیکربندی کلاینت تغییر نمی‌کند."
 
-msgid "Device ID"
-msgstr "شناسهٔ دستگاه"
-
-msgid "Device secret"
-msgstr "کلید محرمانهٔ دستگاه"
-
-msgid "Direct HTTPS to Agent"
-msgstr "اتصال مستقیم HTTPS به Agent"
-
 msgid "Disabled"
 msgstr "غیرفعال"
 
 msgid "Discover listening services automatically"
 msgstr "کشف خودکار سرویس‌های شنونده"
 
-msgid "Discovered listeners"
-msgstr "سرویس‌های شنوندهٔ شناسایی‌شده"
-
 msgid "Discovered listeners are candidates only; add a service rule to manage a port. Unrestricted rules add no source restriction and do not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
 msgstr "سرویس‌های شنوندهٔ شناسایی‌شده فقط پیشنهادند؛ برای مدیریت درگاه، قاعدهٔ سرویس اضافه کنید. قواعد بدون محدودیت، مبدأ را محدود نمی‌کنند و دیوار آتش سیستم را دور نمی‌زنند. خانواده‌های نشانی همگام‌نشده در قواعد پویا همچنان مسدودند."
-
-msgid "Discovery lists candidate ports only. Whitelist mode requires an authorized source; standard mode applies resource limits; observe mode records without blocking. Unrestricted rules keep the original system firewall behavior."
-msgstr "کشف خودکار فقط درگاه‌های پیشنهادی را فهرست می‌کند. حالت فهرست مجاز به مبدأ مجاز نیاز دارد؛ حالت استاندارد محدودیت منابع را اعمال می‌کند؛ حالت مشاهده فقط ثبت می‌کند و مسدود نمی‌کند. قواعد بدون محدودیت، رفتار فعلی دیوار آتش سیستم را حفظ می‌کنند."
 
 msgid "Dismiss"
 msgstr "بستن"
@@ -725,23 +566,8 @@ msgstr "دریافت گزارش تحلیل محلی"
 msgid "Download report"
 msgstr "دریافت گزارش"
 
-msgid "Dynamic lease duration (seconds)"
-msgstr "مدت اعتبار مجوز پویا (ثانیه)"
-
-msgid "Each rule has its own mode, sources, thresholds and timers. Ports grouped in one rule share these settings. Create separate rules for different settings."
-msgstr "هر قانون حالت، مبدأهای مجاز، آستانه‌ها و زمان‌بندی‌های مستقل دارد. پورت‌های یک قانون این تنظیمات را به اشتراک می‌گذارند. برای تنظیمات متفاوت، قوانین جداگانه بسازید."
-
 msgid "Edit the complete UCI configuration for this plugin. Save stages changes; Save & Apply validates and activates them. Existing secret values are preserved by placeholders."
 msgstr "پیکربندی کامل UCI این افزونه را ویرایش کنید. «ذخیره» فقط تغییرات را موقتاً ثبت می‌کند؛ «ذخیره و اعمال» آن‌ها را اعتبارسنجی و فعال می‌کند. مقادیر محرمانهٔ موجود با جای‌نگهدار حفظ می‌شوند."
-
-msgid "Emergency access active"
-msgstr "دسترسی اضطراری فعال"
-
-msgid "Emergency source scope"
-msgstr "مبدأهای مجاز دسترسی اضطراری"
-
-msgid "Enable VPS access rules"
-msgstr "فعال‌سازی قواعد دسترسی به VPS"
 
 msgid "Enable after Save & Apply"
 msgstr "فعال‌سازی پس از ذخیره و اعمال"
@@ -749,29 +575,17 @@ msgstr "فعال‌سازی پس از ذخیره و اعمال"
 msgid "Enable boot protection"
 msgstr "فعال‌سازی حفاظت هنگام راه‌اندازی"
 
-msgid "Enable emergency SSH access"
-msgstr "فعال‌سازی دسترسی اضطراری SSH"
-
 msgid "Enable enhanced monitoring after recovery"
 msgstr "فعال‌سازی پایش دقیق پس از بازیابی"
 
 msgid "Enable protection"
 msgstr "فعال‌سازی حفاظت"
 
-msgid "Enable proxy-path heartbeat"
-msgstr "فعال‌سازی پیام سلامت مستقل مسیر پراکسی"
-
 msgid "Enable scheduled protection"
 msgstr "فعال‌سازی حفاظت زمان‌بندی‌شده"
 
-msgid "Enable the matching action locally and on the VPS Agent first."
-msgstr "ابتدا مجوز همان عملیات را هم در تنظیمات محلی و هم در VPS Agent فعال کنید."
-
 msgid "Enabled"
 msgstr "فعال"
-
-msgid "Enabled service rules must not overlap on the same protocol."
-msgstr "قواعد فعال سرویس نباید روی یک پروتکل، درگاه‌های هم‌پوشان داشته باشند."
 
 msgid "End time"
 msgstr "زمان پایان"
@@ -797,9 +611,6 @@ msgstr "مدت پایش دقیق (ثانیه)"
 msgid "Enhanced observation period (seconds)"
 msgstr "دورهٔ پایش دقیق (ثانیه)"
 
-msgid "Enter 0 to keep rescue open, or an integer from 30 to 3600 seconds."
-msgstr "برای باز ماندن دسترسی اضطراری، 0 و برای محدود کردن زمان، عدد صحیحی از 30 تا 3600 ثانیه وارد کنید."
-
 msgid "Enter IPv6 addresses or prefixes, or explicitly choose no IPv6 matching."
 msgstr "نشانی‌ها یا پیشوندهای IPv6 را وارد کنید، یا صریحاً عدم تطبیق IPv6 را انتخاب کنید."
 
@@ -809,29 +620,11 @@ msgstr "پیش از فعال‌سازی بررسی UDP، مقصد DNS را وا�
 msgid "Enter a Worker HTTPS root URL without a path or credentials."
 msgstr "نشانی ریشهٔ HTTPS مربوط به Worker را بدون مسیر یا اطلاعات ورود وارد کنید."
 
-msgid "Enter a control-service HTTPS root URL without a path or credentials."
-msgstr "نشانی ریشهٔ HTTPS سرویس کنترل را بدون مسیر یا اطلاعات ورود وارد کنید."
-
 msgid "Enter a valid HH:MM:SS time"
 msgstr "زمان معتبر را با قالب HH:MM:SS وارد کنید"
 
-msgid "Enter a valid device ID."
-msgstr "یک شناسه معتبر را وارد کنید."
-
 msgid "Enter manually"
 msgstr "ورود دستی"
-
-msgid "Enter ports from 1 to 65535, or a port range."
-msgstr "درگاهی از 1 تا 65535 یا یک بازهٔ درگاه وارد کنید."
-
-msgid "Enter the paired device secret."
-msgstr "کلید محرمانهٔ دستگاه جفت‌شده را وارد کنید."
-
-msgid "Enter the secret for the independent proxy heartbeat."
-msgstr "کلید محرمانهٔ پیام سلامت مستقل مسیر پراکسی را وارد کنید."
-
-msgid "Enter valid IPv4 or IPv6 addresses or CIDR networks."
-msgstr "آدرس های معتبر IPv4 یا IPv6 یا شبکه های CIDR را وارد کنید."
 
 msgid "Enter your actual proxy exit IPv4 before enabling. A different exit or an unreachable verification service is treated as a failure."
 msgstr "پیش از فعال‌سازی، IPv4 واقعی خروجی پراکسی را وارد کنید. تفاوت خروجی یا در دسترس نبودن سرویس اعتبارسنجی، شکست محسوب می‌شود."
@@ -863,6 +656,9 @@ msgstr "نتیجهٔ اعتبارسنجی خروجی: "
 msgid "Exit verification:"
 msgstr "اعتبارسنجی خروجی: "
 
+msgid "Exit verification: not performed because the connectivity check failed"
+msgstr "بررسی IP خروجی: به‌دلیل ناموفق بودن بررسی اتصال انجام نشد"
+
 msgid "Expected IPv4 source"
 msgstr "منبع IPv4 مورد انتظار"
 
@@ -889,12 +685,6 @@ msgstr "آستانهٔ بررسی‌های ناموفق"
 
 msgid "Fallback bandwidth (bytes per second)"
 msgstr "پهنای باند fallback (بایت بر ثانیه)"
-
-msgid "Fallback bandwidth monitoring needs a trusted data source configured on the VPS Agent."
-msgstr "پایش پهنای باند fallback به منبع دادهٔ قابل اعتمادِ پیکربندی‌شده در VPS Agent نیاز دارد."
-
-msgid "Fallback bandwidth per direction (bytes per second)"
-msgstr "پهنای باند fallback در هر جهت (بایت بر ثانیه)"
 
 msgid "Fast checks are not ready; Internet access remains blocked"
 msgstr "بررسی‌های سریع آماده نیستند؛ اینترنت همچنان مسدود است"
@@ -959,26 +749,11 @@ msgstr "اتصال Honeypot"
 msgid "Honeypot started"
 msgstr "Honeypot شروع شد"
 
-msgid "Household IP and static whitelist"
-msgstr "IP عمومی خانگی و فهرست ثابت مجاز"
-
-msgid "Household public IP"
-msgstr "IP عمومی خانگی"
-
 msgid "I have checked the IPv6 scope independently of IPv4"
 msgstr "محدودهٔ IPv6 را مستقل از IPv4 بررسی کرده‌ام"
 
 msgid "I have confirmed the Worker domain uses a direct connection"
 msgstr "تأیید کرده‌ام که دامنهٔ Worker از اتصال مستقیم استفاده می‌کند"
-
-msgid "I have confirmed the control service uses a direct connection"
-msgstr "من تایید کرده ام که سرویس کنترل از یک اتصال مستقیم استفاده می کند."
-
-msgid "I have verified an authorized SSH management session"
-msgstr "من یک جلسه مدیریت SSH را تایید کرده ام"
-
-msgid "IP filtering"
-msgstr "محدودسازی مبدأ IP"
 
 msgid "IPv4"
 msgstr "IPv4"
@@ -1012,9 +787,6 @@ msgstr "ترافیک IPv6 خارج از این محدودهٔ حفاظت است"
 
 msgid "Import expected IPv4 from VPS"
 msgstr "دریافت IPv4 مورد انتظار از VPS"
-
-msgid "Independent proxy heartbeat"
-msgstr "پیام سلامت مستقل مسیر پراکسی"
 
 msgid "Ingress device does not exist:"
 msgstr "رابط ورودی وجود ندارد: "
@@ -1063,9 +835,6 @@ msgstr "دسترسی اینترنت برقرار است؛ پایش دقیق: "
 
 msgid "Internet restored; observation begins"
 msgstr "دسترسی اینترنت برقرار شد؛ پایش آغاز می‌شود"
-
-msgid "Interrupted; not repeated automatically"
-msgstr "عملیات قطع شد؛ خودکار تکرار نمی‌شود"
 
 msgid "Interruption detected"
 msgstr "قطع ارتباط تشخیص داده شد"
@@ -1148,9 +917,6 @@ msgstr "قالب پاسخ وضعیت یا گزارش نامعتبر است"
 msgid "Keep Internet access blocked during this delay. Disabling this option starts enhanced checks immediately."
 msgstr "در دورهٔ انتظار، اینترنت مسدود می‌ماند. با غیرفعال‌کردن این گزینه، بررسی‌های دقیق بی‌درنگ آغاز می‌شوند."
 
-msgid "Keep VPS policy"
-msgstr "حفظ سیاست VPS"
-
 msgid "Keep scheduled protection enabled"
 msgstr "حفاظت زمان‌بندی‌شده فعال بماند"
 
@@ -1169,9 +935,6 @@ msgstr "دستگاه‌های ورودی شبکهٔ محلی"
 msgid "Last Cloudflare event verification"
 msgstr "آخرین تایید رویداد Cloudflare"
 
-msgid "Last attempt"
-msgstr "آخرین تلاش"
-
 msgid "Last check:"
 msgstr "آخرین بررسی: "
 
@@ -1180,24 +943,6 @@ msgstr "آخرین بررسی تکمیل‌شده"
 
 msgid "Latest connectivity check"
 msgstr "آخرین بررسی اتصال"
-
-msgid "Lease expires"
-msgstr "زمان انقضای مجوز"
-
-msgid "Leave empty to keep the paired device secret."
-msgstr "برای حفظ کلید محرمانهٔ دستگاه جفت‌شده، خالی بگذارید."
-
-msgid "Leave empty to keep the paired secret."
-msgstr "برای حفظ کلید محرمانهٔ جفت‌شده، خالی بگذارید."
-
-msgid "Limit concurrent connections"
-msgstr "محدودیت اتصالات همزمان"
-
-msgid "Limit new connection rate"
-msgstr "محدودسازی نرخ اتصال‌های جدید"
-
-msgid "Limit verified fallback bandwidth"
-msgstr "محدودسازی پهنای باند fallback تأییدشده"
 
 msgid "Link-local, multicast and the router's own management addresses remain accessible."
 msgstr "نشانی‌های link-local، چندپخشی و نشانی‌های مدیریت خود روتر همچنان در دسترس‌اند."
@@ -1217,9 +962,6 @@ msgstr "درگاه محلی SOCKS"
 msgid "Local diagnostic report"
 msgstr "گزارش تشخیصی محلی"
 
-msgid "Local protection could not be prepared; the remote action was not sent."
-msgstr "حفاظت محلی را نمی توان آماده کرد؛ اقدام از راه دور ارسال نشد."
-
 msgid "Local protection was enabled before remote maintenance; awaiting verification."
 msgstr "حفاظت محلی پیش از نگهداری راه دور فعال شد؛ در انتظار تأیید."
 
@@ -1231,9 +973,6 @@ msgstr "درگاه پراکسی محلی"
 
 msgid "Local self-check could not complete"
 msgstr "تکمیل خودآزمایی محلی ممکن نیست"
-
-msgid "Local settings were restored or synchronization stopped. The remote policy still needs verification."
-msgstr "تنظیمات محلی بازگردانده شده یا همگام‌سازی متوقف شده است. سیاست سمت سرور هنوز باید بررسی شود."
 
 msgid "Log records were missed"
 msgstr "بخشی از رکوردهای گزارش خوانده نشده است"
@@ -1253,29 +992,8 @@ msgstr "گزارش‌ها در حافظهٔ RAM"
 msgid "Low"
 msgstr "کم"
 
-msgid "Maintenance operation"
-msgstr "عملیات نگهداری"
-
-msgid "Maintenance record storage needs attention; restart actions are disabled."
-msgstr "ذخیره‌سازی سوابق نگهداری نیاز به بررسی دارد؛ عملیات راه‌اندازی مجدد غیرفعال است."
-
 msgid "Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."
 msgstr "یک درخواست اضافی پس از نخستین آماده‌شدن پراکسی در بوت و یک درخواست پس از بازیابی هر قطع ارتباط انجام می‌شود. نشانه‌های یک قطع ارتباط ادغام می‌شوند. زمان‌بندی روزانه یا درخواست مکرر وجود ندارد. پایان مهلت Cloudflare جایگزین اعتبارسنجی معمول و الزامی خروجی نیست؛ عدم تطابق خروجی نیازمند حفاظت است."
-
-msgid "Manage SSH access"
-msgstr "مدیریت دسترسی SSH"
-
-msgid "Management IP addresses or networks"
-msgstr "نشانی‌ها یا شبکه‌های مدیریت"
-
-msgid "Management addresses and last household IP"
-msgstr "آدرس های مدیریت و آخرین IP خانگی"
-
-msgid "Management check"
-msgstr "بررسی مدیریت"
-
-msgid "Management protection active"
-msgstr "حفاظت دسترسی مدیریت فعال است"
 
 msgid "Maximum restarts within the window"
 msgstr "سقف دفعات راه‌اندازی مجدد در بازه"
@@ -1355,18 +1073,6 @@ msgstr "نیاز به بررسی"
 msgid "Network check status expired; waiting and confirming stability again"
 msgstr "وضعیت بررسی شبکه منقضی شد؛ انتظار و تأیید پایداری دوباره انجام می‌شود"
 
-msgid "New connection cooldown (seconds)"
-msgstr "مدت توقف پذیرش اتصال‌های جدید (ثانیه)"
-
-msgid "New connection rate exceeded"
-msgstr "نرخ اتصال‌های جدید از آستانه گذشته است"
-
-msgid "New connections per second"
-msgstr "اتصالات جدید در ثانیه"
-
-msgid "New connections temporarily limited"
-msgstr "اتصال‌های جدید موقتاً محدود شده‌اند"
-
 msgid "Next"
 msgstr "بعدی"
 
@@ -1384,9 +1090,6 @@ msgstr "دستگاه ورودی مناسبی در شبکهٔ محلی یافت �
 
 msgid "No log entries"
 msgstr "گزارشی ثبت نشده است"
-
-msgid "No protection: bypass enabled"
-msgstr "بدون حفاظت: حالت دور زدن فعال است"
 
 msgid "No recovery event recorded"
 msgstr "هیچ رویداد بازیابی ثبت نشده است"
@@ -1415,12 +1118,6 @@ msgstr "هنوز پیکربندی نشده است"
 msgid "Not running"
 msgstr "اجرا نمی‌شود"
 
-msgid "Observation window (seconds)"
-msgstr "بازهٔ آماری (ثانیه)"
-
-msgid "Observe only"
-msgstr "فقط مشاهده و ثبت"
-
 msgid "Observed proxy exit"
 msgstr "نشانی خروجی مشاهده‌شدهٔ پراکسی"
 
@@ -1430,35 +1127,17 @@ msgstr "هنگام بوت یا نخستین فعال‌سازی، کلاینت�
 msgid "On proxy failure, block Internet traffic in both directions for selected devices where traffic actually passes through this router or proxy. LAN access remains available. Return traffic bypassing this device cannot be blocked. Disabled on first install; start with monitoring, then test one device."
 msgstr "هنگام خرابی پراکسی، ترافیک اینترنتِ دستگاه‌های انتخاب‌شده را فقط در مسیرهایی که واقعاً از این روتر یا پراکسی آن عبور می‌کنند، در هر دو جهت مسدود می‌کند. دسترسی به شبکهٔ محلی حفظ می‌شود. ترافیک برگشتی که از این دستگاه عبور نمی‌کند قابل مسدودسازی نیست. در نصب اولیه غیرفعال است؛ ابتدا حالت نظارت را انتخاب کنید و سپس با یک دستگاه آزمایش کنید."
 
-msgid "Only add ports you intend to filter. Selecting a panel, API, or subscription port filters that service too. Services sharing the same IP, protocol, and port cannot be separated by URL path or SNI here. SSH has separate settings."
-msgstr "فقط پورت‌هایی را اضافه کنید که می‌خواهید فیلتر شوند. با انتخاب پورت پنل، API یا اشتراک، آن سرویس نیز فیلتر می‌شود. سرویس‌هایی با IP، پروتکل و پورت یکسان را نمی‌توان در این بخش بر اساس مسیر URL یا SNI از هم جدا کرد. SSH تنظیمات جداگانه دارد."
-
-msgid "Only enabled service rules restrict their selected ports. Other ports remain under the existing system firewall. SSH is not managed unless you add a rule."
-msgstr "فقط قوانین خدمات فعال پورت های انتخاب شده خود را محدود می کنند، پورت های دیگر تحت فایروال سیستم موجود باقی می مانند. SSH مدیریت نمی شود مگر اینکه شما یک قاعده اضافه کنید."
-
-msgid "Only selected service ports are managed. Other ports keep the existing system firewall policy. SSH management is separate and disabled by default."
-msgstr "فقط پورت های خدمات انتخاب شده مدیریت می شوند، پورت های دیگر سیاست فایروال سیستم موجود را حفظ می کنند. مدیریت SSH به طور پیش فرض جداگانه و غیرفعال است."
-
-msgid "Only the session that applied this policy can confirm it."
-msgstr "تنها نشستی که این سیاست را اعمال کرده می‌تواند آن را تأیید کند."
-
 msgid "Only traffic passing through this router can be protected. Settings take effect only after Save & Apply."
 msgstr "فقط ترافیکی که از این مسیریاب عبور می‌کند قابل حفاظت است. تنظیمات تنها پس از انتخاب «ذخیره و اعمال» اجرا می‌شوند."
 
-msgid "Open until household authorization is restored"
-msgstr "تا بازیابی مجوز IP خانگی باز می‌ماند"
-
 msgid "Operating mode"
 msgstr "حالت عملیاتی"
-
-msgid "Operation failed"
-msgstr "عملیات ناموفق بود"
 
 msgid "Option \"%s\" contains an invalid input value."
 msgstr "مقدار ورودی گزینهٔ «%s» نامعتبر است."
 
 msgid "Optional check: send a DNS-format UDP request through local SOCKS5 UDP ASSOCIATE. Requires luci-lib-nixio and a proxy with UDP support; never falls back to a direct connection. Failure counts as a failed check round. The result covers only this target, not every UDP service."
-msgstr "چک اختیاری: ارسال یک درخواست DNS-format UDP از طریق محلی SOCKS5 UDP ASSOCIATE.نیازهای luci-lib-nixio و یک پراکسی با پشتیبانی UDP؛ هرگز به عنوان یک اتصال مستقیم به حساب نمی آید."
+msgstr "بررسی اختیاری: یک درخواست UDP با قالب DNS از طریق قابلیت UDP ASSOCIATE در SOCKS5 محلی ارسال می‌شود. به luci-lib-nixio و پروکسی با پشتیبانی UDP نیاز دارد و هرگز به اتصال مستقیم تغییر مسیر نمی‌دهد. ناموفق بودن این بررسی، کل دور بررسی را ناموفق می‌کند. نتیجه فقط مسیر UDP به مقصد انتخاب‌شده را نشان می‌دهد، نه همهٔ سرویس‌های UDP."
 
 msgid "Optional. When off, connectivity checks continue without requiring or comparing an expected exit address."
 msgstr "اختیاری است. در حالت غیرفعال، بررسی اتصال بدون نیاز به واردکردن یا مقایسهٔ نشانی خروجی مورد انتظار ادامه می‌یابد."
@@ -1505,9 +1184,6 @@ msgstr "موفق"
 msgid "Pattern confidence"
 msgstr "درجهٔ اطمینان الگو"
 
-msgid "Per-port modes are not supported by the connected service. Update the VPS Agent and, if used, the Cloudflare Worker before applying."
-msgstr "سرویس متصل از حالت مستقل برای هر پورت پشتیبانی نمی‌کند. پیش از اعمال تنظیمات، VPS Agent و در صورت استفاده از Cloudflare، Worker را به‌روزرسانی کنید."
-
 msgid "Per-target timeout"
 msgstr "مهلت هر مقصد"
 
@@ -1550,41 +1226,14 @@ msgstr "خودآزمایی افزونه"
 msgid "Plugin self-check and recovery"
 msgstr "خودآزمایی و بازیابی افزونه"
 
-msgid "Policy confirmation data could not be read. Review saved settings and VPS state."
-msgstr "اطلاعات تأیید سیاست قابل خواندن نیست. تنظیمات ذخیره‌شده و وضعیت VPS را بررسی کنید."
-
-msgid "Policy revision confirmed"
-msgstr "نسخهٔ سیاست تأیید شد"
-
-msgid "Port protection mode"
-msgstr "حالت حفاظت پورت"
-
-msgid "Port ranges must not overlap."
-msgstr "محدوده پورت نباید همپوشانی داشته باشد."
-
 msgid "Ports"
 msgstr "پورت ها"
 
 msgid "Possible failure"
 msgstr "اختلال احتمالی"
 
-msgid "Prepare changes"
-msgstr "آماده‌سازی تغییرات"
-
-msgid "Prepare to remove VPS rules"
-msgstr "آماده‌سازی حذف قواعد VPS"
-
-msgid "Prepare to turn off this plugin VPS port rules and SSH management while synchronization remains enabled. Save & Apply, then confirm the VPS change. After the VPS confirms removal you may stop synchronization. The system firewall remains in effect."
-msgstr "قواعد درگاه VPS و مدیریت SSH این افزونه را با حفظ همگام‌سازی برای غیرفعال‌سازی آماده کنید. تنظیمات را ذخیره و اعمال کنید و سپس تغییر VPS را تأیید کنید. پس از تأیید حذف قواعد می‌توانید همگام‌سازی را متوقف کنید. دیوارهٔ آتش سیستم همچنان فعال می‌ماند."
-
-msgid "Preserve VPS-initiated connections and their replies. Incoming service connections require an explicit rule or a discovered dynamic rule. Existing inbound connections lose access when authorization expires."
-msgstr "حفظ اتصالات مبتنی بر VPS و پاسخ های آنها. اتصالات خدمات ورودی نیاز به یک قاعده صریح یا یک قانون پویا کشف شده است. اتصالات ورودی دسترسی را از دست می دهد زمانی که مجوز منقضی می شود."
-
 msgid "Preset"
 msgstr "پیش‌تنظیم"
-
-msgid "Preview service rules"
-msgstr "قوانین خدمات پیش بینی"
 
 msgid "Previous exit mismatch; routine verification has since passed"
 msgstr "خروجی قبلاً مطابقت نداشت؛ اعتبارسنجی معمول بعدی موفق بوده است"
@@ -1670,9 +1319,6 @@ msgstr "وضعیت حفاظت"
 msgid "Protection status needs verification"
 msgstr "وضعیت حفاظت نیازمند بررسی است"
 
-msgid "Protocol"
-msgstr "پروتکل"
-
 msgid "Proxy Guard"
 msgstr "Proxy Guard"
 
@@ -1706,15 +1352,6 @@ msgstr "اختلال پراکسی (فقط نظارت)"
 msgid "Proxy healthy"
 msgstr "پراکسی در دسترس است"
 
-msgid "Proxy heartbeat age (seconds)"
-msgstr "زمان سپری‌شده از آخرین پیام سلامت پراکسی (ثانیه)"
-
-msgid "Proxy heartbeat interval (seconds)"
-msgstr "فاصلهٔ پیام‌های سلامت مسیر پراکسی (ثانیه)"
-
-msgid "Proxy heartbeat secret"
-msgstr "کلید محرمانهٔ پیام سلامت مسیر پراکسی"
-
 msgid "Proxy probes passed; waiting for service protection to confirm access"
 msgstr "بررسی پراکسی موفق بود؛ در انتظار تأیید دسترسی از حفاظت سرویس"
 
@@ -1733,20 +1370,11 @@ msgstr "راه‌اندازی پراکسی ناموفق بود"
 msgid "Proxy verification passed; access restored with enhanced monitoring"
 msgstr "اعتبارسنجی پراکسی موفق بود؛ دسترسی برقرار شد و پایش دقیق ادامه دارد"
 
-msgid "Public Internet"
-msgstr "همهٔ مبدأهای اینترنت"
-
-msgid "Public access remaining (seconds)"
-msgstr "زمان باقی‌ماندهٔ دسترسی اضطراری عمومی (ثانیه)"
-
-msgid "Public emergency window (seconds)"
-msgstr "مدت دسترسی اضطراری عمومی (ثانیه)"
+msgid "Queried through the same SOCKS proxy only if the primary URL times out. Leave blank to use https://4.ident.me/ when the primary host is api.ipify.org. With a different primary host, leaving this blank disables the backup."
+msgstr "فقط وقتی مهلت درخواست به نشانی اصلی تمام شود، از طریق همان پراکسی SOCKS پرس‌وجو می‌شود. اگر این کادر خالی بماند و میزبان اصلی api.ipify.org باشد، از https://4.ident.me/ استفاده می‌شود. برای میزبان‌های اصلی دیگر، کادر خالی یعنی پرس‌وجوی پشتیبان انجام نمی‌شود."
 
 msgid "Queued"
 msgstr "در صف اجرا"
-
-msgid "REALITY configuration check"
-msgstr "بررسی پیکربندی REALITY"
 
 msgid "Raw UCI configuration"
 msgstr "پیکربندی خام UCI"
@@ -1775,9 +1403,6 @@ msgstr "بررسی فقط‌خواندنی است: تنظیمات ذخیره ی�
 msgid "Ready"
 msgstr "آماده"
 
-msgid "Reboot VPS"
-msgstr "راه‌اندازی مجدد VPS"
-
 msgid "Recent connectivity check details"
 msgstr "جزئیات آخرین بررسی‌های اتصال"
 
@@ -1786,9 +1411,6 @@ msgstr "حوادث امنیتی اخیر"
 
 msgid "Rechecking a delayed heartbeat"
 msgstr "بررسی دوبارهٔ پیام سلامت دیررس"
-
-msgid "Recommended. The VPS restores its previous selected-port policy if a changed policy is not confirmed. Disabling this applies changes immediately."
-msgstr "فعال‌بودن توصیه می‌شود. اگر سیاست تغییرکرده تأیید نشود، VPS سیاست قبلی درگاه‌های انتخاب‌شده را بازمی‌گرداند. با غیرفعال‌سازی، تغییرات فوراً اعمال می‌شوند."
 
 msgid "Recovery checks begin"
 msgstr "بررسی‌های بازیابی آغاز می‌شوند"
@@ -1799,29 +1421,11 @@ msgstr "تاریخچه بازیابی"
 msgid "Recovery threshold"
 msgstr "آستانهٔ بازیابی"
 
-msgid "Recovery verification timeout (seconds)"
-msgstr "مهلت تأیید بازیابی (ثانیه)"
-
-msgid "Recovery verified"
-msgstr "بازیابی تأیید شد"
-
-msgid "Recovery was not verified before the timeout."
-msgstr "بازیابی پیش از پایان مهلت تأیید نشد."
-
-msgid "Reduce the number of rules or whitelist addresses."
-msgstr "تعداد قواعد یا نشانی‌های فهرست مجاز را کاهش دهید."
-
 msgid "Reload this page before enabling protection."
 msgstr "پیش از فعال‌کردن حفاظت، این صفحه را دوباره بارگذاری کنید."
 
-msgid "Remote maintenance"
-msgstr "نگهداری از راه دور"
-
 msgid "Remote maintenance is in progress; Internet protection remains active."
 msgstr "نگهداری از راه دور در حال انجام است؛ حفاظت اینترنت فعال می‌ماند."
-
-msgid "Remove VPS rules"
-msgstr "حذف قواعد VPS"
 
 msgid "Repeat"
 msgstr "تکرار"
@@ -1844,12 +1448,6 @@ msgstr "پیش‌نویس ویرایشگر با الگوی پیش‌فرض جا�
 msgid "Replayed control request rejected"
 msgstr "درخواست کنترل مجدد رد شد"
 
-msgid "Request accepted"
-msgstr "درخواست پذیرفته شد"
-
-msgid "Require VPS service health before restoring access"
-msgstr "تأیید سلامت سرویس‌های VPS پیش از برقراری دسترسی"
-
 msgid "Require continuous stability before restoring access"
 msgstr "الزام پایداری پیوسته پیش از برقراری دسترسی"
 
@@ -1871,17 +1469,11 @@ msgstr "پیش از تأیید حفاظت، خطای گزارش‌شده را ب
 msgid "Resource statistics are disabled or awaiting the first sample"
 msgstr "آمار منابع غیرفعال هستند یا منتظر اولین نمونه هستند."
 
-msgid "Resource threshold exceeded"
-msgstr "مصرف منابع از آستانه گذشته است"
-
 msgid "Restart cancelled"
 msgstr "راه‌اندازی مجدد لغو شد"
 
 msgid "Restart counting window (seconds)"
 msgstr "بازهٔ شمارش راه‌اندازی مجدد (ثانیه)"
-
-msgid "Restart proxy core"
-msgstr "راه‌اندازی مجدد هستهٔ پراکسی"
 
 msgid "Restarting"
 msgstr "در حال راه‌اندازی مجدد"
@@ -1895,17 +1487,8 @@ msgstr "پس از تأیید پراکسی، دسترسی اینترنت برقر
 msgid "Restore defaults and set up again"
 msgstr "بازگردانی پیش‌فرض‌ها و پیکربندی دوباره"
 
-msgid "Restore previous VPS policy"
-msgstr "بازگردانی سیاست قبلی VPS"
-
 msgid "Restore previous settings"
 msgstr "بازگردانی پیکربندی قبلی"
-
-msgid "Restrict listed ports only"
-msgstr "محدودسازی فقط درگاه‌های فهرست‌شده"
-
-msgid "Result unknown"
-msgstr "نتیجهٔ عملیات هنوز مشخص نیست"
 
 msgid "Retained events"
 msgstr "رویدادهای نگهداری‌شده"
@@ -1951,21 +1534,6 @@ msgstr "وضعیت اجرا موجود نیست؛ در انتظار تأیید �
 
 msgid "SOCKS port"
 msgstr "درگاه SOCKS"
-
-msgid "SSH authentication settings remain unchanged. Access is managed only after both heartbeats and an authorized SSH session are verified."
-msgstr "تنظیمات احراز هویت SSH تغییر نمی‌کند. مدیریت دسترسی تنها پس از تأیید هر دو پیام سلامت و یک نشست SSH مجاز فعال می‌شود."
-
-msgid "SSH management"
-msgstr "مدیریت SSH"
-
-msgid "SSH on TCP port 22 is enabled without IP filtering by default. Unrestricted mode adds no source restriction and does not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
-msgstr "SSH روی درگاه TCP شمارهٔ 22 به‌طور پیش‌فرض بدون فیلتر IP فعال است. حالت بدون محدودیت، مبدأ را محدود نمی‌کند و دیوار آتش سیستم را دور نمی‌زند. خانواده‌های نشانی همگام‌نشده در قواعد پویا همچنان مسدودند."
-
-msgid "SSH port"
-msgstr "درگاه SSH"
-
-msgid "SSH rescue requires an independent HTTPS heartbeat through the proxy."
-msgstr "دسترسی اضطراری SSH به پیام سلامت مستقل HTTPS از طریق پراکسی نیاز دارد."
 
 msgid "Sample plugin resources every five seconds. CPU usage is a percentage of the combined capacity of all online logical processors; 100% means all of them are fully used. Memory is the sum of process RSS and may include shared pages more than once. Sampling stores no history on flash. Heartbeat monitoring continues when resource sampling is off."
 msgstr "مصرف منابع افزونه هر پنج ثانیه نمونه‌برداری می‌شود. مصرف CPU درصدی از ظرفیت مجموع پردازنده‌های منطقی فعال است؛ 100% یعنی همهٔ آن‌ها کاملاً مشغول‌اند. حافظه، مجموع RSS فرایندهاست و ممکن است صفحه‌های مشترک چند بار شمرده شوند. سابقهٔ نمونه‌ها روی فلش ذخیره نمی‌شود. با غیرفعال‌بودن نمونه‌برداری منابع نیز پایش پیام سلامت ادامه دارد."
@@ -2048,9 +1616,6 @@ msgstr "حداقل یک روز را انتخاب کنید"
 msgid "Select between one and eight ingress devices"
 msgstr "از یک تا هشت رابط ورودی انتخاب کنید"
 
-msgid "Selected address families authorized"
-msgstr "خانواده‌های نشانی انتخاب‌شده مجاز شدند"
-
 msgid "Selected proxy client is not installed"
 msgstr "کلاینت پراکسی انتخاب‌شده نصب نشده است"
 
@@ -2090,9 +1655,6 @@ msgstr "وضعیت پایشگر سرویس در دسترس نیست؛ در ان�
 msgid "Service monitoring is disabled"
 msgstr "پایش سرویس غیرفعال است"
 
-msgid "Service name"
-msgstr "نام سرویس"
-
 msgid "Service not started"
 msgstr "سرویس هنوز راه‌اندازی نشده است"
 
@@ -2126,9 +1688,6 @@ msgstr "سرویس آماده است"
 msgid "Service restart requested"
 msgstr "درخواست راه‌اندازی مجدد سرویس دریافت شد"
 
-msgid "Service rule preview"
-msgstr "پیش‌نمایش قواعد سرویس"
-
 msgid "Service unavailable"
 msgstr "سرویس در دسترس نیست"
 
@@ -2137,9 +1696,6 @@ msgstr "قواعد سرویس"
 
 msgid "Set up later"
 msgstr "پیکربندی در فرصتی دیگر"
-
-msgid "Settings changed during synchronization; waiting for the next update."
-msgstr "تنظیمات هنگام همگام‌سازی تغییر کرده‌اند؛ در انتظار به‌روزرسانی بعدی."
 
 msgid "Settings were restored:"
 msgstr "پیکربندی بازگردانده شد: "
@@ -2158,9 +1714,6 @@ msgstr "برخی رکوردهای خراب گزارش نادیده گرفته ش
 
 msgid "Specify IPv6 addresses or prefixes"
 msgstr "تعیین نشانی‌ها یا پیشوندهای IPv6"
-
-msgid "Standard resource protection"
-msgstr "حفاظت استاندارد در برابر سوءاستفاده"
 
 msgid "Start time"
 msgstr "زمان آغاز"
@@ -2183,12 +1736,6 @@ msgstr "انتظار هنگام راه‌اندازی"
 msgid "Startup wait begins"
 msgstr "انتظار هنگام راه‌اندازی آغاز شد"
 
-msgid "Static IP addresses or networks"
-msgstr "آدرس های IP استاتیک یا شبکه ها"
-
-msgid "Static whitelist"
-msgstr "فهرست ثابت مجاز"
-
 msgid "Status refreshes automatically every second. Last update:"
 msgstr "وضعیت هر ثانیه خودکار تازه می‌شود. آخرین به‌روزرسانی: "
 
@@ -2210,39 +1757,6 @@ msgstr "یکشنبه"
 msgid "Synchronization failed; check the direct connection, device secret and Worker status."
 msgstr "همگام‌سازی ناموفق بود؛ اتصال مستقیم، کلید محرمانهٔ دستگاه و وضعیت Worker را بررسی کنید."
 
-msgid "Synchronization failed; check the direct connection, device secret and control service."
-msgstr "همگام‌سازی ناموفق بود؛ اتصال مستقیم، کلید محرمانهٔ دستگاه و سرویس کنترل را بررسی کنید."
-
-msgid "Synchronization interval (seconds)"
-msgstr "فاصلهٔ همگام‌سازی (ثانیه)"
-
-msgid "Synchronization is off"
-msgstr "همگام‌سازی غیرفعال است"
-
-msgid "Synchronization is off. The following VPS policy is last known state, not a current confirmation. Rules may remain active and dynamic authorizations expire."
-msgstr "همگام‌سازی غیرفعال است. سیاست VPS زیر آخرین وضعیت شناخته‌شده است و وضعیت فعلی را تأیید نمی‌کند. ممکن است قواعد همچنان فعال باشند و مجوزهای پویا منقضی شوند."
-
-msgid "Synchronization needs attention"
-msgstr "همگام‌سازی نیاز به بررسی دارد"
-
-msgid "Synchronization stopped"
-msgstr "همگام‌سازی متوقف شده است"
-
-msgid "Synchronization updates are delayed; protection cannot be confirmed."
-msgstr "به‌روزرسانی همگام‌سازی تأخیر دارد؛ تأیید حفاظت ممکن نیست."
-
-msgid "Synchronize with the VPS"
-msgstr "همگام‌سازی با VPS"
-
-msgid "Synchronize your household public IP and inspect VPS service health through direct HTTPS or Cloudflare. Proxy traffic connects directly to the VPS."
-msgstr "IP عمومی خانگی را همگام کنید و سلامت سرویس‌های VPS را از طریق HTTPS مستقیم یا Cloudflare بررسی کنید. ترافیک پراکسی مستقیماً به VPS متصل می‌شود."
-
-msgid "Synchronize your household public IP through a Cloudflare Worker and Tunnel. Proxy traffic continues to connect directly to the VPS."
-msgstr "IP عمومی خانگی را از طریق Cloudflare Worker و Tunnel همگام کنید. ترافیک پراکسی همچنان مستقیماً به VPS متصل می‌شود."
-
-msgid "Synchronizing with the VPS"
-msgstr "در حال همگام‌سازی با VPS"
-
 msgid "System clock"
 msgstr "ساعت سیستم"
 
@@ -2261,59 +1775,20 @@ msgstr "زمان سیستم نامعتبر است؛ تأیید برنامه مم
 msgid "TCP, UDP and DNS are running; boot protection delay started"
 msgstr "TCP، UDP و DNS در حال اجرا هستند؛ دورهٔ انتظار حفاظت هنگام راه‌اندازی آغاز شد"
 
-msgid "The Agent denied this action; check its local permissions and credentials."
-msgstr "Agent عملیات را نپذیرفت؛ مجوزها و اطلاعات احراز هویت محلی آن را بررسی کنید."
-
-msgid "The SSH port must not overlap a managed proxy service."
-msgstr "درگاه SSH نباید با درگاه سرویس پراکسیِ تحت مدیریت یکسان باشد."
-
-msgid "The SSH rescue timeout must allow two heartbeat intervals plus the request timeout."
-msgstr "مهلت دسترسی اضطراری SSH باید دست‌کم شامل دو فاصلهٔ پیام سلامت به‌اضافهٔ مهلت درخواست باشد."
-
-msgid "The VPS Agent must also explicitly allow each action. A request being accepted does not mean recovery is complete."
-msgstr "Agent در VPS نیز باید هر عملیات را صریحاً مجاز کند. پذیرفته‌شدن درخواست به معنی تکمیل بازیابی نیست."
-
-msgid "The VPS did not confirm the requested inbound policy and address families."
-msgstr "VPS سیاست ورودی و خانواده‌های نشانی درخواست‌شده را تأیید نکرد."
-
-msgid "The VPS owns this timer. Closing this page, losing the control link or rebooting before confirmation does not keep an unconfirmed policy."
-msgstr "زمان‌سنج روی VPS اجرا می‌شود. بستن صفحه، قطع ارتباط کنترل یا راه‌اندازی مجدد پیش از تأیید باعث حفظ سیاست تأییدنشده نمی‌شود."
-
 msgid "The Worker did not confirm this update."
 msgstr "Worker این به‌روزرسانی را تأیید نکرد."
 
 msgid "The Worker observed the proxy exit. Configure a direct connection before synchronizing."
 msgstr "Worker نشانی خروجی پراکسی را مشاهده کرد. پیش از همگام‌سازی، اتصال مستقیم را تنظیم کنید."
 
-msgid "The connected Agent does not enable Pro Max analysis"
-msgstr "عامل متصل، تجزیه و تحلیل Pro Max را فعال نمی کند"
-
-msgid "The control request must bypass the proxy. Configure direct routing before enabling synchronization. A detected proxy exit is rejected."
-msgstr "درخواست کنترل باید از پراکسی عبور نکند. پیش از فعال‌سازی همگام‌سازی، مسیریابی مستقیم را تنظیم کنید. اگر IP خروجی پراکسی تشخیص داده شود، درخواست رد می‌شود."
-
-msgid "The control service did not confirm this update."
-msgstr "سرویس کنترل این به روز رسانی را تایید نکرد."
-
-msgid "The control service observed the proxy exit. Configure a direct connection before synchronizing."
-msgstr "سرویس کنترل خروجی پراکسی را مشاهده کرد.یک اتصال مستقیم قبل از همگام سازی برقرار کنید."
-
 msgid "The effective timeout also allows for a complete check round and the access permit lifetime, so it may exceed this minimum."
 msgstr "مهلت مؤثر، زمان یک بررسی کامل و مدت اعتبار مجوز دسترسی را نیز در نظر می‌گیرد؛ بنابراین ممکن است از این حداقل بیشتر باشد."
-
-msgid "The lease must be at least twice the synchronization interval."
-msgstr "مدت اعتبار مجوز باید دست‌کم دو برابر فاصلهٔ همگام‌سازی باشد."
 
 msgid "The listener list is limited; unlisted inbound traffic remains subject to the configured policy."
 msgstr "فهرست سرویس‌های شنونده محدود است؛ ترافیک ورودی فهرست‌نشده همچنان تابع سیاست پیکربندی‌شده است."
 
-msgid "The listener list is truncated. Discovery does not change access rules."
-msgstr "فهرست سرویس‌های شنونده کوتاه شده است. کشف خودکار قواعد دسترسی را تغییر نمی‌دهد."
-
 msgid "The original 06:00 maintenance window is prefilled. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. After the window, consecutive successful checks are required again."
 msgstr "بازهٔ نگهداری ساعت 06:00 از پیش وارد شده است. مسدودسازی فقط با فعال‌بودن کلید اصلی و حالت محافظت انجام می‌شود. DNS، شبکهٔ محلی و دسترسی مدیریتی حفظ می‌شوند. پس از پایان بازه، بررسی‌های موفق متوالی دوباره لازم‌اند."
-
-msgid "The previous VPS policy was restored after an unconfirmed change."
-msgstr "پس از یک تغییر تأییدنشده، سیاست قبلی VPS بازگردانده شد."
 
 msgid "The previous settings are loaded into the form. Review them and use Save & Apply to activate them."
 msgstr "پیکربندی قبلی در فرم بارگذاری شده است. آن را بازبینی کنید و برای اجرا، «ذخیره و اعمال» را انتخاب کنید."
@@ -2321,20 +1796,11 @@ msgstr "پیکربندی قبلی در فرم بارگذاری شده است. آ
 msgid "The proxy has remained stable; restoring access and gradually reducing check frequency"
 msgstr "پراکسی پایدار مانده است؛ دسترسی برقرار می‌شود و بسامد بررسی‌ها به‌تدریج کاهش می‌یابد"
 
-msgid "The request result is unknown; checking operation status without repeating it."
-msgstr "نتیجه درخواست ناشناخته است؛ بررسی وضعیت عملیاتی بدون تکرار آن."
-
 msgid "The router restores the previous configuration if you do not confirm. Closing this page does not stop the rollback timer."
 msgstr "اگر تأیید نکنید، مسیریاب پیکربندی قبلی را بازمی‌گرداند. بستن این صفحه شمارش معکوس بازگردانی را متوقف نمی‌کند."
 
-msgid "The selected SSH port is not owned by a verified SSH service"
-msgstr "درگاه SSH انتخاب‌شده متعلق به یک سرویس SSH تأییدشده نیست"
-
 msgid "The service monitor was interrupted; revalidating proxy stability"
 msgstr "پایشگر سرویس قطع شد؛ پایداری پراکسی دوباره بررسی می‌شود"
-
-msgid "The synchronization process is not updating its status."
-msgstr "فرایند همگام‌سازی وضعیت خود را به‌روز نمی‌کند."
 
 msgid "These legacy options are ignored:"
 msgstr "این گزینه‌های قدیمی نادیده گرفته می‌شوند: "
@@ -2345,14 +1811,8 @@ msgstr "این شبکه‌ها هنگام اختلال همچنان در دست�
 msgid "This configuration could not be read. A default template is shown for review."
 msgstr "خواندن این پیکربندی ممکن نشد. الگوی پیش‌فرض برای بررسی نمایش داده شده است."
 
-msgid "This interrupts proxy access. Local protection is prepared before the request is sent."
-msgstr "این امر دسترسی پراکسی را قطع می کند. حفاظت محلی قبل از ارسال درخواست آماده می شود."
-
 msgid "This prepares default plugin settings for review. Existing protection continues until you Save & Apply."
 msgstr "تنظیمات پیش‌فرض افزونه برای بازبینی آماده می‌شوند. حفاظت فعلی تا زمان انتخاب «ذخیره و اعمال» ادامه دارد."
-
-msgid "This preview has not been applied. Unselected ports keep the existing system firewall policy."
-msgstr "این پیش‌نمایش هنوز اعمال نشده است. درگاه‌های انتخاب‌نشده همچنان تابع قواعد فعلی دیوار آتش سیستم هستند."
 
 msgid "This report contains only state names and measurements. It excludes IP addresses, URLs, configuration and raw logs. Review it before sharing. Nothing is uploaded."
 msgstr "این گزارش فقط نام وضعیت‌ها و اندازه‌گیری‌ها را دارد. نشانی IP، URL، پیکربندی و گزارش خام در آن نیست. پیش از اشتراک‌گذاری بازبینی کنید. چیزی بارگذاری نمی‌شود."
@@ -2450,12 +1910,6 @@ msgstr "حالت ناشناخته"
 msgid "Unrecognized options are preserved but may have no effect:"
 msgstr "گزینه‌های ناشناخته حفظ می‌شوند، اما ممکن است اثری نداشته باشند: "
 
-msgid "Unrestricted"
-msgstr "نامحدود"
-
-msgid "Unrestricted bypasses filtering for this rule. Whitelist mode uses allowed sources; standard mode enforces limits; observe mode records threshold events without blocking."
-msgstr "گزینهٔ بدون محدودیت، فیلتر این قانون را غیرفعال می‌کند. حالت فهرست مجاز فقط مبدأهای مجاز را می‌پذیرد؛ حالت استاندارد محدودیت‌ها را اعمال می‌کند؛ حالت مشاهده، عبور از آستانه‌ها را بدون مسدودسازی ثبت می‌کند."
-
 msgid "Unsaved Changes"
 msgstr "تغییرات ذخیره‌نشده"
 
@@ -2468,26 +1922,11 @@ msgstr "نوع رابط ورودی پشتیبانی نمی‌شود: "
 msgid "Unsupported proxy client"
 msgstr "کلاینت پراکسی پشتیبانی نمی‌شود"
 
-msgid "Update the VPS Agent and Cloudflare Worker before using the new source options."
-msgstr "پیش از استفاده از گزینه‌های جدید مبدأ، VPS Agent و Cloudflare Worker را به‌روز کنید."
-
-msgid "Update the VPS Agent and Worker to use policy confirmation."
-msgstr "برای استفاده از تأیید سیاست، VPS Agent و Worker را به‌روز کنید."
-
-msgid "Update the VPS Agent and control service to the matching protocol version."
-msgstr "VPS Agent و سرویس کنترل را به نسخهٔ سازگار پروتکل به‌روز کنید."
-
 msgid "Use 192.0.2.100/32 for a single-device trial, or 192.0.2.0/24 for the subnet."
 msgstr "برای آزمایش یک دستگاه از 192.0.2.100/32 و برای کل زیرشبکه از 192.0.2.0/24 استفاده کنید."
 
 msgid "Use HH:MM:SS in the selected time zone. Overnight windows are supported. Keep the router clock accurate; start and end must differ."
 msgstr "زمان را با قالب HH:MM:SS در منطقهٔ زمانی انتخابی وارد کنید. بازهٔ عبوری از نیمه‌شب پشتیبانی می‌شود. ساعت روتر باید دقیق و زمان آغاز و پایان متفاوت باشد."
-
-msgid "Use an Agent HTTPS endpoint reached through the local SOCKS proxy, separately from the control channel."
-msgstr "از نشانی HTTPS عامل استفاده کنید که جدا از کانال کنترل، از طریق SOCKS محلی قابل دسترسی باشد."
-
-msgid "Use default mode"
-msgstr "استفاده از حالت پیش‌فرض"
 
 msgid "Use detected client listener ports"
 msgstr "استفاده از درگاه‌های شنوندهٔ شناسایی‌شدهٔ کلاینت"
@@ -2507,56 +1946,14 @@ msgstr "کاربر گزارش‌های افزونه را پاک کرد"
 msgid "Uses the saved Pro connection. Importing an address only edits this form; Save & Apply is still required."
 msgstr "از اتصال ذخیره‌شدهٔ Pro استفاده می‌شود. دریافت نشانی فقط فرم را تغییر می‌دهد؛ برای اجرا همچنان باید «ذخیره و اعمال» را انتخاب کنید."
 
-msgid "VPS access readiness"
-msgstr "آمادگی دسترسی به VPS"
-
-msgid "VPS access rules"
-msgstr "قوانین دسترسی VPS"
-
-msgid "VPS access rules are off"
-msgstr "قواعد دسترسی به VPS غیرفعال‌اند"
-
 msgid "VPS address read timed out"
 msgstr "مهلت دریافت نشانی VPS به پایان رسید"
-
-msgid "VPS confirmation window (seconds)"
-msgstr "مهلت تأیید VPS (ثانیه)"
-
-msgid "VPS confirmed protection bypass for:"
-msgstr "VPS دور زدن حفاظت را برای این قواعد تأیید کرده است: "
-
-msgid "VPS confirmed the update"
-msgstr "VPS به‌روزرسانی را تأیید کرد"
 
 msgid "VPS default-route measurement"
 msgstr "اندازه‌گیری خروجی مسیر پیش‌فرض VPS"
 
-msgid "VPS firewall policy restored"
-msgstr "سیاست دیوار آتش VPS بازگردانده شد"
-
-msgid "VPS firewall verification failed"
-msgstr "تأیید دیوار آتش VPS ناموفق بود"
-
-msgid "VPS health check interval (seconds)"
-msgstr "فاصله بررسی سلامت VPS (ثانیه)"
-
 msgid "VPS health status is unavailable"
 msgstr "وضعیت سلامت VPS در دسترس نیست"
-
-msgid "VPS inbound policy"
-msgstr "سیاست دسترسی ورودی VPS"
-
-msgid "VPS policy applied. Seconds remaining to confirm:"
-msgstr "سیاست VPS موقتاً اعمال شد. ثانیه‌های باقی‌مانده برای تأیید: "
-
-msgid "VPS policy does not match selected-port protection; update the Agent."
-msgstr "سیاست VPS با حفاظت درگاه‌های انتخابی سازگار نیست؛ Agent را به‌روز کنید."
-
-msgid "VPS policy is waiting for confirmation"
-msgstr "سیاست VPS در انتظار تأیید است"
-
-msgid "VPS policy was restored. Review the reloaded settings."
-msgstr "سیاست VPS بازگردانده شد. تنظیمات بارگذاری‌شده را بررسی کنید."
 
 msgid "VPS public interface address"
 msgstr "نشانی عمومی رابط شبکهٔ VPS"
@@ -2564,29 +1961,11 @@ msgstr "نشانی عمومی رابط شبکهٔ VPS"
 msgid "VPS service health"
 msgstr "وضعیت سلامت سرویس‌های VPS"
 
-msgid "VPS service monitor failed"
-msgstr "پایش سرویس VPS ناموفق بود"
-
-msgid "VPS service rules"
-msgstr "قواعد دسترسی به سرویس‌های VPS"
-
-msgid "VPS service verification failed"
-msgstr "تأیید سرویس VPS ناموفق بود"
-
-msgid "VPS services"
-msgstr "سرویس‌های VPS"
-
-msgid "VPS services are ready"
-msgstr "سرویس‌های VPS آماده‌اند"
-
 msgid "Validate configuration"
 msgstr "اعتبارسنجی تنظیمات"
 
 msgid "Validating the proxy before restoring access"
 msgstr "اعتبارسنجی پراکسی قبل از بازیابی دسترسی"
-
-msgid "Verified fallback bandwidth threshold exceeded"
-msgstr "پهنای باند fallback تأییدشده از آستانه گذشته است"
 
 msgid "Verify UDP through the proxy"
 msgstr "بررسی UDP از طریق پراکسی"
@@ -2597,20 +1976,11 @@ msgstr "اعتبارسنجی IPv4 خروجی پراکسی"
 msgid "Verify with Cloudflare after startup or an interruption"
 msgstr "اعتبارسنجی با Cloudflare پس از راه‌اندازی یا قطع ارتباط"
 
-msgid "Verifying recovery"
-msgstr "در حال تأیید بازیابی"
-
 msgid "View sanitized diagnostic report"
 msgstr "مشاهدهٔ گزارش تشخیصی بدون اطلاعات حساس"
 
 msgid "Wait before enhanced checks"
 msgstr "انتظار پیش از بررسی‌های دقیق"
-
-msgid "Wait briefly before starting another maintenance operation."
-msgstr "پیش از شروع عملیات نگهداری بعدی، کمی صبر کنید."
-
-msgid "Wait until the VPS finishes applying the policy."
-msgstr "صبر کنید تا اعمال سیاست روی VPS تمام شود."
 
 msgid "Waiting before another restart"
 msgstr "در انتظار پیش از راه‌اندازی مجدد بعدی"
@@ -2624,15 +1994,6 @@ msgstr "در انتظار پایان راه‌اندازی PassWall و بازی�
 msgid "Waiting for TCP, UDP and DNS to start"
 msgstr "در انتظار راه‌اندازی TCP، UDP و DNS"
 
-msgid "Waiting for a fresh Agent report"
-msgstr "انتظار برای گزارش جدید Agent"
-
-msgid "Waiting for a fresh household IP authorization"
-msgstr "در انتظار مجوز تازهٔ IP خانگی"
-
-msgid "Waiting for both authenticated heartbeats"
-msgstr "در انتظار دریافت هر دو پیام سلامت احرازهویت‌شده"
-
 msgid "Waiting for client startup and configured services to recover"
 msgstr "در انتظار راه‌اندازی کلاینت و بازیابی سرویس‌های پیکربندی‌شده"
 
@@ -2642,9 +2003,6 @@ msgstr "در انتظار راه‌اندازی سرویس‌های پراکسی
 msgid "Waiting for local proxy service protection"
 msgstr "در انتظار حفاظت سرویس پراکسی محلی"
 
-msgid "Waiting for management verification"
-msgstr "در انتظار تأیید مسیر مدیریت"
-
 msgid "Waiting for proxy startup"
 msgstr "در انتظار راه‌اندازی پراکسی"
 
@@ -2653,9 +2011,6 @@ msgstr "انتظار برای تأیید پراکسی قبل از بازیابی
 
 msgid "Waiting for startup"
 msgstr "در انتظار راه‌اندازی"
-
-msgid "Waiting for the VPS to confirm the result."
-msgstr "در انتظار تأیید نتیجه توسط VPS."
 
 msgid "Waiting for the required successful proxy checks"
 msgstr "در انتظار تعداد لازم از بررسی‌های موفق پراکسی"
@@ -2669,14 +2024,8 @@ msgstr "در انتظار پایان راه‌اندازی این نوبت PassW
 msgid "Waiting for this restart to finish"
 msgstr "در انتظار پایان این راه‌اندازی مجدد"
 
-msgid "Waiting to synchronize"
-msgstr "در انتظار همگام‌سازی"
-
 msgid "Waiting to verify after proxy recovery"
 msgstr "در انتظار تأیید پس از بازیابی پراکسی"
-
-msgid "Warning: a timed window closes public access when it expires. If your IP has changed and no allowed management source is reachable, you may lose SSH access. An unlimited window keeps SSH publicly reachable during the outage; SSH authentication and the system firewall still apply."
-msgstr "هشدار: با پایان مهلت، دسترسی عمومی بسته می‌شود. اگر IP شما تغییر کرده باشد و هیچ مبدأ مدیریتی مجاز در دسترس نباشد، ممکن است دسترسی SSH را از دست بدهید. در حالت بدون محدودیت زمانی، SSH در طول اختلال از اینترنت قابل دسترسی می‌ماند؛ احراز هویت SSH و دیوارهٔ آتش سیستم همچنان اعمال می‌شوند."
 
 msgid "Watch PassWall runtime log"
 msgstr "پایش گزارش اجرای PassWall"
@@ -2692,12 +2041,6 @@ msgstr "هفتگی (انتخاب روزها)"
 
 msgid "Weekly schedules require between one and seven days"
 msgstr "برای برنامهٔ هفتگی، یک تا هفت روز انتخاب کنید"
-
-msgid "Whitelist mode requires household or static authorized sources."
-msgstr "حالت فهرست مجاز به مبدأهای مجاز خانگی یا ثابت نیاز دارد."
-
-msgid "Whitelist only"
-msgstr "فقط فهرست مجاز"
 
 msgid "Worker HTTPS address"
 msgstr "نشانی HTTPS مربوط به Worker"

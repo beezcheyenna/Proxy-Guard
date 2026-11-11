@@ -70,8 +70,13 @@ const screen = new Function('view','form','rpc','poll','ui','uci','E','_','pgI18
     assert(layout.children.indexOf(heading)<layout.children.indexOf(screen.statusBox));
     assert(layout.children.indexOf(screen.statusBox)<layout.children.indexOf(description));
     assert(layout.children.indexOf(description)<layout.children.indexOf(formNode));
-    assert.strictEqual(layout.children.at(-1).tag,'button');
-    assert(layout.children.indexOf(screen.logBox)<layout.children.length-1,'clear button follows the event log');
+    const clearLogs = layout.children.at(-2);
+    const recoveryHistory = layout.children.at(-1);
+    assert.strictEqual(clearLogs.tag,'button');
+    assert.deepStrictEqual(clearLogs.children,[gettext('Clear logs')]);
+    assert(layout.children.indexOf(screen.logBox)<layout.children.indexOf(clearLogs),'clear button follows the event log');
+    assert.strictEqual(recoveryHistory.tag,'details');
+    assert.strictEqual(recoveryHistory.children[1],screen.incidentBox,'recovery history follows the event log controls');
     assert(!source.includes('设置已提交'));
     assert(!source.includes('saveNotice'));
     assert.equal(layout.children.find(node=>node.tag==='button').attrs.type,'button');
@@ -83,7 +88,7 @@ const screen = new Function('view','form','rpc','poll','ui','uci','E','_','pgI18
     assert(screen.logBox.textContent.includes('important-event') && !screen.logBox.textContent.includes('onerror'));
     assert(screen.checkLogBox.textContent.includes('<img onerror=bad()>'));
     assert(screen.logWarning.textContent.includes('2'));
-    for (const name of ['enabled','mode','sources4','sources6','ipv6_protect','debug','expected_exit4','targets','dns_ports','schedule_enabled','schedule_start','schedule_end','schedule_utc_offset','schedule_repeat','schedule_weekdays']) assert(fields.some(f=>f.name===name));
+    for (const name of ['enabled','mode','sources4','sources6','ipv6_protect','debug','expected_exit4','exit_fallback_url','targets','dns_ports','schedule_enabled','schedule_start','schedule_end','schedule_utc_offset','schedule_repeat','schedule_weekdays']) assert(fields.some(f=>f.name===name));
     assert.equal(fields.find(f=>f.name==='schedule_enabled').default,'0');
     assert.equal(fields.find(f=>f.name==='schedule_utc_offset').default,'+00:00');
     assert.equal(fields.find(f=>f.name==='schedule_repeat').default,'');
@@ -197,6 +202,30 @@ const screen = new Function('view','form','rpc','poll','ui','uci','E','_','pgI18
     assert(JSON.stringify(screen.statusBox).includes('仅监测；正在确认代理恢复'));
     status.fast_watch={enabled:true,phase:'sensitive',holding:false,stable_elapsed:2,stable_required:60}; await screen.refresh();
     assert(JSON.stringify(screen.statusBox).includes('仅监测；正在观察代理稳定性：'));
+    // Reproduced on native ImmortalWrt: the kernel permit expired while the
+    // last worker result and fast watcher still reported a successful probe.
+    for (const phase of ['healthy','suspect','recovering']) {
+        status={phase,enforcement:'blocked',mode:'guard',reason:'代理检测正常',last_probe_at:1,
+            fast_watch:{enabled:true,phase:'sensitive',holding:false,stable_elapsed:15,stable_required:60}};
+        await screen.refresh();
+        const text=JSON.stringify(screen.statusBox);
+        assert(screen.statusBox.className.includes('warning'));
+        assert(!text.includes(gettext('Internet restored; enhanced monitoring: ')),
+            'an expired kernel permit cannot claim access was restored');
+        assert(!text.includes(gettext('Access is allowed during enhanced monitoring; a failure blocks it again')),
+            'recovery text must use actual kernel enforcement');
+        assert(text.includes(gettext('Validating the proxy before restoring access')));
+        assert(text.includes(gettext('Waiting for proxy verification before restoring access')));
+    }
+    status={phase:'healthy',enforcement:'blocked',mode:'guard',reason:'代理检测正常',
+        fast_watch:{enabled:true,phase:'normal',holding:false}};
+    await screen.refresh();
+    assert(JSON.stringify(screen.statusBox).includes(gettext('Waiting for the required successful proxy checks')));
+    status={phase:'healthy',enforcement:'allowing',mode:'guard',
+        fast_watch:{enabled:true,phase:'sensitive',holding:false,stable_elapsed:15,stable_required:60}};
+    await screen.refresh();
+    assert(JSON.stringify(screen.statusBox).includes(gettext('Internet restored; enhanced monitoring: ')),
+        'confirmed allowing state still shows successful recovery');
     status={phase:'blocked',enforcement:'blocked',fast_watch:{enabled:true,phase:'log_wait',log_watch:{enabled:true,available:true,pending:true,event:'rules_removed',event_time:123,checked_at:124}}};
     await screen.refresh();
     assert(JSON.stringify(screen.statusBox).includes('等待客户端本轮启动及已配置服务恢复'));

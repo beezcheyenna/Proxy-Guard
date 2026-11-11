@@ -1,6 +1,6 @@
 {
   "admin/services/proxy-guard-access": {
-    "title": "VPS access rules",
+    "title": "VPS access rules (Pro)",
     "order": 97,
     "action": {
       "type": "view",
@@ -19,7 +19,7 @@
     "order": 98,
     "action": {
       "type": "view",
-      "path": "proxy-guard/raw"
+      "path": "proxy-guard/access-raw"
     },
     "depends": {
       "acl": [

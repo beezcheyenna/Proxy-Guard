@@ -1,6 +1,6 @@
 # Proxy Guard
 
-[简体中文](README.md) · [English](README.en.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [فارسی](README.fa.md)
+[简体中文](README.md) · [English](docs/README.en.md) · [日本語](docs/README.ja.md) · [Русский](docs/README.ru.md) · [فارسی](docs/README.fa.md)
 
 **代理故障时，阻止受保护设备意外直连。**
 
@@ -16,14 +16,14 @@ Proxy Guard 是 OpenWrt / iStoreOS 的代理连接保护插件。开启保护后
 
 普通版在路由器上提供代理连接保护，无需云端配套。Pro 在普通版基础上增加 VPS 访问控制，需要另行部署 Linux Agent，Cloudflare 可选。
 
-| 功能 | 普通版 `0.3.0-16` | Pro `0.3.1-3` |
+| 功能 | 普通版 `0.3.0-21` | Pro `0.3.1-5` |
 | --- | --- | --- |
 | 故障、开机、定时保护 | 支持 | 沿用普通版 |
 | 引导、自检、日志、进程守护 | 支持 | 沿用普通版 |
 | VPS 家庭 IP 授权与指定端口规则 | — | 支持 |
 | SSH 应急访问与远程维护 | — | 按需启用并授权 |
 
-下载：[GitHub Releases](https://github.com/beezcheyenna/Proxy-Guard/releases) · [安装指南](docs/USER-GUIDE.md#guide-setup)
+下载：[GitHub Releases](https://github.com/beezcheyenna/Proxy-Guard/releases) · [安装指南](docs/USER-GUIDE.md#guide-setup) · [更新日志](docs/CHANGELOG.md)
 
 > **Pro 使用提醒：** 普通用户建议使用普通版，不建议安装 Pro。只有在需要 VPS 访问控制等特殊功能时，再选择 Pro。
 
@@ -35,13 +35,13 @@ Proxy Guard 是 OpenWrt / iStoreOS 的代理连接保护插件。开启保护后
 - 设置引导与自检：自动推荐保护范围，应用后检查配置与规则，未确认时自动回退。
 - 状态与事件日志：自动刷新，提供客户端服务与日志监视、进程守护和有限自动恢复。
 
-<a href="docs/images/luci-overview.png"><img src="docs/images/luci-overview.png" alt="Proxy Guard LuCI 主界面" width="720"></a>
+<a href="docs/images/luci-overview.png"><img src="docs/images/luci-overview.png" alt="Proxy Guard LuCI 主界面" width="640"></a>
 
 <a id="guide-setup"></a>
 
 ## 安装与首次设置
 
-1. 通过 LuCI 软件包页面安装匹配的普通版 IPK；需要 VPS 扩展时，再安装兼容的 Pro。
+1. 通过 LuCI 软件包页面安装匹配的普通版：opkg 固件用 IPK，apk 固件用 APK。需要 VPS 扩展时，再安装兼容的 Pro。
 2. 打开“服务 → Proxy Guard / 代理连接保护”，完成引导，核对 SOCKS、客户端、入口及 IPv4 / IPv6 范围和例外。先以“仅监测”启用检查并保存应用，按提示确认，再核对检测结果。
 3. 准备启用阻断时，切换到保护模式，再点击“保存并应用”。自检通过后，在 **30 秒内确认**；自检失败或未按时确认时回退配置。正常的代理故障按阻断保护处理。
 
@@ -52,11 +52,11 @@ Proxy Guard 是 OpenWrt / iStoreOS 的代理连接保护插件。开启保护后
 
 ## 兼容与保护范围
 
-路由器需要 **opkg、LuCI 和 firewall4/nftables**。客户端兼容性取决于版本、代理内核和转发模式。Pro 的 Linux Agent 需要 Python `3.10+`、nftables 和 systemd / OpenRC。
+路由器需要 **opkg 或 apk、LuCI 和 firewall4/nftables**；安装包格式必须与固件匹配。客户端兼容性取决于版本、代理内核和转发模式。Pro 的 Linux Agent 需要 Python `3.10+`、nftables 和 systemd / OpenRC。
 
 - 只能保护实际经过本机的流量。同网段无 NAT 旁路由的回程可能绕过本机；路由器本机主动发起的流量不属于客户端保护范围。
 - LAN、DNS 和管理访问按配置保留。插件不代改 NAT、网络接口、系统路由、DNS 或代理客户端配置。
-- APK、仅有 fw3/iptables 的系统不受本版 IPK 支持；流量卸载、桥接过滤和部分 HomeProxy TUN 组合存在限制。
+- IPK 与 APK 不可混装；仅有 fw3/iptables 的系统不受支持。流量卸载、桥接过滤和代理内核的具体限制见兼容说明。
 - Pro 仅管理明确选中的 VPS 本机服务端口；SSH 单独设置，未选端口继续由原有防火墙管理。
 
 已进行安装、升级、界面、故障阻断与恢复、IPv4/IPv6 和冷启动等功能测试。首次使用请先验证一台设备的实际路径，再扩大范围。支持条件及已知限制见[兼容说明](docs/COMPATIBILITY.md)。
@@ -69,7 +69,7 @@ Proxy Guard 是 OpenWrt / iStoreOS 的代理连接保护插件。开启保护后
 - [安装、升级与卸载](docs/USAGE.md)
 - [兼容范围](docs/COMPATIBILITY.md)
 - [Linux Agent 安装](docs/LINUX-AGENT-INSTALL.md)
-- [Cloudflare 配套](companion/worker/README.md)
+- [Cloudflare 配套](docs/CLOUDFLARE-WORKER.md)
 - [日志适配](docs/LOG_COMPATIBILITY.md)
 - [源码构建](docs/BUILDING.md)
 
@@ -79,4 +79,4 @@ Proxy Guard 是 OpenWrt / iStoreOS 的代理连接保护插件。开启保护后
 
 **本项目面向开发、测试和技术研究。** 请在获授权的设备与网络上使用，并遵守使用及部署所在地的适用法律法规。软件按现有 [MIT 许可证](LICENSE)以“现状”提供，不保证适用于所有场景；相关风险与责任依据适用许可证和法律处理。本说明不修改原有许可证，也不排除依法不得排除的责任。
 
-[安全反馈政策](SECURITY.md) · [免责声明](DISCLAIMER.md) · [隐私说明](docs/PRIVACY.md) · [第三方声明](THIRD_PARTY_NOTICES.md)
+[安全反馈政策](docs/SECURITY.md) · [免责声明](docs/DISCLAIMER.md) · [隐私说明](docs/PRIVACY.md) · [第三方声明](docs/THIRD_PARTY_NOTICES.md)

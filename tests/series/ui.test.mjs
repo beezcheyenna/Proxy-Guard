@@ -12,6 +12,11 @@ function load(path,call,extra={}){
  ctx.baseclass={extend:x=>x};
  const i18n=fs.readFileSync(new URL('package/root/www/luci-static/resources/proxy_guard_i18n.js',root),'utf8');
  ctx.pgI18n=vm.runInNewContext('(function(){'+i18n+'\n})()',ctx);
+ if (path.includes('/package/pro/') || path.startsWith('package/pro/')) {
+  ctx.shared=ctx.pgI18n;
+  const proI18n=fs.readFileSync(new URL('../../package/pro/root/www/luci-static/resources/proxy_guard_pro_i18n.js',import.meta.url),'utf8');
+  ctx.pgI18n=vm.runInNewContext('(function(){'+proI18n+'\n})()',ctx);
+ }
  return vm.runInNewContext('(function(){'+source+'\n})()',ctx);
 }
 test('Pro Save only stages the form',async()=>{

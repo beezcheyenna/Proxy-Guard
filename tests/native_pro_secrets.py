@@ -4,7 +4,7 @@ Provide a fixture read-only LuCI login; never run on a router in active use.
 """
 from pathlib import Path
 import argparse,base64,hashlib,json,os,secrets,stat,subprocess,urllib.request
-p=argparse.ArgumentParser();p.add_argument('--ipk',type=Path,required=True);p.add_argument('--reader-login',type=Path,required=True);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--package','--ipk',dest='package',type=Path,required=True);p.add_argument('--reader-login',type=Path,required=True);a=p.parse_args()
 assert os.geteuid()==0 and Path('/etc/pgvm-fixture').is_file(),'dedicated isolated VM required'
 login=json.loads(a.reader_login.read_text());config=Path('/etc/config/proxy_guard_access');before=config.read_bytes()
 keys={p.name:(p.read_bytes(),stat.S_IMODE(p.stat().st_mode))for p in Path('/etc/proxy-guard-access').glob('*.key')};sessions=[];checks={}
@@ -24,7 +24,10 @@ try:
  cli(['uci','commit','proxy_guard_access']);old=session()
  r=call(old,'uci','get',{'config':'proxy_guard_access','section':'main'})
  check('fixture models readable committed legacy secrets',code(r)==0 and all(v in json.dumps(r)for v in legacy.values()))
- cli(['opkg','--force-reinstall','install',str(a.ipk.resolve())])
+ assert a.package.suffix in ('.ipk','.apk'),'a native package artifact is required'
+ package_args=['apk','--no-network','--allow-untrusted','add','--force-reinstall'] if a.package.suffix=='.apk' else ['opkg','--force-reinstall','install']
+ install_log=cli(package_args+[str(a.package.resolve())])
+ if a.package.suffix=='.apk':check('native APK reinstall actually executed','Reinstalling luci-app-proxy-guard-pro' in install_log and 'unavailable' not in install_log)
  values=json.loads(cli(['ubus','call','uci','get',json.dumps({'config':'proxy_guard_access','section':'main'})]))['values']
  check('disabled state survives upgrade',values.get('enabled')=='0')
  check('supported legacy secret fields leave UCI',all(k not in values for k in legacy))

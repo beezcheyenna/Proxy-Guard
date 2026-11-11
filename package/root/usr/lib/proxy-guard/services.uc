@@ -6,13 +6,15 @@ export function processes(client) {
     let result = [];
     for (let path in glob('/proc/[0-9]*/cmdline') || []) {
         let argv = split(readfile(path) || '', '\x00'), executable = argv[0] || '';
-        let candidate = client == 'passwall2' ? index(executable, '/tmp/etc/passwall2/bin/') == 0 :
+        let candidate = client == 'passwall' ? index(executable, '/tmp/etc/passwall/bin/') == 0 :
+            client == 'passwall2' ? index(executable, '/tmp/etc/passwall2/bin/') == 0 :
             client == 'nikki' ? executable == '/usr/bin/mihomo' :
             client == 'homeproxy' ? executable == '/usr/bin/sing-box' :
             client == 'openclash' ? index(executable, '/etc/openclash/') == 0 || index(executable, '/tmp/etc/openclash/') == 0 : false;
         if (!candidate) continue;
         let base = replace(path, /\/cmdline$/, ''), real = readlink(base + '/exe') || '';
-        if (client == 'passwall2' && !match(real, /\/(xray|sing-box|dnsmasq)$/) ||
+        if (client == 'passwall' && !match(real, /\/(hysteria|sslocal|naive|dnsmasq)$/) ||
+            client == 'passwall2' && !match(real, /\/(xray|sing-box|dnsmasq)$/) ||
             client == 'homeproxy' && !match(real, /\/sing-box$/) ||
             client == 'nikki' && !match(real, /\/mihomo(-meta|-alpha)?$/) ||
             client == 'openclash' && !match(real, /\/(clash_meta|mihomo)$/)) continue;
@@ -23,6 +25,8 @@ export function processes(client) {
             if (argv[i] == '-C' || argv[i] == '-c' || argv[i] == '-config' || argv[i] == '--config' || argv[i] == '-f') config = argv[i+1];
             if (argv[i] == '-d') directory = argv[i+1];
         }
+        if (client == 'passwall' && !config && match(real,/\/naive$/)) config=argv[1];
+        if (client == 'passwall' && index(config || '', '/tmp/etc/passwall/acl/default/') != 0) continue;
         if (client == 'nikki' && !config && directory == '/etc/nikki/run') config = directory + '/config.yaml';
         if (client == 'homeproxy' && config != '/var/run/homeproxy/sing-box-c.json' && config != '/tmp/run/homeproxy/sing-box-c.json') continue;
         if (client == 'passwall2' && index(config || '', '/tmp/etc/passwall2/acl/') != 0) continue;
@@ -95,7 +99,7 @@ function endpoint(item, candidates, ports) {
     return join(',',sort(ids));
 };
 export function services(dns_mode, profile) {
-    if (!profile || profile.client == 'passwall') {
+    if (!profile || profile.client == 'passwall' && !profile.native_core) {
         let value = legacy(dns_mode);
         value.client = 'passwall'; value.required = {tcp:true,udp:true,dns:true};
         value.available = !profile || profile.available != false;

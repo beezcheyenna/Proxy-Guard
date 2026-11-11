@@ -4,13 +4,13 @@
 
 ## 许可文件
 
-[第三方声明](../THIRD_PARTY_NOTICES.md)记录材料、运行依赖与开发工具的使用方式。[组件清单](THIRD_PARTY_COMPONENTS.json)和 LICENSES/SOURCES.json 记录来源、版本/修订及许可副本校验值。许可原文在 LICENSES/ 中。
+[第三方声明](THIRD_PARTY_NOTICES.md)记录材料、运行依赖与开发工具的使用方式。[组件清单](THIRD_PARTY_COMPONENTS.json)和 LICENSES/SOURCES.json 记录来源、版本/修订及许可副本校验值。许可原文在 LICENSES/ 中。
 
 提供通用许可原文不替代具体作者、NOTICE、逐文件声明或适用的对应源码要求。项目主许可也不改变上游材料的授权。
 
 ## UCI 与系统依赖
 
-插件依赖固件提供的 Lua、ucode、LuCI、UCI、rpcd、firewall4、curl 等，没有把这些系统库/解释器打进应用 IPK。
+插件依赖固件提供的 Lua、ucode、LuCI、UCI、rpcd、firewall4、curl 等，没有把这些系统库/解释器打进应用 IPK / APK。
 
 已核对 UCI 修订 16ff0badbde7e17ec3bd1f827ffe45922956cf86：libuci.c 文件头标 LGPL v2.1，lua/uci.c 标 GPL v2；缓存包元数据统一写 LGPL-2.1，与逐文件声明存在差异。Lua 后端会直接加载该 Lua 绑定；前端 JavaScript UCI 模块和 ucode 的 UCI 模块是不同组件。
 
@@ -29,11 +29,9 @@
 
 日志监听在独立 ucode 实例中运行，通过 JSON 状态文件与 Lua 后端交互。分发时应结合实际包含的文件、运行依赖和结合方式履行适用许可要求。
 
-## 配套与可选补丁
+## 配套组件
 
 VPS Agent 使用 Python 标准库和外部 Linux 工具。Worker 使用托管平台 API，开发工具依赖单独列在 companion/worker/THIRD_PARTY_DEPENDENCIES.json；91 个锁文件条目包括可选平台和开发依赖，不等于 91 个运行时捆绑组件。Cloudflare 托管服务受其服务条款约束。
-
-本源码树保留 compat/sing-tun-v0.7.13/ 可选补丁及原许可。该材料采用 GPL-3.0-or-later，不自动替换代理内核，也不包含编译内核。如另行分发修改后的内核，应提供许可要求的匹配源码、补丁和构建资料。
 
 ## 发布与再分发
 

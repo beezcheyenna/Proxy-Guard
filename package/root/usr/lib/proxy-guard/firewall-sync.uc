@@ -30,6 +30,11 @@ function release_guard() {
     return true;
 }
 if (mode != 'persist' && !nft('-c', transaction)) exit(1);
+// The main worker will capture the new signature after a successful change.
+// Invalidate it under fw4's lock first, so the fast writer cannot apply an
+// old snapshot in the interval between rule replacement and publication.
+if (mode != 'persist' && readfile(run + '/firewall.json') != null &&
+    !unlink(run + '/firewall.json')) exit(1);
 if (mode == 'install') {
     let text=readfile(guard);
     if (text == null || length(text)>131072 || !nft('-c',guard)) exit(1);

@@ -92,10 +92,14 @@ function activityText(s) {
         if (f.phase === 'log_wait' || (f.log_watch && f.log_watch.pending)) return _("Waiting for client startup and configured services to recover");
         if (f.phase === 'boot_wait') return _("Waiting for configured proxy services to start");
         if (f.phase === 'delay') return (monitor ? _("Monitoring only; checks resume in ") : _("Internet blocked; validation starts in ")) + f.wait_remaining + _(" seconds");
-        if (f.phase === 'sensitive') return f.holding ?
+        if (f.phase === 'sensitive') return f.holding || (!monitor && s.enforcement !== 'allowing') ?
             (monitor ? _("Monitoring only; confirming proxy recovery") : _("Validating the proxy before restoring access")) :
             (monitor ? _("Monitoring only; observing proxy stability: ") : _("Internet restored; enhanced monitoring: ")) + Math.min(f.stable_elapsed, f.stable_required) + '/' + f.stable_required + _(" seconds");
     }
+    // Kernel permits can expire before the next worker/watch snapshot is published.
+    // Completed check results stay historical; current access text follows enforcement.
+    if (!monitor && s.enforcement === 'blocked' && ['healthy','suspect'].includes(s.phase))
+        return _("Waiting for the required successful proxy checks");
     return pgI18n.runtime(s.reason) || phases[s.phase] || _("Unknown state");
 }
 
@@ -128,7 +132,7 @@ function recoveryText(s) {
     const f=s.fast_watch || {};
     if (f.phase === 'delay') return _("Internet remains blocked during the waiting period; external checks have not started");
     if (f.phase === 'boot_wait' || f.phase === 'log_wait' || f.log_watch && f.log_watch.pending) return _("Waiting for client startup and configured services to recover");
-    if (f.phase === 'sensitive' && f.holding) return _("Waiting for proxy verification before restoring access");
+    if (f.phase === 'sensitive' && (f.holding || s.enforcement !== 'allowing')) return _("Waiting for proxy verification before restoring access");
     if (f.phase === 'sensitive') return _("Access is allowed during enhanced monitoring; a failure blocks it again");
     return s.enforcement === 'blocked' ? _("Waiting for the required successful proxy checks") : _("No recovery is pending");
 }
@@ -208,9 +212,9 @@ return view.extend({
             row(_("Proxy client runtime log"), passwallLogText(s.fast_watch)),
             row(_("Schedule"), s.phase === 'disabled' ? _("Protection is disabled; schedules will not run") : scheduleText(s.schedule) +
                 (s.schedule && s.schedule.enabled ? (s.mode === 'monitor' ? _(" · Monitor only; no blocking") : s.schedule.active ? _(" · Within the scheduled window") : '') : '')),
-            row(_("Observed proxy exit"), s.exit_check && s.exit_check.enabled === false ? _("Exit IP verification is disabled") : s.exit_check ? (s.exit_check.ok ? _("Passed") : _("Failed")) + _("; observed ") + (s.exit_check.observed || _("Unknown")) + _("; expected ") + (s.exit_check.expected || _("Not configured")) : _("Exit has not been checked")),
+            row(_("Observed proxy exit"), s.exit_check && s.exit_check.enabled === false ? _("Exit IP verification is disabled") : s.exit_check && s.exit_check.attempted !== false && s.exit_check.ok != null ? (s.exit_check.ok ? _("Passed") : _("Failed")) + _("; observed ") + (s.exit_check.observed || _("Unknown")) + _("; expected ") + (s.exit_check.expected || _("Not configured")) + (s.exit_check.via ? ' · ' + s.exit_check.via : '') : _("Exit has not been checked")),
             row(_("Last Cloudflare event verification"), cfEventText(s.cf_event)),
-            row(_("HTTPS connectivity checks"), (s.probes || []).map(p => p.host + _(": ") + (p.ok ? _("Success") : _("Failed")) + _(", ") + p.milliseconds + ' ms').join(_("; ")) || _("No completed checks yet")),
+            row(_("HTTPS connectivity checks"), (s.probes || []).map(p => p.host + (p.via ? ' → ' + p.via : '') + _(": ") + (p.ok ? _("Success") : _("Failed")) + _(", ") + p.milliseconds + ' ms').join(_("; ")) || _("No completed checks yet")),
             row(_("UDP proxy path check"), s.udp_probe && s.udp_probe.enabled ? (s.udp_probe.ok ? _("Passed") : _("Failed")) + ' · ' + (s.udp_probe.milliseconds || 0) + ' ms' : _("UDP proxy path check is disabled")),
             row(_("Plugin self-check"), supervisionText(s.supervision)),
             row(_("Plugin resource usage"), s.supervision && s.supervision.resources ?
@@ -526,6 +530,12 @@ return view.extend({
         o.rmempty = false;
         o = s.taboption('advanced', form.Value, 'exit_url', _("Exit verification HTTPS URL"), _("Routine exit verification uses ipify by default. Accepts a plain-text IPv4 address or a compatible trace response. Requests always use the local SOCKS proxy. Keep Cloudflare trace out of recurring targets to avoid frequent Cloudflare requests."));
         o.rmempty = false;o.depends('exit_check','1');o.retain=true;
+        o = s.taboption('advanced', form.Value, 'exit_fallback_url', _("Backup HTTPS URL for exit verification"),
+            _("Queried through the same SOCKS proxy only if the primary URL times out. Leave blank to use https://4.ident.me/ when the primary host is api.ipify.org. With a different primary host, leaving this blank disables the backup."));
+        o.placeholder = 'https://backup.example/ip';
+        o.rmempty = true;
+        o.depends('exit_check', '1');
+        o.retain = true;
         o = s.taboption('advanced', form.Flag, 'cf_event_check', _("Verify with Cloudflare after startup or an interruption"),
             _("Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."));
         o.default='1';o.rmempty=false;o.depends('exit_check','1');o.retain=true;
@@ -594,7 +604,6 @@ return view.extend({
                     E('button',{type:'button',class:'cbi-button cbi-button-neutral',click:ui.createHandlerFn(this,this.preflight)},[_("Check settings and runtime environment")]),
                     E('button',{type:'button',class:'cbi-button cbi-button-neutral',click:ui.createHandlerFn(this,this.showDiagnostics)},[_("View sanitized diagnostic report")]),
                     this.preflightBox]),
-                E('details',{},[E('summary',{},[_("Recovery history")]),this.incidentBox]),
                 E('h3', {}, [_("Event log")]),
                 E('p', {}, [_("Protection events stay here. Frequent website checks are listed separately below.")]),
                 this.logWarning, this.logBox,
@@ -604,7 +613,8 @@ return view.extend({
                         if (!result.ok) throw new Error(pgI18n.runtime(result.error) || _("Failed to clear logs"));
                         return this.refresh();
                     }).catch(err => this.showActionError(err));
-                }) }, [_("Clear logs")])
+                }) }, [_("Clear logs")]),
+                E('details',{},[E('summary',{},[_("Recovery history")]),this.incidentBox])
             ]));
         });
     },

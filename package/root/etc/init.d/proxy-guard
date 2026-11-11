@@ -62,6 +62,11 @@ proxy_guard_apply_running() {
     fi
     [ "$pg_apply_rc" -eq 75 ] || return "$pg_apply_rc"
     [ "$(uci -q get proxy_guard.main.enabled)" = 0 ] || return 0
+    # Tell procd this is an intentional stop before killing busy workers.
+    # Otherwise repeated explicit disables consume its crash-loop budget and
+    # a later real process failure may no longer respawn. Keep the existing
+    # control generation: this is an apply, not a separate user stop request.
+    procd_kill "$(basename "${basescript:-$initscript}")" || return 1
     # Only verified plugin processes are terminated; never unlink the lock.
     ucode /usr/lib/proxy-guard/quiesce.uc || return 1
     # SIGKILL delivery can race the first retry. Keep the procd lock bounded
@@ -69,7 +74,10 @@ proxy_guard_apply_running() {
     pg_apply_attempt=0
     while :; do
         if /usr/libexec/proxy-guard try_apply >/dev/null 2>&1; then
-            return 0
+            # Recreate the deliberately stopped instances with a fresh procd
+            # budget. start_service reapplies the already-disabled policy.
+            start
+            return $?
         else
             pg_apply_rc=$?
         fi

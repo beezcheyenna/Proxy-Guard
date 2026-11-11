@@ -20,6 +20,8 @@ The reviewed upstream revisions are:
 - [Nikki — 78e1a751](https://github.com/nikkinikki-org/OpenWrt-nikki/tree/78e1a751d55ed0762811f054ee699049473da7b8)
 - [HomeProxy — fadaa676](https://github.com/immortalwrt/homeproxy/tree/fadaa676104f59ff6ace480a780a258d846d0aec)
 
+The PassWall and PassWall2 catalogs were also regenerated against the **26.11.3-1** release sources ([PassWall 0b969d5a](https://github.com/Openwrt-Passwall/openwrt-passwall/tree/0b969d5a49743a9725c8dc283b01753c5217dd0d), [PassWall2 176e27cb](https://github.com/Openwrt-Passwall/openwrt-passwall2/tree/176e27cb8d9852ce9b30d2e180810b544d8fc9dc)). The 55 exact lifecycle signatures and 74 regression fixtures are unchanged. OpenClash 0.48.002 and the HomeProxy source used in this compatibility round match the revisions above. Nikki 1.26.2 and the reviewed revision emit the same recognized lifecycle messages.
+
 A Japanese interface can recognize supported Chinese, English or other upstream messages. It does not require an invented Japanese translation of backend messages. Unreviewed forks, translated log formats and future wording require separate verification; this is not a promise to recognize arbitrary messages in every language.
 
 ## Triggers and recovery
@@ -42,4 +44,4 @@ PassWall/PassWall2 provenance and message cases are in `tests/passwall_log_corpu
 
 Other client signatures are in `package/root/usr/lib/proxy-guard/passwall-log.uc`. Related fixtures include `tests/client_adapters_test.uc`, `tests/passwall_log_languages.uc` and `tests/passwall_log_test.uc`. Regression cases cover supported messages, mixed-language restarts, stale/future completion, cancellation, malformed text and catalog changes.
 
-Upstream-derived message material retains its applicable license; see [third-party notices](../THIRD_PARTY_NOTICES.md).
+Upstream-derived message material retains its applicable license; see [third-party notices](THIRD_PARTY_NOTICES.md).

@@ -12,7 +12,7 @@
 
 ## 安装与首次设置
 
-1. 通过 LuCI 软件包页面安装匹配的普通版 IPK；需要 VPS 扩展时，再安装兼容的 Pro。
+1. 通过 LuCI 软件包页面安装匹配的普通版：opkg 固件用 IPK，apk 固件用 APK。需要 VPS 扩展时，再安装兼容的 Pro。
 2. 打开“服务 → Proxy Guard / 代理连接保护”，完成引导，核对 SOCKS、客户端、入口及 IPv4 / IPv6 范围和例外。先以“仅监测”启用检查并保存应用，按提示确认，再核对检测结果。
 3. 准备启用阻断时，切换到保护模式，再点击“保存并应用”。自检通过后，在 **30 秒内确认**；自检失败或未按时确认时回退配置。正常的代理故障按阻断保护处理。
 
@@ -24,9 +24,9 @@
 
 ### 支持哪些系统和代理客户端？
 
-路由器需使用 **opkg + LuCI + firewall4/nftables**，并能从匹配的软件源安装 Lua、ucode、curl 等依赖。已进行兼容测试的版本包括 OpenWrt `24.10.4`、ImmortalWrt `24.10.4` 和 iStoreOS `24.10.8` 的指定版本。
+路由器需使用 **opkg 或 apk + LuCI + firewall4/nftables**，并能从匹配的软件源安装 Lua、ucode、curl 等依赖。24 系列使用 IPK，25.12 系列使用 APK；具体固件与客户端组合见[兼容表](COMPATIBILITY.md)。
 
-已适配 PassWall、PassWall2、OpenClash、Nikki、HomeProxy；支持情况取决于客户端版本、内核及转发模式。部分 sing-box redirect / HomeProxy TUN 组合存在限制，请先核对[兼容表](COMPATIBILITY.md)。IPK 不支持使用 APK 的固件分支，也不支持仅有 fw3/iptables 的系统。`all` 包不表示所有硬件和架构都已验证。
+已适配 PassWall、PassWall2、OpenClash、Nikki、HomeProxy；支持情况取决于客户端版本、内核及转发模式。代理内核和转发模式存在具体限制，请先核对[兼容表](COMPATIBILITY.md)。IPK 与 APK 不可混装，仅有 fw3/iptables 的系统不受支持。`all` 包不表示所有硬件和架构都已验证。
 
 Pro 的 Linux Agent 需要 Python `3.10+`、nftables 及所需内核能力；支持 systemd / OpenRC。已进行兼容测试的发行版包括 Ubuntu、Debian、Rocky Linux、Alpine Linux 的指定版本，详见[Linux 安装](LINUX-AGENT-INSTALL.md)。
 
@@ -67,6 +67,10 @@ Pro 需要兼容的普通版和另行部署的 Linux VPS Agent。控制链路可
 
 HTTPS 检测目标每行一个，格式为 `https://域名/路径|预期状态码`，例如 `https://www.gstatic.com/generate_204|204`。竖线后的 `204` 是预期 HTTP 状态码，不是网址的一部分。可配置 2–4 个目标，并设置常规模式下每轮至少成功几个；默认至少成功 1 个。增强监测期间要求全部目标成功。请求经本机 SOCKS，目标故障或限流也可能影响结果。
 
+新装默认使用 `https://www.gstatic.com/generate_204|204` 和 `https://connectivity-check.ubuntu.com/|204`。覆盖升级会保留已保存的自定义检测目标。
+
+在「连接检测」可填写「出口验证备用 HTTPS 地址」。只有主地址超时才会经同一 SOCKS 查询一次备用地址，下一轮仍从主地址开始。留空时，主域名为 ipify 则使用 https://4.ident.me/，其他主域名则不查询备用地址。两者都无法验证时，仍按既有失败阈值处理。
+
 出口校验启用后，常规地址默认使用 ipify；可选的 Cloudflare 检查只在开机代理就绪和每次中断恢复后额外尝试一次，同一中断的信号会合并，不进行每日或持续轮询。它还受出口校验开关控制。不要将 Cloudflare trace 地址另行加入高频检测列表；任何第三方接口都不能保证永久可用或不限流。
 
 Cloudflare 超时或不可用本身不构成阻断依据，常规检查仍须通过；若它返回的出口与预期不一致，则按故障处理。
@@ -79,6 +83,8 @@ Cloudflare 超时或不可用本身不构成阻断依据，常规检查仍须通
 4. 在自己可控的维护窗口模拟一次代理故障和恢复，检查新连接、已有连接及需要使用的 IPv4 / IPv6、TCP / UDP 路径，同时核对 LAN、DNS、管理和其他网关设备。
 5. 验收后再扩大范围、添加定时或启用开机保护。开机保护应另做重启验收；自检不能代替这些实际通路检查。
 
+升级前请完成或取消尚未确认的配置试用。安装程序会先回退未确认的试用配置，再保留已确认的设置；直接改写 UCI 文件也需要经过应用和确认流程。
+
 <a id="guide-detection"></a>
 
 ### 检测、阻断与恢复
@@ -86,6 +92,8 @@ Cloudflare 超时或不可用本身不构成阻断依据，常规检查仍须通
 #### 常规连通性检测
 
 连通性检查固定经过配置的本机 SOCKS，不回退直连。出口 IPv4 一致性校验默认关闭；启用后须设置可信的预期地址。Pro 可从 VPS 读取地址候选，但网卡或面板地址不一定等于代理真实出口，导入后仍需核对、保存并应用。
+
+自动识别监听端口需要开启客户端服务监视。关闭服务监视后，请确认手动填写的 SOCKS 端口与客户端实际监听端口一致；SOCKS 认证仍然可用。
 
 常规连通性检测默认在每轮完成后等待 10 秒，请求耗时另计；连续失败 3 轮判定故障，连续成功 2 轮确认恢复。这些值均可配置。页面约每秒刷新状态，不代表常规外网检测每秒执行。
 
@@ -131,6 +139,8 @@ Cloudflare 超时或不可用本身不构成阻断依据，常规检查仍须通
 
 #### 状态应该怎么看？
 
+当前保护状态反映内核实际规则；“上次检查通过”只是已完成检查的历史结果，并不保证此刻仍在放行。放行许可过期后，页面会显示阻断或等待重新验证。
+
 | 状态或提示 | 含义与下一步 |
 | --- | --- |
 | 已关闭 | 本插件未提供阻断保护；检查总开关和已应用配置。 |
@@ -143,14 +153,18 @@ Cloudflare 超时或不可用本身不构成阻断依据，常规检查仍须通
 
 #### 升级、重装与排错
 
-升级前保存本插件配置；Pro 的配对密钥、Agent 私有配置和证书也应单独安全备份。升级会保留已有选择，新的默认值不会自动替换旧设置。安装同版本修订包时，opkg 可能认为已经安装；先核对来源与校验值，再按[安装参考](USAGE.md#安装升级和卸载)选择同版本重装方式，不要绕过依赖检查。Pro 可独立升级的前提是基础接口兼容，远端新功能仍可能要求更新 Agent 或 Worker。
+升级前保存本插件配置；Pro 的配对密钥、Agent 私有配置和证书也应单独安全备份。升级会保留开关、自定义时长等设置；检测地址若与已识别的旧预设值完全一致，会迁移到新预设。安装后应核对实际检测地址。安装同版本修订包时，opkg / apk 可能认为已经安装；先核对来源与校验值，再按[安装参考](USAGE.md#安装升级和卸载)选择同版本重装方式，不要绕过依赖检查。Pro 可独立升级的前提是基础接口兼容，远端新功能仍可能要求更新 Agent 或 Worker。
 
 菜单缺失、页面异常或 RPC 找不到对象时，先保留完整安装输出，再重新登录 LuCI 并刷新页面。正常安装应由包内钩子完成缓存清理及 RPC 重载；重新登录后仍异常，应继续排查安装失败和依赖，不要额外放宽 ACL 或把手工重载服务当作安装成功的证据。
 
 可在自己的路由器上只读查看：
 
 ```sh
-opkg status luci-app-proxy-guard
+if command -v opkg >/dev/null 2>&1; then
+    opkg status luci-app-proxy-guard
+else
+    apk list --installed luci-app-proxy-guard
+fi
 /usr/libexec/proxy-guard status
 /usr/libexec/proxy-guard logs
 ```
@@ -179,7 +193,7 @@ SSH 默认不纳管，远程维护默认关闭。若主动启用 SSH 托管，�
 
 #### 控制连接
 
-控制链路可选直接 HTTPS，或 Cloudflare Worker 与 Tunnel/VPC，用于认证和策略协调，本身不承载代理业务流量。控制请求必须绕过代理，并由用户确认直连分流；插件不会代改路由或分流设置。独立代理路径心跳则经本机 SOCKS 验证代理通路。默认控制配置使用 IPv4；IPv6 流量保护不代表 IPv6 云端控制已经验证。部署步骤见[Pro 配套说明](../companion/README.md)。
+控制链路可选直接 HTTPS，或 Cloudflare Worker 与 Tunnel/VPC，用于认证和策略协调，本身不承载代理业务流量。控制请求必须绕过代理，并由用户确认直连分流；插件不会代改路由或分流设置。独立代理路径心跳则经本机 SOCKS 验证代理通路。默认控制配置使用 IPv4；IPv6 流量保护不代表 IPv6 云端控制已经验证。部署步骤见[Pro 配套说明](PRO-COMPANION.md)。
 
 独立代理路径有自己的心跳密钥和 Agent HTTPS 入口；直接 HTTPS 模式可复用同一 Agent 根地址，但请求必须分别走直连控制与 SOCKS 代理路径。Cloudflare 模式不能把 Worker 地址当作该独立入口。地址和密钥对应关系见[连接配置表](LINUX-AGENT-INSTALL.md#control-and-path)。
 
@@ -204,7 +218,7 @@ SSH 默认不纳管，远程维护默认关闭。若主动启用 SSH 托管，�
 
 **本项目面向开发、测试和技术研究。** 请在获授权的设备与网络上使用，并遵守使用及部署所在地的适用法律法规。软件按现有 [MIT 许可证](../LICENSE)以“现状”提供，不保证适用于所有场景；相关风险与责任依据适用许可证和法律处理。本说明不修改原有许可证，也不排除依法不得排除的责任。
 
-[安全反馈政策](../SECURITY.md) · [免责声明](../DISCLAIMER.md) · [隐私说明](PRIVACY.md) · [第三方声明](../THIRD_PARTY_NOTICES.md)
+[安全反馈政策](SECURITY.md) · [免责声明](DISCLAIMER.md) · [隐私说明](PRIVACY.md) · [第三方声明](THIRD_PARTY_NOTICES.md)
 
 ### 相关文档
 
@@ -212,9 +226,11 @@ SSH 默认不纳管，远程维护默认关闭。若主动启用 SSH 托管，�
 
 - [兼容范围](COMPATIBILITY.md)
 - [Linux Agent 安装](LINUX-AGENT-INSTALL.md)
-- [Cloudflare 配套](../companion/worker/README.md)
+- [Cloudflare 配套](CLOUDFLARE-WORKER.md)
 - [源码构建](BUILDING.md)
 - [安装参考](USAGE.md)
 - [引导参考](GUIDED-SETUP.md)
 - [日志适配](LOG_COMPATIBILITY.md)
 - [许可说明](LICENSING.md)
+
+- [更新日志](CHANGELOG.md)

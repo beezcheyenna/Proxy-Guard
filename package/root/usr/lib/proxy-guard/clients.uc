@@ -141,6 +141,81 @@ function json_metadata(profile,path) {
     if (!profile.required.tcp && profile.socks_port) collect(profile,'tcp',profile.socks_port,['tcp'],path);
     return true;
 };
+function listen_port(value) {
+    if (type(value)!='string') return null;
+    let found=match(value,/^(\[[0-9A-Fa-f:.%A-Za-z0-9_-]+\]|[A-Za-z0-9_.-]*):(\d+)$/);
+    return found ? port(found[2]) : null;
+};
+// Current PassWall native cores do not use Xray/sing-box "inbounds".
+// Read their generated listeners, never their remote node or server ports.
+export function native_metadata(profile,path,kind) {
+    let meta=stat(path);
+    if (!meta || meta.type!='file' || meta.size>8388608) return false;
+    let data=decode(readfile(path));
+    if (type(data)!='object') return false;
+    let found=false;
+    function endpoint(name,value,protocols) {
+        let n=listen_port(value);
+        if (!n) { profile.native_invalid=true; return; }
+        collect(profile,name,n,protocols,path); found=true;
+    };
+    function socks(value,account) {
+        let n=listen_port(value);
+        if (!n) { profile.native_invalid=true; return; }
+        if (!profile.socks_port) {
+            profile.socks_port=n;
+            if (account && (account.username!=null || account.password!=null)) {
+                profile._auth_required=true;
+                profile._auth=type(account.username)=='string' && type(account.password)=='string' ?
+                    credential(account.username+':'+account.password) : null;
+            }
+        }
+        add_proxy_port(profile,n); found=true;
+    };
+    if (kind=='hysteria2') {
+        for (let item in [['tcpRedirect','tcp'],['tcpTProxy','tcp'],['udpTProxy','udp']])
+            if (data[item[0]]!=null) endpoint(item[1],data[item[0]].listen,[item[1]]);
+        if (data.socks5!=null) socks(data.socks5.listen,data.socks5);
+        if (data.http!=null) {
+            let n=listen_port(data.http.listen);
+            if (n) { add_proxy_port(profile,n); found=true; } else profile.native_invalid=true;
+        }
+    } else if (kind=='ss-rust') {
+        if (type(data.locals)!='array' || length(data.locals)>32) return false;
+        for (let row in data.locals) {
+            if (type(row)!='object') { profile.native_invalid=true; continue; }
+            let value=port(row.local_port), mode=row.mode || data.mode || 'tcp_only', protocol=row.protocol || 'socks';
+            if (!value || index(['tcp_only','udp_only','tcp_and_udp'],mode)<0) { profile.native_invalid=true; continue; }
+            if (protocol=='socks' || protocol=='http') {
+                if (protocol=='socks') socks(':'+value,null); else add_proxy_port(profile,value);
+                found=true;
+            } else if (protocol=='redir') {
+                if (index(mode,'tcp')>=0) collect(profile,'tcp',value,['tcp'],path);
+                if (index(mode,'udp')>=0) collect(profile,'udp',value,['udp'],path);
+                found=true;
+            }
+        }
+    } else if (kind=='naiveproxy') {
+        if (data.listen==null) return false;
+        let values=type(data.listen)=='array' ? data.listen : [data.listen];
+        if (length(values)>16) return false;
+        for (let value in values) {
+            if (type(value)!='string') { profile.native_invalid=true; continue; }
+            let row=match(value,/^(socks|http|redir):\/\/(.+)$/);
+            if (!row) { profile.native_invalid=true; continue; }
+            if (row[1]=='socks') socks(row[2],null);
+            else if (row[1]=='redir') endpoint('tcp',row[2],['tcp']);
+            else {
+                let n=listen_port(row[2]);
+                if (n) { add_proxy_port(profile,n); found=true; } else profile.native_invalid=true;
+            }
+        }
+    } else return false;
+    if (!profile.required.tcp && profile.socks_port)
+        collect(profile,'tcp',profile.socks_port,['tcp'],path);
+    return found && profile.native_invalid!=true;
+};
+
 export function resolve(requested) {
     requested=requested || 'auto';
     let installed=[];
@@ -155,21 +230,35 @@ export function resolve(requested) {
     let u=cursor();
     if (client=='passwall') {
         p.dns_mode='dnsmasq';
-        u.foreach('passwall','global',s=>{ if (s.dns_shunt) p.dns_mode=s.dns_shunt; });
+        let selected=null;
+        u.foreach('passwall','global',s=>{ if (s.dns_shunt) p.dns_mode=s.dns_shunt; selected=s.node || s.tcp_node; });
+        let kind=lc(selected ? u.get('passwall',selected,'type') || '' : '');
+        if (index(['hysteria2','ss-rust','naiveproxy'],kind)>=0) {
+            p.native_core=kind; p.required={tcp:false,udp:false,dns:false};
+        }
         if (p.dns_mode!='smartdns' && p.dns_mode!='chinadns-ng') p.dns_mode='dnsmasq';
         // The current default ACL redirects LAN DNS to a dedicated dnsmasq
         // listener. Preserve that verified role when protection blocks Internet.
         // Read the default core first so another ACL cannot choose the probe.
         let base='/tmp/etc/passwall/acl/default/';
-        json_metadata(p,base+'global.json');
+        let count=0;
+        function metadata(path) {
+            if (p.native_core) { if (native_metadata(p,path,kind)) count++; }
+            else json_metadata(p,path);
+        };
+        metadata(base+'global.json');
         let files=glob(base+'*.json') || [];
-        for (let path in slice(files,0,32)) if (path!=base+'global.json') json_metadata(p,path);
+        if (length(files)>32) { p.error='too_many_client_profiles'; return p; }
+        for (let path in files) if (path!=base+'global.json') metadata(path);
         let conf=base+'dnsmasq.conf',info=stat(conf);
         if (info && info.type=='file' && info.size<=65536) {
             let value=dnsmasq_port(readfile(conf));
             if (value) collect(p,'dns',value,['tcp','udp'],conf);
         }
-        p.available=true; return finish(p);
+        p.available=!p.native_core || count>0 && p.required.tcp && p.native_invalid!=true;
+        delete p.native_invalid;
+        if (!p.available) p.error='client_runtime_profile_unavailable';
+        return finish(p);
     }
     p.required={tcp:false,udp:false,dns:false};
     if (client=='passwall2' || client=='homeproxy') {

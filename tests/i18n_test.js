@@ -1,23 +1,35 @@
 const fs=require('fs'), assert=require('assert');
 const root=process.env.PG_SOURCE || require('path').resolve(__dirname,'..');
-const rows=fs.readFileSync(root+'/package/i18n/messages.tsv','utf8').split('\n').filter(line=>line && !line.startsWith('#')).map(line=>line.split('\t'));
-const source=fs.readFileSync(root+'/package/root/www/luci-static/resources/view/proxy-guard/overview.js','utf8');
+const readRows=folder=>fs.readFileSync(root+'/'+folder+'/messages.tsv','utf8').split('\n').filter(line=>line&&!line.startsWith('#')).map(line=>line.split('\t'));
+const rows=readRows('package/i18n'), proRows=readRows('package/i18n/pro');
 const runtimeSource=fs.readFileSync(root+'/package/root/www/luci-static/resources/proxy_guard_i18n.js','utf8');
 const keys=new Set(rows.map(row=>row[1]));
-for(const match of source.matchAll(/_\(("(?:\\.|[^"\\])*")\)/g)) assert(keys.has(JSON.parse(match[1])),match[1]);
-for(const file of ['package/root/www/luci-static/resources/proxy_guard_remote_trial.js','package/root/www/luci-static/resources/view/proxy-guard/raw.js','package/root/www/luci-static/resources/proxy_guard_setup.js','package/root/www/luci-static/resources/view/proxy-guard/overview.js','package/pro/root/www/luci-static/resources/view/proxy-guard/access.js']) {
-    const text=fs.readFileSync(root+'/'+file,'utf8');
-    for(const match of text.matchAll(/_\(((?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'))\)/g)) {
+const proKeys=new Set(proRows.map(row=>row[1]));
+const basePath='package/root/www/luci-static/resources/';
+const proPath='package/pro/root/www/luci-static/resources/';
+for (const [file,allowPro] of [
+    [basePath+'proxy_guard_remote_trial.js',true], [basePath+'view/proxy-guard/raw.js',true],
+    [basePath+'proxy_guard_setup.js',false], [basePath+'view/proxy-guard/overview.js',false],
+    [proPath+'view/proxy-guard/access.js',true], [proPath+'view/proxy-guard/access-raw.js',true],
+    [proPath+'proxy_guard_pro_remote_trial.js',true]
+]) {
+    const source=fs.readFileSync(root+'/'+file,'utf8');
+    for(const match of source.matchAll(/\b(?:_|t|pgI18n\.gettext)\(((?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'))\)/g)) {
         const key=require('vm').runInNewContext(match[1]);
-        assert(keys.has(key),file+': '+key);
+        assert(keys.has(key) || allowPro && proKeys.has(key),file+': '+key);
     }
+}
+for (const key of ['VPS access rules','SSH management','Remote maintenance','Keep VPS policy']) {
+    assert(proKeys.has(key) && !keys.has(key),'Pro-only ownership: '+key);
 }
 for(const [locale,index] of [['zh-CN',0],['en',1],['ja',2],['ru',null],['fa',null]]) {
     const extra=index===null?JSON.parse(fs.readFileSync(root+'/package/i18n/'+locale+'.json','utf8')):null;
-    const catalog=Object.fromEntries(rows.map(row=>[row[1],index===null?extra[row[1]]:row[index]]));
+    const proExtra=index===null?JSON.parse(fs.readFileSync(root+'/package/i18n/pro/'+locale+'.json','utf8')):null;
+    const allRows=rows.concat(proRows);
+    const catalog=Object.fromEntries(allRows.map(row=>[row[1],index===null?(extra[row[1]]||proExtra[row[1]]):row[index]]));
     const formatTokens=value=>(value.match(/%(?:\d+\$)?[-+ #0]*\d*(?:\.\d+)?[sdifgeuxX]/g)||[]).sort();
     const ipTokens=value=>value.match(/\b(?:\d{1,3}\.){3}\d{1,3}(?:\/\d{1,2})?/g)||[];
-    for(const row of rows){
+    for(const row of allRows){
         assert.deepStrictEqual(formatTokens(catalog[row[1]]),formatTokens(row[1]),locale+' format placeholders: '+row[1]);
         for(const ip of ipTokens(row[1]))assert(catalog[row[1]].includes(ip),locale+' technical address: '+ip);
         for(const token of row[1].match(/HH:MM:SS|±HH:MM|::\/0|\/tmp\/log\/passwall\.log|65535/g)||[])assert(catalog[row[1]].includes(token),locale+' technical format: '+row[1]);
@@ -47,26 +59,38 @@ console.log('PASS translation coverage and Chinese/English/Japanese/Russian/Pers
     const gettextSource=fs.readFileSync(cbi,'utf8').split('function cbi_d_add')[0];
     const viewChecks=[];
     for (const [locale,column] of [['zh-cn',0],['en',1],['ja',2],['ru',null],['fa',null]]) {
-        const lmo=fs.readFileSync(root+'/package/root/usr/lib/lua/luci/i18n/proxy-guard.'+locale+'.lmo');
-        const offset=lmo.readUInt32BE(lmo.length-4), catalog={};
-        for(let at=offset;at<lmo.length-4;at+=16) {
-            const key=lmo.readUInt32BE(at).toString(16).padStart(8,'0');
-            const start=lmo.readUInt32BE(at+8),length=lmo.readUInt32BE(at+12);
-            catalog[key]=lmo.subarray(start,start+length).toString('utf8');
+        function lmo(path) {
+            const data=fs.readFileSync(root+'/'+path+'.'+locale+'.lmo');
+            const offset=data.readUInt32BE(data.length-4), catalog={};
+            for (let at=offset;at<data.length-4;at+=16) {
+                const key=data.readUInt32BE(at).toString(16).padStart(8,'0');
+                const start=data.readUInt32BE(at+8),length=data.readUInt32BE(at+12);
+                catalog[key]=data.subarray(start,start+length).toString('utf8');
+            }
+            return catalog;
         }
+        const base=lmo('package/root/usr/lib/lua/luci/i18n/proxy-guard');
+        const pro=lmo('package/pro/root/usr/lib/lua/luci/i18n/proxy-guard-pro');
+        for (const hash of Object.keys(pro)) assert(!(hash in base),locale+' catalogs overlap at '+hash);
+        const catalog={...base,...pro};
         const context={window:{TR:catalog},TR:catalog};
         vm.createContext(context);vm.runInContext(gettextSource,context);
         const extra=column===null?JSON.parse(fs.readFileSync(root+'/package/i18n/'+locale+'.json','utf8')):null;
+        const proExtra=column===null?JSON.parse(fs.readFileSync(root+'/package/i18n/pro/'+locale+'.json','utf8')):null;
+        const proGettext=key=>{const id='proxy-guard-pro:'+key; const value=context._(id);return value===id?context._(key):value;};
         for(const row of rows) assert.equal(context._(row[1]),column===null?extra[row[1]]:row[column],locale+': '+row[1]);
-        viewChecks.push(checkLocalizedViews(locale,key=>context._(key)));
-
+        for(const row of proRows) {
+            const actual=row[1]==='VPS access rules (Pro)'?context._(row[1]):proGettext(row[1]);
+            assert.equal(actual,column===null?proExtra[row[1]]:row[column],locale+' Pro: '+row[1]);
+        }
+        viewChecks.push(checkLocalizedViews(locale,key=>context._(key),proGettext));
     }
     console.log('PASS all packaged LMO entries using actual LuCI gettext and hash implementation');
     Promise.all(viewChecks).then(locales=>console.log('PASS all localized settings groups, Pro, raw editors, wizard steps, RTL and technical inputs (actual LuCI gettext; form/RPC stubs): '+locales.join(', '))).catch(e=>{console.error(e);process.exitCode=1;});
 
 }
 
-async function checkLocalizedViews(locale, gettext) {
+async function checkLocalizedViews(locale, gettext, proGettext) {
     const vm = require('vm');
     const tabs = [], sections = [], fields = [], rpcCalls = [];
     let modal;
@@ -129,25 +153,33 @@ async function checkLocalizedViews(locale, gettext) {
     assert.equal(fields.find(f=>f.name==='schedule_utc_offset').default,'+00:00');
     assert.equal(fields.find(f=>f.name==='exit_check').default,'0');
     assert(walk(page).some(n=>n.tag==='h3'&&n.children[0]===gettext('Event log')),locale+' event heading');
-    assert.equal(page.children.at(-1).children[0],gettext('Clear logs'));
+    assert.equal(page.children.at(-2).children[0],gettext('Clear logs'));
+    assert.equal(page.children.at(-1).children[0].children[0],gettext('Recovery history'),locale+' recovery history heading');
     assert.equal(walk(page).find(n=>n.id==='expected_exit4').dir,'ltr',locale+' technical input direction');
-    const access=load('package/pro/root/www/luci-static/resources/view/proxy-guard/access.js');
+    const standardI18n=ctx.pgI18n;
+    ctx.shared=standardI18n;
+    const proI18n=load(proPath+'proxy_guard_pro_i18n.js');
+    ctx.pgI18n=proI18n;
+    const access=load(proPath+'view/proxy-guard/access.js');
     const start=sections.length;const pro=await access.render();await access.statusRequest;
     assert.equal(pro.dir,direction,locale+' Pro direction');
     const proGroups=['Connection settings','VPS service rules','Services','Independent proxy heartbeat','SSH management','Remote maintenance'];
-    for(const key of proGroups)assert(sections.slice(start).some(row=>row.includes(gettext(key))),locale+' Pro group '+key);
+    for(const key of proGroups)assert(sections.slice(start).some(row=>row.includes(proGettext(key))),locale+' Pro group '+key);
     assert.equal(fields.find(f=>f.name==='ssh_open_seconds').default,'0');
-    for(const key of ['Check management readiness','Restart proxy core','Reboot VPS','Raw UCI configuration'])assert(walk(pro).some(n=>n.children.includes(gettext(key))),locale+' Pro action '+key);
+    for(const key of ['Check management readiness','Restart proxy core','Reboot VPS','Raw UCI configuration'])assert(walk(pro).some(n=>n.children.includes(proGettext(key))),locale+' Pro action '+key);
     for(const path of ['proxy-guard-raw','proxy-guard-access-raw']){
         ctx.window.location.pathname='/admin/services/'+path;
-        const raw=load('package/root/www/luci-static/resources/view/proxy-guard/raw.js');
+        const isPro=path==='proxy-guard-access-raw';
+        ctx.pgI18n=isPro?proI18n:standardI18n;
+        const raw=load(isPro?proPath+'view/proxy-guard/access-raw.js':basePath+'view/proxy-guard/raw.js');
         const editor=raw.render(await raw.load());
         assert.equal(editor.dir,direction,locale+' raw direction');
         assert.equal(raw.editor.value,"config proxy_guard 'main'\n");
         assert(raw.editor.attrs.style.includes('direction:ltr'),locale+' UCI syntax remains LTR');
         for(const key of ['Validate configuration','Load default template','Download configuration'])assert(walk(editor).some(n=>n.children.includes(gettext(key))),locale+' raw action '+key);
     }
-    const setup=load('package/root/www/luci-static/resources/proxy_guard_setup.js');
+    ctx.pgI18n=standardI18n;
+    const setup=load(basePath+'proxy_guard_setup.js');
     setup.info={wizard_complete:true};setup.view={showActionError(e){throw e;}};
     const button=key=>{
         const result=modal.body.flatMap(walk).find(n=>n.tag==='button'&&n.children[0]===gettext(key));

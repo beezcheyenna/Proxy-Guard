@@ -57,6 +57,8 @@ function event(s, c) {
 
 let lock = open('/var/lock/proxy-guard-fast.lock', 'a', 0o600);
 if (!lock) die('Cannot open fast protection lock');
+let firewall_lock = open('/var/run/fw4.lock', 'a', 0o600);
+if (!firewall_lock) die('Cannot open system firewall lock');
 let state = read_json(run + '/fast.json');
 let log_cursor = state && state.log_cursor;
 let boot_id = trim(readfile('/proc/sys/kernel/random/boot_id') || '');
@@ -106,19 +108,30 @@ while (readfile(run + '/removing') == null) {
         if (stale) state.holding = true;
         let allow = !state.holding;
         state.gate_ok = true;
-        if (c.mode == 'guard' && (allow || !cleared)) {
-            let script = 'flush set inet proxy_guard service_ifaces\n';
-            if (allow) {
-                let names = [];
-                for (let name in c.interfaces) push(names, sprintf('"%s" timeout 4s', name));
-                script += 'add element inet proxy_guard service_ifaces { ' + join(', ', names) + ' }\n';
+        if (c.mode == 'guard' && c.services_watch != false && (allow || !cleared)) {
+            // A configuration change may replace the gate before the slow
+            // worker publishes its next snapshot. Never renew a different
+            // policy using the old snapshot, and do not race fw4 reload.
+            // Nonblocking: a busy firewall must not delay service monitoring.
+            state.gate_ok = false;
+            if (firewall_lock.lock('xn')) {
+                let policy = read_json(run + '/firewall.json');
+                if (policy && policy.stamp == c.stamp) {
+                    let script = 'flush set inet proxy_guard service_ifaces\n';
+                    if (allow) {
+                        let names = [];
+                        for (let name in c.interfaces) push(names, sprintf('"%s" timeout 4s', name));
+                        script += 'add element inet proxy_guard service_ifaces { ' + join(', ', names) + ' }\n';
+                    }
+                    write(run + '/fast-transaction.nft', script);
+                    state.gate_ok = system(['nft', '-f', run + '/fast-transaction.nft']) == 0;
+                    unlink(run + '/fast-transaction.nft');
+                }
+                firewall_lock.lock('u');
             }
-            write(run + '/fast-transaction.nft', script);
-            state.gate_ok = system(['nft', '-f', run + '/fast-transaction.nft']) == 0;
             cleared = !allow && state.gate_ok;
-            unlink(run + '/fast-transaction.nft');
         }
-        else if (c.mode != 'guard') cleared = false;
+        else if (c.mode != 'guard' || c.services_watch == false) cleared = false;
         event(state, c);
         write(run + '/fast.json', sprintf('%J\n', state));
         if (state.phase != 'normal' || (snapshot.schedule && snapshot.schedule.active)) { if (readfile(run + '/fast-poll') == null) write(run + '/fast-poll', '1\n'); }

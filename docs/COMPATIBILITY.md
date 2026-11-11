@@ -4,23 +4,32 @@
 
 ## 路由器与客户端
 
-本版要求路由器使用 opkg、LuCI 和 firewall4/nftables，依赖包与内核模块须来自匹配的固件软件源。已进行安装、升级、故障阻断、恢复和冷启动等功能测试，兼容模式与已知限制见下表。
+本版要求路由器使用 LuCI 和 firewall4/nftables；opkg 固件安装 IPK，apk 固件安装由匹配 SDK 生成的 APK，依赖包与内核模块须来自匹配的固件软件源。已进行安装、升级、故障阻断、恢复和冷启动等功能测试，兼容模式与已知限制见下表。
 
 | 客户端 | 已纳入验证的模式 | 必须注意 |
 | --- | --- | --- |
-| PassWall / Xray | redirect + tproxy | 读取实际服务和端口，按所选模式检查 |
-| PassWall2 / Xray | redirect + tproxy | 包含原生 LuCI/RPC、升级与冷启动恢复检查 |
-| PassWall2 / sing-box | tproxy | redirect 在保护关闭时已有 IPv6 TCP 基线失败，不声明该模式通过 |
-| OpenClash / Mihomo | redirect + tproxy、TUN | 保留实际 SOCKS 认证；关闭服务监视不应丢失连接认证 |
+| PassWall / Xray、sing-box | TCP redirect + UDP tproxy；TCP/UDP tproxy | IPv6 代理须开启上游支持的 IPv6 TPROXY；本轮 REDIRECT 用例的 IPv6 是受保护的直连路由，不能算作 IPv6 代理验收 |
+| PassWall2 / Xray、sing-box | tproxy | redirect 等其他组合须单独验证，不能从 tproxy 结果推定 |
+| OpenClash / Mihomo | redirect + tproxy、TUN | 保留实际 SOCKS 认证；关闭服务监视不应丢失连接认证。IPv6 UDP 代理需在上游明确启用，已验证其 TPROXY 与 TUN 路径。未启用时 IPv6 UDP 可能走路由直连，直连阻断结果不能当作代理路径通过 |
 | Nikki / Mihomo | redirect + tproxy、TUN | 保留默认 SOCKS 认证，按所选模式检查 |
-| HomeProxy / sing-box | redirect + tproxy | 服务、真实流量与日志适配分别检查 |
-| HomeProxy / sing-box system TUN | 有条件 | 原版 sing-box 1.12.25 / sing-tun 0.7.13 存在 IPv6 UDP 回写原包问题。该组合需要对应修复，不能将修复版的结果视为原版已兼容 |
+| HomeProxy / sing-box | redirect + tproxy、system TUN | 新版官方 sing-box 1.14.4 已重新进行真实 IPv4/IPv6 TCP/UDP 检查，不再使用旧 sing-tun 补丁 |
+| PassWall / 原生 Hysteria2、Shadowsocks-Rust、NaiveProxy | 原生监听识别、受支持路径的故障阻断与恢复 | 已验证 Hysteria2、Shadowsocks-Rust、Naive HTTPS 与 QUIC；NaiveProxy 不提供 UDP 代理，其测试中的 IPv6 为受保护直连。Shadowsocks-Rust 的默认 IPv4 监听不能视为已支持 IPv6 代理 |
+| PassWall / sing-box ShadowTLS v3 客户端 + 原生 ShadowTLS 服务端 | 实际 TCP 代理通流、故障阻断与恢复 | 已使用有效私有测试证书验证 TLS，未关闭证书校验。UDP 是独立的受保护路由流量，不代表 ShadowTLS 提供 UDP 传输 |
+| 原生 ShadowTLS 客户端 | 进程与端口检查 | 官方内置公共根不信任本轮私有测试 CA；原生客户端尚未完成端到端验收，不从 sing-box 客户端结果推定 |
 
-插件不会自动替换 HomeProxy 代理内核。可选择表中其他受支持模式；可选修复的源码、构建条件和许可见[补丁说明](../compat/sing-tun-v0.7.13/README.md)。
+依赖与内核模块必须匹配固件来源。内核版本号和包管理器中的 ABI 标记相同，也不能据此混用不同厂商的内核模块；不要用离线包全集覆盖固件自带模块。
+
+已在未安装 Proxy Guard 的环境中复现：Xray 26.11.9 作为 SOCKS5 UDP 上游时，多个关联同时存活可能产生重复的临时 UDP 监听端口和请求超时。该组合不能视为稳定 UDP 转发验收通过；这不等于 Xray 的其他传输协议均有此问题，也不应通过关闭 UDP 检测来掩盖已经存在的链路故障。
+
+插件不会自动替换代理内核。界面版本、已安装软件包版本和实际运行的内核版本应分别核对。历史版本或不同核心配置的测试结果不自动适用于新版组合。
 
 功能测试涵盖新建和已有的 IPv4/IPv6 TCP/UDP 流量、故障阻断与恢复、增强监测中再次故障，以及 DNS、管理和路由器本机访问的保留。
 
-本版 IPK **不支持**使用 APK 的 iStoreOS 25.12 分支，也不支持仅有 fw3/iptables 的固件。其他固件、内核和 CPU 架构需要核对所需能力与实际流量路径。
+IPK 与 APK 不能互换。本轮覆盖 OpenWrt、ImmortalWrt、iStoreOS 的 24 系列与 25.12 系列；仍不支持仅有 fw3/iptables 的固件。其他固件、内核和 CPU 架构需要核对所需能力与实际流量路径。
+
+## LuCI 语言与主题
+
+插件提供中文、英语、日语、俄语和波斯语。iStoreOS 24 的 Argon 主题与 PassWall2 26.11.3-r1 共存时，已观察到 LuCI 选择“自动”后被 PassWall2 的语言初始化改成英语。可在 LuCI 的系统设置中明确选择语言；五种语言下的普通版和 Pro 页面已分别检查。系统菜单和其他插件的翻译仍由各自语言包提供。
 
 ## VPS Agent
 

@@ -267,17 +267,6 @@
         "tests/passwall_log_corpus.json"
       ],
       "upstream_archive_provenance": []
-    },
-    {
-      "name": "SagerNet/sing-tun",
-      "role": "optional source compatibility patch",
-      "version": "v0.7.13",
-      "license_declared": "GPL-3.0-or-later",
-      "evidence_url": "https://github.com/SagerNet/sing-tun/tree/v0.7.13",
-      "distribution": "Optional source patch included; not automatically installed and no compiled core bundled.",
-      "source_artifacts": [
-        "compat/sing-tun-v0.7.13/"
-      ]
     }
   ],
   "worker_lockfile_inventory": "companion/worker/THIRD_PARTY_DEPENDENCIES.json",

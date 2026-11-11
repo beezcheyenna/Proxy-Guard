@@ -2,17 +2,17 @@
 
 [简体中文](USER-GUIDE.md) · [English](USER-GUIDE.en.md) · [日本語](USER-GUIDE.ja.md) · [Русский](USER-GUIDE.ru.md) · [فارسی](USER-GUIDE.fa.md)
 
-[Project home](../README.en.md)
+[Project home](README.en.md)
 
 <a id="guide-editions"></a>
 
-This guide covers configuration and everyday operation. See the [project home](../README.en.md#guide-editions) for version roles and feature differences.
+This guide covers configuration and everyday operation. See the [project home](README.en.md#guide-editions) for version roles and feature differences.
 
 <a id="guide-setup"></a>
 
 ## Installation and first setup
 
-1. Install the matching Standard IPK through LuCI's package page. Add a compatible Pro package if you need VPS features.
+1. Install the matching Standard package through LuCI: IPK for opkg firmware, APK for apk firmware. Add a compatible Pro package if you need VPS features.
 2. Open “Services → Proxy Guard”, complete the wizard and review SOCKS, the client, ingress interfaces, IPv4 / IPv6 scope and exceptions. Enable checks in “Monitor only”, save and apply, confirm as prompted, then review the results.
 3. When ready to enable blocking, select protection mode and “Save & Apply” again. After the self-check passes, **confirm within 30 seconds**. A failed self-check or missing confirmation rolls back the settings. An ordinary proxy outage follows the blocking protection process.
 
@@ -24,9 +24,9 @@ On first installation, protection, exit IPv4 verification and scheduled protecti
 
 ### Which systems and proxy clients are supported?
 
-The router needs **opkg + LuCI + firewall4/nftables**, with Lua, ucode, curl and other dependencies available from matching firmware feeds. Compatibility-tested builds include OpenWrt `24.10.4`, ImmortalWrt `24.10.4` and iStoreOS `24.10.8`.
+The router needs **opkg or apk + LuCI + firewall4/nftables**, with Lua, ucode, curl and other dependencies available from matching firmware feeds. Use IPK for the 24 series and APK for the 25.12 series; see the [compatibility table](COMPATIBILITY.md) for firmware and client combinations.
 
-Adapters are provided for PassWall, PassWall2, OpenClash, Nikki and HomeProxy. Support depends on the client version, core and forwarding mode. Some sing-box redirect / HomeProxy TUN combinations have limitations; consult the [compatibility table](COMPATIBILITY.md). IPKs do not support APK-based firmware or fw3/iptables-only systems. An `all` package does not mean every architecture or device has been tested.
+Adapters are provided for PassWall, PassWall2, OpenClash, Nikki and HomeProxy. Support depends on the client version, core and forwarding mode. Proxy cores and forwarding modes have specific limitations; consult the [compatibility table](COMPATIBILITY.md). IPK and APK packages are not interchangeable, and fw3/iptables-only systems are unsupported. An `all` package does not mean every architecture or device has been tested.
 
 The Pro Linux Agent requires Python `3.10+`, nftables and the necessary kernel capabilities. It supports systemd / OpenRC. Specific Ubuntu, Debian, Rocky Linux and Alpine Linux releases have been compatibility-tested; see [Linux installation](LINUX-AGENT-INSTALL.md).
 
@@ -67,6 +67,10 @@ Pro requires compatible Standard and a separately deployed Linux VPS Agent. The 
 
 Enter one HTTPS target per line as `https://host/path|expected_status`, for example `https://www.gstatic.com/generate_204|204`. The `204` after the separator is the expected HTTP status, not part of the URL. Configure 2–4 targets and the minimum number that must succeed per round in normal mode; the default minimum is 1. Enhanced monitoring requires every target to succeed. Requests use local SOCKS, so a target outage or rate limit can affect the result.
 
+Fresh installs use `https://www.gstatic.com/generate_204|204` and `https://connectivity-check.ubuntu.com/|204` by default. Upgrading preserves saved custom targets.
+
+Set a backup HTTPS URL for exit verification under Connection checks. The backup is tried once over the same SOCKS route only if the primary times out. Each new round starts with the primary. If the field is blank, ipify uses https://4.ident.me/ and other primary hosts have no backup. The existing failure rules apply if neither service verifies the exit.
+
 With exit verification enabled, routine address checks use ipify by default. The optional Cloudflare check makes one additional attempt when the proxy first becomes ready after boot and once after each interruption recovers. Signals for the same interruption are combined; there is no daily or continuous polling. This option also depends on exit verification. Keep Cloudflare trace URLs out of recurring target lists; no third-party endpoint is guaranteed to remain available or free of rate limits.
 
 A Cloudflare timeout or unavailable response does not by itself trigger blocking; the routine checks must still pass. A returned exit address that differs from the expected address is treated as a fault.
@@ -79,6 +83,8 @@ A Cloudflare timeout or unavailable response does not by itself trigger blocking
 4. During a maintenance window you control, simulate a proxy failure and recovery. Check new and established connections over the IPv4 / IPv6 and TCP / UDP paths you use, as well as LAN, DNS, management and devices using another gateway.
 5. Expand the scope or enable schedules and boot protection after these checks. Test boot protection with a separate reboot; self-check does not replace real traffic-path validation.
 
+Complete or cancel any unconfirmed configuration trial before upgrading. The installer first rolls back an unconfirmed trial, then preserves the confirmed settings. Direct edits to UCI files also require the apply-and-confirm flow.
+
 <a id="guide-detection"></a>
 
 ### Checks, blocking and recovery
@@ -86,6 +92,8 @@ A Cloudflare timeout or unavailable response does not by itself trigger blocking
 #### Normal connectivity checks
 
 Connectivity checks always use the configured local SOCKS proxy, without direct fallback. Exit IPv4 matching is off by default; enabling it requires a trusted expected address. Pro can import VPS address candidates, but an interface or panel address may differ from the actual proxy exit. Review the candidate, then save and apply.
+
+Automatic listener-port detection requires client service monitoring. If you turn service monitoring off, make sure the manual SOCKS port matches the client’s actual listening port. SOCKS authentication remains supported.
 
 Normal connectivity checks wait 10 seconds after each round finishes by default, with request time added separately. Three failed rounds confirm a fault, and two successful rounds confirm recovery. These values are configurable. The page refreshing about once a second does not mean normal external checks run every second.
 
@@ -131,6 +139,8 @@ The UI follows LuCI's language setting and supports **Simplified Chinese, Englis
 
 #### Understanding the status
 
+Current protection status reflects actual kernel enforcement. A previously passed check is historical and does not guarantee that access is currently allowed. If an access permit expires, the page reports blocking or pending revalidation.
+
 | Status or message | Meaning and next action |
 | --- | --- |
 | Disabled | This plugin is not providing blocking protection. Check the main switch and applied configuration. |
@@ -143,14 +153,18 @@ The UI follows LuCI's language setting and supports **Simplified Chinese, Englis
 
 #### Upgrades, reinstalls and troubleshooting
 
-Back up the plugin configuration before upgrading. Securely back up Pro pairing secrets, the private Agent configuration and certificates separately. Upgrades preserve saved choices; new defaults do not automatically replace them. For a revised package with the same version, opkg may report it is already installed. Verify its source and checksum, then use the same-version reinstall procedure in the [installation reference](USAGE.md#安装升级和卸载); do not bypass dependency checks. Pro can be upgraded independently when the base API is compatible, while new remote features may require an Agent or Worker update.
+Back up the plugin configuration before upgrading. Securely back up Pro pairing secrets, the private Agent configuration and certificates separately. Upgrades preserve switches, custom timing and other settings. Detection endpoints that exactly match recognized legacy presets are migrated to the new presets, so check the actual endpoints after installation. For a revised package with the same version, opkg / apk may report it is already installed. Verify its source and checksum, then use the same-version reinstall procedure in the [installation reference](USAGE.md#安装升级和卸载); do not bypass dependency checks. Pro can be upgraded independently when the base API is compatible, while new remote features may require an Agent or Worker update.
 
 If the menu is missing, the page fails or an RPC object is not found, keep the complete installation output, then sign in to LuCI again and refresh. Package hooks should handle cache cleanup and RPC reload during a normal installation. If the issue remains after signing in again, investigate installation failures and dependencies; do not broaden ACLs or count a manual service reload as proof of a successful installation.
 
 Read-only checks on your own router:
 
 ```sh
-opkg status luci-app-proxy-guard
+if command -v opkg >/dev/null 2>&1; then
+    opkg status luci-app-proxy-guard
+else
+    apk list --installed luci-app-proxy-guard
+fi
 /usr/libexec/proxy-guard status
 /usr/libexec/proxy-guard logs
 ```
@@ -179,7 +193,7 @@ SSH is unmanaged by default, and remote maintenance is disabled. If you enable S
 
 #### Control connection
 
-Control can use direct HTTPS or a Cloudflare Worker with Tunnel/VPC. It handles authentication and policy coordination, not proxy traffic. Control requests must bypass the proxy, and you must confirm the direct routing; the plugin does not change routing or traffic-splitting rules. The independent proxy-path heartbeat instead uses local SOCKS to check the proxy route. Control defaults to IPv4. IPv6 traffic filtering does not imply validated IPv6 cloud control. See [Pro companion setup](../companion/README.md).
+Control can use direct HTTPS or a Cloudflare Worker with Tunnel/VPC. It handles authentication and policy coordination, not proxy traffic. Control requests must bypass the proxy, and you must confirm the direct routing; the plugin does not change routing or traffic-splitting rules. The independent proxy-path heartbeat instead uses local SOCKS to check the proxy route. Control defaults to IPv4. IPv6 traffic filtering does not imply validated IPv6 cloud control. See [Pro companion setup](PRO-COMPANION.md).
 
 The independent proxy path has its own heartbeat secret and Agent HTTPS entry. Direct HTTPS mode can reuse the same Agent base URL, but control requests must go directly and path heartbeats through SOCKS. In Cloudflare mode, the Worker URL cannot serve as this independent entry. See the [connection mapping](LINUX-AGENT-INSTALL.md#control-and-path).
 
@@ -204,7 +218,7 @@ Report security vulnerabilities privately first to [beezcheyenna268@gmail.com](m
 
 **This project is intended for development, testing and technical research.** Use it on authorized devices and networks, and comply with the laws applicable where it is used and deployed. The software is provided “as is” under the existing [MIT License](../LICENSE), without a guarantee of suitability for every situation. Risks and liability are governed by the applicable licenses and law. This notice does not modify the existing licenses or exclude liability that cannot legally be excluded.
 
-[Security policy](../SECURITY.en.md) · [Disclaimer](../DISCLAIMER.en.md) · [Privacy](PRIVACY.md) · [Third-party notices](../THIRD_PARTY_NOTICES.md)
+[Security policy](SECURITY.en.md) · [Disclaimer](DISCLAIMER.en.md) · [Privacy](PRIVACY.en.md) · [Third-party notices](THIRD_PARTY_NOTICES.md)
 
 ### Related documentation
 
@@ -212,9 +226,11 @@ Further installation, compatibility and development documentation:
 
 - [Compatibility](COMPATIBILITY.md)
 - [Linux Agent installation](LINUX-AGENT-INSTALL.md)
-- [Cloudflare components](../companion/worker/README.md)
+- [Cloudflare components](CLOUDFLARE-WORKER.md)
 - [Build from source](BUILDING.md)
 - [Installation reference](USAGE.md)
 - [Wizard reference](GUIDED-SETUP.md)
 - [Log compatibility](LOG_COMPATIBILITY.md)
 - [Licensing](LICENSING.md)
+
+- [Changelog](CHANGELOG.en.md)

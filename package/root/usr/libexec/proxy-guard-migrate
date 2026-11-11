@@ -7,19 +7,21 @@ local loaded,why=uci:load('/etc/config/proxy_guard')
 assert(loaded,why)
 local raw=uci:get_all('proxy_guard','main')
 if type(raw)~='table' then os.exit(0) end
-local google={['https://www.google.com/generate_204|204']=true,
- ['https://www.gstatic.com/generate_204|204']=true}
+local gstatic_target='https://www.gstatic.com/generate_204|204'
+local google_target='https://www.google.com/generate_204|204'
+local google={[google_target]=true,[gstatic_target]=true}
 local old_cf={['https://cp.cloudflare.com/generate_204|204']=true,
  ['https://www.cloudflare.com/cdn-cgi/trace|200']=true}
 local targets=raw.targets
 local defaults=type(targets)=='table' and #targets==2 and
- ((google[targets[1]] and old_cf[targets[2]]) or (old_cf[targets[1]] and google[targets[2]]))
+ ((targets[1]==gstatic_target and targets[2]==google_target) or
+  (google[targets[1]] and old_cf[targets[2]]) or (old_cf[targets[1]] and google[targets[2]]))
 local changed=false
 local function set(key,value)
  assert(uci:set('proxy_guard','main',key,value));changed=true
 end
 if defaults then
- set('targets',{'https://www.gstatic.com/generate_204|204','https://www.google.com/generate_204|204'})
+ set('targets',{gstatic_target,'https://connectivity-check.ubuntu.com/|204'})
 end
 if raw.exit_url=='https://www.cloudflare.com/cdn-cgi/trace' then
  set('exit_url','https://api.ipify.org/')

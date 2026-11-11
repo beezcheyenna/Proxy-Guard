@@ -101,7 +101,7 @@ local function installer_active(p)
  if fields[20]~=p.installer_started then return false end
  local command=(read('/proc/'..p.installer_pid..'/cmdline',8192)or''):match('^[^%z]+')or''
  local name=command:match('[^/]+$')
- return name=='opkg' or name=='opkg-cl'
+ return name=='opkg' or name=='opkg-cl' or name=='apk'
 end
 local function package_busy()
  if read('/var/run/proxy-guard/removing',128)~=nil or package_state.state()=='active' then return true end

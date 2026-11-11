@@ -64,7 +64,12 @@ const screen = new Function('view','form','rpc','poll','ui','uci','E','_','pgI18
     }
     screen.updateStatus({phase:'healthy',enforcement:'allowing',cf_event:{enabled:true,attempted:true,checked_at:1,outcome:'ok',observed:'<img onerror=bad()>',colo:'<script>bad()</script>'}});
     assert(!source.includes('innerHTML'));
+    for(const exit of [{enabled:true,attempted:false,expected:'203.0.113.10'},{enabled:true}]) {
+        screen.updateStatus({phase:'blocked',enforcement:'blocked',exit_check:exit});
+        assert(text().includes(translations['Exit has not been checked']));
+        assert(!text().includes(translations['; observed ']));
+    }
     const before=calls.filter(x=>x==='apply').length;flag.current='0';
     assert.equal(calls.filter(x=>x==='apply').length,before);
-    console.log('PASS 11 CF event UI states, historical/current exit separation, resolved mismatch and draft-only toggle (LuCI API stubs)');
+    console.log('PASS CF event UI states, skipped/uninitialized exit diagnostics, historical/current exit separation, resolved mismatch and draft-only toggle (LuCI API stubs)');
 })().catch(e=>{console.error(e);process.exit(1);});

@@ -141,7 +141,7 @@ export function parse(line, client) {
 };
 
 // Pure event reducer, shared by the file reader and native regression tests.
-export function consume(s, text, wall, up, baseline, reset, client) {
+export function consume(s, text, wall, up, baseline, reset, client, interval_start) {
     let old_trip = s.trip || 0, was_pending = s.pending == true;
     // Preserve the last known stage when upgrading an older saved cursor.
     if (s.pending && s.pending_time == null && s.event_time != null && s.event_time <= wall + 2)
@@ -152,7 +152,12 @@ export function consume(s, text, wall, up, baseline, reset, client) {
         if (!e) continue;
         // At attachment/reset, timestamps and the old cursor prevent history
         // copied into a replacement journal from replaying as a new restart.
-        let fresh = e.time != null && wall >= 1577836800 && e.time <= wall + 2 && wall - e.time <= 30;
+        // Newly appended bytes can span a monitor restart. Accept timestamps
+        // within that observed interval only when poll() has verified that
+        // wall and monotonic time advanced together. Rotation/attachment
+        // and clock jumps retain the strict thirty-second freshness rule.
+        let fresh = e.time != null && wall >= 1577836800 && e.time <= wall + 2 &&
+            (wall - e.time <= 30 || interval_start != null && e.time >= interval_start);
         if ((baseline || reset) && !fresh) continue;
         if (reset && index(previous, e.key) >= 0) continue;
         push(recent, e.key);
@@ -205,7 +210,26 @@ export function poll(old, wall, up, boot_id, path, client) {
         s.offset = null; s.partial = ''; s.anchor = ''; s.overlong = false; s.recent = [];
     }
     s.catalog_id = catalog_id;
+    // Offsets and incomplete lines are byte-oriented. A 128-byte tail or an
+    // unfinished write can split UTF-8, so raw buffers must never enter JSON.
+    let partial = type(s.partial) == 'string' ? s.partial : '';
+    let anchor = type(s.anchor) == 'string' ? s.anchor : '';
+    if (s.buffer_encoding == 'base64') {
+        try { partial = b64dec(partial); anchor = b64dec(anchor); }
+        catch (e) { partial = null; anchor = null; }
+    }
+    else if (s.buffer_encoding != null) {
+        partial = null; anchor = null;
+    }
+    if (partial == null || anchor == null) {
+        // A corrupt saved buffer cannot authorize completion from a gap.
+        partial = ''; anchor = ''; s.offset = null; s.overlong = false;
+    }
+    // Also migrate legacy raw buffers on early returns (missing/rotated log).
+    s.partial = b64enc(partial); s.anchor = b64enc(anchor);
+    s.buffer_encoding = 'base64';
     s.client=client; s.path=path;
+    let last_wall = s.checked_at, last_up = s.checked_uptime;
     let meta = lstat(path);
     s.checked_at = wall; s.checked_uptime = up;
     // Reject special files before opening: a FIFO must not stall protection.
@@ -217,14 +241,14 @@ export function poll(old, wall, up, boot_id, path, client) {
     let device = sprintf('%d:%d', info.dev.major, info.dev.minor);
     let baseline = s.offset == null;
     let reset = !baseline && (s.inode != info.inode || s.device != device || info.size < s.offset);
-    if (!baseline && !reset && length(s.anchor || '')) {
-        f.seek(s.offset - length(s.anchor), 0);
-        reset = f.read(length(s.anchor)) != s.anchor;
+    if (!baseline && !reset && length(anchor)) {
+        f.seek(s.offset - length(anchor), 0);
+        reset = f.read(length(anchor)) != anchor;
     }
     let at = baseline || reset ? 0 : s.offset;
     let gap = info.size - at > 65536;
     if (gap) at = info.size - 65536;
-    if (baseline || reset || gap) { s.partial = ''; s.overlong = false; }
+    if (baseline || reset || gap) { partial = ''; s.overlong = false; }
     if (gap && !baseline && !s.pending) {
         s.pending = true; s.trip = (s.trip || 0) + 1;
         s.trigger_kind = 'gap'; s.trigger_time = null;
@@ -238,20 +262,28 @@ export function poll(old, wall, up, boot_id, path, client) {
         let first = index(chunk, '\n');
         chunk = first < 0 ? '' : substr(chunk, first + 1);
     }
-    let text = (s.partial || '') + chunk;
+    let text = partial + chunk;
     let last = rindex(text, '\n');
-    s.partial = last < 0 ? text : substr(text, last + 1);
+    partial = last < 0 ? text : substr(text, last + 1);
     // Keep bounded state and ignore a split overlong line through its newline.
     let complete = last < 0 ? '' : substr(text, 0, last + 1);
     if (s.overlong && length(complete)) {
         complete = substr(complete, index(complete, '\n') + 1); s.overlong = false;
     }
-    if (length(s.partial) > 1024) { s.partial = ''; s.overlong = true; }
-    consume(s, complete, wall, up, baseline, reset,client);
+    if (length(partial) > 1024) { partial = ''; s.overlong = true; }
+    let interval_start = null;
+    if (!baseline && !reset && last_wall != null && last_up != null &&
+        last_wall >= 1577836800 && up >= last_up && wall >= last_wall) {
+        let drift = (wall - last_wall) - (up - last_up);
+        if (drift >= -2 && drift <= 2) interval_start = last_wall - 2;
+    }
+    consume(s, complete, wall, up, baseline, reset, client, interval_start);
     s.offset = at + bytes;
     s.inode = info.inode; s.device = device;
     let size = min(128, s.offset);
-    f.seek(s.offset - size, 0); s.anchor = size ? (f.read(size) || '') : '';
+    f.seek(s.offset - size, 0);
+    s.partial = b64enc(partial);
+    s.anchor = b64enc(size ? (f.read(size) || '') : '');
     f.close(); s.available = true;
     return s;
 };

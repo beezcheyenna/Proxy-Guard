@@ -1,0 +1,672 @@
+# Generated from messages.tsv; use tools/build_translations.py.
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\nLanguage: zh-cn\n"
+
+msgid "VPS access rules (Pro)"
+msgstr "VPS 访问规则（Pro）"
+
+msgid "proxy-guard-pro:0 keeps emergency SSH open until household authorization is restored. Use 30 to 3600 for a timed window."
+msgstr "0 表示保持救援 SSH 开放，直到家庭 IP 授权恢复；30 至 3600 表示限时秒数。"
+
+msgid "proxy-guard-pro:A confirmation action is already being verified."
+msgstr "确认操作的结果正在核对中。"
+
+msgid "proxy-guard-pro:A maintenance operation is already pending."
+msgstr "已有维护操作正在执行。"
+
+msgid "proxy-guard-pro:A missing or failed remote health report withholds the local access permit. Local proxy checks remain required."
+msgstr "远端健康状态缺失或异常时，不发放本地联网许可；仍需通过本地代理验证。"
+
+msgid "proxy-guard-pro:Add at least one address to an enabled static whitelist."
+msgstr "请为启用的静态白名单添加至少一个地址。"
+
+msgid "proxy-guard-pro:Address families"
+msgstr "地址类型"
+
+msgid "proxy-guard-pro:Agent HTTPS address through the proxy"
+msgstr "经代理访问的 Agent HTTPS 地址"
+
+msgid "proxy-guard-pro:Agent started"
+msgstr "Agent 已启动"
+
+msgid "proxy-guard-pro:All sources keeps standard resource limits active. Household and static addresses are allowed in whitelist mode and exempt from standard limits. Legacy bypass disables this rule protection."
+msgstr "所有来源仍执行标准资源限制。家庭和静态地址在白名单模式下获准访问，在标准模式下免于限制。旧版绕过选项会关闭此规则的保护。"
+
+msgid "proxy-guard-pro:All sources, resource limits apply"
+msgstr "所有来源，不豁免资源限制"
+
+msgid "proxy-guard-pro:Allow rebooting the VPS"
+msgstr "允许重启 VPS"
+
+msgid "proxy-guard-pro:Allow restarting the proxy core"
+msgstr "允许重启代理内核"
+
+msgid "proxy-guard-pro:Allowed or exempt sources"
+msgstr "允许或豁免的来源"
+
+msgid "proxy-guard-pro:Analysis Agent connected"
+msgstr "分析 Agent 已连接"
+
+msgid "proxy-guard-pro:Analysis reports observations and suspicion only. A repeated payload does not identify the sender as GFW. Full packet capture and the honeypot are off by default and configured on the Agent."
+msgstr "分析结果仅表示观测和可疑行为。重复内容不能证明发送方是 GFW。完整抓包和蜜罐默认关闭，请在 Agent 上配置。"
+
+msgid "proxy-guard-pro:Another VPS policy change is awaiting confirmation."
+msgstr "另一项 VPS 策略变更正在等待确认。"
+
+msgid "proxy-guard-pro:Another session is confirming the VPS policy."
+msgstr "另一会话正在确认 VPS 策略。"
+
+msgid "proxy-guard-pro:Another settings update is in progress; retry shortly."
+msgstr "另一项设置正在应用，请稍后重试。"
+
+msgid "proxy-guard-pro:Bandwidth threshold duration (seconds)"
+msgstr "带宽持续超限时长（秒）"
+
+msgid "proxy-guard-pro:Both heartbeats lost for (seconds)"
+msgstr "两路心跳同时失联时长（秒）"
+
+msgid "proxy-guard-pro:Bypass all protection (legacy behavior)"
+msgstr "绕过全部保护（兼容旧配置）"
+
+msgid "proxy-guard-pro:Bytes observed"
+msgstr "已观测流量（字节）"
+
+msgid "proxy-guard-pro:Cannot read confirmation status. The VPS rollback timer continues."
+msgstr "无法读取确认状态，VPS 回退计时仍在继续。"
+
+msgid "proxy-guard-pro:Cannot read synchronization status; retrying automatically."
+msgstr "无法读取同步状态，正在自动重试。"
+
+msgid "proxy-guard-pro:Changes take effect after Save & Apply. Stopping synchronization does not remove VPS rules. Dynamic authorizations expire; configured resource limits and SSH rescue remain in effect."
+msgstr "修改须保存并应用后才生效。停止同步不会撤销 VPS 规则；动态授权会到期，已配置的资源限制及 SSH 应急机制仍会保留。"
+
+msgid "proxy-guard-pro:Changes take effect after Save & Apply. When synchronization stops, dynamic leases expire; static and unrestricted rules remain on the VPS."
+msgstr "保存并应用后生效。停止同步后，动态许可到期失效；VPS 上的静态和不限制来源规则仍然保留。"
+
+msgid "proxy-guard-pro:Check management readiness"
+msgstr "检查管理通道"
+
+msgid "proxy-guard-pro:Check the access settings and connection."
+msgstr "请检查访问规则设置和连接。"
+
+msgid "proxy-guard-pro:Checking the VPS capability and applying a temporary policy..."
+msgstr "正在检查 VPS 能力并临时应用策略……"
+
+msgid "proxy-guard-pro:Choose a supported protection mode for this port rule."
+msgstr "请选择此端口规则支持的保护模式。"
+
+msgid "proxy-guard-pro:Choose the public address families to authorize dynamically. Removing a family revokes its dynamic lease after the VPS confirms the update; static rules remain independent."
+msgstr "选择动态授权的公网地址类型。取消某一类型后，VPS 确认更新时会撤销其动态授权；静态规则独立保留。"
+
+msgid "proxy-guard-pro:Cloudflare Worker and Tunnel"
+msgstr "Cloudflare Worker 与 Tunnel"
+
+msgid "proxy-guard-pro:Concurrent connection limit"
+msgstr "并发连接数上限"
+
+msgid "proxy-guard-pro:Concurrent connection threshold exceeded"
+msgstr "并发连接数超过阈值"
+
+msgid "proxy-guard-pro:Configuration changed elsewhere. Review saved settings and VPS state before applying again."
+msgstr "配置已被其他位置修改。再次应用前，请核对已保存设置和 VPS 状态。"
+
+msgid "proxy-guard-pro:Configure observation ports and capture duration on the VPS Agent. Raw evidence and honeypots require Pro Max."
+msgstr "观察端口和采集时长在 VPS Agent 中配置。原始证据保存和诱捕服务需要 Pro Max。"
+
+msgid "proxy-guard-pro:Confirm VPS policy"
+msgstr "确认 VPS 策略"
+
+msgid "proxy-guard-pro:Confirm VPS policy changes before keeping them"
+msgstr "VPS 策略变更须确认后保留"
+
+msgid "proxy-guard-pro:Confirm that the synchronization domain uses a direct connection."
+msgstr "请确认同步域名使用直连。"
+
+msgid "proxy-guard-pro:Confirm the SSH management session in settings"
+msgstr "请在设置中确认已经验证 SSH 管理连接"
+
+msgid "proxy-guard-pro:Confirmation result is unknown. Checking again without repeating policy changes."
+msgstr "确认结果尚未核实，正在继续核对，不会重复修改策略。"
+
+msgid "proxy-guard-pro:Connect by SSH from an authorized management address, then check again"
+msgstr "请从允许的管理地址建立 SSH 连接后重新检查"
+
+msgid "proxy-guard-pro:Connection burst allowance"
+msgstr "允许的突发连接数"
+
+msgid "proxy-guard-pro:Connection settings"
+msgstr "连接设置"
+
+msgid "proxy-guard-pro:Control channel"
+msgstr "控制通道"
+
+msgid "proxy-guard-pro:Control heartbeat age (seconds)"
+msgstr "距上次控制心跳（秒）"
+
+msgid "proxy-guard-pro:Control request timeout (seconds)"
+msgstr "控制请求超时（秒）"
+
+msgid "proxy-guard-pro:Control service HTTPS address"
+msgstr "控制服务 HTTPS 地址"
+
+msgid "proxy-guard-pro:Default port protection mode"
+msgstr "默认端口保护模式"
+
+msgid "proxy-guard-pro:Device ID"
+msgstr "设备标识"
+
+msgid "proxy-guard-pro:Device secret"
+msgstr "设备密钥"
+
+msgid "proxy-guard-pro:Direct HTTPS to Agent"
+msgstr "通过 HTTPS 直连 Agent"
+
+msgid "proxy-guard-pro:Discovered listeners"
+msgstr "发现的监听服务"
+
+msgid "proxy-guard-pro:Discovery lists candidate ports only. Whitelist mode requires an authorized source; standard mode applies resource limits; observe mode records without blocking. Unrestricted rules keep the original system firewall behavior."
+msgstr "发现功能仅列出候选端口。白名单模式检查来源授权；标准模式限制资源使用；观察模式只记录、不阻断。“不限来源”仍沿用系统防火墙规则。"
+
+msgid "proxy-guard-pro:Dynamic lease duration (seconds)"
+msgstr "动态许可有效期（秒）"
+
+msgid "proxy-guard-pro:Each rule has its own mode, sources, thresholds and timers. Ports grouped in one rule share these settings. Create separate rules for different settings."
+msgstr "每条规则均可单独设置模式、允许来源、阈值和时间。同一规则中的端口共用这些设置；需要不同设置时，请拆分为独立规则。"
+
+msgid "proxy-guard-pro:Emergency access active"
+msgstr "应急管理入口已启用"
+
+msgid "proxy-guard-pro:Emergency source scope"
+msgstr "应急入口允许的来源"
+
+msgid "proxy-guard-pro:Enable VPS access rules"
+msgstr "启用 VPS 访问规则"
+
+msgid "proxy-guard-pro:Enable emergency SSH access"
+msgstr "启用 SSH 应急访问"
+
+msgid "proxy-guard-pro:Enable proxy-path heartbeat"
+msgstr "启用独立代理链路心跳"
+
+msgid "proxy-guard-pro:Enable the matching action locally and on the VPS Agent first."
+msgstr "请先在本插件和 VPS Agent 中允许对应操作。"
+
+msgid "proxy-guard-pro:Enabled service rules must not overlap on the same protocol."
+msgstr "同一协议的已启用服务规则不能包含重叠端口。"
+
+msgid "proxy-guard-pro:Enter 0 to keep rescue open, or an integer from 30 to 3600 seconds."
+msgstr "填写 0 以持续开放救援，或填写 30 至 3600 的整数秒数。"
+
+msgid "proxy-guard-pro:Enter a control-service HTTPS root URL without a path or credentials."
+msgstr "请输入控制服务的 HTTPS 根地址，不含路径或凭据。"
+
+msgid "proxy-guard-pro:Enter a valid device ID."
+msgstr "请输入有效的设备标识。"
+
+msgid "proxy-guard-pro:Enter ports from 1 to 65535, or a port range."
+msgstr "请输入 1 至 65535 的端口或端口范围。"
+
+msgid "proxy-guard-pro:Enter the paired device secret."
+msgstr "请输入配对的设备密钥。"
+
+msgid "proxy-guard-pro:Enter the secret for the independent proxy heartbeat."
+msgstr "请填写独立代理心跳的认证密钥。"
+
+msgid "proxy-guard-pro:Enter valid IPv4 or IPv6 addresses or CIDR networks."
+msgstr "请输入有效的 IPv4、IPv6 地址或 CIDR 网段。"
+
+msgid "proxy-guard-pro:Fallback bandwidth monitoring needs a trusted data source configured on the VPS Agent."
+msgstr "回落带宽监测尚需在 VPS Agent 配置可信数据源。"
+
+msgid "proxy-guard-pro:Fallback bandwidth per direction (bytes per second)"
+msgstr "回落连接单向带宽上限（字节/秒）"
+
+msgid "proxy-guard-pro:Household IP and static whitelist"
+msgstr "家庭公网 IP 和静态白名单"
+
+msgid "proxy-guard-pro:Household public IP"
+msgstr "家庭公网 IP"
+
+msgid "proxy-guard-pro:I have confirmed the control service uses a direct connection"
+msgstr "我已确认控制服务通过直连访问"
+
+msgid "proxy-guard-pro:I have verified an authorized SSH management session"
+msgstr "我已从允许的管理地址验证 SSH 连接"
+
+msgid "proxy-guard-pro:IP filtering"
+msgstr "IP 来源限制"
+
+msgid "proxy-guard-pro:Independent proxy heartbeat"
+msgstr "独立代理链路心跳"
+
+msgid "proxy-guard-pro:Interrupted; not repeated automatically"
+msgstr "操作中断，不会自动重复执行"
+
+msgid "proxy-guard-pro:Keep VPS policy"
+msgstr "保留 VPS 策略"
+
+msgid "proxy-guard-pro:Last attempt"
+msgstr "上次尝试"
+
+msgid "proxy-guard-pro:Lease expires"
+msgstr "许可到期时间"
+
+msgid "proxy-guard-pro:Leave empty to keep the paired device secret."
+msgstr "留空以保留已配对的设备密钥。"
+
+msgid "proxy-guard-pro:Leave empty to keep the paired secret."
+msgstr "留空则保留已配对的密钥。"
+
+msgid "proxy-guard-pro:Limit concurrent connections"
+msgstr "限制并发连接数"
+
+msgid "proxy-guard-pro:Limit new connection rate"
+msgstr "限制新连接速率"
+
+msgid "proxy-guard-pro:Limit verified fallback bandwidth"
+msgstr "限制已确认回落连接的带宽"
+
+msgid "proxy-guard-pro:Local protection could not be prepared; the remote action was not sent."
+msgstr "本地保护未能就绪，尚未发送远程操作。"
+
+msgid "proxy-guard-pro:Local settings were restored or synchronization stopped. The remote policy still needs verification."
+msgstr "本地配置已恢复或同步已停止，仍需核对远端策略。"
+
+msgid "proxy-guard-pro:Maintenance operation"
+msgstr "维护操作状态"
+
+msgid "proxy-guard-pro:Maintenance record storage needs attention; restart actions are disabled."
+msgstr "维护操作记录异常，远程重启已停用；代理保护继续运行。"
+
+msgid "proxy-guard-pro:Manage SSH access"
+msgstr "由插件管理 SSH 访问"
+
+msgid "proxy-guard-pro:Management IP addresses or networks"
+msgstr "预设管理 IP 或网段"
+
+msgid "proxy-guard-pro:Management addresses and last household IP"
+msgstr "预设管理地址及最后认证的家庭 IP"
+
+msgid "proxy-guard-pro:Management check"
+msgstr "管理通道检查"
+
+msgid "proxy-guard-pro:Management protection active"
+msgstr "管理访问保护已生效"
+
+msgid "proxy-guard-pro:New connection cooldown (seconds)"
+msgstr "暂停接受新连接的时长（秒）"
+
+msgid "proxy-guard-pro:New connection rate exceeded"
+msgstr "新连接速率超过阈值"
+
+msgid "proxy-guard-pro:New connections per second"
+msgstr "每秒允许的新连接数"
+
+msgid "proxy-guard-pro:New connections temporarily limited"
+msgstr "已临时限制该来源的新连接"
+
+msgid "proxy-guard-pro:No protection: bypass enabled"
+msgstr "未执行保护：已启用绕过"
+
+msgid "proxy-guard-pro:Observation window (seconds)"
+msgstr "统计时间窗口（秒）"
+
+msgid "proxy-guard-pro:Observe only"
+msgstr "仅观察并记录"
+
+msgid "proxy-guard-pro:Only add ports you intend to filter. Selecting a panel, API, or subscription port filters that service too. Services sharing the same IP, protocol, and port cannot be separated by URL path or SNI here. SSH has separate settings."
+msgstr "只添加确实要过滤的端口。面板、API 或订阅端口一旦加入，也会按规则过滤；共用同一 IP、协议和端口的服务无法在这里按 URL 路径或 SNI 分开。SSH 请使用独立设置。"
+
+msgid "proxy-guard-pro:Only enabled service rules restrict their selected ports. Other ports remain under the existing system firewall. SSH is not managed unless you add a rule."
+msgstr "仅限制已启用服务规则选定的端口。其他端口沿用系统原有防火墙规则；只有添加规则后才管理 SSH。"
+
+msgid "proxy-guard-pro:Only selected service ports are managed. Other ports keep the existing system firewall policy. SSH management is separate and disabled by default."
+msgstr "仅管理选定的服务端口；其他端口沿用系统原有防火墙规则。SSH 单独管理，默认关闭。"
+
+msgid "proxy-guard-pro:Only the session that applied this policy can confirm it."
+msgstr "只有应用本次策略的会话才能确认。"
+
+msgid "proxy-guard-pro:Open until household authorization is restored"
+msgstr "保持开放，直到家庭 IP 授权恢复"
+
+msgid "proxy-guard-pro:Operation failed"
+msgstr "操作失败"
+
+msgid "proxy-guard-pro:Per-port modes are not supported by the connected service. Update the VPS Agent and, if used, the Cloudflare Worker before applying."
+msgstr "当前连接的服务不支持按端口选择模式。请先更新 VPS Agent；使用 Cloudflare 时还需更新 Worker，再应用配置。"
+
+msgid "proxy-guard-pro:Policy confirmation data could not be read. Review saved settings and VPS state."
+msgstr "无法读取策略确认记录，请核对已保存配置和 VPS 当前状态。"
+
+msgid "proxy-guard-pro:Policy revision confirmed"
+msgstr "策略版本已确认"
+
+msgid "proxy-guard-pro:Port protection mode"
+msgstr "端口保护模式"
+
+msgid "proxy-guard-pro:Port ranges must not overlap."
+msgstr "端口范围不能重叠。"
+
+msgid "proxy-guard-pro:Prepare changes"
+msgstr "准备更改"
+
+msgid "proxy-guard-pro:Prepare to remove VPS rules"
+msgstr "准备解除 VPS 规则"
+
+msgid "proxy-guard-pro:Prepare to turn off this plugin VPS port rules and SSH management while synchronization remains enabled. Save & Apply, then confirm the VPS change. After the VPS confirms removal you may stop synchronization. The system firewall remains in effect."
+msgstr "准备关闭本插件的 VPS 端口规则和 SSH 托管，同时保留同步。请保存并应用，再确认 VPS 变更。VPS 确认解除后可以停止同步；原系统防火墙仍然生效。"
+
+msgid "proxy-guard-pro:Preserve VPS-initiated connections and their replies. Incoming service connections require an explicit rule or a discovered dynamic rule. Existing inbound connections lose access when authorization expires."
+msgstr "保留 VPS 主动建立的连接及其返回流量。外部发起的业务连接需要显式规则或自动发现的动态授权规则；授权过期后，已有入站连接也会被阻断。"
+
+msgid "proxy-guard-pro:Preview service rules"
+msgstr "预览端口规则"
+
+msgid "proxy-guard-pro:Protocol"
+msgstr "协议"
+
+msgid "proxy-guard-pro:Proxy heartbeat age (seconds)"
+msgstr "距上次代理心跳（秒）"
+
+msgid "proxy-guard-pro:Proxy heartbeat interval (seconds)"
+msgstr "代理链路心跳间隔（秒）"
+
+msgid "proxy-guard-pro:Proxy heartbeat secret"
+msgstr "代理链路心跳密钥"
+
+msgid "proxy-guard-pro:Public Internet"
+msgstr "公网任意来源"
+
+msgid "proxy-guard-pro:Public access remaining (seconds)"
+msgstr "公网应急开放剩余时间（秒）"
+
+msgid "proxy-guard-pro:Public emergency window (seconds)"
+msgstr "公网应急开放时长（秒）"
+
+msgid "proxy-guard-pro:REALITY configuration check"
+msgstr "REALITY 配置检查"
+
+msgid "proxy-guard-pro:Reboot VPS"
+msgstr "重启 VPS"
+
+msgid "proxy-guard-pro:Recommended. The VPS restores its previous selected-port policy if a changed policy is not confirmed. Disabling this applies changes immediately."
+msgstr "建议开启。变更后的策略未确认时，VPS 会恢复原来的指定端口策略。关闭后将立即应用变更。"
+
+msgid "proxy-guard-pro:Recovery verification timeout (seconds)"
+msgstr "恢复确认超时时间（秒）"
+
+msgid "proxy-guard-pro:Recovery verified"
+msgstr "已确认恢复"
+
+msgid "proxy-guard-pro:Recovery was not verified before the timeout."
+msgstr "超时前未能确认恢复，请查看实际运行状态。"
+
+msgid "proxy-guard-pro:Reduce the number of rules or whitelist addresses."
+msgstr "请减少规则或白名单地址的数量。"
+
+msgid "proxy-guard-pro:Remote maintenance"
+msgstr "远程维护"
+
+msgid "proxy-guard-pro:Remove VPS rules"
+msgstr "解除 VPS 规则"
+
+msgid "proxy-guard-pro:Request accepted"
+msgstr "远端已接收请求"
+
+msgid "proxy-guard-pro:Require VPS service health before restoring access"
+msgstr "恢复联网前必须确认 VPS 服务正常"
+
+msgid "proxy-guard-pro:Resource threshold exceeded"
+msgstr "资源使用超过阈值"
+
+msgid "proxy-guard-pro:Restart proxy core"
+msgstr "重启代理内核"
+
+msgid "proxy-guard-pro:Restore previous VPS policy"
+msgstr "恢复之前的 VPS 策略"
+
+msgid "proxy-guard-pro:Restrict listed ports only"
+msgstr "仅限制指定端口"
+
+msgid "proxy-guard-pro:Result unknown"
+msgstr "操作结果尚未确认"
+
+msgid "proxy-guard-pro:SSH authentication settings remain unchanged. Access is managed only after both heartbeats and an authorized SSH session are verified."
+msgstr "插件不会修改 SSH 认证设置；只有两路心跳及授权管理会话均验证通过后，才接管访问限制。"
+
+msgid "proxy-guard-pro:SSH management"
+msgstr "SSH 管理访问"
+
+msgid "proxy-guard-pro:SSH on TCP port 22 is enabled without IP filtering by default. Unrestricted mode adds no source restriction and does not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
+msgstr "SSH/TCP 22 默认启用且不限制来源 IP。不限制来源模式不会覆盖系统防火墙；动态规则对尚未同步的地址类型保持阻断。"
+
+msgid "proxy-guard-pro:SSH port"
+msgstr "SSH 服务端口"
+
+msgid "proxy-guard-pro:SSH rescue requires an independent HTTPS heartbeat through the proxy."
+msgstr "SSH 应急访问需要经代理发送、独立于控制通道的 HTTPS 心跳。"
+
+msgid "proxy-guard-pro:Selected address families authorized"
+msgstr "所选地址类型已授权"
+
+msgid "proxy-guard-pro:Service name"
+msgstr "服务名称"
+
+msgid "proxy-guard-pro:Service rule preview"
+msgstr "端口规则预览"
+
+msgid "proxy-guard-pro:Settings changed during synchronization; waiting for the next update."
+msgstr "同步期间设置已变化，等待下一次更新。"
+
+msgid "proxy-guard-pro:Standard resource protection"
+msgstr "标准防滥用"
+
+msgid "proxy-guard-pro:Static IP addresses or networks"
+msgstr "静态 IP 地址或网段"
+
+msgid "proxy-guard-pro:Static whitelist"
+msgstr "静态白名单"
+
+msgid "proxy-guard-pro:Synchronization failed; check the direct connection, device secret and control service."
+msgstr "同步失败，请检查直连路径、设备密钥和控制服务。"
+
+msgid "proxy-guard-pro:Synchronization interval (seconds)"
+msgstr "同步间隔（秒）"
+
+msgid "proxy-guard-pro:Synchronization is off"
+msgstr "同步已关闭"
+
+msgid "proxy-guard-pro:Synchronization is off. The following VPS policy is last known state, not a current confirmation. Rules may remain active and dynamic authorizations expire."
+msgstr "同步已关闭。以下 VPS 策略是最后已知状态，并非当前确认结果。规则可能仍在生效，动态授权会到期。"
+
+msgid "proxy-guard-pro:Synchronization needs attention"
+msgstr "同步需要检查"
+
+msgid "proxy-guard-pro:Synchronization stopped"
+msgstr "同步已停止"
+
+msgid "proxy-guard-pro:Synchronization updates are delayed; protection cannot be confirmed."
+msgstr "同步状态更新延迟，暂时无法确认保护状态。"
+
+msgid "proxy-guard-pro:Synchronize with the VPS"
+msgstr "同步到 VPS"
+
+msgid "proxy-guard-pro:Synchronize your household public IP and inspect VPS service health through direct HTTPS or Cloudflare. Proxy traffic connects directly to the VPS."
+msgstr "通过 HTTPS 直连或 Cloudflare 同步家庭公网 IP，并检查 VPS 服务健康状态。代理业务仍直接连接 VPS。"
+
+msgid "proxy-guard-pro:Synchronize your household public IP through a Cloudflare Worker and Tunnel. Proxy traffic continues to connect directly to the VPS."
+msgstr "通过 Cloudflare Worker 和 Tunnel 同步家庭公网 IP；代理流量继续直连 VPS。"
+
+msgid "proxy-guard-pro:Synchronizing with the VPS"
+msgstr "正在与 VPS 同步"
+
+msgid "proxy-guard-pro:The Agent denied this action; check its local permissions and credentials."
+msgstr "Agent 已拒绝该操作，请检查其本地授权及认证密钥。"
+
+msgid "proxy-guard-pro:The SSH port must not overlap a managed proxy service."
+msgstr "SSH 端口不能与已管理的代理服务端口重叠。"
+
+msgid "proxy-guard-pro:The SSH rescue timeout must allow two heartbeat intervals plus the request timeout."
+msgstr "SSH 应急等待时间须覆盖两次心跳间隔及请求超时时间。"
+
+msgid "proxy-guard-pro:The VPS Agent must also explicitly allow each action. A request being accepted does not mean recovery is complete."
+msgstr "每项操作还需 VPS Agent 明确允许；收到请求不代表已经完成恢复。"
+
+msgid "proxy-guard-pro:The VPS did not confirm the requested inbound policy and address families."
+msgstr "VPS 未确认请求的入站策略和地址类型。"
+
+msgid "proxy-guard-pro:The VPS owns this timer. Closing this page, losing the control link or rebooting before confirmation does not keep an unconfirmed policy."
+msgstr "计时由 VPS 执行。关闭网页、控制链路失联或确认前重启，都不会将未确认的策略保留下来。"
+
+msgid "proxy-guard-pro:The connected Agent does not enable Pro Max analysis"
+msgstr "当前 Agent 未启用 Pro Max 分析"
+
+msgid "proxy-guard-pro:The control request must bypass the proxy. Configure direct routing before enabling synchronization. A detected proxy exit is rejected."
+msgstr "控制请求必须绕过代理。请先配置直连，再启用同步；检测到代理出口时会拒绝授权。"
+
+msgid "proxy-guard-pro:The control service did not confirm this update."
+msgstr "控制服务未确认本次更新。"
+
+msgid "proxy-guard-pro:The control service observed the proxy exit. Configure a direct connection before synchronizing."
+msgstr "控制服务看到的是代理出口，请先配置直连再同步。"
+
+msgid "proxy-guard-pro:The lease must be at least twice the synchronization interval."
+msgstr "许可有效期至少为同步间隔的两倍。"
+
+msgid "proxy-guard-pro:The listener list is truncated. Discovery does not change access rules."
+msgstr "监听列表已截断。发现功能不会更改访问规则。"
+
+msgid "proxy-guard-pro:The previous VPS policy was restored after an unconfirmed change."
+msgstr "上次未确认的 VPS 策略变更已回退。"
+
+msgid "proxy-guard-pro:The request result is unknown; checking operation status without repeating it."
+msgstr "请求结果尚未确认，正在查询状态，不会重复执行操作。"
+
+msgid "proxy-guard-pro:The selected SSH port is not owned by a verified SSH service"
+msgstr "尚未确认指定端口由 SSH 服务监听"
+
+msgid "proxy-guard-pro:The synchronization process is not updating its status."
+msgstr "同步进程未更新状态。"
+
+msgid "proxy-guard-pro:This interrupts proxy access. Local protection is prepared before the request is sent."
+msgstr "此操作会中断代理连接。启用保护模式时，会先准备本地阻断，再发送请求。"
+
+msgid "proxy-guard-pro:This preview has not been applied. Unselected ports keep the existing system firewall policy."
+msgstr "此处仅为预览，尚未应用。未选端口继续沿用系统原有防火墙规则。"
+
+msgid "proxy-guard-pro:Unrestricted"
+msgstr "不限制来源"
+
+msgid "proxy-guard-pro:Unrestricted bypasses filtering for this rule. Whitelist mode uses allowed sources; standard mode enforces limits; observe mode records threshold events without blocking."
+msgstr "不限制表示此规则不进行过滤。仅白名单模式按允许来源放行；标准模式执行限制；仅观察模式记录超限事件，不阻断连接。"
+
+msgid "proxy-guard-pro:Update the VPS Agent and Cloudflare Worker before using the new source options."
+msgstr "使用新的来源选项前，请更新 VPS Agent 和 Cloudflare Worker。"
+
+msgid "proxy-guard-pro:Update the VPS Agent and Worker to use policy confirmation."
+msgstr "使用策略确认功能前，请更新 VPS Agent 和 Worker。"
+
+msgid "proxy-guard-pro:Update the VPS Agent and control service to the matching protocol version."
+msgstr "请将 VPS Agent 和控制服务更新到匹配的协议版本。"
+
+msgid "proxy-guard-pro:Use an Agent HTTPS endpoint reached through the local SOCKS proxy, separately from the control channel."
+msgstr "填写经本机 SOCKS 代理访问的 Agent HTTPS 地址；它必须独立于控制通道。"
+
+msgid "proxy-guard-pro:Use default mode"
+msgstr "使用默认模式"
+
+msgid "proxy-guard-pro:VPS access readiness"
+msgstr "VPS 访问就绪状态"
+
+msgid "proxy-guard-pro:VPS access rules"
+msgstr "VPS 访问规则"
+
+msgid "proxy-guard-pro:VPS access rules are off"
+msgstr "VPS 访问规则已关闭"
+
+msgid "proxy-guard-pro:VPS confirmation window (seconds)"
+msgstr "VPS 确认窗口（秒）"
+
+msgid "proxy-guard-pro:VPS confirmed protection bypass for:"
+msgstr "VPS 已确认以下规则绕过保护： "
+
+msgid "proxy-guard-pro:VPS confirmed the update"
+msgstr "VPS 已确认更新"
+
+msgid "proxy-guard-pro:VPS firewall policy restored"
+msgstr "VPS 防火墙策略已恢复"
+
+msgid "proxy-guard-pro:VPS firewall verification failed"
+msgstr "VPS 防火墙核验失败"
+
+msgid "proxy-guard-pro:VPS health check interval (seconds)"
+msgstr "VPS 健康检查间隔（秒）"
+
+msgid "proxy-guard-pro:VPS inbound policy"
+msgstr "VPS 入站策略"
+
+msgid "proxy-guard-pro:VPS policy applied. Seconds remaining to confirm:"
+msgstr "VPS 策略已临时应用，确认剩余秒数： "
+
+msgid "proxy-guard-pro:VPS policy does not match selected-port protection; update the Agent."
+msgstr "VPS 策略与指定端口保护不一致，请更新 Agent。"
+
+msgid "proxy-guard-pro:VPS policy is waiting for confirmation"
+msgstr "VPS 策略等待确认"
+
+msgid "proxy-guard-pro:VPS policy was restored. Review the reloaded settings."
+msgstr "VPS 策略已恢复，请检查重新载入的设置。"
+
+msgid "proxy-guard-pro:VPS service monitor failed"
+msgstr "VPS 服务监视异常"
+
+msgid "proxy-guard-pro:VPS service rules"
+msgstr "VPS 服务规则"
+
+msgid "proxy-guard-pro:VPS service verification failed"
+msgstr "VPS 服务验证失败"
+
+msgid "proxy-guard-pro:VPS services"
+msgstr "VPS 服务"
+
+msgid "proxy-guard-pro:VPS services are ready"
+msgstr "VPS 服务已就绪"
+
+msgid "proxy-guard-pro:Verified fallback bandwidth threshold exceeded"
+msgstr "已确认的回落连接持续超过带宽阈值"
+
+msgid "proxy-guard-pro:Verifying recovery"
+msgstr "正在确认恢复"
+
+msgid "proxy-guard-pro:Wait briefly before starting another maintenance operation."
+msgstr "请稍后再发起新的维护操作。"
+
+msgid "proxy-guard-pro:Wait until the VPS finishes applying the policy."
+msgstr "请等待 VPS 完成策略应用。"
+
+msgid "proxy-guard-pro:Waiting for a fresh Agent report"
+msgstr "等待新的 Agent 报告"
+
+msgid "proxy-guard-pro:Waiting for a fresh household IP authorization"
+msgstr "等待当前家庭 IP 完成认证"
+
+msgid "proxy-guard-pro:Waiting for both authenticated heartbeats"
+msgstr "等待两路认证心跳均正常"
+
+msgid "proxy-guard-pro:Waiting for management verification"
+msgstr "等待管理通道验证"
+
+msgid "proxy-guard-pro:Waiting for the VPS to confirm the result."
+msgstr "正在等待 VPS 确认处理结果。"
+
+msgid "proxy-guard-pro:Waiting to synchronize"
+msgstr "等待同步"
+
+msgid "proxy-guard-pro:Warning: a timed window closes public access when it expires. If your IP has changed and no allowed management source is reachable, you may lose SSH access. An unlimited window keeps SSH publicly reachable during the outage; SSH authentication and the system firewall still apply."
+msgstr "警告：限时结束会收回临时公网放行。若当前 IP 已变化，且没有可用的允许管理来源，可能无法重新登录 SSH。持续开放会延长 SSH 公网暴露时间；SSH 身份验证和系统防火墙仍然生效。"
+
+msgid "proxy-guard-pro:Whitelist mode requires household or static authorized sources."
+msgstr "仅白名单模式须设置家庭授权或静态允许来源。"
+
+msgid "proxy-guard-pro:Whitelist only"
+msgstr "仅允许白名单"

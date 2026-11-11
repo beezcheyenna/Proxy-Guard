@@ -20,7 +20,7 @@ The lifecycle recognizer in package/root/usr/lib/proxy-guard/passwall-log.uc and
 | Nikki | 78e1a751d55ed0762811f054ee699049473da7b8 | GPL-3.0-or-later in the pinned package recipe; retain per-file notices | Lifecycle message identifiers |
 | HomeProxy | fadaa676104f59ff6ace480a780a258d846d0aec | GPL-2.0-only in the pinned init script | Lifecycle message identifiers |
 
-The exact PassWall/PassWall2 archive hashes and cases are recorded in tests/passwall_log_corpus.json. Source URLs, license copies and retrieval hashes for all five projects are recorded in docs/THIRD_PARTY_COMPONENTS.json and LICENSES/UPSTREAM/. Recognition material has been selected and mapped to Proxy Guard events; entire upstream scripts, UI packages and proxy cores are not bundled in the LuCI IPKs.
+The exact PassWall/PassWall2 archive hashes and cases are recorded in tests/passwall_log_corpus.json. Source URLs, license copies and retrieval hashes for all five projects are recorded in docs/THIRD_PARTY_COMPONENTS.json and LICENSES/UPSTREAM/. Recognition material has been selected and mapped to Proxy Guard events; entire upstream scripts, UI packages and proxy cores are not bundled in the LuCI IPK/APK packages.
 
 PassWall acknowledgements: Copyright (C) 2018-2020 L-WRT Team; Copyright (C) 2021-2025 xiaorouji; Copyright (C) 2026 Openwrt-Passwall Organization, as stated in the pinned upstream package recipe. PassWall2 acknowledgements: Copyright (C) 2022-2025 xiaorouji; Copyright (C) 2026 Openwrt-Passwall Organization. Additional upstream notices are preserved with the license/source references; this list does not remove other contributors' rights.
 
@@ -66,22 +66,12 @@ The Worker package declares development dependencies, not production npm depende
 - Miniflare 5.20261023.3-beta: MIT, as declared by the lockfile.
 - workerd 1.20261023.1: Apache-2.0, as declared by the lockfile.
 
-The lockfile has 91 non-root package entries, including platform-specific optional entries. Their exact versions, integrity values and declared licenses are listed in companion/worker/THIRD_PARTY_DEPENDENCIES.json. That is a lockfile inventory, not a claim that all entries are installed or shipped. node_modules, Wrangler, Miniflare, workerd and cloudflared binaries are not bundled in the application's LuCI IPKs. A future vendored or bundled distribution must preserve the actual packages' notices, including transitive and native-library notices; generic license texts alone are insufficient.
+The lockfile has 91 non-root package entries, including platform-specific optional entries. Their exact versions, integrity values and declared licenses are listed in companion/worker/THIRD_PARTY_DEPENDENCIES.json. That is a lockfile inventory, not a claim that all entries are installed or shipped. node_modules, Wrangler, Miniflare, workerd and cloudflared binaries are not bundled in the application's LuCI IPK/APK packages. A future vendored or bundled distribution must preserve the actual packages' notices, including transitive and native-library notices; generic license texts alone are insufficient.
 
 ## Proxy cores and panels / 对接项目
 
-PassWall, PassWall2, OpenClash, Nikki, HomeProxy, Xray, sing-box, Mihomo and 3x-ui are separately maintained projects. Reading their configuration/logs, observing their services or invoking an authorized management interface does not transfer their copyright to Proxy Guard. The LuCI IPKs do not contain or automatically replace these proxy cores or panels. Inclusion of a third-party binary or source in another distribution requires a separate component-specific notice/source check.
-
-## Optional sing-tun patch / 可选补丁
-
-This source tree includes compat/sing-tun-v0.7.13/ as optional source patch material. It does not contain a compiled replacement core or automatically install that patch.
-
-Where included, the patch modifies SagerNet/sing-tun v0.7.13, Copyright (C) 2022 nekohasekai, under GPL-3.0-or-later. Preserve that directory's LICENSE.sing-tun, COPYING.GPL-3.0, patch, source/version hashes and build/validation notes. GPL v3 and “or later” wording must not be replaced by MIT.
-
-The application's LuCI IPKs do not include this patched core. If distributing a compiled patched core, provide the corresponding source and build material required by its license; merely attaching this notice or linking to an unrelated upstream version is insufficient.
-
-Upstream: https://github.com/SagerNet/sing-tun/tree/v0.7.13
+PassWall, PassWall2, OpenClash, Nikki, HomeProxy, Xray, sing-box, Mihomo and 3x-ui are separately maintained projects. Reading their configuration/logs, observing their services or invoking an authorized management interface does not transfer their copyright to Proxy Guard. The LuCI IPK/APK packages do not contain or automatically replace these proxy cores or panels. Inclusion of a third-party binary or source in another distribution requires a separate component-specific notice/source check.
 
 ## Licensing scope / 许可范围
 
-自有代码采用 MIT 授权，第三方材料、运行依赖、开发工具和可选补丁按各自来源保留原许可。再分发时应核查实际包含的内容与组合方式，保留相关版权、NOTICE 和适用源码材料。具体组件和文件的原始声明优先。
+自有代码采用 MIT 授权，第三方材料、运行依赖和开发工具按各自来源保留原许可。再分发时应核查实际包含的内容与组合方式，保留相关版权、NOTICE 和适用源码材料。具体组件和文件的原始声明优先。

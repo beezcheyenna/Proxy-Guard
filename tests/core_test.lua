@@ -4,6 +4,13 @@ local n=0
 local function check(ok,name) assert(ok,name); n=n+1 end
 local function invalid(raw) return not pcall(core.config,raw) end
 check(not core.config().enabled,'disabled by default')
+check(core.config({exit_check='1',expected_exit4='203.0.113.7',exit_url='https://api.ipify.org'}).exit_host=='api.ipify.org','bare HTTPS origin is a valid exit URL')
+check(core.config({exit_check='1',expected_exit4='203.0.113.7',exit_fallback_url='https://4.ident.me'}).exit_fallback_host=='4.ident.me','bare HTTPS origin is a valid fallback URL')
+check(core.config({targets={'https://one.test?health=1|204','https://two.test#health|204'}}).targets[1].host=='one.test','HTTPS origin query and fragment do not become part of the authority')
+for _,url in ipairs({'https://user:secret@example.com','https://example.com:443','https://203.0.113.7','https://example.com%2f.evil.test','https://example.com..','https://example.com\n'}) do
+ check(invalid({exit_check='1',expected_exit4='203.0.113.7',exit_url=url}),'bare-origin validation still rejects unsafe or invalid authority')
+end
+
 check(core.config().expected_exit4=='','no personal exit fallback')
 check(not core.config({enabled='1',mode='guard',expected_exit4=''}).exit_check,'protection can run with optional exit verification off')
 check(invalid({enabled='1',mode='guard',exit_check='1',expected_exit4=''}),'enabled exit verification requires an actual exit address')

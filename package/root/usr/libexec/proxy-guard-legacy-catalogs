@@ -1,0 +1,69 @@
+#!/usr/bin/lua
+-- Retain old Pro translations across a base-only opkg upgrade. These data
+-- came from the old installed base; the new base ships its own catalog only.
+local installed = '/usr/lib/lua/luci/i18n/'
+local saved = '/var/run/proxy-guard/legacy-lmo/'
+
+local function u32(data, at)
+    local a,b,c,d = data:byte(at, at+3)
+    assert(d, 'truncated word')
+    return ((a*256+b)*256+c)*256+d
+end
+
+local function word(n)
+    return string.char(math.floor(n/16777216)%256, math.floor(n/65536)%256, math.floor(n/256)%256, n%256)
+end
+
+local function catalog(path)
+    local file = io.open(path, 'rb')
+    if not file then return nil end
+    local data = file:read(1048577) or ''
+    file:close()
+    assert(#data>=4 and #data<=1048576, 'invalid catalog size')
+    local index = u32(data, #data-3)
+    assert(index<=#data-4 and index%4==0 and (#data-4-index)%16==0, 'invalid catalog index')
+    return data, index
+end
+
+local function missing(old, old_index, current, current_index)
+    local used, strings, entries = {}, {}, {}
+    for at=current_index+1,#current-4,16 do used[u32(current, at)]=true end
+    local offset=0
+    for at=old_index+1,#old-4,16 do
+        if not used[u32(old, at)] then
+            local start,size=u32(old, at+8),u32(old, at+12)
+            assert(start<=old_index and size<=old_index-start, 'invalid translation span')
+            local padded=math.ceil(size/4)*4
+            strings[#strings+1]=old:sub(start+1,start+size)..string.rep('\0',padded-size)
+            entries[#entries+1]=old:sub(at,at+7)..word(offset)..word(size)
+            offset=offset+padded
+        end
+    end
+    if #entries>0 then return table.concat(strings)..table.concat(entries)..word(offset) end
+end
+
+for _,lang in ipairs({'en','zh-cn','ja','ru','fa'}) do
+    local previous=saved..lang..'.lmo'
+    local target=installed..'proxy-guard-legacy-pro.'..lang..'.lmo'
+    local ok=pcall(function()
+        local old,old_index=catalog(previous)
+        if not old then return end
+        local current,current_index=catalog(installed..'proxy-guard.'..lang..'.lmo')
+        local data=missing(old,old_index,assert(current),current_index)
+        if data then
+            local file=assert(io.open(target..'.new','wb'))
+            assert(file:write(data))
+            assert(file:close())
+            -- LuCI may render under a different service identity.
+            assert(os.execute('chmod 644 '..target..'.new')==0)
+            assert(os.rename(target..'.new',target))
+        else
+            os.remove(target)
+        end
+    end)
+    if ok then os.remove(previous)
+    else
+        os.remove(target..'.new')
+        io.stderr:write('Proxy Guard: cannot preserve the old Pro catalog for '..lang..'\n')
+    end
+end

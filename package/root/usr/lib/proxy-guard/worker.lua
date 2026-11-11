@@ -300,7 +300,7 @@ local function publish(c,s)
     s.version=core.VERSION; s.enabled=c.enabled; s.mode=c.mode
     s.updated_at=os.time(); s.updated_uptime=now()
     s.lease_seconds=c.lease_seconds
-    s.probe_budget=c.timeout*(#c.targets+1+(c.cf_event_check and 1 or 0))+(c.udp_check and c.udp_timeout or 0)
+    s.probe_budget=c.probe_budget
     s.cf_event=cf_event.status(cf_saved(),c.cf_event_check)
     s.interfaces=c.interfaces; s.sources4=c.sources4; s.sources6=c.sources6
     s.schedule=core.schedule(c,os.time())
@@ -409,6 +409,25 @@ local function sync_schedule(c,s)
         return true
     end
     return false
+end
+
+local function https_probe(c,target,body_path)
+    if body_path then os.remove(body_path) end
+    local rc,out=command(core.probe_command(c,target,body_path))
+    local code,seconds=out:match('(%d%d%d)%s+([%d%.]+)%s*$')
+    local body=body_path and (read(body_path) or '') or ''
+    if body_path then os.remove(body_path) end
+    return {rc=rc,code=tonumber(code) or 0,body=body,
+        milliseconds=math.floor((tonumber(seconds) or 0)*1000)}
+end
+
+local function exit_probe(c,target,body_path)
+    local primary=https_probe(c,target,body_path)
+    if primary.rc~=28 or not c.exit_fallback_url then return primary end
+    local backup=https_probe(c,{url=c.exit_fallback_url},body_path)
+    backup.fallback=true
+    backup.milliseconds=primary.milliseconds+backup.milliseconds
+    return backup
 end
 
 function M.tick(force)
@@ -545,9 +564,14 @@ function M.tick(force)
     end
     if c.passwall_watch and s.schedule_release and
         (not fast or fast.schedule_release~=s.schedule_release) then publish(c,s); return true end
-    if c.passwall_watch and c.boot_guard and (not fast or fast.phase=='boot_wait') then publish(c,s); return true end
+    -- A missing or stale monitor snapshot cannot define the required probe policy.
+    -- Wait for a fresh snapshot even when boot protection is disabled.
+    if c.passwall_watch and (not fast or fast.phase=='boot_wait') then publish(c,s); return true end
     if fast and (fast.phase=='log_wait' or fast.log_pending or
-        fast.phase=='delay' and now()<(fast.delay_until or 0)) then publish(c,s); return true end
+        -- The watcher owns the delay-to-sensitive transition. Its last snapshot
+        -- may still say delay for a tick after the deadline; probing then would
+        -- use normal min_success instead of the sensitive all-target policy.
+        fast.phase=='delay') then publish(c,s); return true end
     local probe_config=c
     if fast and fast.phase~='normal' then
         probe_config={}; for k,v in pairs(c) do probe_config[k]=v end
@@ -563,36 +587,37 @@ function M.tick(force)
     local successes=0; local results={}
     local reused
     for index,target in ipairs(c.targets) do
-        local body_path=(core.is_trace_url(target.url) or target.url==c.exit_url) and (run..'/target-response-'..index) or nil
-        if body_path then os.remove(body_path) end
-        local rc,out=command(core.probe_command(c,target,body_path))
-        local code,seconds=out:match('(%d%d%d)%s+([%d%.]+)%s*$')
-        local body=body_path and (read(body_path) or '') or ''
-        if body_path then os.remove(body_path) end
-        local trace=core.is_trace_url(target.url) and core.trace(body) or nil
-        local good=rc==0 and tonumber(code)==target.code and (not core.is_trace_url(target.url) or trace~=nil)
+        local trace_url=core.is_trace_url(target.url)
+        local shared_exit=c.exit_check and target.url==c.exit_url
+        local body_path=(trace_url or shared_exit) and (run..'/target-response-'..index) or nil
+        -- Older configurations may use the exact exit URL as an HTTP target.
+        -- Share that response with exit verification. Reuse a fallback if an
+        -- old list repeats the URL; ordinary HTTP probes retain their cadence.
+        local response=shared_exit and
+            (reused and reused.fallback and reused or exit_probe(c,target,body_path)) or https_probe(c,target,body_path)
+        if response.fallback then trace_url=core.is_trace_url(c.exit_fallback_url) end
+        local trace=trace_url and core.trace(response.body) or nil
+        local good=response.rc==0 and response.code==target.code and (not trace_url or trace~=nil)
         if good then successes=successes+1 end
-        local result={host=target.host,ok=good,curl_code=rc,http_code=tonumber(code) or 0,milliseconds=math.floor((tonumber(seconds) or 0)*1000)}
+        local result={host=target.host,ok=good,curl_code=response.rc,http_code=response.code,milliseconds=response.milliseconds}
+        if response.fallback then result.via=c.exit_fallback_host end
         if trace then result.observed=trace.ip; result.colo=trace.colo end
         results[#results+1]=result
-        if target.url==c.exit_url then reused={rc=rc,code=tonumber(code) or 0,body=body} end
+        if shared_exit then reused=response end
         if strict_probe and not good then break end
     end
-    local exit_rc,exit_code,exit_body=1,0,''
+    -- A strict connectivity failure skips the remaining checks. Preserve an
+    -- already shared exit response, but never report an unissued IP request
+    -- as a failed lookup.
+    local exit=reused or {rc=1,code=0,body=''}
+    local exit_attempted=reused~=nil
     if c.exit_check and (not strict_probe or successes==#c.targets) then
-        if reused then exit_rc,exit_code,exit_body=reused.rc,reused.code,reused.body
-        else
-            local exit_path=run..'/exit-response'
-            os.remove(exit_path)
-            local exit_out
-            exit_rc,exit_out=command(core.probe_command(c,{url=c.exit_url},exit_path))
-            exit_code=tonumber(exit_out:match('(%d%d%d)%s+[%d%.]+%s*$')) or 0
-            exit_body=read(exit_path) or ''
-            os.remove(exit_path)
-        end
+        exit=reused or exit_probe(c,{url=c.exit_url},run..'/exit-response')
+        exit_attempted=true
     end
-    local exit_value=core.exit_response(c.exit_url,exit_body)
-    local exit_ok=not c.exit_check or exit_rc==0 and exit_code==200 and exit_value~=nil and exit_value.ip==c.expected_exit4
+    local exit_url=exit.fallback and c.exit_fallback_url or c.exit_url
+    local exit_value=core.exit_response(exit_url,exit.body)
+    local exit_ok=not c.exit_check or exit.rc==0 and exit.code==200 and exit_value~=nil and exit_value.ip==c.expected_exit4
     if c.mode=='guard' then
         -- Probes can outlive a permit or an external rules/config change.
         -- Never renew based solely on the snapshot from before the probes.
@@ -699,8 +724,13 @@ function M.tick(force)
     end
     s.probes=results
     s.last_probe_at=os.time()
-    s.exit_check={enabled=c.exit_check,ok=c.exit_check and exit_ok or nil,expected=c.exit_check and c.expected_exit4 or '',observed=exit_value and exit_value.ip or '',colo=exit_value and exit_value.colo or nil,curl_code=exit_rc,http_code=exit_code}
-    if c.exit_check and not exit_ok then s.reason='代理出口验证失败：出口不符或验证服务不可达' end
+    local fallback_changed=(s.exit_check and s.exit_check.via~=nil or false)~=(exit.fallback==true)
+    s.exit_check={enabled=c.exit_check,attempted=exit_attempted,expected=c.exit_check and c.expected_exit4 or '',
+        observed=exit_value and exit_value.ip or '',colo=exit_value and exit_value.colo or nil,
+        curl_code=exit_attempted and exit.rc or nil,http_code=exit_attempted and exit.code or nil,
+        via=exit.fallback and c.exit_fallback_host or nil}
+    if c.exit_check and exit_attempted then s.exit_check.ok=exit_ok end
+    if c.exit_check and exit_attempted and not exit_ok then s.reason='代理出口验证失败：出口不符或验证服务不可达' end
     if not cf_allowed then s.reason='CF 出口核验不一致，等待新的出口验证确认' end
     if c.mode=='guard' then
         local script,allowed=core.lease(c,not s.blocked,os.time())
@@ -718,11 +748,17 @@ function M.tick(force)
         end
         event(c,s.phase=='blocked' and 'error' or 'info',s.phase,reason..(c.mode=='monitor' and '（仅监测，未阻断）' or ''))
     end
-    if c.debug or old_phase~=s.phase then
+    if c.debug or old_phase~=s.phase or fallback_changed then
         local detail={}
-        for _,r in ipairs(results) do detail[#detail+1]=r.host..': curl='..r.curl_code..', HTTP='..r.http_code..', '..r.milliseconds..'ms' end
+        for _,r in ipairs(results) do
+            local host=r.host..(r.via and ' → '..r.via or '')
+            detail[#detail+1]=host..': curl='..r.curl_code..', HTTP='..r.http_code..', '..r.milliseconds..'ms'
+        end
         if c.exit_check then
-        detail[#detail+1]='出口验证: '..(exit_ok and '成功' or '失败')..', curl='..exit_rc..', HTTP='..exit_code..', IP='..s.exit_check.observed
+            local via=exit.fallback and c.exit_host..' curl=28 → '..c.exit_fallback_host..', ' or ''
+            detail[#detail+1]=exit_attempted and
+                ('出口验证: '..(exit_ok and '成功' or '失败')..', '..via..'curl='..exit.rc..', HTTP='..exit.code..', IP='..s.exit_check.observed) or
+                '出口验证: 连通性检查失败，本轮未执行'
         end
         event(c,c.debug and 'debug' or 'info','probe',table.concat(detail,'; '))
     end
@@ -816,7 +852,13 @@ function M.status()
     if s.phase=='error' then s.enforcement='unverified' end
     -- RPC consumers must see the combined kernel gates, not just the slower
     -- network worker's internal blocked flag while fast protection is holding.
-    if s.enforcement=='blocked' then s.blocked=true
+    if s.enforcement=='blocked' then
+        s.blocked=true
+        -- The last successful worker snapshot can outlive the kernel permit.
+        -- Do not report its healthy phase as the current protection reason.
+        if s.phase=='healthy' or s.phase=='suspect' then
+            s.phase='recovering'; s.reason='放行许可已到期，等待重新确认代理状态'
+        end
     elseif s.enforcement=='allowing' or s.enforcement=='off' then s.blocked=false
     else s.blocked=nil end
     s.interface_waiting=pending and fw.complete and not not applied and s.firewall_error=='等待局域网接口就绪' or false

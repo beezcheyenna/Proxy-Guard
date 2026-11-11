@@ -2,7 +2,7 @@
 
 普通版无需安装本组件。使用 Pro 的远程功能时，需要路由器上的基础包和 Pro 扩展，以及 Linux VPS 上的 Agent。控制链路可选**直接 HTTPS**，或 **Cloudflare Worker 与 Tunnel/VPC**；Cloudflare 并非必需。
 
-IPK 安装到 OpenWrt；Linux 使用本文的 Python Agent 安装器。已测试的发行版与条件见[兼容范围](COMPATIBILITY.md)。需要 Python `3.10+`、nftables、相应内核能力，以及 systemd 或 OpenRC。
+IPK / APK 安装到对应的 OpenWrt 固件；Linux 使用本文的 Python Agent 安装器。已测试的发行版与条件见[兼容范围](COMPATIBILITY.md)。需要 Python `3.10+`、nftables、相应内核能力，以及 systemd 或 OpenRC。
 
 ## 1. 安装依赖
 
@@ -39,11 +39,11 @@ apk add python3 nftables iproute2 coreutils ca-certificates
 
 ## 2. 解压源码并准备配置
 
-将项目源码归档 `proxy-guard-source.tar.gz` 上传到 VPS，在归档所在目录执行：
+将项目源码归档 `proxy-guard-source-0.3.0-21-pro-0.3.1-5.tar.gz` 上传到 VPS，在归档所在目录执行：
 
 ```sh
-tar -xzf proxy-guard-source.tar.gz
-cd proxy-guard/companion/vps
+tar -xzf proxy-guard-source-0.3.0-21-pro-0.3.1-5.tar.gz
+cd Proxy-Guard/companion/vps
 cp agent.example.json agent.json
 chmod 600 agent.json
 python3 - <<'PY'
@@ -78,7 +78,7 @@ Agent 不安装 Xray、3x-ui 或其他代理服务，它只对已经部署的服
 
 Agent 通常保持 `bind=127.0.0.1`、`port=8788`、`public_control=false`，由同机 `cloudflared` 访问回环 API。
 
-按 [Worker 配套说明](../companion/worker/README.md)设置 Tunnel、VPC Service、`VPS_API` 绑定和凭据：
+按 [Worker 配套说明](CLOUDFLARE-WORKER.md)设置 Tunnel、VPC Service、`VPS_API` 绑定和凭据：
 
 - `AGENT_SECRET` 与 Agent 的 `agent_secret` 相同。
 - `DEVICE_TOKEN` 是另一枚独立凭据，不能与 `AGENT_SECRET` 共用。
@@ -158,11 +158,11 @@ SSH 托管默认关闭。明确启用并通过管理会话及双通道检查后�
 
 OpenWrt 的两个原始 UCI 编辑器分别编辑本地代理保护和 VPS 访问规则，不编辑 Agent 的本机配置。监听、证书和维护授权仍通过 Agent 配置文件设置。
 
-仓库中的 Wrangler 项目用于部署 Worker；Agent、Tunnel 和 VPC Service 仍须分别安装或创建。当前未提供已配置的一键部署入口，具体步骤见 [Worker 配套说明](../companion/worker/README.md)。
+仓库中的 Wrangler 项目用于部署 Worker；Agent、Tunnel 和 VPC Service 仍须分别安装或创建。当前未提供已配置的一键部署入口，具体步骤见 [Worker 配套说明](CLOUDFLARE-WORKER.md)。
 
 ## 7. 升级与配置备份
 
-Agent 升级与路由器 IPK 安装是两件事。使用兼容的新版源码，在保留 SSH 或控制台的情况下重新运行安装器；它会检查并保留现有 `/etc/proxy-guard-access/agent.json`，而不是用新解压的示例覆盖它。只改源码目录中的 `agent.json` 不会更新实际运行配置。
+Agent 升级与路由器 IPK / APK 安装是两件事。使用兼容的新版源码，在保留 SSH 或控制台的情况下重新运行安装器；它会检查并保留现有 `/etc/proxy-guard-access/agent.json`，而不是用新解压的示例覆盖它。只改源码目录中的 `agent.json` 不会更新实际运行配置。
 
 升级前，安全备份实际配置、TLS 证书/私钥和保留的兼容源码；如需灾难恢复，还应保留该实例配置所指定的持久状态与操作记录。备份含凭据，不应放入公开问题附件。不要把另一台 VPS 的状态或已用操作 ID 复制过来，也不要降低策略修订号来强行恢复同步。
 
@@ -197,7 +197,7 @@ sh ./install.sh --install /etc/proxy-guard-access/agent.json
 | 应急已开放仍不能 SSH | SSH 服务、认证、系统防火墙和上游安全组仍须允许；本组件只撤销自己的相应限制。 |
 | 配置已改但状态不变 | 是否修改实际配置、重新通过检查并重启 Agent，是否误改了示例文件，是否有待确认或未知结果事务。 |
 
-完成配置后应核对实际规则与流量。更多边界见[兼容范围](COMPATIBILITY.md)，共享入口和心跳行为见[Pro 配套说明](../companion/README.md)。
+完成配置后应核对实际规则与流量。更多边界见[兼容范围](COMPATIBILITY.md)，共享入口和心跳行为见[Pro 配套说明](PRO-COMPANION.md)。
 
 ## 9. 卸载
 
@@ -211,4 +211,4 @@ sudo sh ./uninstall.sh --remove
 sh ./uninstall.sh --remove
 ```
 
-卸载只移除本组件的服务和专属规则，保留配置、密钥和程序；不会刷新系统全部防火墙。详见 [Pro 配套说明](../companion/README.md)。
+卸载只移除本组件的服务和专属规则，保留配置、密钥和程序；不会刷新系统全部防火墙。详见 [Pro 配套说明](PRO-COMPANION.md)。

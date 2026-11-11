@@ -101,6 +101,20 @@ class IndependentVersions(unittest.TestCase):
                               '--packages', str(after)], capture_output=True, text=True, timeout=180)
         self.assertEqual(sdk.returncode, 0, sdk.stdout + sdk.stderr)
 
+    def test_single_edition_build_ignores_the_other_catalog_source(self):
+        for edition, other in (('standard', 'pro'), ('pro', 'standard')):
+            with self.subTest(edition=edition):
+                catalog = self.root / 'package/i18n'
+                if other == 'pro':
+                    catalog /= 'pro'
+                original = (catalog / 'messages.tsv').read_text()
+                (catalog / 'messages.tsv').write_text(original + '# pending translation edits\n')
+                try:
+                    out = self.build('only-' + edition, only=edition)
+                    self.assertEqual(len(list(out.glob('*.ipk'))), 1)
+                finally:
+                    (catalog / 'messages.tsv').write_text(original)
+
     def test_api_manifest_drift_cannot_build_a_misleading_package(self):
         for key in ('PG_BASE_API', 'PG_PRO_BASE_API'):
             with self.subTest(key=key):

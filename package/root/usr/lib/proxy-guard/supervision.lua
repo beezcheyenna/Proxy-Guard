@@ -106,7 +106,7 @@ function M.tick()
         (not request or type(request.queued_uptime)~='number' or request.queued_uptime>now or now-request.queued_uptime>30 or request.generation~=control())
     local s=machine.step(c,previous,{up=now,wall_time=os.time(),boot_id=boot,recovery_expired=recovery_expired,
         started=start,stopped=read(run..'/stopped')~=nil,main_updated=health.updated_uptime,
-        fast_updated=fast.updated_uptime,runtime_errors=health.errors,probe_budget=c.timeout*(#c.targets+1+(c.cf_event_check and 1 or 0))+(c.udp_check and c.udp_timeout or 0),lease_seconds=c.lease_seconds})
+        fast_updated=fast.updated_uptime,runtime_errors=health.errors,probe_budget=c.probe_budget,lease_seconds=c.lease_seconds})
     s.first_seen=start
     if c.resource_monitor then s.resources=resources(previous and previous.resources,now) else s.resources=nil end
     if s.action=='restart' then

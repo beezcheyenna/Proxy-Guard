@@ -1,20 +1,20 @@
 {
-  "source": "c11ea39837213de3f2dcf0bcf94639f901efbca1c6b4c1fa5f8f5727b804eb19",
-  "extra_sources": {
-    "ru": "9580da4ed94b6e43afe7f3fcabbec8b844806b475e10452deee1bc9e45f8f58b",
-    "fa": "753da18a065ba035592c509d1a6111116354b9edb8c94b84ce67a32dec2af185"
+  "inputs": {
+    "package/i18n/messages.tsv": "283a66d5ad19c6a21ac79720f413d4951c108e8f837920abd68148a8452bcea3",
+    "package/i18n/ru.json": "c692390547fb64b68740d5de404ac3ffbdabbfa34c7449c0ab7163eba087f603",
+    "package/i18n/fa.json": "cf4bdb6513aa1a6c3f04e5355037e04da972296fe0b8c4cb8aa3a8a527d5d443"
   },
   "files": {
-    "package/i18n/en.po": "98eaa0d38f9fd64b44482c2f561bc7e463794eb8a5e110d5e5c4def3f229cd83",
-    "package/root/usr/lib/lua/luci/i18n/proxy-guard.en.lmo": "dd0977f1f0893b67703a5a110cb804027dcefabb74dade0123c8bdff32be2aee",
-    "package/i18n/zh-cn.po": "738a9da9f47117182bfd2f5c3b2d79e810a9cb62a7f2c91e071e65a10c8b3aad",
-    "package/root/usr/lib/lua/luci/i18n/proxy-guard.zh-cn.lmo": "1d60f96434a92e005a3782041220f2ee10f6a250eff03ebd19b3cdff55b29b65",
-    "package/i18n/ja.po": "85519063063bb76f8fefcc01e6e05b2ce15d035fdb954ef5143584f1623e13d3",
-    "package/root/usr/lib/lua/luci/i18n/proxy-guard.ja.lmo": "63e98f0e7cf7467e6ea9177c5ea2895d8d1d0f3ded6f2f9df0abd62dc9a23c4f",
-    "package/i18n/ru.po": "c7d33dcf246cc53c8df1d3c1ede27ba35a7ef4aa28d0aafa1e457ca44eeea9e1",
-    "package/root/usr/lib/lua/luci/i18n/proxy-guard.ru.lmo": "4c754d75749b31008a315a8b0c9cbf84a6271b6d68c705ea0ea1e8830c91b95d",
-    "package/i18n/fa.po": "ae644b14b7df46ca9082d3ee8ac390f76c9fa0ea6353ce1350ea03ca70461281",
-    "package/root/usr/lib/lua/luci/i18n/proxy-guard.fa.lmo": "154e3f7c65fd56a0f6febf3db7566f9561c33b3aada36c04b12be8b1c60f11e4",
-    "package/root/www/luci-static/resources/proxy_guard_i18n.js": "9dd6beea54abdf39332f7d078f0176ac55547c16834930d478e4f59f8d6eb236"
+    "package/i18n/en.po": "eac628ceb9efcbf8364cb3e9ed4d5e1461df669ec2ac9a9efb13fc050432a5c6",
+    "package/root/usr/lib/lua/luci/i18n/proxy-guard.en.lmo": "ca4c853b7db8a0f48164a0bf7392d199d764f006e3be98377b5c24c760ebc163",
+    "package/i18n/zh-cn.po": "847c1477265e765cf94d60b35817d2c83069d57945adc582466d31bea1e3ab6b",
+    "package/root/usr/lib/lua/luci/i18n/proxy-guard.zh-cn.lmo": "65c12e60725c9cd8003982d6a87fd5842d7af7ec3acc005199f06661ee6ed0d7",
+    "package/i18n/ja.po": "13f3a8c50c83e876646e4a9bb6acd099c6231666ef7340ddd9465bd37d50322c",
+    "package/root/usr/lib/lua/luci/i18n/proxy-guard.ja.lmo": "9d49222d265e89482af7c7a83e93a63933f4a13be1908b168f76d1ae994c32af",
+    "package/i18n/ru.po": "401dcaef94ca96ddbd9443dbcd196aa83a0168739a08623c31564e0881381eb6",
+    "package/root/usr/lib/lua/luci/i18n/proxy-guard.ru.lmo": "65e853a8a8d0cbd7b9744154fb5ea4a4e1e7e92507609a8f2bf1eb643103509d",
+    "package/i18n/fa.po": "2a0ea60ed00925f8b036935d893595a87e070b5a72cf35d4ee36a7e71f6621c0",
+    "package/root/usr/lib/lua/luci/i18n/proxy-guard.fa.lmo": "219beb4b9888ce91bf3c1f3cdcac33fe5244501c40d023a8f750202d3dbad0b4",
+    "package/root/www/luci-static/resources/proxy_guard_i18n.js": "0caa6e33417661ff094385e4e8d2b32b45c9c331ea0f791fbfb33fbeda648023"
   }
 }

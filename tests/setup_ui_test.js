@@ -8,11 +8,12 @@ function E(tag,attrs={},children=[]){
  if(tag==='select'){const selected=children.filter(x=>x.attrs.selected!=null);node.value=(selected.at(-1)||children[0]).value;}
  return node;
 }
-const ui={showModal:(title,body)=>{modal=body;},hideModal(){}};
+let setupInfo={ok:true,wizard_complete:true};
+const ui={showModal:(title,body)=>{modal=body;},hideModal(){modal=[];}};
 const profiles={auto:discovery.client,passwall2:discovery.client,nikki:{available:true,client:'nikki',socks_port:1080,proxy_ports:[7891,7892],dns_ports:[1053]}};
-const rpc={declare:definition=>(...args)=>{calls.push(definition.method);return Promise.resolve(definition.method==='setup_discover'?{...discovery,client:profiles[args[0]||'auto']||{available:false,client:args[0]}}:{ok:true,wizard_complete:true});}};
+const rpc={declare:definition=>(...args)=>{calls.push(definition.method);return Promise.resolve(definition.method==='setup_discover'?{...discovery,client:profiles[args[0]||'auto']||{available:false,client:args[0]}}:setupInfo);}};
 const pgI18n={runtime:x=>x,modal:(_ui,title,body)=>{modal=body;}};
-const pg=new Function('baseclass','ui','rpc','poll','uci','pgI18n','_','E',fs.readFileSync(root+'/package/root/www/luci-static/resources/proxy_guard_setup.js','utf8'))({extend:x=>x},ui,rpc,{add(){}},{get:()=>draft},pgI18n,x=>x,E);
+const pg=new Function('baseclass','ui','rpc','poll','uci','pgI18n','_','E',fs.readFileSync(process.env.PG_SETUP_MODULE||root+'/package/root/www/luci-static/resources/proxy_guard_setup.js','utf8'))({extend:x=>x},ui,rpc,{add(){}},{get:()=>draft},pgI18n,x=>x,E);
 pg.info={wizard_complete:true};pg.view={showActionError:e=>{throw e;},handleSaveApply:()=>{throw Error('unexpected apply');}};
 function button(label){let found;function visit(v){if(!v||typeof v!=='object')return;if(v.tag==='button'&&v.children[0]===label)found=v;for(const x of v.children||[])visit(x);}for(const row of modal)visit(row);assert(found,label);return found;}
 (async()=>{
@@ -47,5 +48,14 @@ function button(label){let found;function visit(v){if(!v||typeof v!=='object')re
  pg.active={id:'x',token:'y',owned:true,phase:'checking'};pg.showTransaction();assert(pg.confirmButton.disabled);
  pg.active.phase='confirming';pg.active.remaining=30;pg.renderTransaction();assert(!pg.confirmButton.disabled);
  pg.active.owned=false;pg.renderTransaction();assert(pg.confirmButton.disabled&&pg.cancelButton.disabled);
- console.log('PASS wizard DOM boolean attributes, interface/preset defaults, backward navigation, draft-only changes, and confirmation gating');
+ let reloaded=0;pg.reloadForm=async()=>{reloaded++;};
+ setupInfo={ok:true,transaction:{id:'second-session-new',owned:false,phase:'checking'}};
+ await pg.pollTransaction();
+ assert.equal(pg.active.id,'second-session-new','successive foreign transactions must replace the active modal');
+ assert(pg.confirmButton.disabled&&pg.cancelButton.disabled,'foreign transaction cannot be confirmed or cancelled');
+ setupInfo={ok:true,last_result:{id:'second-session-new',phase:'confirmed'}};
+ await pg.pollTransaction();
+ assert.equal(pg.active,null);assert.equal(modal.length,0,'completed foreign transaction must not leave an uncloseable modal');
+ assert.equal(reloaded,1,'completed transaction refreshes the actual confirmed settings');
+ console.log('PASS wizard DOM boolean attributes, interface/preset defaults, backward navigation, draft-only changes, confirmation gating and consecutive foreign transactions');
 })().catch(e=>{console.error(e);process.exit(1);});

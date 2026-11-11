@@ -8,7 +8,13 @@ else
     test -f /.dockerenv
     test "$(ls /sys/class/net)" = lo
 fi
-if opkg status flock | grep -q '^Status: .* installed$'; then echo 'flock fixture still installed'; exit 1; fi
+if command -v opkg >/dev/null 2>&1; then
+    if opkg status flock | grep -q '^Status: .* installed$'; then echo 'flock fixture still installed'; exit 1; fi
+elif command -v apk >/dev/null 2>&1; then
+    if apk info --installed flock >/dev/null 2>&1; then echo 'flock fixture still installed'; exit 1; fi
+else
+    echo 'No native package manager available'; exit 1
+fi
 fixture=/tmp/pg-lock-test
 mkdir -p "$fixture"
 first=''; second=''; worker=''

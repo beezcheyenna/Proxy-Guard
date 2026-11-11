@@ -21,14 +21,14 @@ with tempfile.TemporaryDirectory(prefix='pg-sdk-stage-')as raw:
  D=Path(raw);sdk=D/'sdk';(sdk/'include').mkdir(parents=True)
  (sdk/'rules.mk').write_text('CP:=cp -fpR\nINCLUDE_DIR:=$(TOPDIR)/include\n')
  (sdk/'include/package.mk').write_text('')
- wrapper=D/'replay.mk';hooks=[];metadata=[];lines=['TOPDIR:='+str(sdk),'include '+str(S/'package/Makefile'),'.PHONY: stage','stage:']
+ wrapper=D/'replay.mk';hooks=[];metadata=[];lines=['TOPDIR:='+str(sdk),'include '+str(S/'package/Makefile'),'define ProxyGuard/TestStage','.PHONY: stage','stage:']
  for index,name in enumerate(packages):
   dest=D/('stage'+str(index));dest.mkdir()
   lines.append('\t$(call Package/'+name+'/install,'+str(dest)+')')
   metadata.extend(['DEPENDS:=','EXTRA_DEPENDS:=','VERSION:=','$(eval $(Package/'+name+'))','$(file >'+str(D/(name+'-depends'))+',$(DEPENDS))','$(file >'+str(D/(name+'-extra-depends'))+',$(EXTRA_DEPENDS))','$(file >'+str(D/(name+'-version'))+',$(VERSION))'])
   for hook in ('preinst','postinst','prerm','postrm'):
    hooks.append('$(file >'+str(D/(name+'-'+hook))+',$(Package/'+name+'/'+hook+'))')
- wrapper.write_text('\n'.join(lines+hooks+metadata)+'\n')
+ wrapper.write_text('\n'.join(lines+['endef','$(eval $(ProxyGuard/TestStage))']+hooks+metadata)+'\n')
  done=subprocess.run(['make','--no-print-directory','-f',str(wrapper),'stage'],cwd=S/'package',capture_output=True,text=True,timeout=90)
  assert done.returncode==0,(done.stdout+done.stderr)[-3000:]
  counts={}

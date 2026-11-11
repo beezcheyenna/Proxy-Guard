@@ -1,6 +1,6 @@
 # 源码、构建与验证
 
-普通版的配方版本为 `0.3.0-16`，Pro 为 `0.3.1-3`。本页介绍源码目录、IPK 构建和开发测试。每次构建后应使用对应产物的 SHA256 校验值。
+普通版的配方版本为 `0.3.0-21`，Pro 为 `0.3.1-5`。本页介绍源码目录、IPK / APK 构建和开发测试。每次构建后应使用对应产物的 SHA256 校验值。
 
 ## 目录
 
@@ -13,7 +13,6 @@
 | `companion/vps/` | Linux Agent、示例配置和受限安装脚本 |
 | `companion/worker/` | Worker 模板、固定依赖锁文件和测试 |
 | `tests/` | 单元、前端和需要专门环境的原生/网络回归 |
-| `compat/sing-tun-v0.7.13/` | 可选上游补丁源码及 GPL 许可；无内核二进制 |
 | `LICENSES/` | 许可原文与上游声明副本 |
 
 普通版和 Pro 使用独立构建入口；Linux Agent 与 Worker 位于 `companion/`。
@@ -37,6 +36,7 @@ python3 -B tools/build_ipk.py
 
 ```sh
 python3 -B tools/build_translations.py /path/to/po2lmo
+# 只重新生成 Pro 词库和专属页面时加 --only pro
 ```
 
 不得手工修改 LMO 或诊断映射后沿用旧生成摘要。LuCI 工具、SDK、交叉编译器和代理内核不随此源码捆绑。
@@ -45,7 +45,9 @@ python3 -B tools/build_translations.py /path/to/po2lmo
 
 将 package/ 作为一个包目录放入匹配 OpenWrt SDK 的 package/ 目录，按 SDK 标准流程选择并编译 luci-app-proxy-guard 或 luci-app-proxy-guard-pro。依赖来自该目标匹配的软件源/SDK；all 不是任意固件兼容保证。
 
-SDK 配方与 Python 构建器使用相同的两组安装目录和钩子文本。tools/test_sdk_staging.py 只比较配方暂存、权限与钩子，不是完整 SDK 工具链编译；必须在带专用测试标记的隔离 VM 中，针对已构建的两个包执行。
+25.12 的 APK 应使用匹配的官方 SDK 原生生成；`tools/build_ipk.py` 只生成 IPK，不生成 APK。APK 版本写法为 `0.3.0-r21` / `0.3.1-r5`。配方保留 APK 的安装、升级、卸载脚本入口，Pro 最低基础版本约束也随包格式转换。
+
+SDK 配方与 Python 构建器使用相同的两组安装目录，并按包管理器选择对应钩子。tools/test_sdk_staging.py 只比较配方暂存、权限与钩子，不是完整 SDK 工具链编译；必须在带专用测试标记的隔离 VM 中，针对已构建的两个包执行。
 
 许可证和第三方声明保存在安装文件目录，后续构建会一起带入。Pro 的许可文件位于自己的目录，不覆盖普通版文件。
 
@@ -73,7 +75,7 @@ npm ci
 npm test
 ```
 
-npm test 不等于真实 Cloudflare/VPC/Tunnel 通过。部署命令、密钥及绑定准备见[Worker 说明](../companion/worker/README.md)。部署前应单独核对目标账户的绑定、凭据和连接状态。
+npm test 不等于真实 Cloudflare/VPC/Tunnel 通过。部署命令、密钥及绑定准备见[Worker 说明](CLOUDFLARE-WORKER.md)。部署前应单独核对目标账户的绑定、凭据和连接状态。
 
 ## 测试范围
 

@@ -38,7 +38,6 @@ def main():
     parser.add_argument("--output",type=Path)
     parser.add_argument("--only",choices=("standard","pro"),help="Build only this package; a Pro update does not rebuild the base package")
     args=parser.parse_args()
-    verify_translations()
     core=(ROOT/'package/root/usr/lib/proxy-guard/core.lua').read_text()
     assert re.search(r"M\.VERSION\s*=\s*['\"]([^'\"]+)['\"]",core).group(1)==PACKAGE_VERSION
     for rel,key in [('package/root/usr/share/proxy-guard/pro-api','PG_BASE_API'),('package/pro/root/usr/share/proxy-guard/pro-requires-api','PG_PRO_BASE_API')]:
@@ -46,6 +45,8 @@ def main():
     dest=args.output or ROOT/'dist';dest.mkdir(parents=True,exist_ok=True)
     sums=[];manifest={};owners={}
     selected=[SPECS[{"standard":0,"pro":1}[args.only]]] if args.only else SPECS[:{"standard":1,"pro":2}[args.edition]]
+    for spec in selected:
+        verify_translations("pro" if spec[0].endswith("-pro") else "standard")
     # Pro-only releases must still reject files owned by the base package.
     # Inventory every prerequisite before emitting any package, so an overlap
     # cannot leave a plausible partial release in the output directory.

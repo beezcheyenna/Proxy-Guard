@@ -135,7 +135,7 @@ end
 
 local function https_host(url)
     assert(type(url)=='string' and not url:find('[%c%s]') and #url<=512,'HTTPS 地址无效')
-    local host=url:match('^https://([^/]+)/')
+    local host=url:match('^https://([^/?#]+)')
     assert(host and host:match('^[%w%.%-]+$') and host:find('%.') and not ipv4(host),'检测目标必须使用 HTTPS 域名，不支持认证信息或自定义端口')
     for label in host:gmatch('[^.]+') do
         assert(#label<=63 and label:match('^[%w]') and label:match('[%w]$'),'检测域名无效')
@@ -254,7 +254,7 @@ function M.config(raw)
     assert(#c.dns_ports>=1 and #c.dns_ports<=16,'配置 1 至 16 个 DNS 服务端口')
     local targets=list(raw.targets or {
         'https://www.gstatic.com/generate_204|204',
-        'https://www.google.com/generate_204|204'
+        'https://connectivity-check.ubuntu.com/|204'
     })
     assert(#targets>=2 and #targets<=4,'配置 2 至 4 个 HTTPS 检测目标')
     for _,v in ipairs(targets) do
@@ -268,8 +268,19 @@ function M.config(raw)
     assert(not c.exit_check or ipv4(c.expected_exit4),'预期出口必须填写一个 IPv4 地址')
     c.cf_event_check=c.exit_check and c.cf_event_check
     c.min_success=number(raw.min_success,1,1,#c.targets,'每轮最少成功目标数')
-    -- Covers one complete sequential probe round plus scheduling margin.
-    c.lease_seconds=math.max(30,c.interval+c.timeout*(#c.targets+1+(c.cf_event_check and 1 or 0))+(c.udp_check and c.udp_timeout or 0)+15)
+    if c.exit_check then
+        local backup_url=raw.exit_fallback_url
+        if (backup_url==nil or backup_url=='') and c.exit_host:lower()=='api.ipify.org' then
+            backup_url='https://4.ident.me/'
+        end
+        if backup_url~=nil and backup_url~='' then
+            c.exit_fallback_host=https_host(backup_url)
+            c.exit_fallback_url=backup_url
+        end
+    end
+    -- Reserve time for at most one fallback in a sequential probe round.
+    c.probe_budget=c.timeout*(#c.targets+1+(c.cf_event_check and 1 or 0)+(c.exit_fallback_url and 1 or 0))+(c.udp_check and c.udp_timeout or 0)
+    c.lease_seconds=math.max(30,c.interval+c.probe_budget+15)
     return c
 end
 

@@ -1,0 +1,672 @@
+# Generated from messages.tsv; use tools/build_translations.py.
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\nLanguage: fa\n"
+
+msgid "VPS access rules (Pro)"
+msgstr "قواعد دسترسی VPS (Pro)"
+
+msgid "proxy-guard-pro:0 keeps emergency SSH open until household authorization is restored. Use 30 to 3600 for a timed window."
+msgstr "مقدار 0 دسترسی اضطراری SSH را تا بازیابی مجوز IP خانگی باز نگه می‌دارد. برای محدودیت زمانی، 30 تا 3600 ثانیه تعیین کنید."
+
+msgid "proxy-guard-pro:A confirmation action is already being verified."
+msgstr "نتیجهٔ یک اقدام تأیید در حال بررسی است."
+
+msgid "proxy-guard-pro:A maintenance operation is already pending."
+msgstr "یک عملیات نگهداری از قبل در انتظار اجراست."
+
+msgid "proxy-guard-pro:A missing or failed remote health report withholds the local access permit. Local proxy checks remain required."
+msgstr "نبودن گزارش سلامت راه دور یا ناموفق‌بودن آن، مانع صدور مجوز دسترسی محلی می‌شود. بررسی‌های محلی پراکسی همچنان الزامی‌اند."
+
+msgid "proxy-guard-pro:Add at least one address to an enabled static whitelist."
+msgstr "حداقل یک آدرس را به یک لیست سفید استاتیک فعال اضافه کنید."
+
+msgid "proxy-guard-pro:Address families"
+msgstr "خانواده‌های نشانی"
+
+msgid "proxy-guard-pro:Agent HTTPS address through the proxy"
+msgstr "نشانی HTTPS عامل از طریق پراکسی"
+
+msgid "proxy-guard-pro:Agent started"
+msgstr "Agent راه‌اندازی شد"
+
+msgid "proxy-guard-pro:All sources keeps standard resource limits active. Household and static addresses are allowed in whitelist mode and exempt from standard limits. Legacy bypass disables this rule protection."
+msgstr "برای همهٔ مبدأها محدودیت منابع استاندارد فعال می‌ماند. نشانی‌های خانگی و ثابت در حالت فهرست مجاز اجازهٔ دسترسی دارند و در حالت استاندارد معاف‌اند. گزینهٔ قدیمی دور زدن، حفاظت این قاعده را غیرفعال می‌کند."
+
+msgid "proxy-guard-pro:All sources, resource limits apply"
+msgstr "همهٔ مبدأها، با اعمال محدودیت منابع"
+
+msgid "proxy-guard-pro:Allow rebooting the VPS"
+msgstr "اجازهٔ راه‌اندازی مجدد VPS"
+
+msgid "proxy-guard-pro:Allow restarting the proxy core"
+msgstr "اجازهٔ راه‌اندازی مجدد هستهٔ پراکسی"
+
+msgid "proxy-guard-pro:Allowed or exempt sources"
+msgstr "مبدأهای مجاز یا معاف از محدودیت"
+
+msgid "proxy-guard-pro:Analysis Agent connected"
+msgstr "عامل تحلیل متصل شد"
+
+msgid "proxy-guard-pro:Analysis reports observations and suspicion only. A repeated payload does not identify the sender as GFW. Full packet capture and the honeypot are off by default and configured on the Agent."
+msgstr "تحلیل فقط مشاهدات و موارد مشکوک را گزارش می‌کند. تکرار محتوای بسته، فرستنده را به‌عنوان GFW شناسایی نمی‌کند. ضبط کامل بسته و honeypot به‌طور پیش‌فرض غیرفعال‌اند و در Agent تنظیم می‌شوند."
+
+msgid "proxy-guard-pro:Another VPS policy change is awaiting confirmation."
+msgstr "تغییر دیگری در سیاست VPS در انتظار تأیید است."
+
+msgid "proxy-guard-pro:Another session is confirming the VPS policy."
+msgstr "نشست دیگری در حال تأیید سیاست VPS است."
+
+msgid "proxy-guard-pro:Another settings update is in progress; retry shortly."
+msgstr "به‌روزرسانی دیگری برای تنظیمات در حال انجام است؛ کمی بعد دوباره تلاش کنید."
+
+msgid "proxy-guard-pro:Bandwidth threshold duration (seconds)"
+msgstr "مدت عبور از آستانهٔ پهنای باند (ثانیه)"
+
+msgid "proxy-guard-pro:Both heartbeats lost for (seconds)"
+msgstr "مدت قطع هم‌زمان هر دو پیام سلامت (ثانیه)"
+
+msgid "proxy-guard-pro:Bypass all protection (legacy behavior)"
+msgstr "دور زدن همهٔ حفاظت‌ها (سازگاری با تنظیمات قدیمی)"
+
+msgid "proxy-guard-pro:Bytes observed"
+msgstr "ترافیک مشاهده‌شده (بایت)"
+
+msgid "proxy-guard-pro:Cannot read confirmation status. The VPS rollback timer continues."
+msgstr "خواندن وضعیت تأیید ممکن نیست. زمان‌سنج بازگردانی VPS همچنان فعال است."
+
+msgid "proxy-guard-pro:Cannot read synchronization status; retrying automatically."
+msgstr "خواندن وضعیت همگام‌سازی ممکن نیست؛ تلاش مجدد به‌صورت خودکار انجام می‌شود."
+
+msgid "proxy-guard-pro:Changes take effect after Save & Apply. Stopping synchronization does not remove VPS rules. Dynamic authorizations expire; configured resource limits and SSH rescue remain in effect."
+msgstr "تغییرات پس از «ذخیره و اعمال» اجرا می‌شوند. توقف همگام‌سازی قواعد VPS را حذف نمی‌کند. مجوزهای پویا منقضی می‌شوند؛ محدودیت منابع و دسترسی اضطراری SSH طبق تنظیمات باقی می‌مانند."
+
+msgid "proxy-guard-pro:Changes take effect after Save & Apply. When synchronization stops, dynamic leases expire; static and unrestricted rules remain on the VPS."
+msgstr "تغییرات پس از «ذخیره و اعمال» اجرا می‌شوند. با توقف همگام‌سازی، مجوزهای پویا منقضی می‌شوند؛ قواعد ثابت و بدون محدودیت روی VPS باقی می‌مانند."
+
+msgid "proxy-guard-pro:Check management readiness"
+msgstr "بررسی آمادگی مسیر مدیریت"
+
+msgid "proxy-guard-pro:Check the access settings and connection."
+msgstr "تنظیمات دسترسی و اتصال را بررسی کنید."
+
+msgid "proxy-guard-pro:Checking the VPS capability and applying a temporary policy..."
+msgstr "در حال بررسی قابلیت‌های VPS و اعمال موقت سیاست…"
+
+msgid "proxy-guard-pro:Choose a supported protection mode for this port rule."
+msgstr "برای این قانون پورت، یک حالت حفاظت پشتیبانی‌شده انتخاب کنید."
+
+msgid "proxy-guard-pro:Choose the public address families to authorize dynamically. Removing a family revokes its dynamic lease after the VPS confirms the update; static rules remain independent."
+msgstr "خانواده‌های نشانی عمومی را برای مجازسازی پویا انتخاب کنید. حذف یک خانواده، پس از تأیید VPS مجوز پویای آن را لغو می‌کند؛ قواعد ثابت مستقل‌اند."
+
+msgid "proxy-guard-pro:Cloudflare Worker and Tunnel"
+msgstr "Cloudflare Worker و Tunnel"
+
+msgid "proxy-guard-pro:Concurrent connection limit"
+msgstr "سقف اتصال‌های هم‌زمان"
+
+msgid "proxy-guard-pro:Concurrent connection threshold exceeded"
+msgstr "تعداد اتصال‌های هم‌زمان از آستانه گذشته است"
+
+msgid "proxy-guard-pro:Configuration changed elsewhere. Review saved settings and VPS state before applying again."
+msgstr "تنظیمات در جای دیگری تغییر کرده‌اند. پیش از اعمال مجدد، تنظیمات ذخیره‌شده و وضعیت VPS را بررسی کنید."
+
+msgid "proxy-guard-pro:Configure observation ports and capture duration on the VPS Agent. Raw evidence and honeypots require Pro Max."
+msgstr "درگاه‌های مشاهده و مدت ضبط را در VPS Agent تعیین کنید. شواهد خام و honeypot به Pro Max نیاز دارند."
+
+msgid "proxy-guard-pro:Confirm VPS policy"
+msgstr "تأیید سیاست VPS"
+
+msgid "proxy-guard-pro:Confirm VPS policy changes before keeping them"
+msgstr "حفظ تغییرات سیاست VPS تنها پس از تأیید"
+
+msgid "proxy-guard-pro:Confirm that the synchronization domain uses a direct connection."
+msgstr "تأیید کنید که دامنهٔ همگام‌سازی از اتصال مستقیم استفاده می‌کند."
+
+msgid "proxy-guard-pro:Confirm the SSH management session in settings"
+msgstr "تایید جلسه مدیریت SSH در تنظیمات"
+
+msgid "proxy-guard-pro:Confirmation result is unknown. Checking again without repeating policy changes."
+msgstr "نتیجهٔ تأیید مشخص نیست. بررسی بدون تکرار تغییر سیاست ادامه دارد."
+
+msgid "proxy-guard-pro:Connect by SSH from an authorized management address, then check again"
+msgstr "از نشانی مدیریتی مجاز با SSH متصل شوید و سپس دوباره بررسی کنید"
+
+msgid "proxy-guard-pro:Connection burst allowance"
+msgstr "ظرفیت اتصال‌های ناگهانی"
+
+msgid "proxy-guard-pro:Connection settings"
+msgstr "تنظیمات اتصال"
+
+msgid "proxy-guard-pro:Control channel"
+msgstr "کانال کنترل"
+
+msgid "proxy-guard-pro:Control heartbeat age (seconds)"
+msgstr "زمان سپری‌شده از آخرین پیام سلامت کنترل (ثانیه)"
+
+msgid "proxy-guard-pro:Control request timeout (seconds)"
+msgstr "مهلت درخواست کنترل (ثانیه)"
+
+msgid "proxy-guard-pro:Control service HTTPS address"
+msgstr "نشانی HTTPS سرویس کنترل"
+
+msgid "proxy-guard-pro:Default port protection mode"
+msgstr "حالت پیش‌فرض حفاظت پورت"
+
+msgid "proxy-guard-pro:Device ID"
+msgstr "شناسهٔ دستگاه"
+
+msgid "proxy-guard-pro:Device secret"
+msgstr "کلید محرمانهٔ دستگاه"
+
+msgid "proxy-guard-pro:Direct HTTPS to Agent"
+msgstr "اتصال مستقیم HTTPS به Agent"
+
+msgid "proxy-guard-pro:Discovered listeners"
+msgstr "سرویس‌های شنوندهٔ شناسایی‌شده"
+
+msgid "proxy-guard-pro:Discovery lists candidate ports only. Whitelist mode requires an authorized source; standard mode applies resource limits; observe mode records without blocking. Unrestricted rules keep the original system firewall behavior."
+msgstr "کشف خودکار فقط درگاه‌های پیشنهادی را فهرست می‌کند. حالت فهرست مجاز به مبدأ مجاز نیاز دارد؛ حالت استاندارد محدودیت منابع را اعمال می‌کند؛ حالت مشاهده فقط ثبت می‌کند و مسدود نمی‌کند. قواعد بدون محدودیت، رفتار فعلی دیوار آتش سیستم را حفظ می‌کنند."
+
+msgid "proxy-guard-pro:Dynamic lease duration (seconds)"
+msgstr "مدت اعتبار مجوز پویا (ثانیه)"
+
+msgid "proxy-guard-pro:Each rule has its own mode, sources, thresholds and timers. Ports grouped in one rule share these settings. Create separate rules for different settings."
+msgstr "هر قانون حالت، مبدأهای مجاز، آستانه‌ها و زمان‌بندی‌های مستقل دارد. پورت‌های یک قانون این تنظیمات را به اشتراک می‌گذارند. برای تنظیمات متفاوت، قوانین جداگانه بسازید."
+
+msgid "proxy-guard-pro:Emergency access active"
+msgstr "دسترسی اضطراری فعال"
+
+msgid "proxy-guard-pro:Emergency source scope"
+msgstr "مبدأهای مجاز دسترسی اضطراری"
+
+msgid "proxy-guard-pro:Enable VPS access rules"
+msgstr "فعال‌سازی قواعد دسترسی به VPS"
+
+msgid "proxy-guard-pro:Enable emergency SSH access"
+msgstr "فعال‌سازی دسترسی اضطراری SSH"
+
+msgid "proxy-guard-pro:Enable proxy-path heartbeat"
+msgstr "فعال‌سازی پیام سلامت مستقل مسیر پراکسی"
+
+msgid "proxy-guard-pro:Enable the matching action locally and on the VPS Agent first."
+msgstr "ابتدا مجوز همان عملیات را هم در تنظیمات محلی و هم در VPS Agent فعال کنید."
+
+msgid "proxy-guard-pro:Enabled service rules must not overlap on the same protocol."
+msgstr "قواعد فعال سرویس نباید روی یک پروتکل، درگاه‌های هم‌پوشان داشته باشند."
+
+msgid "proxy-guard-pro:Enter 0 to keep rescue open, or an integer from 30 to 3600 seconds."
+msgstr "برای باز ماندن دسترسی اضطراری، 0 و برای محدود کردن زمان، عدد صحیحی از 30 تا 3600 ثانیه وارد کنید."
+
+msgid "proxy-guard-pro:Enter a control-service HTTPS root URL without a path or credentials."
+msgstr "نشانی ریشهٔ HTTPS سرویس کنترل را بدون مسیر یا اطلاعات ورود وارد کنید."
+
+msgid "proxy-guard-pro:Enter a valid device ID."
+msgstr "یک شناسه معتبر را وارد کنید."
+
+msgid "proxy-guard-pro:Enter ports from 1 to 65535, or a port range."
+msgstr "درگاهی از 1 تا 65535 یا یک بازهٔ درگاه وارد کنید."
+
+msgid "proxy-guard-pro:Enter the paired device secret."
+msgstr "کلید محرمانهٔ دستگاه جفت‌شده را وارد کنید."
+
+msgid "proxy-guard-pro:Enter the secret for the independent proxy heartbeat."
+msgstr "کلید محرمانهٔ پیام سلامت مستقل مسیر پراکسی را وارد کنید."
+
+msgid "proxy-guard-pro:Enter valid IPv4 or IPv6 addresses or CIDR networks."
+msgstr "آدرس های معتبر IPv4 یا IPv6 یا شبکه های CIDR را وارد کنید."
+
+msgid "proxy-guard-pro:Fallback bandwidth monitoring needs a trusted data source configured on the VPS Agent."
+msgstr "پایش پهنای باند fallback به منبع دادهٔ قابل اعتمادِ پیکربندی‌شده در VPS Agent نیاز دارد."
+
+msgid "proxy-guard-pro:Fallback bandwidth per direction (bytes per second)"
+msgstr "پهنای باند fallback در هر جهت (بایت بر ثانیه)"
+
+msgid "proxy-guard-pro:Household IP and static whitelist"
+msgstr "IP عمومی خانگی و فهرست ثابت مجاز"
+
+msgid "proxy-guard-pro:Household public IP"
+msgstr "IP عمومی خانگی"
+
+msgid "proxy-guard-pro:I have confirmed the control service uses a direct connection"
+msgstr "من تایید کرده ام که سرویس کنترل از یک اتصال مستقیم استفاده می کند."
+
+msgid "proxy-guard-pro:I have verified an authorized SSH management session"
+msgstr "من یک جلسه مدیریت SSH را تایید کرده ام"
+
+msgid "proxy-guard-pro:IP filtering"
+msgstr "محدودسازی مبدأ IP"
+
+msgid "proxy-guard-pro:Independent proxy heartbeat"
+msgstr "پیام سلامت مستقل مسیر پراکسی"
+
+msgid "proxy-guard-pro:Interrupted; not repeated automatically"
+msgstr "عملیات قطع شد؛ خودکار تکرار نمی‌شود"
+
+msgid "proxy-guard-pro:Keep VPS policy"
+msgstr "حفظ سیاست VPS"
+
+msgid "proxy-guard-pro:Last attempt"
+msgstr "آخرین تلاش"
+
+msgid "proxy-guard-pro:Lease expires"
+msgstr "زمان انقضای مجوز"
+
+msgid "proxy-guard-pro:Leave empty to keep the paired device secret."
+msgstr "برای حفظ کلید محرمانهٔ دستگاه جفت‌شده، خالی بگذارید."
+
+msgid "proxy-guard-pro:Leave empty to keep the paired secret."
+msgstr "برای حفظ کلید محرمانهٔ جفت‌شده، خالی بگذارید."
+
+msgid "proxy-guard-pro:Limit concurrent connections"
+msgstr "محدودیت اتصالات همزمان"
+
+msgid "proxy-guard-pro:Limit new connection rate"
+msgstr "محدودسازی نرخ اتصال‌های جدید"
+
+msgid "proxy-guard-pro:Limit verified fallback bandwidth"
+msgstr "محدودسازی پهنای باند fallback تأییدشده"
+
+msgid "proxy-guard-pro:Local protection could not be prepared; the remote action was not sent."
+msgstr "حفاظت محلی را نمی توان آماده کرد؛ اقدام از راه دور ارسال نشد."
+
+msgid "proxy-guard-pro:Local settings were restored or synchronization stopped. The remote policy still needs verification."
+msgstr "تنظیمات محلی بازگردانده شده یا همگام‌سازی متوقف شده است. سیاست سمت سرور هنوز باید بررسی شود."
+
+msgid "proxy-guard-pro:Maintenance operation"
+msgstr "عملیات نگهداری"
+
+msgid "proxy-guard-pro:Maintenance record storage needs attention; restart actions are disabled."
+msgstr "ذخیره‌سازی سوابق نگهداری نیاز به بررسی دارد؛ عملیات راه‌اندازی مجدد غیرفعال است."
+
+msgid "proxy-guard-pro:Manage SSH access"
+msgstr "مدیریت دسترسی SSH"
+
+msgid "proxy-guard-pro:Management IP addresses or networks"
+msgstr "نشانی‌ها یا شبکه‌های مدیریت"
+
+msgid "proxy-guard-pro:Management addresses and last household IP"
+msgstr "آدرس های مدیریت و آخرین IP خانگی"
+
+msgid "proxy-guard-pro:Management check"
+msgstr "بررسی مدیریت"
+
+msgid "proxy-guard-pro:Management protection active"
+msgstr "حفاظت دسترسی مدیریت فعال است"
+
+msgid "proxy-guard-pro:New connection cooldown (seconds)"
+msgstr "مدت توقف پذیرش اتصال‌های جدید (ثانیه)"
+
+msgid "proxy-guard-pro:New connection rate exceeded"
+msgstr "نرخ اتصال‌های جدید از آستانه گذشته است"
+
+msgid "proxy-guard-pro:New connections per second"
+msgstr "اتصالات جدید در ثانیه"
+
+msgid "proxy-guard-pro:New connections temporarily limited"
+msgstr "اتصال‌های جدید موقتاً محدود شده‌اند"
+
+msgid "proxy-guard-pro:No protection: bypass enabled"
+msgstr "بدون حفاظت: حالت دور زدن فعال است"
+
+msgid "proxy-guard-pro:Observation window (seconds)"
+msgstr "بازهٔ آماری (ثانیه)"
+
+msgid "proxy-guard-pro:Observe only"
+msgstr "فقط مشاهده و ثبت"
+
+msgid "proxy-guard-pro:Only add ports you intend to filter. Selecting a panel, API, or subscription port filters that service too. Services sharing the same IP, protocol, and port cannot be separated by URL path or SNI here. SSH has separate settings."
+msgstr "فقط پورت‌هایی را اضافه کنید که می‌خواهید فیلتر شوند. با انتخاب پورت پنل، API یا اشتراک، آن سرویس نیز فیلتر می‌شود. سرویس‌هایی با IP، پروتکل و پورت یکسان را نمی‌توان در این بخش بر اساس مسیر URL یا SNI از هم جدا کرد. SSH تنظیمات جداگانه دارد."
+
+msgid "proxy-guard-pro:Only enabled service rules restrict their selected ports. Other ports remain under the existing system firewall. SSH is not managed unless you add a rule."
+msgstr "فقط قوانین خدمات فعال پورت های انتخاب شده خود را محدود می کنند، پورت های دیگر تحت فایروال سیستم موجود باقی می مانند. SSH مدیریت نمی شود مگر اینکه شما یک قاعده اضافه کنید."
+
+msgid "proxy-guard-pro:Only selected service ports are managed. Other ports keep the existing system firewall policy. SSH management is separate and disabled by default."
+msgstr "فقط پورت های خدمات انتخاب شده مدیریت می شوند، پورت های دیگر سیاست فایروال سیستم موجود را حفظ می کنند. مدیریت SSH به طور پیش فرض جداگانه و غیرفعال است."
+
+msgid "proxy-guard-pro:Only the session that applied this policy can confirm it."
+msgstr "تنها نشستی که این سیاست را اعمال کرده می‌تواند آن را تأیید کند."
+
+msgid "proxy-guard-pro:Open until household authorization is restored"
+msgstr "تا بازیابی مجوز IP خانگی باز می‌ماند"
+
+msgid "proxy-guard-pro:Operation failed"
+msgstr "عملیات ناموفق بود"
+
+msgid "proxy-guard-pro:Per-port modes are not supported by the connected service. Update the VPS Agent and, if used, the Cloudflare Worker before applying."
+msgstr "سرویس متصل از حالت مستقل برای هر پورت پشتیبانی نمی‌کند. پیش از اعمال تنظیمات، VPS Agent و در صورت استفاده از Cloudflare، Worker را به‌روزرسانی کنید."
+
+msgid "proxy-guard-pro:Policy confirmation data could not be read. Review saved settings and VPS state."
+msgstr "اطلاعات تأیید سیاست قابل خواندن نیست. تنظیمات ذخیره‌شده و وضعیت VPS را بررسی کنید."
+
+msgid "proxy-guard-pro:Policy revision confirmed"
+msgstr "نسخهٔ سیاست تأیید شد"
+
+msgid "proxy-guard-pro:Port protection mode"
+msgstr "حالت حفاظت پورت"
+
+msgid "proxy-guard-pro:Port ranges must not overlap."
+msgstr "محدوده پورت نباید همپوشانی داشته باشد."
+
+msgid "proxy-guard-pro:Prepare changes"
+msgstr "آماده‌سازی تغییرات"
+
+msgid "proxy-guard-pro:Prepare to remove VPS rules"
+msgstr "آماده‌سازی حذف قواعد VPS"
+
+msgid "proxy-guard-pro:Prepare to turn off this plugin VPS port rules and SSH management while synchronization remains enabled. Save & Apply, then confirm the VPS change. After the VPS confirms removal you may stop synchronization. The system firewall remains in effect."
+msgstr "قواعد درگاه VPS و مدیریت SSH این افزونه را با حفظ همگام‌سازی برای غیرفعال‌سازی آماده کنید. تنظیمات را ذخیره و اعمال کنید و سپس تغییر VPS را تأیید کنید. پس از تأیید حذف قواعد می‌توانید همگام‌سازی را متوقف کنید. دیوارهٔ آتش سیستم همچنان فعال می‌ماند."
+
+msgid "proxy-guard-pro:Preserve VPS-initiated connections and their replies. Incoming service connections require an explicit rule or a discovered dynamic rule. Existing inbound connections lose access when authorization expires."
+msgstr "حفظ اتصالات مبتنی بر VPS و پاسخ های آنها. اتصالات خدمات ورودی نیاز به یک قاعده صریح یا یک قانون پویا کشف شده است. اتصالات ورودی دسترسی را از دست می دهد زمانی که مجوز منقضی می شود."
+
+msgid "proxy-guard-pro:Preview service rules"
+msgstr "قوانین خدمات پیش بینی"
+
+msgid "proxy-guard-pro:Protocol"
+msgstr "پروتکل"
+
+msgid "proxy-guard-pro:Proxy heartbeat age (seconds)"
+msgstr "زمان سپری‌شده از آخرین پیام سلامت پراکسی (ثانیه)"
+
+msgid "proxy-guard-pro:Proxy heartbeat interval (seconds)"
+msgstr "فاصلهٔ پیام‌های سلامت مسیر پراکسی (ثانیه)"
+
+msgid "proxy-guard-pro:Proxy heartbeat secret"
+msgstr "کلید محرمانهٔ پیام سلامت مسیر پراکسی"
+
+msgid "proxy-guard-pro:Public Internet"
+msgstr "همهٔ مبدأهای اینترنت"
+
+msgid "proxy-guard-pro:Public access remaining (seconds)"
+msgstr "زمان باقی‌ماندهٔ دسترسی اضطراری عمومی (ثانیه)"
+
+msgid "proxy-guard-pro:Public emergency window (seconds)"
+msgstr "مدت دسترسی اضطراری عمومی (ثانیه)"
+
+msgid "proxy-guard-pro:REALITY configuration check"
+msgstr "بررسی پیکربندی REALITY"
+
+msgid "proxy-guard-pro:Reboot VPS"
+msgstr "راه‌اندازی مجدد VPS"
+
+msgid "proxy-guard-pro:Recommended. The VPS restores its previous selected-port policy if a changed policy is not confirmed. Disabling this applies changes immediately."
+msgstr "فعال‌بودن توصیه می‌شود. اگر سیاست تغییرکرده تأیید نشود، VPS سیاست قبلی درگاه‌های انتخاب‌شده را بازمی‌گرداند. با غیرفعال‌سازی، تغییرات فوراً اعمال می‌شوند."
+
+msgid "proxy-guard-pro:Recovery verification timeout (seconds)"
+msgstr "مهلت تأیید بازیابی (ثانیه)"
+
+msgid "proxy-guard-pro:Recovery verified"
+msgstr "بازیابی تأیید شد"
+
+msgid "proxy-guard-pro:Recovery was not verified before the timeout."
+msgstr "بازیابی پیش از پایان مهلت تأیید نشد."
+
+msgid "proxy-guard-pro:Reduce the number of rules or whitelist addresses."
+msgstr "تعداد قواعد یا نشانی‌های فهرست مجاز را کاهش دهید."
+
+msgid "proxy-guard-pro:Remote maintenance"
+msgstr "نگهداری از راه دور"
+
+msgid "proxy-guard-pro:Remove VPS rules"
+msgstr "حذف قواعد VPS"
+
+msgid "proxy-guard-pro:Request accepted"
+msgstr "درخواست پذیرفته شد"
+
+msgid "proxy-guard-pro:Require VPS service health before restoring access"
+msgstr "تأیید سلامت سرویس‌های VPS پیش از برقراری دسترسی"
+
+msgid "proxy-guard-pro:Resource threshold exceeded"
+msgstr "مصرف منابع از آستانه گذشته است"
+
+msgid "proxy-guard-pro:Restart proxy core"
+msgstr "راه‌اندازی مجدد هستهٔ پراکسی"
+
+msgid "proxy-guard-pro:Restore previous VPS policy"
+msgstr "بازگردانی سیاست قبلی VPS"
+
+msgid "proxy-guard-pro:Restrict listed ports only"
+msgstr "محدودسازی فقط درگاه‌های فهرست‌شده"
+
+msgid "proxy-guard-pro:Result unknown"
+msgstr "نتیجهٔ عملیات هنوز مشخص نیست"
+
+msgid "proxy-guard-pro:SSH authentication settings remain unchanged. Access is managed only after both heartbeats and an authorized SSH session are verified."
+msgstr "تنظیمات احراز هویت SSH تغییر نمی‌کند. مدیریت دسترسی تنها پس از تأیید هر دو پیام سلامت و یک نشست SSH مجاز فعال می‌شود."
+
+msgid "proxy-guard-pro:SSH management"
+msgstr "مدیریت SSH"
+
+msgid "proxy-guard-pro:SSH on TCP port 22 is enabled without IP filtering by default. Unrestricted mode adds no source restriction and does not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
+msgstr "SSH روی درگاه TCP شمارهٔ 22 به‌طور پیش‌فرض بدون فیلتر IP فعال است. حالت بدون محدودیت، مبدأ را محدود نمی‌کند و دیوار آتش سیستم را دور نمی‌زند. خانواده‌های نشانی همگام‌نشده در قواعد پویا همچنان مسدودند."
+
+msgid "proxy-guard-pro:SSH port"
+msgstr "درگاه SSH"
+
+msgid "proxy-guard-pro:SSH rescue requires an independent HTTPS heartbeat through the proxy."
+msgstr "دسترسی اضطراری SSH به پیام سلامت مستقل HTTPS از طریق پراکسی نیاز دارد."
+
+msgid "proxy-guard-pro:Selected address families authorized"
+msgstr "خانواده‌های نشانی انتخاب‌شده مجاز شدند"
+
+msgid "proxy-guard-pro:Service name"
+msgstr "نام سرویس"
+
+msgid "proxy-guard-pro:Service rule preview"
+msgstr "پیش‌نمایش قواعد سرویس"
+
+msgid "proxy-guard-pro:Settings changed during synchronization; waiting for the next update."
+msgstr "تنظیمات هنگام همگام‌سازی تغییر کرده‌اند؛ در انتظار به‌روزرسانی بعدی."
+
+msgid "proxy-guard-pro:Standard resource protection"
+msgstr "حفاظت استاندارد در برابر سوءاستفاده"
+
+msgid "proxy-guard-pro:Static IP addresses or networks"
+msgstr "آدرس های IP استاتیک یا شبکه ها"
+
+msgid "proxy-guard-pro:Static whitelist"
+msgstr "فهرست ثابت مجاز"
+
+msgid "proxy-guard-pro:Synchronization failed; check the direct connection, device secret and control service."
+msgstr "همگام‌سازی ناموفق بود؛ اتصال مستقیم، کلید محرمانهٔ دستگاه و سرویس کنترل را بررسی کنید."
+
+msgid "proxy-guard-pro:Synchronization interval (seconds)"
+msgstr "فاصلهٔ همگام‌سازی (ثانیه)"
+
+msgid "proxy-guard-pro:Synchronization is off"
+msgstr "همگام‌سازی غیرفعال است"
+
+msgid "proxy-guard-pro:Synchronization is off. The following VPS policy is last known state, not a current confirmation. Rules may remain active and dynamic authorizations expire."
+msgstr "همگام‌سازی غیرفعال است. سیاست VPS زیر آخرین وضعیت شناخته‌شده است و وضعیت فعلی را تأیید نمی‌کند. ممکن است قواعد همچنان فعال باشند و مجوزهای پویا منقضی شوند."
+
+msgid "proxy-guard-pro:Synchronization needs attention"
+msgstr "همگام‌سازی نیاز به بررسی دارد"
+
+msgid "proxy-guard-pro:Synchronization stopped"
+msgstr "همگام‌سازی متوقف شده است"
+
+msgid "proxy-guard-pro:Synchronization updates are delayed; protection cannot be confirmed."
+msgstr "به‌روزرسانی همگام‌سازی تأخیر دارد؛ تأیید حفاظت ممکن نیست."
+
+msgid "proxy-guard-pro:Synchronize with the VPS"
+msgstr "همگام‌سازی با VPS"
+
+msgid "proxy-guard-pro:Synchronize your household public IP and inspect VPS service health through direct HTTPS or Cloudflare. Proxy traffic connects directly to the VPS."
+msgstr "IP عمومی خانگی را همگام کنید و سلامت سرویس‌های VPS را از طریق HTTPS مستقیم یا Cloudflare بررسی کنید. ترافیک پراکسی مستقیماً به VPS متصل می‌شود."
+
+msgid "proxy-guard-pro:Synchronize your household public IP through a Cloudflare Worker and Tunnel. Proxy traffic continues to connect directly to the VPS."
+msgstr "IP عمومی خانگی را از طریق Cloudflare Worker و Tunnel همگام کنید. ترافیک پراکسی همچنان مستقیماً به VPS متصل می‌شود."
+
+msgid "proxy-guard-pro:Synchronizing with the VPS"
+msgstr "در حال همگام‌سازی با VPS"
+
+msgid "proxy-guard-pro:The Agent denied this action; check its local permissions and credentials."
+msgstr "Agent عملیات را نپذیرفت؛ مجوزها و اطلاعات احراز هویت محلی آن را بررسی کنید."
+
+msgid "proxy-guard-pro:The SSH port must not overlap a managed proxy service."
+msgstr "درگاه SSH نباید با درگاه سرویس پراکسیِ تحت مدیریت یکسان باشد."
+
+msgid "proxy-guard-pro:The SSH rescue timeout must allow two heartbeat intervals plus the request timeout."
+msgstr "مهلت دسترسی اضطراری SSH باید دست‌کم شامل دو فاصلهٔ پیام سلامت به‌اضافهٔ مهلت درخواست باشد."
+
+msgid "proxy-guard-pro:The VPS Agent must also explicitly allow each action. A request being accepted does not mean recovery is complete."
+msgstr "Agent در VPS نیز باید هر عملیات را صریحاً مجاز کند. پذیرفته‌شدن درخواست به معنی تکمیل بازیابی نیست."
+
+msgid "proxy-guard-pro:The VPS did not confirm the requested inbound policy and address families."
+msgstr "VPS سیاست ورودی و خانواده‌های نشانی درخواست‌شده را تأیید نکرد."
+
+msgid "proxy-guard-pro:The VPS owns this timer. Closing this page, losing the control link or rebooting before confirmation does not keep an unconfirmed policy."
+msgstr "زمان‌سنج روی VPS اجرا می‌شود. بستن صفحه، قطع ارتباط کنترل یا راه‌اندازی مجدد پیش از تأیید باعث حفظ سیاست تأییدنشده نمی‌شود."
+
+msgid "proxy-guard-pro:The connected Agent does not enable Pro Max analysis"
+msgstr "عامل متصل، تجزیه و تحلیل Pro Max را فعال نمی کند"
+
+msgid "proxy-guard-pro:The control request must bypass the proxy. Configure direct routing before enabling synchronization. A detected proxy exit is rejected."
+msgstr "درخواست کنترل باید از پراکسی عبور نکند. پیش از فعال‌سازی همگام‌سازی، مسیریابی مستقیم را تنظیم کنید. اگر IP خروجی پراکسی تشخیص داده شود، درخواست رد می‌شود."
+
+msgid "proxy-guard-pro:The control service did not confirm this update."
+msgstr "سرویس کنترل این به روز رسانی را تایید نکرد."
+
+msgid "proxy-guard-pro:The control service observed the proxy exit. Configure a direct connection before synchronizing."
+msgstr "سرویس کنترل خروجی پراکسی را مشاهده کرد.یک اتصال مستقیم قبل از همگام سازی برقرار کنید."
+
+msgid "proxy-guard-pro:The lease must be at least twice the synchronization interval."
+msgstr "مدت اعتبار مجوز باید دست‌کم دو برابر فاصلهٔ همگام‌سازی باشد."
+
+msgid "proxy-guard-pro:The listener list is truncated. Discovery does not change access rules."
+msgstr "فهرست سرویس‌های شنونده کوتاه شده است. کشف خودکار قواعد دسترسی را تغییر نمی‌دهد."
+
+msgid "proxy-guard-pro:The previous VPS policy was restored after an unconfirmed change."
+msgstr "پس از یک تغییر تأییدنشده، سیاست قبلی VPS بازگردانده شد."
+
+msgid "proxy-guard-pro:The request result is unknown; checking operation status without repeating it."
+msgstr "نتیجه درخواست ناشناخته است؛ بررسی وضعیت عملیاتی بدون تکرار آن."
+
+msgid "proxy-guard-pro:The selected SSH port is not owned by a verified SSH service"
+msgstr "درگاه SSH انتخاب‌شده متعلق به یک سرویس SSH تأییدشده نیست"
+
+msgid "proxy-guard-pro:The synchronization process is not updating its status."
+msgstr "فرایند همگام‌سازی وضعیت خود را به‌روز نمی‌کند."
+
+msgid "proxy-guard-pro:This interrupts proxy access. Local protection is prepared before the request is sent."
+msgstr "این امر دسترسی پراکسی را قطع می کند. حفاظت محلی قبل از ارسال درخواست آماده می شود."
+
+msgid "proxy-guard-pro:This preview has not been applied. Unselected ports keep the existing system firewall policy."
+msgstr "این پیش‌نمایش هنوز اعمال نشده است. درگاه‌های انتخاب‌نشده همچنان تابع قواعد فعلی دیوار آتش سیستم هستند."
+
+msgid "proxy-guard-pro:Unrestricted"
+msgstr "نامحدود"
+
+msgid "proxy-guard-pro:Unrestricted bypasses filtering for this rule. Whitelist mode uses allowed sources; standard mode enforces limits; observe mode records threshold events without blocking."
+msgstr "گزینهٔ بدون محدودیت، فیلتر این قانون را غیرفعال می‌کند. حالت فهرست مجاز فقط مبدأهای مجاز را می‌پذیرد؛ حالت استاندارد محدودیت‌ها را اعمال می‌کند؛ حالت مشاهده، عبور از آستانه‌ها را بدون مسدودسازی ثبت می‌کند."
+
+msgid "proxy-guard-pro:Update the VPS Agent and Cloudflare Worker before using the new source options."
+msgstr "پیش از استفاده از گزینه‌های جدید مبدأ، VPS Agent و Cloudflare Worker را به‌روز کنید."
+
+msgid "proxy-guard-pro:Update the VPS Agent and Worker to use policy confirmation."
+msgstr "برای استفاده از تأیید سیاست، VPS Agent و Worker را به‌روز کنید."
+
+msgid "proxy-guard-pro:Update the VPS Agent and control service to the matching protocol version."
+msgstr "VPS Agent و سرویس کنترل را به نسخهٔ سازگار پروتکل به‌روز کنید."
+
+msgid "proxy-guard-pro:Use an Agent HTTPS endpoint reached through the local SOCKS proxy, separately from the control channel."
+msgstr "از نشانی HTTPS عامل استفاده کنید که جدا از کانال کنترل، از طریق SOCKS محلی قابل دسترسی باشد."
+
+msgid "proxy-guard-pro:Use default mode"
+msgstr "استفاده از حالت پیش‌فرض"
+
+msgid "proxy-guard-pro:VPS access readiness"
+msgstr "آمادگی دسترسی به VPS"
+
+msgid "proxy-guard-pro:VPS access rules"
+msgstr "قوانین دسترسی VPS"
+
+msgid "proxy-guard-pro:VPS access rules are off"
+msgstr "قواعد دسترسی به VPS غیرفعال‌اند"
+
+msgid "proxy-guard-pro:VPS confirmation window (seconds)"
+msgstr "مهلت تأیید VPS (ثانیه)"
+
+msgid "proxy-guard-pro:VPS confirmed protection bypass for:"
+msgstr "VPS دور زدن حفاظت را برای این قواعد تأیید کرده است: "
+
+msgid "proxy-guard-pro:VPS confirmed the update"
+msgstr "VPS به‌روزرسانی را تأیید کرد"
+
+msgid "proxy-guard-pro:VPS firewall policy restored"
+msgstr "سیاست دیوار آتش VPS بازگردانده شد"
+
+msgid "proxy-guard-pro:VPS firewall verification failed"
+msgstr "تأیید دیوار آتش VPS ناموفق بود"
+
+msgid "proxy-guard-pro:VPS health check interval (seconds)"
+msgstr "فاصله بررسی سلامت VPS (ثانیه)"
+
+msgid "proxy-guard-pro:VPS inbound policy"
+msgstr "سیاست دسترسی ورودی VPS"
+
+msgid "proxy-guard-pro:VPS policy applied. Seconds remaining to confirm:"
+msgstr "سیاست VPS موقتاً اعمال شد. ثانیه‌های باقی‌مانده برای تأیید: "
+
+msgid "proxy-guard-pro:VPS policy does not match selected-port protection; update the Agent."
+msgstr "سیاست VPS با حفاظت درگاه‌های انتخابی سازگار نیست؛ Agent را به‌روز کنید."
+
+msgid "proxy-guard-pro:VPS policy is waiting for confirmation"
+msgstr "سیاست VPS در انتظار تأیید است"
+
+msgid "proxy-guard-pro:VPS policy was restored. Review the reloaded settings."
+msgstr "سیاست VPS بازگردانده شد. تنظیمات بارگذاری‌شده را بررسی کنید."
+
+msgid "proxy-guard-pro:VPS service monitor failed"
+msgstr "پایش سرویس VPS ناموفق بود"
+
+msgid "proxy-guard-pro:VPS service rules"
+msgstr "قواعد دسترسی به سرویس‌های VPS"
+
+msgid "proxy-guard-pro:VPS service verification failed"
+msgstr "تأیید سرویس VPS ناموفق بود"
+
+msgid "proxy-guard-pro:VPS services"
+msgstr "سرویس‌های VPS"
+
+msgid "proxy-guard-pro:VPS services are ready"
+msgstr "سرویس‌های VPS آماده‌اند"
+
+msgid "proxy-guard-pro:Verified fallback bandwidth threshold exceeded"
+msgstr "پهنای باند fallback تأییدشده از آستانه گذشته است"
+
+msgid "proxy-guard-pro:Verifying recovery"
+msgstr "در حال تأیید بازیابی"
+
+msgid "proxy-guard-pro:Wait briefly before starting another maintenance operation."
+msgstr "پیش از شروع عملیات نگهداری بعدی، کمی صبر کنید."
+
+msgid "proxy-guard-pro:Wait until the VPS finishes applying the policy."
+msgstr "صبر کنید تا اعمال سیاست روی VPS تمام شود."
+
+msgid "proxy-guard-pro:Waiting for a fresh Agent report"
+msgstr "انتظار برای گزارش جدید Agent"
+
+msgid "proxy-guard-pro:Waiting for a fresh household IP authorization"
+msgstr "در انتظار مجوز تازهٔ IP خانگی"
+
+msgid "proxy-guard-pro:Waiting for both authenticated heartbeats"
+msgstr "در انتظار دریافت هر دو پیام سلامت احرازهویت‌شده"
+
+msgid "proxy-guard-pro:Waiting for management verification"
+msgstr "در انتظار تأیید مسیر مدیریت"
+
+msgid "proxy-guard-pro:Waiting for the VPS to confirm the result."
+msgstr "در انتظار تأیید نتیجه توسط VPS."
+
+msgid "proxy-guard-pro:Waiting to synchronize"
+msgstr "در انتظار همگام‌سازی"
+
+msgid "proxy-guard-pro:Warning: a timed window closes public access when it expires. If your IP has changed and no allowed management source is reachable, you may lose SSH access. An unlimited window keeps SSH publicly reachable during the outage; SSH authentication and the system firewall still apply."
+msgstr "هشدار: با پایان مهلت، دسترسی عمومی بسته می‌شود. اگر IP شما تغییر کرده باشد و هیچ مبدأ مدیریتی مجاز در دسترس نباشد، ممکن است دسترسی SSH را از دست بدهید. در حالت بدون محدودیت زمانی، SSH در طول اختلال از اینترنت قابل دسترسی می‌ماند؛ احراز هویت SSH و دیوارهٔ آتش سیستم همچنان اعمال می‌شوند."
+
+msgid "proxy-guard-pro:Whitelist mode requires household or static authorized sources."
+msgstr "حالت فهرست مجاز به مبدأهای مجاز خانگی یا ثابت نیاز دارد."
+
+msgid "proxy-guard-pro:Whitelist only"
+msgstr "فقط فهرست مجاز"

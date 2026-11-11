@@ -1,22 +1,38 @@
 # 安装与使用
 
-本文介绍普通版 `0.3.0-16` 与 Pro `0.3.1-3` 的安装、配置和维护。安装前先阅读[兼容范围](COMPATIBILITY.md)；日常设置见[使用指南](USER-GUIDE.md)。
+本文介绍普通版 `0.3.0-21` 与 Pro `0.3.1-5` 的安装、配置和维护。安装前先阅读[兼容范围](COMPATIBILITY.md)；日常设置见[使用指南](USER-GUIDE.md)。
 
 ## 安装、升级和卸载
 
-通过 LuCI 的软件包上传功能安装 IPK，或将文件上传到路由器后执行：
+先按固件选择包格式：使用 opkg 的 24 系列安装 IPK，使用 apk 的 25.12 系列安装 APK。不要把 IPK 改后缀当作 APK，也不要混用两个包管理器。可以通过 LuCI 上传对应文件，或上传后在路由器执行。
+
+**opkg / IPK：**
 
 ```sh
-opkg install /tmp/luci-app-proxy-guard_0.3.0-16_all.ipk
+opkg install /tmp/luci-app-proxy-guard_0.3.0-21_all.ipk
 ```
+
+**apk / APK：**
+
+```sh
+apk --no-network --allow-untrusted add /tmp/luci-app-proxy-guard-0.3.0-r21.apk
+```
+
+这里的 `--allow-untrusted` 用于手工安装已核对来源与 SHA256 的本地包，不会跳过依赖检查。`--no-network` 要求所需依赖已安装；缺少依赖时，先从固件匹配的软件源准备依赖，再安装本地包。
 
 Pro 是普通版的扩展，需要已安装兼容的基础包，但不要求两个版本号一致。首次安装可以在同一次事务中安装两个包：
 
 ```sh
-opkg install /tmp/luci-app-proxy-guard_0.3.0-16_all.ipk /tmp/luci-app-proxy-guard-pro_0.3.1-3_all.ipk
+opkg install /tmp/luci-app-proxy-guard_0.3.0-21_all.ipk /tmp/luci-app-proxy-guard-pro_0.3.1-5_all.ipk
 ```
 
-以后只升级 Pro 时，上传并安装新的 Pro IPK 即可，不需重复安装或更新普通版。Pro 通过最低基础版本与稳定基础接口检查兼容性；缺少接口或接口不兼容时会拒绝安装并说明原因。普通版也可独立发布修复，接口兼容时不要求升级 Pro；安全修复和固件兼容修复仍应正常维护。
+APK 固件对应命令：
+
+```sh
+apk --no-network --allow-untrusted add /tmp/luci-app-proxy-guard-0.3.0-r21.apk /tmp/luci-app-proxy-guard-pro-0.3.1-r5.apk
+```
+
+以后只升级 Pro 时，上传并安装与固件格式匹配的新 Pro 包即可，不需重复安装或更新普通版。Pro 通过最低基础版本与稳定基础接口检查兼容性；缺少接口或接口不兼容时会拒绝安装并说明原因。普通版也可独立发布修复，接口兼容时不要求升级 Pro；安全修复和固件兼容修复仍应正常维护。
 
 普通版只需路由器端，不依赖 Linux Agent 或 Cloudflare。Pro 的远程控制与家庭 IP 授权需要另装 VPS Agent，控制链路可选直接 HTTPS，或 Cloudflare Worker 与 Tunnel/VPC；只装扩展包不会自动创建这些资源。Linux 安装步骤见[Linux Agent 安装](LINUX-AGENT-INSTALL.md)。
 
@@ -29,16 +45,28 @@ Pro 从 0.3.1-2 起会在安装和启动时把旧 UCI 中的 `device_token`、`p
 若下载的是**同一版本号的重新构建包**，普通的 `opkg install` 可能不会替换文件。先确认来源和 SHA256、备份配置，再仅对确实要替换的包使用：
 
 ```sh
-opkg install --force-reinstall /tmp/luci-app-proxy-guard_0.3.0-16_all.ipk
+opkg install --force-reinstall /tmp/luci-app-proxy-guard_0.3.0-21_all.ipk
 # 仅当需要替换已安装的 Pro 时执行下一行
-opkg install --force-reinstall /tmp/luci-app-proxy-guard-pro_0.3.1-3_all.ipk
+opkg install --force-reinstall /tmp/luci-app-proxy-guard-pro_0.3.1-5_all.ipk
 ```
+
+APK 同版本替换应指定实际本地文件：
+
+```sh
+apk --no-network --allow-untrusted add --force-reinstall /tmp/luci-app-proxy-guard-0.3.0-r21.apk
+# 仅当需要替换已安装的 Pro 时执行下一行
+apk --no-network --allow-untrusted add --force-reinstall /tmp/luci-app-proxy-guard-pro-0.3.1-r5.apk
+```
+
+不要仅凭 `apk fix` 返回成功判断本地包已重装；输出中如果出现 `unavailable, skipped`，文件并未替换。
+
+升级前请完成或取消尚未确认的配置试用。安装程序会先回退未确认的试用配置，再保留已确认的设置；直接改写 UCI 文件也需要经过应用和确认流程。
 
 版本号相同不代表文件内容相同；不要先卸载再重装来代替覆盖升级。安装过程中保留完整输出，完成后检查包状态和本插件实际状态。不要同时从多个会话执行安装、应用或重装。
 
 安装后入口为 LuCI“服务 → Proxy Guard / 代理连接保护”。安装钩子会清理 LuCI 缓存、自动重载 rpcd，并按需要重启本插件；这是安装包自身的行为。正常安装不需要额外手工刷新 rpcd。如果菜单或 RPC 仍缺失，应保留安装输出并排查，不要用额外授权掩盖问题。
 
-首次安装默认总开关关闭、仅监测模式。升级会保留修改过的 `/etc/config/proxy_guard`，包括开关和自定义等待时间；可能同时保留一份 `proxy_guard-opkg` 供对照。安装前应自行保存配置副本，升级后检查实际状态，不要直接以新的默认值覆盖旧配置。
+首次安装默认总开关关闭、仅监测模式。升级会保留修改过的 `/etc/config/proxy_guard`，包括开关和自定义等待时间。安装迁移会更新与已识别旧预设完全一致的检测地址：旧 Google/Cloudflare 默认组合改为 gstatic + Ubuntu，旧 Cloudflare 出口地址改为 ipify；自定义目标组合按实际匹配结果保留。包管理器可能另存待合并的配置副本（如 opkg 的 `proxy_guard-opkg` 或 apk 的 `.apk-new`），须按实际安装输出检查。安装前应自行保存配置副本，升级后检查实际状态，不要直接以新的默认值覆盖旧配置。
 
 安装前的备份至少包括 `/etc/config/proxy_guard`；使用 Pro 时还包括 `/etc/config/proxy_guard_access` 及存在的 `/etc/proxy-guard-access/device.key`、`/etc/proxy-guard-access/path.key`。原始 UCI 导出不会包含这些私有密钥，不能单独充当完整配对备份。备份只应由管理员读取，避免上传公开仓库或问题附件。路由器配置备份不包含 VPS 的 Agent 配置、证书及 Worker Secrets，后者须分别保管。
 
@@ -51,7 +79,14 @@ opkg remove luci-app-proxy-guard-pro  # 仅当已安装 Pro 时先卸载扩展
 opkg remove luci-app-proxy-guard
 ```
 
-正常卸载会清理本插件的规则、RPC 注册、菜单和启动链接；修改过的配置可能按 opkg 的配置文件规则保留。卸载会解除本插件的阻断，不能在仍依赖该阻断时把卸载当作维护手段。
+APK 固件使用：
+
+```sh
+apk del luci-app-proxy-guard-pro  # 仅当已安装 Pro 时先卸载扩展
+apk del luci-app-proxy-guard
+```
+
+正常卸载会清理本插件的规则、RPC 注册、菜单和启动链接；修改过的配置可能按所用包管理器的配置文件规则保留。卸载会解除本插件的阻断，不能在仍依赖该阻断时把卸载当作维护手段。
 
 ## 第一次配置
 
@@ -87,7 +122,11 @@ opkg remove luci-app-proxy-guard
 
 每轮经本机 SOCKS 请求配置的 HTTPS 连通性目标；只有启用出口 IPv4 校验时，才要求额外取得并核对出口地址。常规模式使用配置的连续失败/恢复次数，默认失败 3 轮、恢复 2 轮。默认网站最少成功数为 1；启用的出口校验和 UDP 检查也必须通过。每轮结束后再等配置间隔，默认等待 10 秒，网络请求耗时另计。
 
+新装默认检测 `https://www.gstatic.com/generate_204|204` 和 `https://connectivity-check.ubuntu.com/|204`，覆盖升级会保留已保存的自定义检测目标。
+
 固定启动宽限默认截至路由器开机后 150 秒；保护模式在等待期间保持阻断。启用开机保护时，改为等待所需服务就绪，再走阻断等待与恢复验证。
+
+开启出口 IPv4 校验后，可以在「连接检测」填写备用 HTTPS 地址。主地址超时才会在同一轮经同一 SOCKS 补查一次，下一轮仍先查主地址。留空时，ipify 使用 https://4.ident.me/，其他主域名不使用备用地址。错误 IPv4、主备都失败、以及阻断和恢复的判定沿用现有规则。
 
 ### 代理客户端服务监视
 
@@ -134,7 +173,11 @@ opkg remove luci-app-proxy-guard
 只读排查可以查看页面，或在自己的路由器执行：
 
 ```sh
-opkg status luci-app-proxy-guard
+if command -v opkg >/dev/null 2>&1; then
+    opkg status luci-app-proxy-guard
+else
+    apk info -a luci-app-proxy-guard
+fi
 /usr/libexec/proxy-guard status
 /usr/libexec/proxy-guard logs
 ```

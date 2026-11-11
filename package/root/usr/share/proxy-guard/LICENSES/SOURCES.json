@@ -136,15 +136,6 @@
       "sha256": "beaf0072874cb66e4c2867758c7d04e0a1f99b2326c24e26b848fbf0ee72d8a4",
       "ok": true,
       "path": "LICENSES/UPSTREAM/UCI-lib-header.txt"
-    },
-    {
-      "name": "Sing-tun-LICENSE.txt",
-      "path": "LICENSES/UPSTREAM/Sing-tun-LICENSE.txt",
-      "url": "https://github.com/SagerNet/sing-tun/tree/v0.7.13",
-      "sha256": "2f02b7486bcfa90d115c71a20437f3906b6fd5bef81c5dc0efd341399e89d0fd",
-      "bytes": 674,
-      "ok": true,
-      "origin": "Existing optional compatibility directory"
     }
   ]
 }

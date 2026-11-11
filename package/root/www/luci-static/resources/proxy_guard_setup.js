@@ -48,7 +48,9 @@ return baseclass.extend({
    if(epoch!==(this.epoch||0))return;
    this.info=info;
    if(info.transaction){
-    if(!this.active){
+    if(!this.active||info.transaction.id!==this.active.id){
+     // A second session can finish one transaction and start another between
+     // polls. Follow the current transaction so its modal can also close.
      if(info.transaction.claimable){
       const claimed=assertResult(await claimCall());
       if(epoch!==(this.epoch||0))return;
@@ -56,7 +58,6 @@ return baseclass.extend({
      }
      this.epoch=(this.epoch||0)+1;this.active=info.transaction;this.showTransaction();return;
     }
-    if(info.transaction.id!==this.active.id){this.active=null;throw new Error(_('Another configuration transaction is active'));}
     this.active=Object.assign({},this.active,info.transaction);this.renderTransaction();
    }else if(this.active){
     const old=this.active;this.active=null;this.epoch=(this.epoch||0)+1;ui.hideModal();

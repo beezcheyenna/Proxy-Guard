@@ -26,9 +26,6 @@ msgstr "、HTTP "
 msgid "-- Please choose --"
 msgstr "-- 選択してください --"
 
-msgid "0 keeps emergency SSH open until household authorization is restored. Use 30 to 3600 for a timed window."
-msgstr "0 は家庭 IP の認証が復旧するまで緊急 SSH を開放します。時間を制限する場合は 30～3600 秒を指定してください。"
-
 msgid ":"
 msgstr "："
 
@@ -77,15 +74,6 @@ msgstr "；待機のリセット回数："
 msgid "; waiting to restore access"
 msgstr "；通信再開を待機中"
 
-msgid "A confirmation action is already being verified."
-msgstr "確認操作の結果を照合しています。"
-
-msgid "A maintenance operation is already pending."
-msgstr "メンテナンス操作がすでに進行中です。"
-
-msgid "A missing or failed remote health report withholds the local access permit. Local proxy checks remain required."
-msgstr "リモートの正常性を確認できない場合、通信許可を発行しません。ローカルプロキシの検証も必要です。"
-
 msgid "A package operation is in progress. Try again when it finishes."
 msgstr "パッケージの処理中です。完了してから再試行してください。"
 
@@ -113,20 +101,8 @@ msgstr "有効化パラメーターは有効です。実行環境は適用時に
 msgid "Active kernel flowtables"
 msgstr "カーネルで有効なフローオフロード"
 
-msgid "Add at least one address to an enabled static whitelist."
-msgstr "有効な固定許可リストには、少なくとも1つのアドレスを追加してください。"
-
-msgid "Address families"
-msgstr "アドレスファミリー"
-
 msgid "After recovery, allow Internet access while checking at one-second intervals during observation. Any failure blocks access and restarts the delay. Disabling observation still requires the original recovery checks."
 msgstr "復旧後は通信を許可して1秒間隔で監視します。失敗すると遮断して待機をやり直します。監視を無効にしても従来の復旧確認は必要です。"
-
-msgid "Agent HTTPS address through the proxy"
-msgstr "プロキシ経由の Agent HTTPS アドレス"
-
-msgid "Agent started"
-msgstr "Agent が起動しました"
 
 msgid "All IPv6 sources on selected ingress devices"
 msgstr "選択した入口のすべての IPv6 送信元"
@@ -137,32 +113,17 @@ msgstr "設定済みサービスがすべて停止または再起動"
 msgid "All configured services stopped"
 msgstr "設定済みサービスがすべて停止しました"
 
-msgid "All sources keeps standard resource limits active. Household and static addresses are allowed in whitelist mode and exempt from standard limits. Legacy bypass disables this rule protection."
-msgstr "すべての送信元でも標準リソース制限は有効です。自宅と静的アドレスはホワイトリストでは許可され、標準モードでは制限対象外です。旧設定の回避はこのルールの保護を無効にします。"
-
-msgid "All sources, resource limits apply"
-msgstr "すべての送信元にリソース制限を適用"
-
 msgid "All three services stop or restart"
 msgstr "3 項目すべてが停止または再起動"
 
 msgid "All three services stopped"
 msgstr "3つのサービスがすべて停止"
 
-msgid "Allow rebooting the VPS"
-msgstr "VPS の再起動を許可"
-
-msgid "Allow restarting the proxy core"
-msgstr "プロキシコアの再起動を許可"
-
 msgid "Allowed LAN IPv4 networks"
 msgstr "アクセスを許可する LAN IPv4 ネットワーク"
 
 msgid "Allowed LAN IPv6 networks"
 msgstr "アクセスを許可する LAN IPv6 ネットワーク"
-
-msgid "Allowed or exempt sources"
-msgstr "許可または制限対象外の送信元"
 
 msgid "Allowing time for checks to start"
 msgstr "接続チェックの開始を待機中"
@@ -176,29 +137,14 @@ msgstr "独立した監視プロセスが5秒ごとにプラグインのハー�
 msgid "An nft flowtable is active; existing connections may bypass blocking. Check and disable flow offloading first."
 msgstr "nft flowtable が動作しているため、既存接続が遮断を迂回する可能性があります。フローオフロードを確認し、無効にしてください。"
 
-msgid "Analysis Agent connected"
-msgstr "分析 Agent に接続済み"
-
 msgid "Analysis event"
 msgstr "分析イベント"
-
-msgid "Analysis reports observations and suspicion only. A repeated payload does not identify the sender as GFW. Full packet capture and the honeypot are off by default and configured on the Agent."
-msgstr "分析結果は観測と疑わしい動作を示すものです。データの重複だけでは送信元を GFW と特定できません。パケット保存とハニーポットは初期状態では無効です。"
-
-msgid "Another VPS policy change is awaiting confirmation."
-msgstr "別の VPS ポリシー変更が確認待ちです。"
 
 msgid "Another configuration transaction is active"
 msgstr "別の設定確認が進行中です"
 
 msgid "Another session is checking configuration"
 msgstr "別のログインセッションで設定を確認しています"
-
-msgid "Another session is confirming the VPS policy."
-msgstr "別のセッションが VPS ポリシーを確認しています。"
-
-msgid "Another settings update is in progress; retry shortly."
-msgstr "別の設定を適用中です。少し待ってから再試行してください。"
 
 msgid "Any interruption during sensitive recovery restarts the wait and stability timer. Disabling this option still requires the original consecutive recovery checks."
 msgstr "復旧確認中に中断があれば待機・安定時間を数え直します。無効にしても従来の連続成功回数を満たす必要があります。"
@@ -260,8 +206,8 @@ msgstr "検証待ち"
 msgid "Back"
 msgstr "戻る"
 
-msgid "Bandwidth threshold duration (seconds)"
-msgstr "帯域超過の継続時間（秒）"
+msgid "Backup HTTPS URL for exit verification"
+msgstr "出口検証用の予備 HTTPS URL"
 
 msgid "Block Internet access on proxy failure"
 msgstr "プロキシ障害時にインターネット接続を遮断"
@@ -299,20 +245,11 @@ msgstr "起動時保護を開始しました。TCP・UDP・DNS の稼働を待�
 msgid "Boot service protection"
 msgstr "起動時のサービス障害時保護"
 
-msgid "Both heartbeats lost for (seconds)"
-msgstr "両方のハートビートが途絶えてからの時間（秒）"
-
 msgid "Bridge filtering"
 msgstr "ブリッジフィルタリング"
 
 msgid "Bridged traffic enters the IP firewall and may affect switching; blocking is not enabled"
 msgstr "ブリッジ通信が IP ファイアウォールを通過し、スイッチ機能に影響する可能性があるため、遮断を有効にしません"
-
-msgid "Bypass all protection (legacy behavior)"
-msgstr "すべての保護を回避（旧設定互換）"
-
-msgid "Bytes observed"
-msgstr "観測した転送量（バイト）"
 
 msgid "CPU (total)"
 msgstr "CPU（全体比）"
@@ -344,9 +281,6 @@ msgstr "分析状態を取得できません。自動的に再試行します。
 msgid "Cannot read client log; service and proxy checks continue"
 msgstr "クライアントログを読み取れません。サービスとプロキシの確認を継続します"
 
-msgid "Cannot read confirmation status. The VPS rollback timer continues."
-msgstr "確認状態を取得できません。VPS の復元タイマーは継続しています。"
-
 msgid "Cannot read firewall rules"
 msgstr "ファイアウォールルールを読み取れません"
 
@@ -361,9 +295,6 @@ msgstr "プラグインの状態またはログを読み取れません"
 
 msgid "Cannot read status; protection cannot be confirmed:"
 msgstr "状態を読み取れないため、保護を確認できません："
-
-msgid "Cannot read synchronization status; retrying automatically."
-msgstr "同期状態を取得できません。自動的に再試行します。"
 
 msgid "Cannot read this session's plugin configuration"
 msgstr "このセッションのプラグイン設定を読み取れません"
@@ -392,12 +323,6 @@ msgstr "キャプチャの状態"
 msgid "Captured packets"
 msgstr "取得したパケット数"
 
-msgid "Changes take effect after Save & Apply. Stopping synchronization does not remove VPS rules. Dynamic authorizations expire; configured resource limits and SSH rescue remain in effect."
-msgstr "変更は「保存して適用」の後に有効になります。同期を停止しても VPS のルールは削除されません。動的な許可は期限切れになりますが、設定済みのリソース制限と SSH 緊急アクセスの仕組みは維持されます。"
-
-msgid "Changes take effect after Save & Apply. When synchronization stops, dynamic leases expire; static and unrestricted rules remain on the VPS."
-msgstr "保存して適用すると反映されます。同期を停止すると動的許可は期限切れになり、VPSの固定ルールと送信元制限なしのルールは維持されます。"
-
 msgid "Changing only logging options does not restart checks or reset permits. Logs are stored in memory, cleared on reboot, and also sent to the system log."
 msgstr "ログ設定だけを変更しても、監視の再起動や接続許可のリセットは行いません。ログはメモリに保存され、再起動時に消去されます。システムログにも出力します。"
 
@@ -412,9 +337,6 @@ msgstr "本機の TCP・UDP・DNS を毎秒確認し、選択した条件に一�
 
 msgid "Check local TCP, UDP and DNS services every second. If all three stop, block protected clients immediately. Keep the existing SOCKS, HTTPS and exit IP checks. Traffic initiated by this router, LAN access and DNS remain available."
 msgstr "本機の TCP・UDP・DNS を毎秒確認します。3 項目がすべて停止すると保護対象端末を直ちに遮断します。従来の SOCKS・HTTPS・出口 IP 確認は継続し、ルーター自身の通信、LAN、DNS は維持します。"
-
-msgid "Check management readiness"
-msgstr "管理経路を確認"
 
 msgid "Check plugin services"
 msgstr "プラグインのサービスを確認してください"
@@ -431,14 +353,8 @@ msgstr "確認対象は https://domain/path|status_code 形式にしてくださ
 msgid "Check targets require an HTTPS domain without credentials or custom ports"
 msgstr "確認対象は HTTPS のドメイン名を使用してください。認証情報やカスタムポートは指定できません"
 
-msgid "Check the access settings and connection."
-msgstr "アクセス設定と接続を確認してください。"
-
 msgid "Check the selected client every second using its configured TCP, UDP and DNS capabilities. Unconfigured capabilities are shown separately. Keep the existing real proxy checks and preserve router, LAN and DNS access."
 msgstr "選択したクライアントの設定済み TCP・UDP・DNS 機能を毎秒確認します。未設定の機能は区別して表示し、実通信のプロキシ検証とルーター・LAN・DNS へのアクセスを維持します。"
-
-msgid "Checking the VPS capability and applying a temporary policy..."
-msgstr "VPS の対応状況を確認し、ポリシーを一時適用しています…"
 
 msgid "Checking the applied configuration and protection rules..."
 msgstr "適用した設定と保護ルールを確認しています…"
@@ -455,17 +371,11 @@ msgstr "確認とログ"
 msgid "Choose IPv6 scope"
 msgstr "IPv6 の範囲を選択"
 
-msgid "Choose a supported protection mode for this port rule."
-msgstr "このポートルールで利用できる保護モードを選択してください。"
-
 msgid "Choose an IPv6 protection scope explicitly."
 msgstr "IPv6 の保護範囲を明示的に選択してください。"
 
 msgid "Choose any combination of days. An overnight window belongs to its start day: Monday 23:00–01:00 continues into Tuesday morning."
 msgstr "曜日は自由に複数選択できます。日付をまたぐ時間帯は開始日の曜日に属します。月曜日の 23:00–01:00 は火曜日の午前 1 時まで続きます。"
-
-msgid "Choose the public address families to authorize dynamically. Removing a family revokes its dynamic lease after the VPS confirms the update; static rules remain independent."
-msgstr "動的に認可する公開アドレスの種類を選択します。選択を解除した種類の動的認可は、VPS が更新を確認した時点で取り消されます。固定ルールは独立して維持されます。"
 
 msgid "Clear logs"
 msgstr "ログを消去"
@@ -503,9 +413,6 @@ msgstr "クライアントの起動完了と設定済みサービスの稼働を
 msgid "Close"
 msgstr "閉じる"
 
-msgid "Cloudflare Worker and Tunnel"
-msgstr "Cloudflare Worker と Tunnel"
-
 msgid "Cloudflare data center"
 msgstr "Cloudflare データセンター"
 
@@ -521,20 +428,11 @@ msgstr "Cloudflare が異なる出口 IP を返しました。新しい出口検
 msgid "Combined LAN exemptions must not cover the entire Internet"
 msgstr "LAN の例外範囲を合算してインターネット全体を含めることはできません"
 
-msgid "Concurrent connection limit"
-msgstr "同時接続数の上限"
-
-msgid "Concurrent connection threshold exceeded"
-msgstr "同時接続数がしきい値を超えました"
-
 msgid "Configuration changed during UDP check; waiting for revalidation"
 msgstr "UDP 検査中に設定が変わりました。再検証を待っています"
 
 msgid "Configuration changed elsewhere. Reload it before saving."
 msgstr "設定が別の画面で変更されました。再読み込みしてから保存してください。"
-
-msgid "Configuration changed elsewhere. Review saved settings and VPS state before applying again."
-msgstr "別の場所で設定が変更されました。再適用する前に保存済み設定と VPS の状態を確認してください。"
 
 msgid "Configuration format"
 msgstr "設定の形式"
@@ -563,9 +461,6 @@ msgstr "DNS サービスポートを 1～16 個設定してください"
 msgid "Configure between 2 and 4 HTTPS check targets"
 msgstr "HTTPS 確認対象を 2～4 件設定してください"
 
-msgid "Configure observation ports and capture duration on the VPS Agent. Raw evidence and honeypots require Pro Max."
-msgstr "観測ポートと収集時間は VPS Agent で設定します。生データの保存とハニーポットには Pro Max が必要です。"
-
 msgid "Configured flow offloading"
 msgstr "設定上のフローオフロード"
 
@@ -578,26 +473,11 @@ msgstr "設定済みのプロキシサービスが中断しました"
 msgid "Confirm"
 msgstr "確認"
 
-msgid "Confirm VPS policy"
-msgstr "VPS ポリシーの確認"
-
-msgid "Confirm VPS policy changes before keeping them"
-msgstr "VPS ポリシーの変更を確認後に保持"
-
 msgid "Confirm protection settings"
 msgstr "保護設定の維持を確認"
 
-msgid "Confirm that the synchronization domain uses a direct connection."
-msgstr "同期先ドメインに直接接続する設定を確認してください。"
-
 msgid "Confirm the IPv6 scope independently of IPv4."
 msgstr "IPv4 とは別に IPv6 の範囲を確認してください。"
-
-msgid "Confirm the SSH management session in settings"
-msgstr "設定画面で SSH 管理接続の確認済み項目を選択してください"
-
-msgid "Confirmation result is unknown. Checking again without repeating policy changes."
-msgstr "確認結果が不明です。ポリシーを再変更せずに結果を照合しています。"
 
 msgid "Confirming consecutive failures"
 msgstr "連続失敗を確認中です"
@@ -608,17 +488,8 @@ msgstr "プロキシの復旧を確認中です"
 msgid "Confirming recovery"
 msgstr "復旧を確認中"
 
-msgid "Connect by SSH from an authorized management address, then check again"
-msgstr "許可された管理アドレスから SSH 接続を確立し、再度確認してください"
-
-msgid "Connection burst allowance"
-msgstr "許容するバースト接続数"
-
 msgid "Connection checks"
 msgstr "接続チェック"
-
-msgid "Connection settings"
-msgstr "接続設定"
 
 msgid "Connectivity monitor delayed"
 msgstr "接続監視の更新が遅延"
@@ -634,18 +505,6 @@ msgstr "復旧に必要な連続成功回数"
 
 msgid "Continue"
 msgstr "続行"
-
-msgid "Control channel"
-msgstr "制御チャネル"
-
-msgid "Control heartbeat age (seconds)"
-msgstr "前回の制御ハートビートからの経過時間（秒）"
-
-msgid "Control request timeout (seconds)"
-msgstr "制御リクエストのタイムアウト（秒）"
-
-msgid "Control service HTTPS address"
-msgstr "制御サービスの HTTPS アドレス"
 
 msgid "Current protection reason"
 msgstr "現在の保護動作の理由"
@@ -665,9 +524,6 @@ msgstr "DNS サービスポートとプロキシ受付ポートは重複でき�
 msgid "Days of the week"
 msgstr "曜日"
 
-msgid "Default port protection mode"
-msgstr "既定のポート保護モード"
-
 msgid "Default template"
 msgstr "既定のテンプレート"
 
@@ -686,29 +542,14 @@ msgstr "詳細な確認ログ"
 msgid "Detect one installed client automatically. When several are installed, select the client to monitor. This does not modify the client configuration."
 msgstr "クライアントが1つの場合は自動検出し、複数ある場合は監視対象を選択します。クライアント設定は変更しません。"
 
-msgid "Device ID"
-msgstr "デバイスID"
-
-msgid "Device secret"
-msgstr "デバイス認証キー"
-
-msgid "Direct HTTPS to Agent"
-msgstr "HTTPS で Agent に直接接続"
-
 msgid "Disabled"
 msgstr "無効"
 
 msgid "Discover listening services automatically"
 msgstr "待ち受けサービスを自動検出"
 
-msgid "Discovered listeners"
-msgstr "検出した待ち受けサービス"
-
 msgid "Discovered listeners are candidates only; add a service rule to manage a port. Unrestricted rules add no source restriction and do not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
 msgstr "検出された待受ポートは候補として表示されます。管理するにはサービスルールを追加してください。「送信元の制限なし」はシステムファイアウォールの設定を上書きしません。動的ルールでは、未同期のアドレスファミリーからの接続は引き続き遮断されます。"
-
-msgid "Discovery lists candidate ports only. Whitelist mode requires an authorized source; standard mode applies resource limits; observe mode records without blocking. Unrestricted rules keep the original system firewall behavior."
-msgstr "検出機能は候補ポートの一覧を表示するだけです。許可リストモードは送信元を制限し、標準モードはリソース使用量を制限します。監視モードは記録のみで遮断しません。「送信元の制限なし」でも既存のシステムファイアウォールは適用されます。"
 
 msgid "Dismiss"
 msgstr "閉じる"
@@ -725,23 +566,8 @@ msgstr "ローカル分析レポートをダウンロード"
 msgid "Download report"
 msgstr "レポートをダウンロード"
 
-msgid "Dynamic lease duration (seconds)"
-msgstr "動的許可の有効期間（秒）"
-
-msgid "Each rule has its own mode, sources, thresholds and timers. Ports grouped in one rule share these settings. Create separate rules for different settings."
-msgstr "ルールごとにモード、許可する接続元、しきい値、時間を設定できます。同じルールに含まれるポートは設定を共有します。異なる設定が必要な場合はルールを分けてください。"
-
 msgid "Edit the complete UCI configuration for this plugin. Save stages changes; Save & Apply validates and activates them. Existing secret values are preserved by placeholders."
 msgstr "このプラグインの UCI 設定全体を編集できます。「保存」は変更の一時保存のみを行い、「保存して適用」は検証後に有効化します。既存の機密値はプレースホルダーで保持されます。"
-
-msgid "Emergency access active"
-msgstr "緊急管理アクセスが有効です"
-
-msgid "Emergency source scope"
-msgstr "緊急アクセスを許可する送信元"
-
-msgid "Enable VPS access rules"
-msgstr "VPSアクセスルールを有効化"
 
 msgid "Enable after Save & Apply"
 msgstr "保存して適用した後に有効化"
@@ -749,29 +575,17 @@ msgstr "保存して適用した後に有効化"
 msgid "Enable boot protection"
 msgstr "起動時保護を有効にする"
 
-msgid "Enable emergency SSH access"
-msgstr "SSH 緊急アクセスを有効化"
-
 msgid "Enable enhanced monitoring after recovery"
 msgstr "通信再開後に重点監視"
 
 msgid "Enable protection"
 msgstr "保護機能を有効にする"
 
-msgid "Enable proxy-path heartbeat"
-msgstr "独立したプロキシ経路のハートビートを有効化"
-
 msgid "Enable scheduled protection"
 msgstr "スケジュール保護を有効にする"
 
-msgid "Enable the matching action locally and on the VPS Agent first."
-msgstr "本プラグインと VPS Agent の両方で対象の操作を許可してください。"
-
 msgid "Enabled"
 msgstr "有効"
-
-msgid "Enabled service rules must not overlap on the same protocol."
-msgstr "同じプロトコルの有効なサービスルールでポートを重複させることはできません。"
 
 msgid "End time"
 msgstr "終了時刻"
@@ -797,9 +611,6 @@ msgstr "重点監視時間（秒）"
 msgid "Enhanced observation period (seconds)"
 msgstr "重点監視時間（秒）"
 
-msgid "Enter 0 to keep rescue open, or an integer from 30 to 3600 seconds."
-msgstr "継続して開放する場合は 0、時間を制限する場合は 30～3600 の整数秒を入力してください。"
-
 msgid "Enter IPv6 addresses or prefixes, or explicitly choose no IPv6 matching."
 msgstr "IPv6 アドレスまたはプレフィックスを入力するか、対象外にすることを明示してください。"
 
@@ -809,29 +620,11 @@ msgstr "UDP 検証を有効にする前に DNS の宛先を入力してくださ
 msgid "Enter a Worker HTTPS root URL without a path or credentials."
 msgstr "パスや認証情報を含まないWorkerのHTTPSルートURLを入力してください。"
 
-msgid "Enter a control-service HTTPS root URL without a path or credentials."
-msgstr "パスや認証情報を含まない制御サービスの HTTPS ルート URL を入力してください。"
-
 msgid "Enter a valid HH:MM:SS time"
 msgstr "有効な HH:MM:SS 形式で入力してください"
 
-msgid "Enter a valid device ID."
-msgstr "有効なデバイスIDを入力してください。"
-
 msgid "Enter manually"
 msgstr "手動入力"
-
-msgid "Enter ports from 1 to 65535, or a port range."
-msgstr "1〜65535のポート番号またはポート範囲を入力してください。"
-
-msgid "Enter the paired device secret."
-msgstr "ペアリングしたデバイスの認証キーを入力してください。"
-
-msgid "Enter the secret for the independent proxy heartbeat."
-msgstr "独立したプロキシハートビートの認証キーを入力してください。"
-
-msgid "Enter valid IPv4 or IPv6 addresses or CIDR networks."
-msgstr "有効なIPv4、IPv6アドレスまたはCIDRネットワークを入力してください。"
 
 msgid "Enter your actual proxy exit IPv4 before enabling. A different exit or an unreachable verification service is treated as a failure."
 msgstr "有効化前に実際のプロキシ出口 IPv4 を入力してください。出口の不一致や検証サービスへの接続失敗は障害として扱います。"
@@ -863,6 +656,9 @@ msgstr "出口検証結果："
 msgid "Exit verification:"
 msgstr "出口検証："
 
+msgid "Exit verification: not performed because the connectivity check failed"
+msgstr "出口確認: 接続確認に失敗したため、今回は未実行"
+
 msgid "Expected IPv4 source"
 msgstr "想定 IPv4 の取得元"
 
@@ -889,12 +685,6 @@ msgstr "失敗しきい値"
 
 msgid "Fallback bandwidth (bytes per second)"
 msgstr "フォールバック接続の帯域上限（バイト/秒）"
-
-msgid "Fallback bandwidth monitoring needs a trusted data source configured on the VPS Agent."
-msgstr "フォールバック帯域の監視には、VPS Agent で信頼できるデータソースの設定が必要です。"
-
-msgid "Fallback bandwidth per direction (bytes per second)"
-msgstr "フォールバック接続の片方向帯域上限（バイト/秒）"
 
 msgid "Fast checks are not ready; Internet access remains blocked"
 msgstr "サービス監視未準備のためインターネット遮断を維持しています"
@@ -959,26 +749,11 @@ msgstr "ハニーポットへの接続"
 msgid "Honeypot started"
 msgstr "ハニーポットが起動しました"
 
-msgid "Household IP and static whitelist"
-msgstr "自宅のグローバルIPと固定許可リスト"
-
-msgid "Household public IP"
-msgstr "自宅のグローバルIP"
-
 msgid "I have checked the IPv6 scope independently of IPv4"
 msgstr "IPv4 とは別に IPv6 の範囲を確認済み"
 
 msgid "I have confirmed the Worker domain uses a direct connection"
 msgstr "Workerのドメインに直接接続することを確認しました"
-
-msgid "I have confirmed the control service uses a direct connection"
-msgstr "制御サービスへの通信がプロキシを経由しないことを確認しました"
-
-msgid "I have verified an authorized SSH management session"
-msgstr "許可された管理アドレスから SSH 接続を確認済み"
-
-msgid "IP filtering"
-msgstr "送信元IP制限"
 
 msgid "IPv4"
 msgstr "IPv4"
@@ -1012,9 +787,6 @@ msgstr "IPv6 通信は今回の保護範囲に含まれません"
 
 msgid "Import expected IPv4 from VPS"
 msgstr "VPS から想定 IPv4 を取り込む"
-
-msgid "Independent proxy heartbeat"
-msgstr "独立したプロキシ経路のハートビート"
 
 msgid "Ingress device does not exist:"
 msgstr "受信インターフェースが存在しません："
@@ -1063,9 +835,6 @@ msgstr "通信再開済み・重点監視中："
 
 msgid "Internet restored; observation begins"
 msgstr "接続復旧、監視を開始"
-
-msgid "Interrupted; not repeated automatically"
-msgstr "操作が中断されました。自動再実行はしません"
 
 msgid "Interruption detected"
 msgstr "中断を検出"
@@ -1148,9 +917,6 @@ msgstr "状態またはログの応答形式が不正です"
 msgid "Keep Internet access blocked during this delay. Disabling this option starts enhanced checks immediately."
 msgstr "待機中はインターネット遮断を維持します。無効にすると重点チェックを直ちに開始します。"
 
-msgid "Keep VPS policy"
-msgstr "VPS ポリシーを保持"
-
 msgid "Keep scheduled protection enabled"
 msgstr "定時保護を有効にしたままにする"
 
@@ -1169,9 +935,6 @@ msgstr "LAN 側の入口デバイス"
 msgid "Last Cloudflare event verification"
 msgstr "直近の Cloudflare イベント検証"
 
-msgid "Last attempt"
-msgstr "最終試行"
-
 msgid "Last check:"
 msgstr "最終確認："
 
@@ -1180,24 +943,6 @@ msgstr "前回のチェック完了時刻"
 
 msgid "Latest connectivity check"
 msgstr "直近の疎通確認"
-
-msgid "Lease expires"
-msgstr "許可の有効期限"
-
-msgid "Leave empty to keep the paired device secret."
-msgstr "空欄にすると、ペアリング済みのデバイス認証キーを維持します。"
-
-msgid "Leave empty to keep the paired secret."
-msgstr "空欄の場合は、ペアリング済みのキーを保持します。"
-
-msgid "Limit concurrent connections"
-msgstr "同時接続数を制限"
-
-msgid "Limit new connection rate"
-msgstr "新規接続レートを制限"
-
-msgid "Limit verified fallback bandwidth"
-msgstr "確認済みフォールバック接続の帯域を制限"
 
 msgid "Link-local, multicast and the router's own management addresses remain accessible."
 msgstr "リンクローカル、マルチキャスト、ルーター自身の管理アドレスへのアクセスは維持します。"
@@ -1217,9 +962,6 @@ msgstr "ローカル SOCKS ポート"
 msgid "Local diagnostic report"
 msgstr "ローカル診断レポート"
 
-msgid "Local protection could not be prepared; the remote action was not sent."
-msgstr "ローカル保護を準備できなかったため、リモート操作は送信していません。"
-
 msgid "Local protection was enabled before remote maintenance; awaiting verification."
 msgstr "リモートメンテナンス前にローカル保護を有効にしました。再確認を待機中です。"
 
@@ -1231,9 +973,6 @@ msgstr "ローカルプロキシポート"
 
 msgid "Local self-check could not complete"
 msgstr "ローカル自己診断を完了できません"
-
-msgid "Local settings were restored or synchronization stopped. The remote policy still needs verification."
-msgstr "ローカル設定が復元されたか、同期が停止しました。リモートポリシーの確認が必要です。"
 
 msgid "Log records were missed"
 msgstr "読み取れなかったログがあります"
@@ -1253,29 +992,8 @@ msgstr "メモリ上のログ"
 msgid "Low"
 msgstr "低"
 
-msgid "Maintenance operation"
-msgstr "メンテナンス操作の状態"
-
-msgid "Maintenance record storage needs attention; restart actions are disabled."
-msgstr "メンテナンス記録に問題があるため、リモート再起動は無効です。プロキシの保護は継続します。"
-
 msgid "Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."
 msgstr "起動後にプロキシが初めて利用可能になった時点と、各切断から復旧した時点で、それぞれ 1 回だけ追加確認します。同じ切断の複数の通知はまとめて扱い、毎日の定時実行や連続ポーリングは行いません。Cloudflare がタイムアウトしても通常の出口検証は必須です。出口 IP が一致しない場合は保護が必要です。"
-
-msgid "Manage SSH access"
-msgstr "プラグインで SSH アクセスを管理"
-
-msgid "Management IP addresses or networks"
-msgstr "管理用 IP アドレスまたはネットワーク"
-
-msgid "Management addresses and last household IP"
-msgstr "管理用アドレスと最後に認証した家庭の IP"
-
-msgid "Management check"
-msgstr "管理経路の確認"
-
-msgid "Management protection active"
-msgstr "管理アクセスの保護が有効です"
 
 msgid "Maximum restarts within the window"
 msgstr "期間内の再起動回数の上限"
@@ -1355,18 +1073,6 @@ msgstr "対応が必要"
 msgid "Network check status expired; waiting and confirming stability again"
 msgstr "ネットワーク確認の状態が期限切れのため、待機して安定性を再確認します"
 
-msgid "New connection cooldown (seconds)"
-msgstr "新規接続の受付を停止する時間（秒）"
-
-msgid "New connection rate exceeded"
-msgstr "新規接続レートがしきい値を超えました"
-
-msgid "New connections per second"
-msgstr "毎秒の新規接続数"
-
-msgid "New connections temporarily limited"
-msgstr "この送信元の新規接続を一時的に制限しています"
-
 msgid "Next"
 msgstr "次へ"
 
@@ -1384,9 +1090,6 @@ msgstr "利用できる LAN 入口がありません。先に既存のネット�
 
 msgid "No log entries"
 msgstr "ログはありません"
-
-msgid "No protection: bypass enabled"
-msgstr "保護なし：回避が有効"
 
 msgid "No recovery event recorded"
 msgstr "復旧イベントはまだ記録されていません"
@@ -1415,12 +1118,6 @@ msgstr "未設定"
 msgid "Not running"
 msgstr "停止中"
 
-msgid "Observation window (seconds)"
-msgstr "集計期間（秒）"
-
-msgid "Observe only"
-msgstr "監視と記録のみ"
-
 msgid "Observed proxy exit"
 msgstr "検出したプロキシ出口"
 
@@ -1430,29 +1127,11 @@ msgstr "起動時または初回有効化時は保護対象端末を遮断し、
 msgid "On proxy failure, block Internet traffic in both directions for selected devices where traffic actually passes through this router or proxy. LAN access remains available. Return traffic bypassing this device cannot be blocked. Disabled on first install; start with monitoring, then test one device."
 msgstr "プロキシ障害時、指定端末の通信のうち本機のルーティングまたはプロキシを実際に通過するインターネット通信を双方向に遮断します。LAN アクセスは維持します。本機を迂回する戻り通信は遮断できません。初回インストール時は無効です。まず監視のみで確認し、その後 1 台で試験してください。"
 
-msgid "Only add ports you intend to filter. Selecting a panel, API, or subscription port filters that service too. Services sharing the same IP, protocol, and port cannot be separated by URL path or SNI here. SSH has separate settings."
-msgstr "制限したいポートだけを追加してください。管理画面、API、サブスクリプション用のポートを選択すると、それらも制限されます。同じ IP・プロトコル・ポートを共有するサービスを、ここで URL パスや SNI によって区別することはできません。SSH は個別に設定してください。"
-
-msgid "Only enabled service rules restrict their selected ports. Other ports remain under the existing system firewall. SSH is not managed unless you add a rule."
-msgstr "有効なサービスルールで指定したポートのみを制限します。その他のポートには既存のシステムファイアウォールが適用されます。SSH はルールを追加した場合のみ管理されます。"
-
-msgid "Only selected service ports are managed. Other ports keep the existing system firewall policy. SSH management is separate and disabled by default."
-msgstr "選択したサービスポートのみを管理します。その他のポートには既存のシステムファイアウォール設定が適用されます。SSH は別途管理し、既定では無効です。"
-
-msgid "Only the session that applied this policy can confirm it."
-msgstr "このポリシーを適用したセッションだけが確認できます。"
-
 msgid "Only traffic passing through this router can be protected. Settings take effect only after Save & Apply."
 msgstr "本機を実際に通過する通信だけが保護対象です。「保存して適用」を押すまで設定は反映されません。"
 
-msgid "Open until household authorization is restored"
-msgstr "家庭 IP の認証が復旧するまで開放"
-
 msgid "Operating mode"
 msgstr "動作モード"
-
-msgid "Operation failed"
-msgstr "操作に失敗しました"
 
 msgid "Option \"%s\" contains an invalid input value."
 msgstr "項目「%s」の入力値が不正です。"
@@ -1505,9 +1184,6 @@ msgstr "成功"
 msgid "Pattern confidence"
 msgstr "パターン一致の確信度"
 
-msgid "Per-port modes are not supported by the connected service. Update the VPS Agent and, if used, the Cloudflare Worker before applying."
-msgstr "接続先のサービスはポートごとのモードに対応していません。設定を適用する前に VPS Agent を更新し、Cloudflare を使用している場合は Worker も更新してください。"
-
 msgid "Per-target timeout"
 msgstr "対象ごとのタイムアウト"
 
@@ -1550,41 +1226,14 @@ msgstr "プラグインの自己診断"
 msgid "Plugin self-check and recovery"
 msgstr "プラグインの自己診断と復旧"
 
-msgid "Policy confirmation data could not be read. Review saved settings and VPS state."
-msgstr "ポリシーの確認記録を読み取れません。保存済みの設定と VPS の状態を確認してください。"
-
-msgid "Policy revision confirmed"
-msgstr "ポリシーのリビジョン確認"
-
-msgid "Port protection mode"
-msgstr "ポート保護モード"
-
-msgid "Port ranges must not overlap."
-msgstr "ポート範囲を重複させることはできません。"
-
 msgid "Ports"
 msgstr "ポート"
 
 msgid "Possible failure"
 msgstr "障害の可能性"
 
-msgid "Prepare changes"
-msgstr "変更を準備"
-
-msgid "Prepare to remove VPS rules"
-msgstr "VPS ルールの解除を準備"
-
-msgid "Prepare to turn off this plugin VPS port rules and SSH management while synchronization remains enabled. Save & Apply, then confirm the VPS change. After the VPS confirms removal you may stop synchronization. The system firewall remains in effect."
-msgstr "同期を維持したまま、このプラグインの VPS ポートルールと SSH 管理を無効にする準備をします。「保存して適用」後、VPS の変更を確認してください。解除確認後は同期を停止できます。既存のシステムファイアウォールは引き続き有効です。"
-
-msgid "Preserve VPS-initiated connections and their replies. Incoming service connections require an explicit rule or a discovered dynamic rule. Existing inbound connections lose access when authorization expires."
-msgstr "VPS が開始した接続とその応答を維持します。外部からのサービス接続には明示的なルールか自動検出による動的認可が必要です。認可が失効すると既存の受信接続も遮断されます。"
-
 msgid "Preset"
 msgstr "プリセット"
-
-msgid "Preview service rules"
-msgstr "ポートルールをプレビュー"
 
 msgid "Previous exit mismatch; routine verification has since passed"
 msgstr "以前は出口 IP が不一致でしたが、その後の通常検証で正常を確認しました"
@@ -1670,9 +1319,6 @@ msgstr "保護状態"
 msgid "Protection status needs verification"
 msgstr "保護状態の確認が必要です"
 
-msgid "Protocol"
-msgstr "プロトコル"
-
 msgid "Proxy Guard"
 msgstr "プロキシ接続保護"
 
@@ -1706,15 +1352,6 @@ msgstr "プロキシ障害（監視のみ）"
 msgid "Proxy healthy"
 msgstr "プロキシ正常"
 
-msgid "Proxy heartbeat age (seconds)"
-msgstr "前回のプロキシハートビートからの経過時間（秒）"
-
-msgid "Proxy heartbeat interval (seconds)"
-msgstr "プロキシ経路のハートビート間隔（秒）"
-
-msgid "Proxy heartbeat secret"
-msgstr "プロキシ経路のハートビートキー"
-
 msgid "Proxy probes passed; waiting for service protection to confirm access"
 msgstr "プロキシ検証に成功し、サービス障害時保護の通信再開確認を待っています"
 
@@ -1733,20 +1370,11 @@ msgstr "プロキシの起動に失敗"
 msgid "Proxy verification passed; access restored with enhanced monitoring"
 msgstr "プロキシ検証に成功し、通信を再開して重点監視に入りました"
 
-msgid "Public Internet"
-msgstr "インターネット上のすべての送信元"
-
-msgid "Public access remaining (seconds)"
-msgstr "公開緊急アクセスの残り時間（秒）"
-
-msgid "Public emergency window (seconds)"
-msgstr "公開緊急アクセスの有効時間（秒）"
+msgid "Queried through the same SOCKS proxy only if the primary URL times out. Leave blank to use https://4.ident.me/ when the primary host is api.ipify.org. With a different primary host, leaving this blank disables the backup."
+msgstr "メインの URL がタイムアウトした場合に限り、同じ SOCKS プロキシ経由で問い合わせます。空欄のとき、メインのホストが api.ipify.org なら https://4.ident.me/ を使用します。ほかのホストでは、空欄のままだと予備の問い合わせは行いません。"
 
 msgid "Queued"
 msgstr "実行待ち"
-
-msgid "REALITY configuration check"
-msgstr "REALITY 設定の確認"
 
 msgid "Raw UCI configuration"
 msgstr "UCI 設定の直接編集"
@@ -1775,9 +1403,6 @@ msgstr "読み取り専用の確認です。設定の保存・適用や、プロ
 msgid "Ready"
 msgstr "準備完了"
 
-msgid "Reboot VPS"
-msgstr "VPS を再起動"
-
 msgid "Recent connectivity check details"
 msgstr "最近の接続チェックの詳細"
 
@@ -1786,9 +1411,6 @@ msgstr "最近のセキュリティイベント"
 
 msgid "Rechecking a delayed heartbeat"
 msgstr "遅延したハートビートを再確認中"
-
-msgid "Recommended. The VPS restores its previous selected-port policy if a changed policy is not confirmed. Disabling this applies changes immediately."
-msgstr "有効を推奨します。変更後のポリシーを確認しない場合、VPS は以前の指定ポートポリシーに戻します。無効にすると変更は即時適用されます。"
 
 msgid "Recovery checks begin"
 msgstr "復旧検査の開始"
@@ -1799,29 +1421,11 @@ msgstr "復旧履歴"
 msgid "Recovery threshold"
 msgstr "復旧しきい値"
 
-msgid "Recovery verification timeout (seconds)"
-msgstr "復旧確認のタイムアウト（秒）"
-
-msgid "Recovery verified"
-msgstr "復旧を確認しました"
-
-msgid "Recovery was not verified before the timeout."
-msgstr "タイムアウトまでに復旧を確認できませんでした。実際の稼働状態を確認してください。"
-
-msgid "Reduce the number of rules or whitelist addresses."
-msgstr "ルールまたは許可リストのアドレス数を減らしてください。"
-
 msgid "Reload this page before enabling protection."
 msgstr "保護を有効にする前に、このページを再読み込みしてください。"
 
-msgid "Remote maintenance"
-msgstr "リモートメンテナンス"
-
 msgid "Remote maintenance is in progress; Internet protection remains active."
 msgstr "リモートメンテナンス中のため、インターネット保護を維持しています。"
-
-msgid "Remove VPS rules"
-msgstr "VPS ルールの解除"
 
 msgid "Repeat"
 msgstr "繰り返し"
@@ -1844,12 +1448,6 @@ msgstr "編集中の内容を既定のテンプレートに置き換えますか
 msgid "Replayed control request rejected"
 msgstr "制御リクエストのリプレイを拒否しました"
 
-msgid "Request accepted"
-msgstr "リモート側が要求を受け付けました"
-
-msgid "Require VPS service health before restoring access"
-msgstr "通信再開前に VPS サービスの正常性を確認"
-
 msgid "Require continuous stability before restoring access"
 msgstr "連続安定後に通信を再開"
 
@@ -1871,17 +1469,11 @@ msgstr "表示されたエラーを解消すると、保護状態を確認でき
 msgid "Resource statistics are disabled or awaiting the first sample"
 msgstr "リソース統計は無効、または初回の測定を待機中です"
 
-msgid "Resource threshold exceeded"
-msgstr "リソース使用量がしきい値を超えました"
-
 msgid "Restart cancelled"
 msgstr "再起動がキャンセルされました"
 
 msgid "Restart counting window (seconds)"
 msgstr "再起動回数を数える期間（秒）"
-
-msgid "Restart proxy core"
-msgstr "プロキシコアを再起動"
 
 msgid "Restarting"
 msgstr "再起動中"
@@ -1895,17 +1487,8 @@ msgstr "プロキシの検証に成功すると通信を再開します。重点
 msgid "Restore defaults and set up again"
 msgstr "初期設定に戻して再設定"
 
-msgid "Restore previous VPS policy"
-msgstr "以前の VPS ポリシーに戻す"
-
 msgid "Restore previous settings"
 msgstr "以前の設定に戻す"
-
-msgid "Restrict listed ports only"
-msgstr "指定したポートのみ制限"
-
-msgid "Result unknown"
-msgstr "操作結果は未確認です"
 
 msgid "Retained events"
 msgstr "保持中のイベント数"
@@ -1951,21 +1534,6 @@ msgstr "動作状態がありません。監視サービスによる再検証を
 
 msgid "SOCKS port"
 msgstr "SOCKS ポート"
-
-msgid "SSH authentication settings remain unchanged. Access is managed only after both heartbeats and an authorized SSH session are verified."
-msgstr "SSH の認証設定は変更しません。両方のハートビートと許可された管理セッションの確認後に、アクセス制限を開始します。"
-
-msgid "SSH management"
-msgstr "SSH 管理アクセス"
-
-msgid "SSH on TCP port 22 is enabled without IP filtering by default. Unrestricted mode adds no source restriction and does not override the system firewall. Unsynchronized address families remain blocked for dynamic rules."
-msgstr "SSHのTCP 22番ポートは、初期状態では有効で送信元IP制限がありません。送信元制限なしの設定でもシステムのファイアウォールは適用されます。動的ルールでは、未同期のアドレスファミリーへのアクセスは遮断されます。"
-
-msgid "SSH port"
-msgstr "SSH サービスポート"
-
-msgid "SSH rescue requires an independent HTTPS heartbeat through the proxy."
-msgstr "SSH 緊急アクセスには、制御経路から独立した、プロキシ経由の HTTPS ハートビートが必要です。"
 
 msgid "Sample plugin resources every five seconds. CPU usage is a percentage of the combined capacity of all online logical processors; 100% means all of them are fully used. Memory is the sum of process RSS and may include shared pages more than once. Sampling stores no history on flash. Heartbeat monitoring continues when resource sampling is off."
 msgstr "5秒ごとに測定します。CPU 使用率はオンラインの全論理プロセッサーの合計処理能力を基準とし、100% は全プロセッサーの最大稼働を表します。メモリは各プロセスの RSS の合計で、共有ページが重複して含まれる場合があります。測定履歴はフラッシュに保存しません。統計を無効にしてもハートビート監視は継続します。"
@@ -2048,9 +1616,6 @@ msgstr "曜日を 1 つ以上選択してください"
 msgid "Select between one and eight ingress devices"
 msgstr "受信インターフェースを 1～8 個選択してください"
 
-msgid "Selected address families authorized"
-msgstr "選択したアドレス種別の認可"
-
 msgid "Selected proxy client is not installed"
 msgstr "選択したプロキシクライアントがインストールされていません"
 
@@ -2090,9 +1655,6 @@ msgstr "サービス監視の状態を取得できません。確認を待機中
 msgid "Service monitoring is disabled"
 msgstr "サービス監視は無効です"
 
-msgid "Service name"
-msgstr "サービス名"
-
 msgid "Service not started"
 msgstr "サービス未起動"
 
@@ -2126,9 +1688,6 @@ msgstr "サービスの準備完了"
 msgid "Service restart requested"
 msgstr "サービスの再起動要求を検出"
 
-msgid "Service rule preview"
-msgstr "ポートルールのプレビュー"
-
 msgid "Service unavailable"
 msgstr "サービスを利用できません"
 
@@ -2137,9 +1696,6 @@ msgstr "サービスルール"
 
 msgid "Set up later"
 msgstr "後で設定"
-
-msgid "Settings changed during synchronization; waiting for the next update."
-msgstr "同期中に設定が変更されました。次回の更新を待機します。"
 
 msgid "Settings were restored:"
 msgstr "設定を復元しました："
@@ -2158,9 +1714,6 @@ msgstr "破損したログをスキップしました："
 
 msgid "Specify IPv6 addresses or prefixes"
 msgstr "IPv6 アドレスまたはプレフィックスを指定"
-
-msgid "Standard resource protection"
-msgstr "標準のリソース保護"
 
 msgid "Start time"
 msgstr "開始時刻"
@@ -2183,12 +1736,6 @@ msgstr "起動待機"
 msgid "Startup wait begins"
 msgstr "起動待機の開始"
 
-msgid "Static IP addresses or networks"
-msgstr "固定IPアドレスまたはネットワーク"
-
-msgid "Static whitelist"
-msgstr "固定許可リスト"
-
 msgid "Status refreshes automatically every second. Last update:"
 msgstr "状態は毎秒自動更新されます。最終更新："
 
@@ -2210,39 +1757,6 @@ msgstr "日曜日"
 msgid "Synchronization failed; check the direct connection, device secret and Worker status."
 msgstr "同期に失敗しました。直接接続、デバイス認証キー、Workerの状態を確認してください。"
 
-msgid "Synchronization failed; check the direct connection, device secret and control service."
-msgstr "同期に失敗しました。直接接続経路、デバイスの共有シークレット、制御サービスを確認してください。"
-
-msgid "Synchronization interval (seconds)"
-msgstr "同期間隔（秒）"
-
-msgid "Synchronization is off"
-msgstr "同期は無効です"
-
-msgid "Synchronization is off. The following VPS policy is last known state, not a current confirmation. Rules may remain active and dynamic authorizations expire."
-msgstr "同期は停止中です。以下は最後に確認した VPS ポリシーであり、現在の状態を保証しません。ルールが残っている場合があり、動的許可には期限があります。"
-
-msgid "Synchronization needs attention"
-msgstr "同期の確認が必要です"
-
-msgid "Synchronization stopped"
-msgstr "同期を停止しました"
-
-msgid "Synchronization updates are delayed; protection cannot be confirmed."
-msgstr "同期状態の更新が遅れています。保護状態を確認できません。"
-
-msgid "Synchronize with the VPS"
-msgstr "VPSと同期"
-
-msgid "Synchronize your household public IP and inspect VPS service health through direct HTTPS or Cloudflare. Proxy traffic connects directly to the VPS."
-msgstr "HTTPS での直接接続または Cloudflare を通じて家庭の公開 IP と VPS の正常性を確認します。プロキシ通信は VPS に直接接続します。"
-
-msgid "Synchronize your household public IP through a Cloudflare Worker and Tunnel. Proxy traffic continues to connect directly to the VPS."
-msgstr "Cloudflare WorkerとTunnelを経由して自宅のグローバルIPを同期します。プロキシ通信は引き続きVPSに直接接続します。"
-
-msgid "Synchronizing with the VPS"
-msgstr "VPSと同期中"
-
 msgid "System clock"
 msgstr "システム時刻"
 
@@ -2261,59 +1775,20 @@ msgstr "システム時刻が無効でスケジュールを確認できません
 msgid "TCP, UDP and DNS are running; boot protection delay started"
 msgstr "TCP・UDP・DNS の稼働を確認しました。起動時保護の待機を開始します"
 
-msgid "The Agent denied this action; check its local permissions and credentials."
-msgstr "Agent が操作を拒否しました。Agent 側の権限と認証キーを確認してください。"
-
-msgid "The SSH port must not overlap a managed proxy service."
-msgstr "SSH ポートを管理対象のプロキシサービスポートと重複させることはできません。"
-
-msgid "The SSH rescue timeout must allow two heartbeat intervals plus the request timeout."
-msgstr "SSH 緊急アクセスの待機時間には、ハートビート間隔の2倍と要求のタイムアウトを確保してください。"
-
-msgid "The VPS Agent must also explicitly allow each action. A request being accepted does not mean recovery is complete."
-msgstr "各操作は VPS Agent 側でも明示的に許可する必要があります。要求の受付は、復旧の完了を意味しません。"
-
-msgid "The VPS did not confirm the requested inbound policy and address families."
-msgstr "要求した受信ポリシーとアドレス種別を VPS が確認できませんでした。"
-
-msgid "The VPS owns this timer. Closing this page, losing the control link or rebooting before confirmation does not keep an unconfirmed policy."
-msgstr "タイマーは VPS 側で動作します。ページを閉じたり、制御接続が切れたり、確認前に再起動したりしても、未確認のポリシーは保持されません。"
-
 msgid "The Worker did not confirm this update."
 msgstr "Workerから更新完了の確認を受信できませんでした。"
 
 msgid "The Worker observed the proxy exit. Configure a direct connection before synchronizing."
 msgstr "Workerがプロキシの出口IPを検出しました。直接接続を設定してから同期してください。"
 
-msgid "The connected Agent does not enable Pro Max analysis"
-msgstr "接続先の Agent では Pro Max 分析が有効になっていません"
-
-msgid "The control request must bypass the proxy. Configure direct routing before enabling synchronization. A detected proxy exit is rejected."
-msgstr "制御リクエストはプロキシを経由できません。同期前に直接接続を設定してください。プロキシの出口を検出した場合、許可を拒否します。"
-
-msgid "The control service did not confirm this update."
-msgstr "制御サービスが今回の更新を確認できませんでした。"
-
-msgid "The control service observed the proxy exit. Configure a direct connection before synchronizing."
-msgstr "制御サービスが観測したのはプロキシの出口です。直接接続経路を設定してから同期してください。"
-
 msgid "The effective timeout also allows for a complete check round and the access permit lifetime, so it may exceed this minimum."
 msgstr "実際のタイムアウトにはチェック1回分の所要時間と通信許可の有効期間も考慮するため、この下限より長くなる場合があります。"
-
-msgid "The lease must be at least twice the synchronization interval."
-msgstr "許可の有効期間は、同期間隔の2倍以上にしてください。"
 
 msgid "The listener list is limited; unlisted inbound traffic remains subject to the configured policy."
 msgstr "待ち受け一覧には表示件数の上限があります。表示されない受信通信にも設定済みのポリシーが適用されます。"
 
-msgid "The listener list is truncated. Discovery does not change access rules."
-msgstr "待受一覧は件数制限により省略されています。検出機能はアクセスルールを変更しません。"
-
 msgid "The original 06:00 maintenance window is prefilled. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. After the window, consecutive successful checks are required again."
 msgstr "元の 6 時のメンテナンス時間帯を入力済みです。保護の有効設定が有効で保護モードの場合に遮断します。DNS、LAN、管理アクセスは維持します。終了後は、所定回数の連続成功を再確認してから接続を許可します。"
-
-msgid "The previous VPS policy was restored after an unconfirmed change."
-msgstr "未確認の変更後、以前の VPS ポリシーに復元しました。"
 
 msgid "The previous settings are loaded into the form. Review them and use Save & Apply to activate them."
 msgstr "以前の設定をフォームに読み込みました。確認後、「保存して適用」で反映してください。"
@@ -2321,20 +1796,11 @@ msgstr "以前の設定をフォームに読み込みました。確認後、「
 msgid "The proxy has remained stable; restoring access and gradually reducing check frequency"
 msgstr "プロキシの安定を継続して確認できたため、通信を再開し、チェック頻度を段階的に下げます"
 
-msgid "The request result is unknown; checking operation status without repeating it."
-msgstr "要求の結果が不明なため、操作を繰り返さずに状態を確認しています。"
-
 msgid "The router restores the previous configuration if you do not confirm. Closing this page does not stop the rollback timer."
 msgstr "期限内に確認しない場合、以前の設定へ自動的に戻ります。ページを閉じても復元のタイマーは止まりません。"
 
-msgid "The selected SSH port is not owned by a verified SSH service"
-msgstr "指定ポートで SSH サービスが待ち受けていることを確認できません"
-
 msgid "The service monitor was interrupted; revalidating proxy stability"
 msgstr "サービス監視が中断したため、プロキシの安定性を再確認します"
-
-msgid "The synchronization process is not updating its status."
-msgstr "同期プロセスの状態が更新されていません。"
 
 msgid "These legacy options are ignored:"
 msgstr "次の旧オプションは無視されます： "
@@ -2345,14 +1811,8 @@ msgstr "障害時もこれらのネットワークにアクセスできます。
 msgid "This configuration could not be read. A default template is shown for review."
 msgstr "設定を読み取れませんでした。確認用に既定のテンプレートを表示しています。"
 
-msgid "This interrupts proxy access. Local protection is prepared before the request is sent."
-msgstr "この操作によりプロキシ接続が中断されます。保護モードが有効な場合は、要求送信前にローカルの遮断を準備します。"
-
 msgid "This prepares default plugin settings for review. Existing protection continues until you Save & Apply."
 msgstr "プラグインの初期設定を確認用に読み込みます。保存して適用するまで、現在の保護を維持します。"
-
-msgid "This preview has not been applied. Unselected ports keep the existing system firewall policy."
-msgstr "これは未適用のプレビューです。選択していないポートには既存のシステムファイアウォール設定が適用されます。"
 
 msgid "This report contains only state names and measurements. It excludes IP addresses, URLs, configuration and raw logs. Review it before sharing. Nothing is uploaded."
 msgstr "状態名と測定値のみを含み、IP、URL、設定、元のログは含みません。共有前に内容を確認してください。自動送信は行いません。"
@@ -2450,12 +1910,6 @@ msgstr "状態不明"
 msgid "Unrecognized options are preserved but may have no effect:"
 msgstr "未認識のオプションは保持されますが、反映されない場合があります： "
 
-msgid "Unrestricted"
-msgstr "送信元制限なし"
-
-msgid "Unrestricted bypasses filtering for this rule. Whitelist mode uses allowed sources; standard mode enforces limits; observe mode records threshold events without blocking."
-msgstr "「制限なし」では、このルールのフィルタリングを行いません。ホワイトリストは許可された接続元のみ通し、標準モードは制限を適用します。監視のみの場合は接続を遮断せず、しきい値超過を記録します。"
-
 msgid "Unsaved Changes"
 msgstr "適用待ちの変更"
 
@@ -2468,26 +1922,11 @@ msgstr "未対応の受信インターフェース種別："
 msgid "Unsupported proxy client"
 msgstr "非対応のプロキシクライアント"
 
-msgid "Update the VPS Agent and Cloudflare Worker before using the new source options."
-msgstr "新しい送信元設定を使う前に VPS Agent と Cloudflare Worker を更新してください。"
-
-msgid "Update the VPS Agent and Worker to use policy confirmation."
-msgstr "ポリシー確認を使うには VPS Agent と Worker を更新してください。"
-
-msgid "Update the VPS Agent and control service to the matching protocol version."
-msgstr "VPS Agent と制御サービスを、対応するプロトコルのバージョンに更新してください。"
-
 msgid "Use 192.0.2.100/32 for a single-device trial, or 192.0.2.0/24 for the subnet."
 msgstr "単一端末の試験では 192.0.2.100/32、サブネット全体では 192.0.2.0/24 などを指定します。"
 
 msgid "Use HH:MM:SS in the selected time zone. Overnight windows are supported. Keep the router clock accurate; start and end must differ."
 msgstr "選択したタイムゾーンの HH:MM:SS 形式で入力します。日付をまたぐ設定も可能です。ルーターの時刻を正確に保ってください。開始と終了は異なる時刻にしてください。"
-
-msgid "Use an Agent HTTPS endpoint reached through the local SOCKS proxy, separately from the control channel."
-msgstr "ローカルの SOCKS プロキシ経由で到達できる Agent の HTTPS アドレスを指定します。制御経路とは独立している必要があります。"
-
-msgid "Use default mode"
-msgstr "既定のモードを使用"
 
 msgid "Use detected client listener ports"
 msgstr "検出したクライアントのリスナーポートを使用"
@@ -2507,56 +1946,14 @@ msgstr "ユーザーがプラグインのログを消去しました"
 msgid "Uses the saved Pro connection. Importing an address only edits this form; Save & Apply is still required."
 msgstr "保存済みの Pro 接続を使用します。取り込みはフォームの編集のみで、反映には保存して適用する必要があります。"
 
-msgid "VPS access readiness"
-msgstr "VPS アクセスの準備状態"
-
-msgid "VPS access rules"
-msgstr "VPSアクセスルール"
-
-msgid "VPS access rules are off"
-msgstr "VPS のアクセスルールは無効です"
-
 msgid "VPS address read timed out"
 msgstr "VPS アドレスの取得がタイムアウトしました"
-
-msgid "VPS confirmation window (seconds)"
-msgstr "VPS 確認時間（秒）"
-
-msgid "VPS confirmed protection bypass for:"
-msgstr "VPS が次のルールの保護回避を確認しました： "
-
-msgid "VPS confirmed the update"
-msgstr "VPSが更新を確認しました"
 
 msgid "VPS default-route measurement"
 msgstr "VPS の既定経路での出口測定"
 
-msgid "VPS firewall policy restored"
-msgstr "VPS のファイアウォールポリシーを復元しました"
-
-msgid "VPS firewall verification failed"
-msgstr "VPS のファイアウォール検証に失敗しました"
-
-msgid "VPS health check interval (seconds)"
-msgstr "VPS 正常性確認の間隔（秒）"
-
 msgid "VPS health status is unavailable"
 msgstr "VPS の正常性情報を取得できません"
-
-msgid "VPS inbound policy"
-msgstr "VPS の受信ポリシー"
-
-msgid "VPS policy applied. Seconds remaining to confirm:"
-msgstr "VPS ポリシーを一時適用しました。確認までの残り秒数： "
-
-msgid "VPS policy does not match selected-port protection; update the Agent."
-msgstr "VPS のポリシーが指定ポートの保護設定と一致しません。Agent を更新してください。"
-
-msgid "VPS policy is waiting for confirmation"
-msgstr "VPS ポリシーの確認待ち"
-
-msgid "VPS policy was restored. Review the reloaded settings."
-msgstr "VPS ポリシーを復元しました。再読み込みされた設定を確認してください。"
 
 msgid "VPS public interface address"
 msgstr "VPS インターフェースの公開アドレス"
@@ -2564,29 +1961,11 @@ msgstr "VPS インターフェースの公開アドレス"
 msgid "VPS service health"
 msgstr "VPS サービスの正常性"
 
-msgid "VPS service monitor failed"
-msgstr "VPS サービスの監視でエラーが発生しました"
-
-msgid "VPS service rules"
-msgstr "VPSサービスルール"
-
-msgid "VPS service verification failed"
-msgstr "VPS サービスの検証に失敗しました"
-
-msgid "VPS services"
-msgstr "VPS サービス"
-
-msgid "VPS services are ready"
-msgstr "VPS サービスの準備完了"
-
 msgid "Validate configuration"
 msgstr "設定を検証"
 
 msgid "Validating the proxy before restoring access"
 msgstr "通信再開前にプロキシを検証中"
-
-msgid "Verified fallback bandwidth threshold exceeded"
-msgstr "確認済みフォールバック接続の帯域超過が続いています"
 
 msgid "Verify UDP through the proxy"
 msgstr "プロキシ経由で UDP を検証"
@@ -2597,20 +1976,11 @@ msgstr "プロキシ出口 IPv4 を照合"
 msgid "Verify with Cloudflare after startup or an interruption"
 msgstr "起動時と切断からの復旧時に Cloudflare で検証する"
 
-msgid "Verifying recovery"
-msgstr "復旧を確認中"
-
 msgid "View sanitized diagnostic report"
 msgstr "機密情報を除いた診断レポートを表示"
 
 msgid "Wait before enhanced checks"
 msgstr "重点チェック前に待機"
-
-msgid "Wait briefly before starting another maintenance operation."
-msgstr "少し待ってから次のメンテナンス操作を開始してください。"
-
-msgid "Wait until the VPS finishes applying the policy."
-msgstr "VPS によるポリシーの適用が完了するまでお待ちください。"
 
 msgid "Waiting before another restart"
 msgstr "次の再起動まで待機中"
@@ -2624,15 +1994,6 @@ msgstr "PassWall の起動完了と3サービスの復旧を待機中"
 msgid "Waiting for TCP, UDP and DNS to start"
 msgstr "TCP・UDP・DNS の起動待ち"
 
-msgid "Waiting for a fresh Agent report"
-msgstr "Agent の最新レポートを待機中"
-
-msgid "Waiting for a fresh household IP authorization"
-msgstr "現在の家庭 IP の認証を待機中"
-
-msgid "Waiting for both authenticated heartbeats"
-msgstr "両方の認証済みハートビートの正常化を待機中"
-
 msgid "Waiting for client startup and configured services to recover"
 msgstr "クライアントの起動完了と設定済みサービスの復旧を待っています"
 
@@ -2642,9 +2003,6 @@ msgstr "設定済みのプロキシサービスの起動を待っています"
 msgid "Waiting for local proxy service protection"
 msgstr "ローカルプロキシの保護待機中"
 
-msgid "Waiting for management verification"
-msgstr "管理経路の確認待ち"
-
 msgid "Waiting for proxy startup"
 msgstr "プロキシの起動を待機中"
 
@@ -2653,9 +2011,6 @@ msgstr "プロキシの検証が成功するまで通信再開を待機します
 
 msgid "Waiting for startup"
 msgstr "起動を待機"
-
-msgid "Waiting for the VPS to confirm the result."
-msgstr "VPS からの処理結果の確認を待っています。"
 
 msgid "Waiting for the required successful proxy checks"
 msgstr "プロキシの疎通確認が復旧条件を満たすまで待機します"
@@ -2669,14 +2024,8 @@ msgstr "今回の PassWall 起動完了と TCP・UDP・DNS の復旧を待機中
 msgid "Waiting for this restart to finish"
 msgstr "今回の再起動の完了を待機中"
 
-msgid "Waiting to synchronize"
-msgstr "同期待機中"
-
 msgid "Waiting to verify after proxy recovery"
 msgstr "プロキシの復旧後に検証します"
-
-msgid "Warning: a timed window closes public access when it expires. If your IP has changed and no allowed management source is reachable, you may lose SSH access. An unlimited window keeps SSH publicly reachable during the outage; SSH authentication and the system firewall still apply."
-msgstr "警告：指定時間が経過すると、一時的な外部アクセス許可は解除されます。IP が変わり、許可された管理元から接続できない場合、SSH に再接続できなくなる可能性があります。時間を制限しない場合、障害中は SSH がインターネットに公開され続けます。SSH 認証とシステムのファイアウォールは引き続き適用されます。"
 
 msgid "Watch PassWall runtime log"
 msgstr "PassWall 実行ログを監視"
@@ -2692,12 +2041,6 @@ msgstr "毎週（曜日を選択）"
 
 msgid "Weekly schedules require between one and seven days"
 msgstr "毎週のスケジュールでは 1～7 曜日を選択してください"
-
-msgid "Whitelist mode requires household or static authorized sources."
-msgstr "ホワイトリストモードには自宅 IP または静的な許可送信元が必要です。"
-
-msgid "Whitelist only"
-msgstr "許可リストのみ"
 
 msgid "Worker HTTPS address"
 msgstr "WorkerのHTTPSアドレス"
