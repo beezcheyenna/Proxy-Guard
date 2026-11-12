@@ -1,6 +1,6 @@
 # Proxy Guard
 
-[简体中文](../README.md) · [English](README.en.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [فارسی](README.fa.md)
+[English](../README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [فارسی](README.fa.md)
 
 <div dir="rtl" lang="fa">
 
@@ -70,6 +70,8 @@ Proxy Guard افزونهٔ محافظت از اتصال پروکسی برای Op
 - [راهنمای کامل کاربر](USER-GUIDE.fa.md)
 - [نصب، ارتقا و حذف](USAGE.md)
 - [سازگاری](COMPATIBILITY.md)
+- [ماتریس دقیق آزمون‌ها](TEST-MATRIX.md)
+- [بازیابی در شرایط خطا](RECOVERY.md)
 - [نصب Linux Agent](LINUX-AGENT-INSTALL.md)
 - [بخش Cloudflare](CLOUDFLARE-WORKER.md)
 - [سازگاری گزارش‌ها](LOG_COMPATIBILITY.md)
@@ -84,3 +86,5 @@ Proxy Guard افزونهٔ محافظت از اتصال پروکسی برای Op
 [سیاست امنیتی](SECURITY.fa.md) · [سلب ضمانت](DISCLAIMER.fa.md) · [حریم خصوصی](PRIVACY.fa.md) · [اعلامیه‌های اجزای ثالث](THIRD_PARTY_NOTICES.md)
 
 </div>
+
+[مشارکت](../CONTRIBUTING.md)

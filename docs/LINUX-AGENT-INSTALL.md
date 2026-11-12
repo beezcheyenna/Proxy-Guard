@@ -1,5 +1,7 @@
 # Linux VPS Agent 安装（Pro 配套）
 
+精确的发行版、内核、架构、客户端版本、测试日期与未验收范围见[测试矩阵](TEST-MATRIX.md)。
+
 普通版无需安装本组件。使用 Pro 的远程功能时，需要路由器上的基础包和 Pro 扩展，以及 Linux VPS 上的 Agent。控制链路可选**直接 HTTPS**，或 **Cloudflare Worker 与 Tunnel/VPC**；Cloudflare 并非必需。
 
 IPK / APK 安装到对应的 OpenWrt 固件；Linux 使用本文的 Python Agent 安装器。已测试的发行版与条件见[兼容范围](COMPATIBILITY.md)。需要 Python `3.10+`、nftables、相应内核能力，以及 systemd 或 OpenRC。

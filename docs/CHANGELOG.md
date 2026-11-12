@@ -1,31 +1,31 @@
-# 更新日志
+# Changelog
 
-[简体中文](CHANGELOG.md) · [English](CHANGELOG.en.md) · [日本語](CHANGELOG.ja.md) · [Русский](CHANGELOG.ru.md) · [فارسی](CHANGELOG.fa.md)
+[Home](../README.md) · [User guide](USER-GUIDE.en.md)
 
-## 普通版 0.3.0-21 · Pro 0.3.1-5
+## Standard 0.3.0-21 · Pro 0.3.1-5
 
-本次交付汇总近期兼容性修复与状态显示修复。Pro 保持独立版本，普通版更新不要求重新安装 Pro。
+This delivery includes the recent compatibility fixes and the status-display fix. Pro retains its independent version; updating Standard does not require reinstalling Pro.
 
-### 修复
+### Fixes
 
-- 修复放行许可失效后，实际已经阻断而状态说明仍显示“正常”或“已恢复”的问题。当前状态以内核规则为准，保留上次检查结果作为历史记录。
-- 修复切换配置时，旧的服务监视任务仍向已移除规则集合写入的问题；关闭服务监视时，不再错误更新可选服务许可。
-- 修复日志监视暂停后，已完成的启动记录可能长期无法解除等待的问题；补全时间连续性校验，避免用旧日志误判恢复。
-- 修复非 ASCII 日志恰好被分段读取时，内部游标状态可能生成无效 UTF-8 的问题。
-- 修复原生 Hysteria2、Shadowsocks-Rust、NaiveProxy 的监听识别偏差，减少因错误 SOCKS 端口造成的误阻断。
-- 修复正常关闭服务消耗 procd 崩溃重启预算、影响后续真正异常恢复的问题。
-- 修复 SDK 安装配方缩进与 APK 最低版本依赖表达式的兼容问题。
+- Corrected status text that could still say healthy or restored after the kernel access permit expired and traffic was already blocked. Current status follows kernel enforcement; completed check results remain historical.
+- Prevented an old service-monitor task from writing to a removed rule set after a configuration change. Optional service permits are no longer updated when service monitoring is disabled.
+- Fixed recovery remaining pending after log monitoring paused past a completed startup record. Timeline continuity is checked so old records cannot incorrectly confirm recovery.
+- Fixed invalid UTF-8 in internal cursor state when a read split a non-ASCII log character.
+- Corrected native Hysteria2, Shadowsocks-Rust and NaiveProxy listener detection to avoid false blocking caused by selecting the wrong SOCKS port.
+- Prevented intentional service shutdown from consuming procd's crash-restart budget and interfering with later recovery from a real crash.
+- Fixed SDK recipe indentation and APK minimum-version dependency syntax.
 
-### 兼容与说明
+### Compatibility and documentation
 
-- 提供匹配包管理器的 IPK 和 APK；安装、升级、配置保留、界面、故障阻断与恢复、IPv4/IPv6、已有连接及冷启动均已进行功能测试。
-- 补测 PassWall 使用 sing-box 的 ShadowTLS v3 客户端与原生 ShadowTLS 服务端的实际通流、故障阻断和恢复。原生 ShadowTLS 客户端尚未完成端到端验收；UDP 检查属于独立路由流量，不代表 ShadowTLS 传输 UDP。
-- 更新五种语言的首页、使用说明、隐私说明和界面截图。文档集中于 `docs/`，图片位于 `docs/images/`。
-- 出口 IPv4 备用查询规则保持不变：仅主地址超时才尝试备用，每轮从主地址开始，明确返回错误 IP 的处理不变。
-- Xray 26.11.9 SOCKS5 UDP 并发端口冲突是已复现的上游限制，本次未修改或修复 Xray。详情见[兼容说明](COMPATIBILITY.md)。
+- IPK and APK packages are provided for their respective package managers. Functional tests cover installation, upgrades, retained configuration, UI, fault blocking and recovery, IPv4/IPv6, established connections and cold boot.
+- Added actual traffic, failure and recovery checks for a PassWall-managed sing-box ShadowTLS v3 client with a native ShadowTLS server. The native ShadowTLS client is not end-to-end accepted. UDP checks use a separate routed path and do not imply UDP transport through ShadowTLS.
+- Refreshed the homepages, user guides, privacy pages and screenshots in five languages. Documentation is under `docs/`, with images under `docs/images/`.
+- Exit IPv4 fallback behavior is unchanged: only a primary timeout triggers the backup; every new round starts with the primary, and an explicitly wrong IP remains a fault.
+- Concurrent SOCKS5 UDP port collisions in Xray 26.11.9 remain a reproduced upstream limitation. This release does not modify or fix Xray. See [compatibility](COMPATIBILITY.md).
 
-### 升级
+### Upgrading
 
-备份现有配置，按固件包管理器选择 IPK 或 APK。正常升级保留已确认的配置；新装默认关闭保护、出口 IPv4 校验和定时保护，时区为 UTC+00:00。Pro 仍需先安装兼容普通版，后续可在兼容接口范围内分别升级。
+Back up your configuration and choose IPK or APK to match the firmware. Normal upgrades preserve confirmed settings. Fresh installations leave protection, exit IPv4 matching and schedules off, with UTC+00:00 as the default offset. Pro still requires a compatible Standard installation; subsequent upgrades can be separate within the supported interface contract.
 
-[使用指南](USER-GUIDE.md) · [隐私说明](PRIVACY.md)
+[User guide](USER-GUIDE.en.md) · [Privacy](PRIVACY.en.md)

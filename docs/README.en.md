@@ -1,6 +1,6 @@
 # Proxy Guard
 
-[简体中文](../README.md) · [English](README.en.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [فارسی](README.fa.md)
+[English](../README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [فارسی](README.fa.md)
 
 **Block unintended direct connections from protected devices when the proxy fails.**
 
@@ -68,6 +68,8 @@ Installation, upgrades, UI behavior, failure blocking and recovery, IPv4/IPv6 an
 - [Full user guide](USER-GUIDE.en.md)
 - [Installation, upgrades and removal](USAGE.md)
 - [Compatibility](COMPATIBILITY.md)
+- [Exact test matrix](TEST-MATRIX.md)
+- [Recovery](RECOVERY.md)
 - [Linux Agent installation](LINUX-AGENT-INSTALL.md)
 - [Cloudflare companion](CLOUDFLARE-WORKER.md)
 - [Log compatibility](LOG_COMPATIBILITY.md)
@@ -80,3 +82,5 @@ Report security vulnerabilities privately to [beezcheyenna268@gmail.com](mailto:
 **This project is intended for development, testing and technical research.** Use it on authorized devices and networks, and comply with the laws applicable where it is used and deployed. The software is provided “as is” under the existing [MIT License](../LICENSE), without a guarantee of suitability for every situation. Risks and liability are governed by the applicable licenses and law. This notice does not modify the existing licenses or exclude liability that cannot legally be excluded.
 
 [Security policy](SECURITY.en.md) · [Disclaimer](DISCLAIMER.en.md) · [Privacy](PRIVACY.en.md) · [Third-party notices](THIRD_PARTY_NOTICES.md)
+
+[Contributing](../CONTRIBUTING.md)

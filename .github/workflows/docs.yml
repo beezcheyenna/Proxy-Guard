@@ -1,0 +1,42 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  release:
+    types: [published, edited]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  links-and-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check links, five languages and package versions
+        run: python3 tools/check_docs.py
+      - name: Exercise failure detection
+        run: python3 -m unittest discover -s tools/tests -p 'test_check_docs.py'
+
+  stable-release:
+    if: github.event_name != 'pull_request' && github.repository == 'beezcheyenna/Proxy-Guard'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          # A release event must also validate the current homepage, not only the tag.
+          ref: main
+          persist-credentials: false
+      - name: Compare default branch with latest stable release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tools/check_docs.py --latest-release beezcheyenna/Proxy-Guard

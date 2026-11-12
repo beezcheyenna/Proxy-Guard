@@ -1,82 +1,86 @@
 # Proxy Guard
 
-[简体中文](README.md) · [English](docs/README.en.md) · [日本語](docs/README.ja.md) · [Русский](docs/README.ru.md) · [فارسی](docs/README.fa.md)
+[English](README.md) · [简体中文](docs/README.zh-CN.md) · [日本語](docs/README.ja.md) · [Русский](docs/README.ru.md) · [فارسی](docs/README.fa.md)
 
-**代理故障时，阻止受保护设备意外直连。**
+**Block unintended direct connections from protected devices when the proxy fails.**
 
-**支持的代理客户端：** PassWall · PassWall2 · OpenClash · Nikki · HomeProxy。具体版本与模式见[兼容说明](docs/COMPATIBILITY.md)。
+**Supported proxy clients:** PassWall · PassWall2 · OpenClash · Nikki · HomeProxy. See [version and mode compatibility](docs/COMPATIBILITY.md).
 
-Proxy Guard 是 OpenWrt / iStoreOS 的代理连接保护插件。开启保护后，插件会在确认代理故障时自动阻断所选设备的外网流量，降低意外直连和真实 IP 暴露的风险；恢复验证通过后，再恢复上网。
+Proxy Guard protects proxy connections on OpenWrt / iStoreOS. With protection enabled, a confirmed proxy failure automatically blocks Internet traffic from selected devices, reducing the risk of unintended direct connections and exposure of your real IP. Access resumes after recovery checks pass.
 
-插件只处理这些设备实际经过本机的外网流量，局域网、DNS 和管理访问按配置保留。
+Only traffic from these devices that actually traverses this router is covered. Configured LAN, DNS and management exceptions remain available.
 
 <a id="guide-editions"></a>
 
-## 版本
+## Versions
 
-普通版在路由器上提供代理连接保护，无需云端配套。Pro 在普通版基础上增加 VPS 访问控制，需要另行部署 Linux Agent，Cloudflare 可选。
+Standard provides proxy connection protection on the router without cloud components. Pro adds VPS access control to Standard and requires a separately deployed Linux Agent; Cloudflare is optional.
 
-| 功能 | 普通版 `0.3.0-21` | Pro `0.3.1-5` |
+| Feature | Standard `0.3.0-21` | Pro `0.3.1-5` |
 | --- | --- | --- |
-| 故障、开机、定时保护 | 支持 | 沿用普通版 |
-| 引导、自检、日志、进程守护 | 支持 | 沿用普通版 |
-| VPS 家庭 IP 授权与指定端口规则 | — | 支持 |
-| SSH 应急访问与远程维护 | — | 按需启用并授权 |
+| Failure, boot and scheduled protection | Included | Uses Standard |
+| Wizard, self-checks, logs and watchdog | Included | Uses Standard |
+| VPS household IP authorization and selected-port rules | — | Included |
+| Emergency SSH and remote maintenance | — | Separate opt-in and authorization |
 
-下载：[GitHub Releases](https://github.com/beezcheyenna/Proxy-Guard/releases) · [安装指南](docs/USER-GUIDE.md#guide-setup) · [更新日志](docs/CHANGELOG.md)
+Download: [GitHub Releases](https://github.com/beezcheyenna/Proxy-Guard/releases) · [Installation guide](docs/USER-GUIDE.en.md#guide-setup) · [Changelog](docs/CHANGELOG.en.md)
 
-> **Pro 使用提醒：** 普通用户建议使用普通版，不建议安装 Pro。只有在需要 VPS 访问控制等特殊功能时，再选择 Pro。
+> **Choosing Pro:** Most users should use Standard. Pro is not recommended unless you have a specific need for VPS access control or its other advanced features.
 
-## 主要功能
+## Features
 
-- 代理故障保护：经本机 SOCKS 检查连通性，可选出口 IPv4 和 UDP 通路校验。
-- 外网流量阻断：覆盖所选设备实际经本机的 IPv4/IPv6、TCP/UDP 双向流量及已有连接。
-- 开机与定时保护：支持启动阶段保护、每天或每周多选星期，并可设置固定 UTC 偏移。
-- 设置引导与自检：自动推荐保护范围，应用后检查配置与规则，未确认时自动回退。
-- 状态与事件日志：自动刷新，提供客户端服务与日志监视、进程守护和有限自动恢复。
+- Proxy-failure protection: connectivity checks through local SOCKS, with optional exit IPv4 and UDP path verification.
+- Internet blocking for selected clients: IPv4/IPv6 TCP/UDP traffic in both directions, including established connections that traverse the router.
+- Boot and scheduled protection: startup blocking, daily or selected-weekday schedules, and a configurable fixed UTC offset.
+- Guided setup and self-checks: recommended scopes, checks after applying, and rollback when a change is not confirmed.
+- Live status and event logs: client-service and log monitoring, process supervision and bounded automatic recovery.
 
-<a href="docs/images/luci-overview.png"><img src="docs/images/luci-overview.png" alt="Proxy Guard LuCI 主界面" width="640"></a>
+<a href="docs/images/luci-overview-en.png"><img src="docs/images/luci-overview-en.png" alt="Proxy Guard LuCI main interface" width="640"></a>
 
 <a id="guide-setup"></a>
 
-## 安装与首次设置
+## Installation and first setup
 
-1. 通过 LuCI 软件包页面安装匹配的普通版：opkg 固件用 IPK，apk 固件用 APK。需要 VPS 扩展时，再安装兼容的 Pro。
-2. 打开“服务 → Proxy Guard / 代理连接保护”，完成引导，核对 SOCKS、客户端、入口及 IPv4 / IPv6 范围和例外。先以“仅监测”启用检查并保存应用，按提示确认，再核对检测结果。
-3. 准备启用阻断时，切换到保护模式，再点击“保存并应用”。自检通过后，在 **30 秒内确认**；自检失败或未按时确认时回退配置。正常的代理故障按阻断保护处理。
+1. Install the matching Standard package through LuCI: IPK for opkg firmware, APK for apk firmware. Add a compatible Pro package if you need VPS features.
+2. Open “Services → Proxy Guard”, complete the wizard and review SOCKS, the client, ingress interfaces, IPv4 / IPv6 scope and exceptions. Enable checks in “Monitor only”, save and apply, confirm as prompted, then review the results.
+3. When ready to enable blocking, select protection mode and “Save & Apply” again. After the self-check passes, **confirm within 30 seconds**. A failed self-check or missing confirmation rolls back the settings. An ordinary proxy outage follows the blocking protection process.
 
-新装的保护总开关、出口 IPv4 校验和定时保护默认关闭。勾选和编辑只修改草稿；“保存”只暂存，**“保存并应用”才提交**。设置页可重新运行引导、载入上次确认的配置或编辑原始 UCI。
+On first installation, protection, exit IPv4 verification and scheduled protection are off. Editing changes the draft; “Save” stages it, and **“Save & Apply” submits it**. The settings page also lets you rerun the wizard, load the last confirmed configuration or edit raw UCI.
 
 <a id="guide-requirements"></a>
 <a id="guide-scope"></a>
 
-## 兼容与保护范围
+## Compatibility and scope
 
-路由器需要 **opkg 或 apk、LuCI 和 firewall4/nftables**；安装包格式必须与固件匹配。客户端兼容性取决于版本、代理内核和转发模式。Pro 的 Linux Agent 需要 Python `3.10+`、nftables 和 systemd / OpenRC。
+The router requires **opkg or apk, LuCI and firewall4/nftables**. The package format must match the firmware. Client compatibility depends on the version, proxy core and forwarding mode. Pro's Linux Agent requires Python `3.10+`, nftables and systemd / OpenRC.
 
-- 只能保护实际经过本机的流量。同网段无 NAT 旁路由的回程可能绕过本机；路由器本机主动发起的流量不属于客户端保护范围。
-- LAN、DNS 和管理访问按配置保留。插件不代改 NAT、网络接口、系统路由、DNS 或代理客户端配置。
-- IPK 与 APK 不可混装；仅有 fw3/iptables 的系统不受支持。流量卸载、桥接过滤和代理内核的具体限制见兼容说明。
-- Pro 仅管理明确选中的 VPS 本机服务端口；SSH 单独设置，未选端口继续由原有防火墙管理。
+- Only traffic actually traversing this router is covered. Return traffic may bypass a same-subnet gateway without NAT. Connections initiated by the router itself are outside the client protection scope.
+- Configured LAN, DNS and management exceptions remain available. The plugin does not change NAT, interfaces, system routes, DNS or proxy-client configuration.
+- IPK and APK packages are not interchangeable. Systems with only fw3/iptables are unsupported. See the compatibility guide for flow offloading, bridge filtering and proxy-core limitations.
+- Pro manages explicitly selected VPS local service ports. SSH is configured separately; unselected ports remain subject to the existing firewall.
 
-已进行安装、升级、界面、故障阻断与恢复、IPv4/IPv6 和冷启动等功能测试。首次使用请先验证一台设备的实际路径，再扩大范围。支持条件及已知限制见[兼容说明](docs/COMPATIBILITY.md)。
+Installation, upgrades, UI behavior, failure blocking and recovery, IPv4/IPv6 and cold startup have been tested. Start with one client and verify its actual path before expanding the scope. See [compatibility](docs/COMPATIBILITY.md) for requirements and known limitations.
 
 <a id="guide-docs"></a>
 
-## 使用说明
+## Documentation
 
-- [完整使用指南](docs/USER-GUIDE.md)
-- [安装、升级与卸载](docs/USAGE.md)
-- [兼容范围](docs/COMPATIBILITY.md)
-- [Linux Agent 安装](docs/LINUX-AGENT-INSTALL.md)
-- [Cloudflare 配套](docs/CLOUDFLARE-WORKER.md)
-- [日志适配](docs/LOG_COMPATIBILITY.md)
-- [源码构建](docs/BUILDING.md)
+- [Full user guide](docs/USER-GUIDE.en.md)
+- [Installation, upgrades and removal](docs/USAGE.md)
+- [Compatibility](docs/COMPATIBILITY.md)
+- [Exact test matrix](docs/TEST-MATRIX.md)
+- [Recovery](docs/RECOVERY.md)
+- [Linux Agent installation](docs/LINUX-AGENT-INSTALL.md)
+- [Cloudflare companion](docs/CLOUDFLARE-WORKER.md)
+- [Log compatibility](docs/LOG_COMPATIBILITY.md)
+- [Building from source](docs/BUILDING.md)
 
-## 许可与反馈
+## License and support
 
-安全漏洞请先私下发送至 [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com)，不要公开未修复的利用细节、真实 VPS 地址或凭据。普通问题可脱敏后提交 Issue。
+Report security vulnerabilities privately to [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com). Do not publish unfixed exploit details, real VPS addresses or credentials. Ordinary bugs can be reported through a sanitized Issue.
 
-**本项目面向开发、测试和技术研究。** 请在获授权的设备与网络上使用，并遵守使用及部署所在地的适用法律法规。软件按现有 [MIT 许可证](LICENSE)以“现状”提供，不保证适用于所有场景；相关风险与责任依据适用许可证和法律处理。本说明不修改原有许可证，也不排除依法不得排除的责任。
+**This project is intended for development, testing and technical research.** Use it on authorized devices and networks, and comply with the laws applicable where it is used and deployed. The software is provided “as is” under the existing [MIT License](LICENSE), without a guarantee of suitability for every situation. Risks and liability are governed by the applicable licenses and law. This notice does not modify the existing licenses or exclude liability that cannot legally be excluded.
 
-[安全反馈政策](docs/SECURITY.md) · [免责声明](docs/DISCLAIMER.md) · [隐私说明](docs/PRIVACY.md) · [第三方声明](docs/THIRD_PARTY_NOTICES.md)
+[Security policy](docs/SECURITY.en.md) · [Disclaimer](docs/DISCLAIMER.en.md) · [Privacy](docs/PRIVACY.en.md) · [Third-party notices](docs/THIRD_PARTY_NOTICES.md)
+
+[Contributing](CONTRIBUTING.md)

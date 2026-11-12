@@ -1,0 +1,28 @@
+name: Documentation / 文档反馈
+description: Report unclear steps, broken links or translation errors.
+title: "[Docs] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for public documentation feedback only. Security reports: beezcheyenna268@gmail.com.
+        此表单仅用于公开文档反馈；安全问题请先发邮件。
+  - type: input
+    id: page
+    attributes:
+      label: Page, section and language / 页面、章节和语言
+      description: Include the repository path or public documentation URL.
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: Problem / 问题
+      description: Quote the relevant sentence and explain the ambiguity or error.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Suggested correction / 修改建议
+      description: Exact wording or a reproducible command result is helpful. Remove credentials and deployment addresses.

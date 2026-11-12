@@ -1,6 +1,6 @@
 # Changelog
 
-[简体中文](CHANGELOG.md) · [English](CHANGELOG.en.md) · [日本語](CHANGELOG.ja.md) · [Русский](CHANGELOG.ru.md) · [فارسی](CHANGELOG.fa.md)
+[Home](../README.md) · [User guide](USER-GUIDE.en.md)
 
 ## Standard 0.3.0-21 · Pro 0.3.1-5
 

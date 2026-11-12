@@ -1,31 +1,31 @@
-# Журнал изменений
+# Changelog
 
-[简体中文](CHANGELOG.md) · [English](CHANGELOG.en.md) · [日本語](CHANGELOG.ja.md) · [Русский](CHANGELOG.ru.md) · [فارسی](CHANGELOG.fa.md)
+[Home](../README.md) · [User guide](USER-GUIDE.en.md)
 
 ## Standard 0.3.0-21 · Pro 0.3.1-5
 
-Эта поставка включает последние исправления совместимости и отображения состояния. Pro сохраняет независимую версию; обновление Standard не требует переустановки Pro.
+This delivery includes the recent compatibility fixes and the status-display fix. Pro retains its independent version; updating Standard does not require reinstalling Pro.
 
-### Исправления
+### Fixes
 
-- Устранено отображение «исправно» или «доступ восстановлен», когда разрешение в ядре уже истекло и трафик заблокирован. Текущее состояние соответствует правилам ядра, а завершённые проверки сохраняются как история.
-- Старый процесс контроля служб больше не записывает данные в удалённый набор правил после смены конфигурации. При отключённом контроле служб необязательные разрешения служб не обновляются.
-- Устранено зависание ожидания восстановления, если запуск завершился во время паузы чтения журнала. Проверяется непрерывность временной последовательности, чтобы старые записи не подтверждали восстановление.
-- Исправлено появление некорректного UTF-8 во внутреннем состоянии чтения, когда граница порции журнала проходила внутри символа вне ASCII.
-- Исправлено определение слушающих портов нативных Hysteria2, Shadowsocks-Rust и NaiveProxy, чтобы ошибочный выбор SOCKS-порта не вызывал ложную блокировку.
-- Намеренная остановка службы больше не расходует лимит аварийных перезапусков procd и не мешает восстановлению после реального сбоя.
-- Исправлены отступы рецепта SDK и запись ограничения минимальной версии зависимости APK.
+- Corrected status text that could still say healthy or restored after the kernel access permit expired and traffic was already blocked. Current status follows kernel enforcement; completed check results remain historical.
+- Prevented an old service-monitor task from writing to a removed rule set after a configuration change. Optional service permits are no longer updated when service monitoring is disabled.
+- Fixed recovery remaining pending after log monitoring paused past a completed startup record. Timeline continuity is checked so old records cannot incorrectly confirm recovery.
+- Fixed invalid UTF-8 in internal cursor state when a read split a non-ASCII log character.
+- Corrected native Hysteria2, Shadowsocks-Rust and NaiveProxy listener detection to avoid false blocking caused by selecting the wrong SOCKS port.
+- Prevented intentional service shutdown from consuming procd's crash-restart budget and interfering with later recovery from a real crash.
+- Fixed SDK recipe indentation and APK minimum-version dependency syntax.
 
-### Совместимость и документация
+### Compatibility and documentation
 
-- Подготовлены IPK и APK для соответствующих менеджеров пакетов. Проведены функциональные проверки установки, обновления, сохранения конфигурации, интерфейса, блокировки и восстановления, IPv4/IPv6, установленных соединений и холодного запуска.
-- Дополнительно проверены реальный трафик, блокировка при сбое и восстановление для клиента sing-box ShadowTLS v3 под управлением PassWall с нативным сервером ShadowTLS. Нативный клиент ShadowTLS ещё не прошёл сквозную проверку. UDP проверяется по отдельному маршрутизируемому пути; это не проверка передачи UDP через ShadowTLS.
-- Обновлены главные страницы, руководства, уведомления о конфиденциальности и снимки интерфейса на пяти языках. Документы находятся в `docs/`, изображения — в `docs/images/`.
-- Поведение резервной проверки выходного IPv4 не изменено: резервный адрес используется только после тайм-аута основного; каждый новый цикл начинается с основного, а явно неверный IP считается сбоем.
-- Коллизии портов при одновременных ассоциациях SOCKS5 UDP в Xray 26.11.9 остаются воспроизведённым ограничением upstream. В этой поставке Xray не изменяется и не исправляется. См. [совместимость](COMPATIBILITY.md).
+- IPK and APK packages are provided for their respective package managers. Functional tests cover installation, upgrades, retained configuration, UI, fault blocking and recovery, IPv4/IPv6, established connections and cold boot.
+- Added actual traffic, failure and recovery checks for a PassWall-managed sing-box ShadowTLS v3 client with a native ShadowTLS server. The native ShadowTLS client is not end-to-end accepted. UDP checks use a separate routed path and do not imply UDP transport through ShadowTLS.
+- Refreshed the homepages, user guides, privacy pages and screenshots in five languages. Documentation is under `docs/`, with images under `docs/images/`.
+- Exit IPv4 fallback behavior is unchanged: only a primary timeout triggers the backup; every new round starts with the primary, and an explicitly wrong IP remains a fault.
+- Concurrent SOCKS5 UDP port collisions in Xray 26.11.9 remain a reproduced upstream limitation. This release does not modify or fix Xray. See [compatibility](COMPATIBILITY.md).
 
-### Обновление
+### Upgrading
 
-Сохраните резервную копию настроек и выберите IPK или APK под свою прошивку. Обычное обновление сохраняет подтверждённую конфигурацию. При новой установке защита, сверка выходного IPv4 и расписания отключены, смещение времени — UTC+00:00. Для первой установки Pro по-прежнему нужен совместимый Standard; далее их можно обновлять отдельно в пределах совместимого интерфейса.
+Back up your configuration and choose IPK or APK to match the firmware. Normal upgrades preserve confirmed settings. Fresh installations leave protection, exit IPv4 matching and schedules off, with UTC+00:00 as the default offset. Pro still requires a compatible Standard installation; subsequent upgrades can be separate within the supported interface contract.
 
-[Руководство](USER-GUIDE.ru.md) · [Конфиденциальность](PRIVACY.ru.md)
+[User guide](USER-GUIDE.en.md) · [Privacy](PRIVACY.en.md)

@@ -1,0 +1,28 @@
+name: Feature request / 功能建议
+description: Propose a focused improvement with its use case.
+title: "[Feature] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include live deployment addresses or secrets. Report vulnerabilities privately to beezcheyenna268@gmail.com.
+        请勿填写真实部署地址或密钥；漏洞请先私下反馈。
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem / 使用场景与问题
+      description: Which edition and workflow are affected? Explain the practical need.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior / 期望行为
+      description: Describe defaults, scope, failure behavior and alternatives.
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility considerations / 兼容性考虑
+      description: Would it change port scope, permissions, control protocols or existing configuration?

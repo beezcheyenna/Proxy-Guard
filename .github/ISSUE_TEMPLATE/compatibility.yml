@@ -1,0 +1,41 @@
+name: Compatibility / 兼容性报告
+description: Report an exact tested combination or a compatibility failure.
+title: "[Compatibility] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Public issue: use sanitized data only. Security vulnerabilities go to beezcheyenna268@gmail.com.
+        公开反馈请脱敏；安全漏洞请先私下发邮件。不要提交完整配置、真实部署 IP 或凭据。
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Evidence type / 测试类型
+      options:
+        - Isolated VM with native kernel / 原生内核隔离虚拟机
+        - Authorized deployment / 获授权的实际部署
+        - Mock or unit test / 模拟或单元测试
+        - Not yet reproduced / 尚未复现
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Exact versions / 精确版本
+      description: System, kernel, architecture, package manager, Standard/Pro, proxy client and running core; Agent/Worker commit if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: path
+    attributes:
+      label: Mode and traffic path / 模式与流量路径
+      description: REDIRECT, TPROXY or TUN; IPv4/IPv6, TCP/UDP, NAT/return path and offloading. Use documentation addresses.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Cases, date, expected and actual result / 项目、日期、预期与实际结果
+      description: Include the first failure and later reruns. A process running or a page loading is not a packet-path result.
+    validations:
+      required: true

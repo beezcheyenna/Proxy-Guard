@@ -1,31 +1,31 @@
-# 更新履歴
+# Changelog
 
-[简体中文](CHANGELOG.md) · [English](CHANGELOG.en.md) · [日本語](CHANGELOG.ja.md) · [Русский](CHANGELOG.ru.md) · [فارسی](CHANGELOG.fa.md)
+[Home](../README.md) · [User guide](USER-GUIDE.en.md)
 
-## 通常版 0.3.0-21 · Pro 0.3.1-5
+## Standard 0.3.0-21 · Pro 0.3.1-5
 
-今回の配布には、最近の互換性修正と状態表示の修正を含みます。Pro は独立したバージョンを維持し、通常版の更新に伴う再インストールは不要です。
+This delivery includes the recent compatibility fixes and the status-display fix. Pro retains its independent version; updating Standard does not require reinstalling Pro.
 
-### 修正
+### Fixes
 
-- カーネルの通信許可が期限切れになり、すでに遮断されているのに「正常」や「復旧済み」と表示される問題を修正しました。現在の状態は実際のルールに従い、完了済みの検査結果は履歴として保持します。
-- 設定変更後に古いサービス監視処理が削除済みのルール集合へ書き込む問題を修正しました。サービス監視が無効な場合は、任意のサービス許可を更新しません。
-- ログ監視の中断中に起動が完了すると、復旧待ちが解除されない場合がある問題を修正しました。時系列の連続性を確認し、古いログで復旧と誤認しないようにしました。
-- 非 ASCII 文字の途中でログが分割された場合に、内部の読み取り位置情報が不正な UTF-8 になる問題を修正しました。
-- ネイティブ Hysteria2、Shadowsocks-Rust、NaiveProxy の待受ポートの識別を修正し、誤った SOCKS ポートによる不要な遮断を防ぎました。
-- 意図的なサービス停止が procd の異常再起動回数に算入され、その後の実際の異常復旧を妨げる問題を修正しました。
-- SDK ビルドレシピのインデントと APK の最低バージョン依存指定を修正しました。
+- Corrected status text that could still say healthy or restored after the kernel access permit expired and traffic was already blocked. Current status follows kernel enforcement; completed check results remain historical.
+- Prevented an old service-monitor task from writing to a removed rule set after a configuration change. Optional service permits are no longer updated when service monitoring is disabled.
+- Fixed recovery remaining pending after log monitoring paused past a completed startup record. Timeline continuity is checked so old records cannot incorrectly confirm recovery.
+- Fixed invalid UTF-8 in internal cursor state when a read split a non-ASCII log character.
+- Corrected native Hysteria2, Shadowsocks-Rust and NaiveProxy listener detection to avoid false blocking caused by selecting the wrong SOCKS port.
+- Prevented intentional service shutdown from consuming procd's crash-restart budget and interfering with later recovery from a real crash.
+- Fixed SDK recipe indentation and APK minimum-version dependency syntax.
 
-### 互換性とドキュメント
+### Compatibility and documentation
 
-- パッケージ管理方式に対応する IPK と APK を用意しました。インストール、更新、設定保持、画面、障害時の遮断と復旧、IPv4/IPv6、既存接続、コールドブートの機能テストを実施しています。
-- PassWall が管理する sing-box ShadowTLS v3 クライアントとネイティブ ShadowTLS サーバーで、実通信、障害時の遮断、復旧を追加検証しました。ネイティブ ShadowTLS クライアントのエンドツーエンド検証は未完了です。UDP は別のルーティング経路で検査しており、ShadowTLS による UDP 転送の検証ではありません。
-- 5 言語のホームページ、ユーザーガイド、プライバシー説明、画面画像を更新しました。文書は `docs/`、画像は `docs/images/` にまとめています。
-- 出口 IPv4 の予備問い合わせは従来どおりです。主取得先のタイムアウト時のみ予備を試し、次の検査は主取得先から再開します。明示的な IP 不一致は障害として扱います。
-- Xray 26.11.9 の同時 SOCKS5 UDP 関連付けにおけるポート衝突は、再現済みの上流側の制限です。今回は Xray 自体を変更・修正していません。[互換性](COMPATIBILITY.md)を参照してください。
+- IPK and APK packages are provided for their respective package managers. Functional tests cover installation, upgrades, retained configuration, UI, fault blocking and recovery, IPv4/IPv6, established connections and cold boot.
+- Added actual traffic, failure and recovery checks for a PassWall-managed sing-box ShadowTLS v3 client with a native ShadowTLS server. The native ShadowTLS client is not end-to-end accepted. UDP checks use a separate routed path and do not imply UDP transport through ShadowTLS.
+- Refreshed the homepages, user guides, privacy pages and screenshots in five languages. Documentation is under `docs/`, with images under `docs/images/`.
+- Exit IPv4 fallback behavior is unchanged: only a primary timeout triggers the backup; every new round starts with the primary, and an explicitly wrong IP remains a fault.
+- Concurrent SOCKS5 UDP port collisions in Xray 26.11.9 remain a reproduced upstream limitation. This release does not modify or fix Xray. See [compatibility](COMPATIBILITY.md).
 
-### 更新方法
+### Upgrading
 
-設定をバックアップし、ファームウェアに合う IPK または APK を選んでください。通常の更新では確認済み設定を保持します。新規導入時は保護、出口 IPv4 照合、スケジュールが無効で、UTC オフセットは UTC+00:00 です。Pro の初回導入には互換性のある通常版が必要ですが、その後は対応するインターフェースの範囲内で別々に更新できます。
+Back up your configuration and choose IPK or APK to match the firmware. Normal upgrades preserve confirmed settings. Fresh installations leave protection, exit IPv4 matching and schedules off, with UTC+00:00 as the default offset. Pro still requires a compatible Standard installation; subsequent upgrades can be separate within the supported interface contract.
 
-[ユーザーガイド](USER-GUIDE.ja.md) · [プライバシー](PRIVACY.ja.md)
+[User guide](USER-GUIDE.en.md) · [Privacy](PRIVACY.en.md)

@@ -1,6 +1,6 @@
 # Proxy Guard
 
-[简体中文](../README.md) · [English](README.en.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [فارسی](README.fa.md)
+[English](../README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [Русский](README.ru.md) · [فارسی](README.fa.md)
 
 **プロキシ障害時に、保護対象端末の意図しない直接接続を防ぐ。**
 
@@ -68,6 +68,8 @@ Proxy Guard は OpenWrt / iStoreOS 向けのプロキシ接続保護プラグイ
 - [ユーザーガイド](USER-GUIDE.ja.md)
 - [インストール・更新・削除](USAGE.md)
 - [互換性](COMPATIBILITY.md)
+- [詳細なテストマトリクス](TEST-MATRIX.md)
+- [障害時の復旧](RECOVERY.md)
 - [Linux Agent の導入](LINUX-AGENT-INSTALL.md)
 - [Cloudflare 連携](CLOUDFLARE-WORKER.md)
 - [ログの互換性](LOG_COMPATIBILITY.md)
@@ -80,3 +82,5 @@ Proxy Guard は OpenWrt / iStoreOS 向けのプロキシ接続保護プラグイ
 **本プロジェクトは、開発・テスト・技術研究を想定しています。** 許可を得た機器とネットワークで使用し、利用先・導入先で適用される法令を守ってください。ソフトウェアは既存の [MIT ライセンス](../LICENSE)に基づき「現状のまま」提供され、すべての状況への適合を保証しません。リスクと責任は、適用されるライセンスと法令に従います。本説明は既存のライセンスを変更せず、法令上排除できない責任を排除しません。
 
 [セキュリティ方針](SECURITY.ja.md) · [免責事項](DISCLAIMER.ja.md) · [プライバシー](PRIVACY.ja.md) · [第三者ソフトウェアの表示](THIRD_PARTY_NOTICES.md)
+
+[貢献方法](../CONTRIBUTING.md)

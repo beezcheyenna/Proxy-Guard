@@ -81,7 +81,7 @@ A Cloudflare timeout or unavailable response does not by itself trigger blocking
 2. Enable monitor-only mode, save and apply, and confirm if prompted. Review website results, optional exit verification and enabled client-service checks.
 3. Switch to protection mode and save and apply. Confirm within 30 seconds after self-check succeeds, keeping a separate management or console path.
 4. During a maintenance window you control, simulate a proxy failure and recovery. Check new and established connections over the IPv4 / IPv6 and TCP / UDP paths you use, as well as LAN, DNS, management and devices using another gateway.
-5. Expand the scope or enable schedules and boot protection after these checks. Test boot protection with a separate reboot; self-check does not replace real traffic-path validation.
+5. Expand the scope or enable schedules and boot protection after these checks. To test boot protection, retain an independent management path, reboot the router running Proxy Guard, then verify startup blocking and recovery from a protected client. Rebooting only the client is insufficient; self-check does not replace real traffic-path validation.
 
 Complete or cancel any unconfirmed configuration trial before upgrading. The installer first rolls back an unconfirmed trial, then preserves the confirmed settings. Direct edits to UCI files also require the apply-and-confirm flow.
 
@@ -225,6 +225,8 @@ Report security vulnerabilities privately first to [beezcheyenna268@gmail.com](m
 Further installation, compatibility and development documentation:
 
 - [Compatibility](COMPATIBILITY.md)
+- [Exact test matrix](TEST-MATRIX.md)
+- [Recovery](RECOVERY.md)
 - [Linux Agent installation](LINUX-AGENT-INSTALL.md)
 - [Cloudflare components](CLOUDFLARE-WORKER.md)
 - [Build from source](BUILDING.md)
@@ -234,3 +236,5 @@ Further installation, compatibility and development documentation:
 - [Licensing](LICENSING.md)
 
 - [Changelog](CHANGELOG.en.md)
+
+[Contributing](../CONTRIBUTING.md)
