@@ -1,5 +1,7 @@
 # 普通版与 Pro 的功能范围
 
+[English](EDITION-MATRIX.en.md) · [简体中文](EDITION-MATRIX.md) · [日本語](EDITION-MATRIX.ja.md) · [Русский](EDITION-MATRIX.ru.md) · [فارسی](EDITION-MATRIX.fa.md)
+
 普通版 `0.3.0-21` 与 Pro `0.3.1-5` 使用独立包和版本号。普通版提供路由器上的连接保护；Pro 增加所选 VPS 服务端口的访问管理。
 
 | 范围 | 普通版 | Pro |
@@ -46,7 +48,7 @@ Pro 自带五种语言的专属页面、策略确认和原始配置编辑器。�
 
 包依赖与基础 API 常量来自 [package/Makefile](../package/Makefile)。IPK 的 `-21` 与 APK 的 `-r21` 是各自包格式的修订号，不能仅改后缀互换。最低依赖表示允许安装的下限，不表示该历史版本已包含此后全部安全、功能和固件修复。
 
-Agent 当前没有独立、完整的语义版本发布线；请使用[当前 Release](https://github.com/beezcheyenna/Proxy-Guard/releases/tag/v0.3.0-21-pro-0.3.1-5)源码中的 `companion/vps` 和按需部署的 `companion/worker`，并记录部署的 tag/commit。Worker 的 `package.json` 仍是 0.2.0，不能用这个数字证明云端代码已经更新。
+Agent 当前没有独立、完整的语义版本发布线；请使用[当前 Release（英语）](https://github.com/beezcheyenna/Proxy-Guard/releases/tag/v0.3.0-21-pro-0.3.1-5)源码中的 `companion/vps` 和按需部署的 `companion/worker`，并记录部署的 tag/commit。Worker 的 `package.json` 仍是 0.2.0，不能用这个数字证明云端代码已经更新。
 
 ### 升级决策
 

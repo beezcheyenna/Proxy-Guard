@@ -1,6 +1,6 @@
 # Privacy and network activity
 
-[简体中文](PRIVACY.md) · [English](PRIVACY.en.md) · [日本語](PRIVACY.ja.md) · [Русский](PRIVACY.ru.md) · [فارسی](PRIVACY.fa.md)
+[English](PRIVACY.en.md) · [简体中文](PRIVACY.md) · [日本語](PRIVACY.ja.md) · [Русский](PRIVACY.ru.md) · [فارسی](PRIVACY.fa.md)
 
 ## Requests made by the plugin
 
@@ -10,7 +10,9 @@ Optional Cloudflare event verification and UDP DNS checks run only when their sw
 
 Process, socket, interface and client-log monitoring reads local information. The plugin does not send these readings to the project maintainer. Pro connects to the control endpoint you configure. Your VPS, HTTPS endpoint and any enabled Cloudflare components can process connection addresses, authentication requests and relevant status. Control-channel and proxy-path heartbeats are separate settings. Household authorization addresses are sensitive operational data.
 
-Public source and examples contain no usable account credentials, personal exit address or deployed Worker/VPC resource identifiers. Deployers must provide their own values. See [Pro components](PRO-COMPANION.md).
+Optional VPS egress measurement is off by default. When enabled, the Agent contacts ipify from the VPS default IPv4 route. The service sees the request source and time. See the [egress API](VPS-EGRESS-INFO.md).
+
+Public source and examples contain no usable account credentials, personal exit address or deployed Worker/VPC resource identifiers. Deployers must provide their own values. See [Pro components](PRO-COMPANION.en.md).
 
 ## Stored information
 
@@ -26,7 +28,7 @@ Report security issues privately under the [security policy](SECURITY.en.md) to 
 
 Check IP addresses, domains, account names, device IDs, tokens, SOCKS authentication, panel and subscription URLs, query parameters, Cookies, Authorization headers, HAR files and private keys before sharing. Documentation can use `192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24` and `2001:db8::/32` as example networks.
 
-The README screenshots use the actual interface with example values for the client name, addresses, time and resource usage. They are illustrations, not measurements of a user's deployment or proof of client compatibility. See the [compatibility notes](COMPATIBILITY.md) for supported configurations. Do not copy placeholder addresses into a working configuration.
+The README screenshots use the actual interface with example values for the client name, addresses, time and resource usage. They are illustrations, not measurements of a user's deployment or proof of client compatibility. See the [compatibility notes](COMPATIBILITY.en.md) for supported configurations. Do not copy placeholder addresses into a working configuration.
 
 ## Protecting configuration and keys
 

@@ -1,5 +1,7 @@
 # Proxy Guard Worker — third-party notices
 
+[English](THIRD_PARTY_NOTICES.md) · [简体中文](THIRD_PARTY_NOTICES.zh-CN.md) · [日本語](THIRD_PARTY_NOTICES.ja.md) · [Русский](THIRD_PARTY_NOTICES.ru.md) · [فارسی](THIRD_PARTY_NOTICES.fa.md)
+
 Original Worker source is offered under the accompanying MIT LICENSE, Copyright (c) 2026 Proxy Guard contributors.
 
 The Worker uses hosted Cloudflare platform APIs. The hosted platform is governed by its service terms; this project's license does not license that service.

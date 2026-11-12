@@ -1,6 +1,6 @@
 # 安全漏洞反馈
 
-[简体中文](SECURITY.md) · [English](SECURITY.en.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
+[English](SECURITY.en.md) · [简体中文](SECURITY.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
 
 **安全漏洞反馈邮箱：[beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com)**
 
@@ -31,4 +31,4 @@
 
 公开仓库中的普通 Issue 表单不会因勾选提示而变成私密报告。仓库文档与模板只能引导反馈流程，不能保证阻止他人公开信息，也不能代替 VPS 本身的安全防护。
 
-更多说明：[隐私与脱敏](PRIVACY.md) · [免责声明](DISCLAIMER.md) · [项目首页](../README.md)。
+更多说明：[隐私与脱敏](PRIVACY.md) · [免责声明](DISCLAIMER.md) · [项目首页](README.zh-CN.md)。

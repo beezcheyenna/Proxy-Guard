@@ -1,10 +1,12 @@
 # 安装与使用
 
+[English](USAGE.en.md) · [简体中文](USAGE.md) · [日本語](USAGE.ja.md) · [Русский](USAGE.ru.md) · [فارسی](USAGE.fa.md)
+
 本文介绍普通版 `0.3.0-21` 与 Pro `0.3.1-5` 的安装、配置和维护。安装前先阅读[兼容范围](COMPATIBILITY.md)及[精确测试矩阵](TEST-MATRIX.md)；日常设置见[使用指南](USER-GUIDE.md)。
 
 ## 安装前校验下载文件
 
-从[同一正式 Release](https://github.com/beezcheyenna/Proxy-Guard/releases/tag/v0.3.0-21-pro-0.3.1-5)下载目标包和其附件 `SHA256SUMS`，放在同一目录。文件名、普通版／Pro、IPK／APK 和版本都要对应；不要混用另一 Release 的清单。
+从[同一正式 Release（英语）](https://github.com/beezcheyenna/Proxy-Guard/releases/tag/v0.3.0-21-pro-0.3.1-5)下载目标包和其附件 `SHA256SUMS`，放在同一目录。文件名、普通版／Pro、IPK／APK 和版本都要对应；不要混用另一 Release 的清单。
 
 在有 `sha256sum` 的 Linux 或 OpenWrt 上，仅核验一个已下载的包：
 
@@ -20,6 +22,8 @@ sha256sum -c SHA256SUMS.selected
 macOS 可执行 `shasum -a 256 文件名`，把输出的完整 64 位摘要与同一 Release 的对应行逐字核对；这只计算摘要，不会自动取得可信发布者身份。
 
 **SHA256 验证的是文件与清单的一致性。** 若攻击者同时替换了包和清单，校验仍可能通过。当前 Release 的 `SHA256SUMS` 不是独立数字签名；不要把它描述为发布者身份认证。请从正确仓库的 HTTPS Release 入口取得文件；如未来提供签名或证明，仍须核验独立可信的签名身份。
+
+<a id="installation"></a>
 
 ## 安装、升级和卸载
 
@@ -89,7 +93,7 @@ apk --no-network --allow-untrusted add --force-reinstall /tmp/luci-app-proxy-gua
 
 安装前的备份至少包括 `/etc/config/proxy_guard`；使用 Pro 时还包括 `/etc/config/proxy_guard_access` 及存在的 `/etc/proxy-guard-access/device.key`、`/etc/proxy-guard-access/path.key`。原始 UCI 导出不会包含这些私有密钥，不能单独充当完整配对备份。备份只应由管理员读取，避免上传公开仓库或问题附件。路由器配置备份不包含 VPS 的 Agent 配置、证书及 Worker Secrets，后者须分别保管。
 
-使用 Pro 时，卸载路由器扩展或停止同步**不会立即删除 VPS 已有规则**。若目的是移除远端访问策略，应在控制链路可用时先执行准备移除、应用并确认，见[远端策略确认](GUIDED-SETUP.md#pro-的远端策略确认)。
+使用 Pro 时，卸载路由器扩展或停止同步**不会立即删除 VPS 已有规则**。若目的是移除远端访问策略，应在控制链路可用时先执行准备移除、应用并确认，见[远端策略确认](GUIDED-SETUP.md#remote-policy-confirmation)。
 
 需要卸载时执行：
 
@@ -157,7 +161,7 @@ apk del luci-app-proxy-guard
 
 ### 代理客户端运行日志
 
-需在服务监视下另行开启日志监视，可设 1–10 秒读取间隔。只读所选客户端运行日志的新增数据，例如 PassWall 的 `/tmp/log/passwall.log`，识别明确的重启、规则删除/清空、停止、启动失败和运行完成消息。普通规则下载、更新完毕及清理日志提示不单独触发。消息按已核对的上游实际语言识别，与插件页面所选语言独立；具体语言和限制见[运行日志兼容说明](LOG_COMPATIBILITY.md)。
+需在服务监视下另行开启日志监视，可设 1–10 秒读取间隔。只读所选客户端运行日志的新增数据，例如 PassWall 的 `/tmp/log/passwall.log`，识别明确的重启、规则删除/清空、停止、启动失败和运行完成消息。普通规则下载、更新完毕及清理日志提示不单独触发。消息按已核对的上游实际语言识别，与插件页面所选语言独立；具体语言和限制见[运行日志兼容说明](LOG_COMPATIBILITY.zh-CN.md)。
 
 首次由日志触发后，等当前启动周期有效的“运行完成”、全部所需服务恢复和新的代理验证通过，直接放行进入敏感观察，不另加一次故障等待。**如果故障发生在已经放行的敏感观察中，仍要执行配置的阻断等待**，后来的完成日志不能提前取消等待。
 
@@ -282,7 +286,7 @@ Pro 仅过滤已启用且明确选中的服务端口。未选择的独立 3x-ui 
 
 每个端口的 `source_mode=all` 表示允许所有来源连接，不会按家庭或静态白名单自动豁免，标准防滥用仍启用；已验证的代理业务仍按既有可信流量策略处理。仅白名单模式不能配合“所有来源”。旧的 `source_mode=any` 继续保留完全绕过该端口保护的行为，界面明确标为无保护，升级不会静默改变旧规则。状态显示远端确认的有效行为，不能仅凭选择了“标准防护”判断限流已生效。
 
-Pro 默认开启 VPS 策略确认，以及停止同步与移除规则的独立流程，详见[设置引导与确认回退](GUIDED-SETUP.md#pro-的远端策略确认)。
+Pro 默认开启 VPS 策略确认，以及停止同步与移除规则的独立流程，详见[设置引导与确认回退](GUIDED-SETUP.md#remote-policy-confirmation)。
 
 `revision` 是同步协议的递增版本号，由应用后端维护；原始编辑器不能通过填写更低值回退它。重装时应保留配对配置与版本号，避免与已有 VPS 的状态不一致。
 

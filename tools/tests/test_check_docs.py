@@ -14,11 +14,10 @@ class DocumentationChecks(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
         self.write("package/Makefile", "PKG_VERSION:=1.2.3\nPKG_RELEASE:=4\nPG_PRO_VERSION:=2.3.4\nPG_PRO_RELEASE:=5\n")
-        for lang in docs.LANGUAGES:
-            suffix = "." + lang if lang else ""
-            self.write("README.md" if lang == "en" else ("docs/README.zh-CN.md" if not lang else f"docs/README{suffix}.md"), "| Standard \x601.2.3-4\x60 | Pro \x602.3.4-5\x60 |\n")
-            self.write(f"docs/CHANGELOG{suffix}.md", "# Changes\n\n## 1.2.3-4 / Pro 2.3.4-5\n")
-            self.write(f"docs/USER-GUIDE{suffix}.md", "# Guide\n")
+        for rel in (*docs.HOMEPAGES.values(), docs.ENGLISH_HOME_ALIAS):
+            self.write(rel, "| Standard \x601.2.3-4\x60 | Pro \x602.3.4-5\x60 |\n")
+        for rel in docs.CHANGELOGS:
+            self.write(rel, "# Changes\n\n## 1.2.3-4 / Pro 2.3.4-5\n")
         self.release = {"tag_name": "v1.2.3-4-pro-2.3.4-5", "draft": False, "prerelease": False,
                         "assets": [{"name": n} for n in docs.expected_assets("1.2.3-4", "2.3.4-5")]}
 
@@ -82,6 +81,73 @@ class DocumentationChecks(unittest.TestCase):
     def test_missing_release_asset(self):
         self.release["assets"].pop()
         self.assertTrue(docs.check_release(self.root, self.release))
+
+
+    def test_existing_link_to_wrong_language_fails(self):
+        manual, destinations = self.language_fixture()
+        page = self.root / manual["en"]
+        page.write_text(page.read_text() + "\n[Installation](TARGET.md)\n")
+        self.assertEqual(docs.check_links(self.root)[0], [])
+        self.assertEqual(docs.check_languages(self.root, (manual, destinations)), [
+            "manual/HELP.en.md: en link targets zh-CN page 'TARGET.md'; use manual/TARGET.en.md",
+        ])
+
+    def test_same_language_link_and_switcher_pass(self):
+        manual, destinations = self.language_fixture()
+        page = self.root / manual["en"]
+        page.write_text(page.read_text() + "\n[Installation](TARGET.en.md#install)\n")
+        self.assertEqual(docs.check_languages(self.root, (manual, destinations)), [])
+        self.assertEqual(docs.check_links(self.root)[0], [])
+
+    def test_missing_translation_fails(self):
+        manual, destinations = self.language_fixture()
+        (self.root / manual["ja"]).unlink()
+        errors = docs.check_languages(self.root, (manual, destinations))
+        self.assertIn("manual/HELP.ja.md: missing ja translation", errors)
+
+    def test_wrong_script_with_correct_suffix_fails(self):
+        manual, destinations = self.language_fixture()
+        page = self.root / manual["en"]
+        page.write_text(page.read_text() + "\n这段内容是中文而不是对应的英文翻译。\n")
+        errors = docs.check_languages(self.root, (manual, destinations))
+        self.assertIn("manual/HELP.en.md: unexpected han prose in en page", errors)
+
+    def test_switcher_must_open_the_corresponding_translation(self):
+        manual, destinations = self.language_fixture()
+        page = self.root / manual["en"]
+        page.write_text(page.read_text().replace("[English](HELP.en.md)", "[English](HELP.md)"))
+        errors = docs.check_languages(self.root, (manual, destinations))
+        self.assertIn("manual/HELP.en.md: invalid five-language navigation", errors)
+
+    def test_english_release_cannot_link_to_chinese_main_document(self):
+        self.write("docs/USAGE.md", "# 安装与使用\n")
+        self.release["body"] = "[Installation](https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/USAGE.md)"
+        errors = docs.check_release(self.root, self.release)
+        self.assertTrue(any("non-English document" in error for error in errors))
+
+    def test_release_english_anchor_is_verified(self):
+        self.write("docs/USAGE.en.md", "# Install\n\n<a id=\"installation\"></a>\n")
+        base = "https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/USAGE.en.md"
+        self.release["body"] = f"[Install]({base}#installation)"
+        self.assertEqual(docs.check_release(self.root, self.release), [])
+        self.release["body"] = f"[Install]({base}#wrong-section)"
+        self.assertTrue(any("missing anchor" in error for error in docs.check_release(self.root, self.release)))
+
+    def language_fixture(self):
+        manual = docs.localized_pages("manual/HELP", "zh-CN")
+        destinations = docs.localized_pages("manual/TARGET", "zh-CN")
+        prose = {
+            "en": "Read the installation instructions for this firmware.",
+            "zh-CN": "请选择与设备固件相符的安装方式。",
+            "ja": "ファームウェアに合う手順を選びます。",
+            "ru": "Выберите инструкцию для установленной прошивки.",
+            "fa": "روش نصب متناسب با فریم‌ور دستگاه را انتخاب کنید.",
+        }
+        for group in (manual, destinations):
+            for lang, page in group.items():
+                nav = docs.language_menu(page, group)
+                self.write(page, f"# Help\n\n{nav}\n\n<a id=\"install\"></a>\n\n{prose[lang]}\n")
+        return manual, destinations
 
 
 if __name__ == "__main__":

@@ -1,14 +1,16 @@
-# Third-party notices / 第三方声明
+# Third-party notices
+
+[English](THIRD_PARTY_NOTICES.md) · [简体中文](THIRD_PARTY_NOTICES.zh-CN.md) · [日本語](THIRD_PARTY_NOTICES.ja.md) · [Русский](THIRD_PARTY_NOTICES.ru.md) · [فارسی](THIRD_PARTY_NOTICES.fa.md)
 
 Updated: 2026-11-08. Scope: Proxy Guard Standard, Pro, the VPS Agent and the companion Worker source. This is a component and provenance notice, not a replacement for the upstream license texts.
 
-## Project-owned code / 自有代码
+## Project-owned code
 
 Copyright (c) 2026 Proxy Guard contributors.
 
 Original Proxy Guard code and original documentation are offered under the MIT license in LICENSE. This statement does not relicense upstream message strings, patches, libraries, interpreters, tools, proxy cores or firmware. Standard and Pro use the same licensing policy; the name “Pro” does not imply a proprietary license.
 
-## Upstream message material / 上游日志消息
+## Upstream message material
 
 The lifecycle recognizer in package/root/usr/lib/proxy-guard/passwall-log.uc and its test corpora contain message identifiers and translated message strings taken from the following upstream revisions. The parser and control logic are authored in this project. Any copyrightable upstream-derived material retains its upstream terms. We do not assert that every short functional identifier is independently copyrightable, or that reproducing a notice alone resolves all combination/licensing questions.
 
@@ -68,10 +70,10 @@ The Worker package declares development dependencies, not production npm depende
 
 The lockfile has 91 non-root package entries, including platform-specific optional entries. Their exact versions, integrity values and declared licenses are listed in companion/worker/THIRD_PARTY_DEPENDENCIES.json. That is a lockfile inventory, not a claim that all entries are installed or shipped. node_modules, Wrangler, Miniflare, workerd and cloudflared binaries are not bundled in the application's LuCI IPK/APK packages. A future vendored or bundled distribution must preserve the actual packages' notices, including transitive and native-library notices; generic license texts alone are insufficient.
 
-## Proxy cores and panels / 对接项目
+## Proxy cores and panels
 
 PassWall, PassWall2, OpenClash, Nikki, HomeProxy, Xray, sing-box, Mihomo and 3x-ui are separately maintained projects. Reading their configuration/logs, observing their services or invoking an authorized management interface does not transfer their copyright to Proxy Guard. The LuCI IPK/APK packages do not contain or automatically replace these proxy cores or panels. Inclusion of a third-party binary or source in another distribution requires a separate component-specific notice/source check.
 
-## Licensing scope / 许可范围
+## Licensing scope
 
-自有代码采用 MIT 授权，第三方材料、运行依赖和开发工具按各自来源保留原许可。再分发时应核查实际包含的内容与组合方式，保留相关版权、NOTICE 和适用源码材料。具体组件和文件的原始声明优先。
+Original code uses MIT. Keep applicable third-party notices, copyright, and source records for the actual distribution. The original declarations for each component and file govern their terms. See [licensing scope](LICENSING.en.md).

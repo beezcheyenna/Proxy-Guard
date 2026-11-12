@@ -1,12 +1,12 @@
 # Proxy Guard User Guide
 
-[简体中文](USER-GUIDE.md) · [English](USER-GUIDE.en.md) · [日本語](USER-GUIDE.ja.md) · [Русский](USER-GUIDE.ru.md) · [فارسی](USER-GUIDE.fa.md)
+[English](USER-GUIDE.en.md) · [简体中文](USER-GUIDE.md) · [日本語](USER-GUIDE.ja.md) · [Русский](USER-GUIDE.ru.md) · [فارسی](USER-GUIDE.fa.md)
 
-[Project home](README.en.md)
+[Project home](../README.md)
 
 <a id="guide-editions"></a>
 
-This guide covers configuration and everyday operation. See the [project home](README.en.md#guide-editions) for version roles and feature differences.
+This guide covers configuration and everyday operation. See the [project home](../README.md#guide-editions) for version roles and feature differences.
 
 <a id="guide-setup"></a>
 
@@ -24,11 +24,11 @@ On first installation, protection, exit IPv4 verification and scheduled protecti
 
 ### Which systems and proxy clients are supported?
 
-The router needs **opkg or apk + LuCI + firewall4/nftables**, with Lua, ucode, curl and other dependencies available from matching firmware feeds. Use IPK for the 24 series and APK for the 25.12 series; see the [compatibility table](COMPATIBILITY.md) for firmware and client combinations.
+The router needs **opkg or apk + LuCI + firewall4/nftables**, with Lua, ucode, curl and other dependencies available from matching firmware feeds. Use IPK for the 24 series and APK for the 25.12 series; see the [compatibility table](COMPATIBILITY.en.md) for firmware and client combinations.
 
-Adapters are provided for PassWall, PassWall2, OpenClash, Nikki and HomeProxy. Support depends on the client version, core and forwarding mode. Proxy cores and forwarding modes have specific limitations; consult the [compatibility table](COMPATIBILITY.md). IPK and APK packages are not interchangeable, and fw3/iptables-only systems are unsupported. An `all` package does not mean every architecture or device has been tested.
+Adapters are provided for PassWall, PassWall2, OpenClash, Nikki and HomeProxy. Support depends on the client version, core and forwarding mode. Proxy cores and forwarding modes have specific limitations; consult the [compatibility table](COMPATIBILITY.en.md). IPK and APK packages are not interchangeable, and fw3/iptables-only systems are unsupported. An `all` package does not mean every architecture or device has been tested.
 
-The Pro Linux Agent requires Python `3.10+`, nftables and the necessary kernel capabilities. It supports systemd / OpenRC. Specific Ubuntu, Debian, Rocky Linux and Alpine Linux releases have been compatibility-tested; see [Linux installation](LINUX-AGENT-INSTALL.md).
+The Pro Linux Agent requires Python `3.10+`, nftables and the necessary kernel capabilities. It supports systemd / OpenRC. Specific Ubuntu, Debian, Rocky Linux and Alpine Linux releases have been compatibility-tested; see [Linux installation](LINUX-AGENT-INSTALL.en.md).
 
 <a id="guide-scope"></a>
 
@@ -115,7 +115,7 @@ When service monitoring triggers protection, the default recovery sequence is:
 
 During enhanced monitoring, the next round starts about one second after the previous round finishes; request time is additional. Every HTTPS target, and any enabled exit IPv4 and UDP checks, must pass. Any failure blocks traffic again without using normal mode's minimum-success setting or consecutive-failure threshold.
 
-The wait, enhanced monitoring and their durations are configurable. After a log-triggered fault, initial recovery skips the extra wait only after a fresh startup-completed message, service recovery and new proxy validation. The end of a scheduled window uses this recovery flow only with service monitoring enabled and no other fault or unfinished wait. A new fault during enhanced monitoring still blocks traffic and restarts the wait. Boot protection must be enabled separately. See [detection behavior](USAGE.md) and [log compatibility](LOG_COMPATIBILITY.md).
+The wait, enhanced monitoring and their durations are configurable. After a log-triggered fault, initial recovery skips the extra wait only after a fresh startup-completed message, service recovery and new proxy validation. The end of a scheduled window uses this recovery flow only with service monitoring enabled and no other fault or unfinished wait. A new fault during enhanced monitoring still blocks traffic and restarts the wait. Boot protection must be enabled separately. See [detection behavior](USAGE.en.md) and [log compatibility](LOG_COMPATIBILITY.md).
 
 <a id="guide-schedule"></a>
 
@@ -153,7 +153,7 @@ Current protection status reflects actual kernel enforcement. A previously passe
 
 #### Upgrades, reinstalls and troubleshooting
 
-Back up the plugin configuration before upgrading. Securely back up Pro pairing secrets, the private Agent configuration and certificates separately. Upgrades preserve switches, custom timing and other settings. Detection endpoints that exactly match recognized legacy presets are migrated to the new presets, so check the actual endpoints after installation. For a revised package with the same version, opkg / apk may report it is already installed. Verify its source and checksum, then use the same-version reinstall procedure in the [installation reference](USAGE.md#安装升级和卸载); do not bypass dependency checks. Pro can be upgraded independently when the base API is compatible, while new remote features may require an Agent or Worker update.
+Back up the plugin configuration before upgrading. Securely back up Pro pairing secrets, the private Agent configuration and certificates separately. Upgrades preserve switches, custom timing and other settings. Detection endpoints that exactly match recognized legacy presets are migrated to the new presets, so check the actual endpoints after installation. For a revised package with the same version, opkg / apk may report it is already installed. Verify its source and checksum, then use the same-version reinstall procedure in the [installation reference](USAGE.en.md#installation); do not bypass dependency checks. Pro can be upgraded independently when the base API is compatible, while new remote features may require an Agent or Worker update.
 
 If the menu is missing, the page fails or an RPC object is not found, keep the complete installation output, then sign in to LuCI again and refresh. Package hooks should handle cache cleanup and RPC reload during a normal installation. If the issue remains after signing in again, investigate installation failures and dependencies; do not broaden ACLs or count a manual service reload as proof of a successful installation.
 
@@ -193,9 +193,9 @@ SSH is unmanaged by default, and remote maintenance is disabled. If you enable S
 
 #### Control connection
 
-Control can use direct HTTPS or a Cloudflare Worker with Tunnel/VPC. It handles authentication and policy coordination, not proxy traffic. Control requests must bypass the proxy, and you must confirm the direct routing; the plugin does not change routing or traffic-splitting rules. The independent proxy-path heartbeat instead uses local SOCKS to check the proxy route. Control defaults to IPv4. IPv6 traffic filtering does not imply validated IPv6 cloud control. See [Pro companion setup](PRO-COMPANION.md).
+Control can use direct HTTPS or a Cloudflare Worker with Tunnel/VPC. It handles authentication and policy coordination, not proxy traffic. Control requests must bypass the proxy, and you must confirm the direct routing; the plugin does not change routing or traffic-splitting rules. The independent proxy-path heartbeat instead uses local SOCKS to check the proxy route. Control defaults to IPv4. IPv6 traffic filtering does not imply validated IPv6 cloud control. See [Pro companion setup](PRO-COMPANION.en.md).
 
-The independent proxy path has its own heartbeat secret and Agent HTTPS entry. Direct HTTPS mode can reuse the same Agent base URL, but control requests must go directly and path heartbeats through SOCKS. In Cloudflare mode, the Worker URL cannot serve as this independent entry. See the [connection mapping](LINUX-AGENT-INSTALL.md#control-and-path).
+The independent proxy path has its own heartbeat secret and Agent HTTPS entry. Direct HTTPS mode can reuse the same Agent base URL, but control requests must go directly and path heartbeats through SOCKS. In Cloudflare mode, the Worker URL cannot serve as this independent entry. See the [connection mapping](LINUX-AGENT-INSTALL.en.md#control-and-path).
 
 #### Fixed remote maintenance
 
@@ -224,17 +224,17 @@ Report security vulnerabilities privately first to [beezcheyenna268@gmail.com](m
 
 Further installation, compatibility and development documentation:
 
-- [Compatibility](COMPATIBILITY.md)
-- [Exact test matrix](TEST-MATRIX.md)
-- [Recovery](RECOVERY.md)
-- [Linux Agent installation](LINUX-AGENT-INSTALL.md)
-- [Cloudflare components](CLOUDFLARE-WORKER.md)
-- [Build from source](BUILDING.md)
-- [Installation reference](USAGE.md)
-- [Wizard reference](GUIDED-SETUP.md)
+- [Compatibility](COMPATIBILITY.en.md)
+- [Exact test matrix](TEST-MATRIX.en.md)
+- [Recovery](RECOVERY.en.md)
+- [Linux Agent installation](LINUX-AGENT-INSTALL.en.md)
+- [Cloudflare components](CLOUDFLARE-WORKER.en.md)
+- [Build from source](BUILDING.en.md)
+- [Installation reference](USAGE.en.md)
+- [Wizard reference](GUIDED-SETUP.en.md)
 - [Log compatibility](LOG_COMPATIBILITY.md)
-- [Licensing](LICENSING.md)
+- [Licensing](LICENSING.en.md)
 
-- [Changelog](CHANGELOG.en.md)
+- [Changelog](CHANGELOG.md)
 
 [Contributing](../CONTRIBUTING.md)

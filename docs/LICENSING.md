@@ -1,10 +1,12 @@
 # 许可范围与第三方材料
 
+[English](LICENSING.en.md) · [简体中文](LICENSING.md) · [日本語](LICENSING.ja.md) · [Русский](LICENSING.ru.md) · [فارسی](LICENSING.fa.md)
+
 自有代码和原创文档采用根目录[MIT 许可证](../LICENSE)。普通版、Pro 与配套自有代码使用相同授权政策。第三方材料继续保留各自的作者、许可和适用分发条件，不将全部文件或整个运行环境概称为纯 MIT。
 
 ## 许可文件
 
-[第三方声明](THIRD_PARTY_NOTICES.md)记录材料、运行依赖与开发工具的使用方式。[组件清单](THIRD_PARTY_COMPONENTS.json)和 LICENSES/SOURCES.json 记录来源、版本/修订及许可副本校验值。许可原文在 LICENSES/ 中。
+[第三方声明](THIRD_PARTY_NOTICES.zh-CN.md)记录材料、运行依赖与开发工具的使用方式。[组件清单](THIRD_PARTY_COMPONENTS.json)和 LICENSES/SOURCES.json 记录来源、版本/修订及许可副本校验值。许可原文在 LICENSES/ 中。
 
 提供通用许可原文不替代具体作者、NOTICE、逐文件声明或适用的对应源码要求。项目主许可也不改变上游材料的授权。
 

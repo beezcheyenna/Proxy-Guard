@@ -1,5 +1,7 @@
 # 源码、构建与验证
 
+[English](BUILDING.en.md) · [简体中文](BUILDING.md) · [日本語](BUILDING.ja.md) · [Русский](BUILDING.ru.md) · [فارسی](BUILDING.fa.md)
+
 普通版的配方版本为 `0.3.0-21`，Pro 为 `0.3.1-5`。本页介绍源码目录、IPK / APK 构建和开发测试。每次构建后应使用对应产物的 SHA256 校验值。
 
 ## 目录

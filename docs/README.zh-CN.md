@@ -23,7 +23,7 @@ Proxy Guard 是 OpenWrt / iStoreOS 的代理连接保护插件。开启保护后
 | VPS 家庭 IP 授权与指定端口规则 | — | 支持 |
 | SSH 应急访问与远程维护 | — | 按需启用并授权 |
 
-下载：[GitHub Releases](https://github.com/beezcheyenna/Proxy-Guard/releases) · [安装指南](USER-GUIDE.md#guide-setup) · [更新日志](CHANGELOG.md)
+下载：[GitHub Releases（英语）](https://github.com/beezcheyenna/Proxy-Guard/releases) · [安装指南](USER-GUIDE.md#guide-setup) · [更新日志（英语）](CHANGELOG.md)
 
 > **Pro 使用提醒：** 普通用户建议使用普通版，不建议安装 Pro。只有在需要 VPS 访问控制等特殊功能时，再选择 Pro。
 
@@ -72,7 +72,7 @@ Proxy Guard 是 OpenWrt / iStoreOS 的代理连接保护插件。开启保护后
 - [故障救援](RECOVERY.md)
 - [Linux Agent 安装](LINUX-AGENT-INSTALL.md)
 - [Cloudflare 配套](CLOUDFLARE-WORKER.md)
-- [日志适配](LOG_COMPATIBILITY.md)
+- [日志适配](LOG_COMPATIBILITY.zh-CN.md)
 - [源码构建](BUILDING.md)
 
 ## 许可与反馈
@@ -81,6 +81,6 @@ Proxy Guard 是 OpenWrt / iStoreOS 的代理连接保护插件。开启保护后
 
 **本项目面向开发、测试和技术研究。** 请在获授权的设备与网络上使用，并遵守使用及部署所在地的适用法律法规。软件按现有 [MIT 许可证](../LICENSE)以“现状”提供，不保证适用于所有场景；相关风险与责任依据适用许可证和法律处理。本说明不修改原有许可证，也不排除依法不得排除的责任。
 
-[安全反馈政策](SECURITY.md) · [免责声明](DISCLAIMER.md) · [隐私说明](PRIVACY.md) · [第三方声明](THIRD_PARTY_NOTICES.md)
+[安全反馈政策](SECURITY.md) · [免责声明](DISCLAIMER.md) · [隐私说明](PRIVACY.md) · [第三方声明](THIRD_PARTY_NOTICES.zh-CN.md)
 
-[参与贡献](../CONTRIBUTING.md)
+[参与贡献](CONTRIBUTING.zh-CN.md)

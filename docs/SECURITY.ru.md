@@ -1,6 +1,6 @@
 # Сообщения об уязвимостях
 
-[简体中文](SECURITY.md) · [English](SECURITY.en.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
+[English](SECURITY.en.md) · [简体中文](SECURITY.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
 
 **Адрес для сообщений: [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com)**
 
@@ -31,4 +31,4 @@
 
 Обычное обращение (issue) в открытом репозитории не становится приватным после установки флажка подтверждения. Документы и шаблоны направляют процесс обращения, но не гарантируют, что никто не опубликует сведения, и не заменяют защиту самого VPS.
 
-См. [конфиденциальность](PRIVACY.md), [отказ от гарантий и риски](DISCLAIMER.ru.md) и [главную страницу](README.ru.md).
+См. [конфиденциальность](PRIVACY.ru.md), [отказ от гарантий и риски](DISCLAIMER.ru.md) и [главную страницу](README.ru.md).

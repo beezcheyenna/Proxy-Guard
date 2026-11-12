@@ -6,13 +6,74 @@ from html import unescape
 from html.parser import HTMLParser
 import json
 import os
+from posixpath import relpath
 from pathlib import Path
 import re
 import sys
+import unicodedata
 from urllib.parse import unquote, urlsplit
 from urllib.request import Request, urlopen
 
-LANGUAGES = ("", "en", "ja", "ru", "fa")
+
+LOCALES = {
+    "en": "English",
+    "zh-CN": "简体中文",
+    "ja": "日本語",
+    "ru": "Русский",
+    "fa": "فارسی",
+}
+
+
+def localized_pages(stem, default_language):
+    return {
+        lang: f"{stem}.md" if lang == default_language else f"{stem}.{lang}.md"
+        for lang in LOCALES
+    }
+
+
+HOMEPAGES = {
+    lang: "README.md" if lang == "en" else f"docs/README.{lang}.md"
+    for lang in LOCALES
+}
+CONTRIBUTING = {
+    lang: "CONTRIBUTING.md" if lang == "en" else f"docs/CONTRIBUTING.{lang}.md"
+    for lang in LOCALES
+}
+DOCUMENTS = (
+    HOMEPAGES,
+    CONTRIBUTING,
+    *(localized_pages(f"docs/{name}", "zh-CN") for name in (
+        "BUILDING", "CLOUDFLARE-WORKER", "COMPATIBILITY", "DISCLAIMER",
+        "EDITION-MATRIX", "GUIDED-SETUP", "LICENSING", "LINUX-AGENT-INSTALL",
+        "PRIVACY", "PRO-COMPANION", "RECOVERY", "SECURITY", "TEST-MATRIX",
+        "USAGE", "USER-GUIDE",
+    )),
+    *(localized_pages(name, "en") for name in (
+        "docs/LOG_COMPATIBILITY", "docs/THIRD_PARTY_NOTICES", "docs/VPS-EGRESS-INFO",
+        "LICENSES/README", "companion/vps/README",
+        "companion/worker/README", "companion/worker/THIRD_PARTY_NOTICES",
+    )),
+    localized_pages("companion/vps/LICENSING", None),
+    localized_pages("companion/vps/THIRD_PARTY_NOTICES", None),
+)
+# Published changelogs are English, including the older localized URLs.
+CHANGELOGS = {"docs/CHANGELOG.md", *(
+    f"docs/CHANGELOG.{lang}.md" for lang in ("en", "ja", "ru", "fa")
+)}
+# These copies ship with the router packages or the VPS installer. Repository
+# navigation uses the localized notices without relying on installed-file layout.
+PACKAGE_NOTICES = {
+    "companion/vps/LICENSING.md",
+    "companion/vps/THIRD_PARTY_NOTICES.md",
+    "package/pro/root/usr/share/proxy-guard-pro/LICENSING.md",
+    "package/pro/root/usr/share/proxy-guard-pro/THIRD_PARTY_NOTICES.md",
+    "package/root/usr/share/proxy-guard/LICENSES/README.md",
+    "package/root/usr/share/proxy-guard/LICENSING.md",
+    "package/root/usr/share/proxy-guard/THIRD_PARTY_NOTICES.md",
+}
+ENGLISH_HOME_ALIAS = "docs/README.en.md"
+REPO = "beezcheyenna/Proxy-Guard"
+
 SKIP_DIRS = {".git", "node_modules", ".venv", "__pycache__"}
 REF = re.compile(r"^\s{0,3}\[([^\]]+)\]:\s*(<[^>]*>|\S+)", re.M)
 INLINE = re.compile(r"!?\[[^\]\n]*\]\(")
@@ -104,26 +165,55 @@ def link_targets(text):
     return targets
 
 
+def markdown_files(root):
+    for file in sorted(root.rglob("*.md")):
+        if not SKIP_DIRS.intersection(file.relative_to(root).parts):
+            yield file
+
+
+def github_document(url):
+    parts = unquote(url.path).strip("/").split("/")
+    repo_parts = REPO.lower().split("/")
+    if [p.lower() for p in parts[:2]] != repo_parts:
+        return None
+    if url.hostname == "github.com" and len(parts) >= 5 and parts[2] == "blob":
+        return parts[3], "/".join(parts[4:])
+    if url.hostname == "raw.githubusercontent.com" and len(parts) >= 4:
+        return parts[2], "/".join(parts[3:])
+    return None
+
+
+def local_destination(root, source, url):
+    document = github_document(url)
+    if document and document[0] == "main":
+        return (root / document[1]).resolve()
+    if url.scheme or url.netloc:
+        return None
+    rel = unquote(url.path)
+    if not rel:
+        return source
+    if rel.startswith("/"):
+        return (root / rel.lstrip("/")).resolve()
+    return (source.parent / rel).resolve()
+
+
 def check_links(root):
     root = Path(root).resolve()
     errors, count, cache = [], 0, {}
-    for file in sorted(root.rglob("*.md")):
-        if any(part in SKIP_DIRS for part in file.relative_to(root).parts):
-            continue
+    for file in markdown_files(root):
         for target in link_targets(file.read_text(encoding="utf-8")):
             if target.startswith("UNDEFINED_REFERENCE:"):
                 errors.append(f"{file.relative_to(root)}: {target}")
                 continue
             try:
                 url = urlsplit(unescape(target))
+                dest = local_destination(root, file, url)
             except ValueError:
                 errors.append(f"{file.relative_to(root)}: malformed link {target!r}")
                 continue
-            if url.scheme or url.netloc or target.startswith("//"):
+            if dest is None:
                 continue
             count += 1
-            rel = unquote(url.path)
-            dest = ((root / rel.lstrip("/")) if rel.startswith("/") else (file.parent / rel)).resolve() if rel else file
             if not dest.is_relative_to(root) or not dest.exists():
                 errors.append(f"{file.relative_to(root)}: missing local target {target!r}")
                 continue
@@ -133,6 +223,95 @@ def check_links(root):
                 if unquote(url.fragment) not in cache[dest]:
                     errors.append(f"{file.relative_to(root)}: missing anchor {target!r}")
     return errors, count
+
+
+def language_menu(page, variants):
+    directory = Path(page).parent
+    return " · ".join(
+        f"[{label}]({relpath(variants[lang], directory)})"
+        for lang, label in LOCALES.items()
+    )
+
+
+def page_locales(groups=DOCUMENTS):
+    return {
+        path: lang
+        for variants in groups
+        for lang, path in variants.items()
+    }
+
+
+SCRIPT_RANGES = {
+    "han": r"[\u3400-\u9fff]",
+    "kana": r"[\u3041-\u3096\u30a1-\u30fa]",
+    "cyrillic": r"[\u0400-\u052f]",
+    "arabic": r"[\u0600-\u06ff\u0750-\u077f]",
+}
+PRIMARY_SCRIPT = {"zh-CN": "han", "ja": "kana", "ru": "cyrillic", "fa": "arabic"}
+
+
+def check_prose_language(content, lang):
+    # Ignore code, link destinations and markup. A script check catches a
+    # copied translation, while terminology and meaning still need review.
+    body = re.sub(r"(\x60+).*?\1", "", prose(content))
+    body = re.sub(r"\]\([^)\n]+\)", "]", body)
+    body = re.sub(r"<[^>\n]+>", "", body)
+    letters = {
+        script: sum(unicodedata.category(c).startswith("L") for c in re.findall(pattern, body))
+        for script, pattern in SCRIPT_RANGES.items()
+    }
+    primary = PRIMARY_SCRIPT.get(lang)
+    if primary and letters[primary] < 8:
+        return f"body does not contain enough {lang} prose"
+    allowed = {"han", "kana"} if lang == "ja" else {primary}
+    for script, count in letters.items():
+        if script not in allowed and count >= 8:
+            return f"unexpected {script} prose in {lang} page"
+    return None
+
+
+def check_languages(root, groups=DOCUMENTS):
+    root = Path(root).resolve()
+    locales = page_locales(groups)
+    variants_by_path = {path: variants for variants in groups for path in variants.values()}
+    if groups is DOCUMENTS:
+        locales[ENGLISH_HOME_ALIAS] = "en"
+        variants_by_path[ENGLISH_HOME_ALIAS] = HOMEPAGES
+    errors = []
+    for rel, lang in locales.items():
+        path = root / rel
+        if not path.is_file():
+            errors.append(f"{rel}: missing {lang} translation")
+            continue
+        menu = language_menu(rel, variants_by_path[rel])
+        lines = path.read_text(encoding="utf-8").splitlines()
+        if lines.count(menu) != 1 or menu not in lines[:5]:
+            errors.append(f"{rel}: invalid five-language navigation")
+        body = "\n".join(line for line in lines if line != menu)
+        problem = check_prose_language(body, lang)
+        if problem:
+            errors.append(f"{rel}: {problem}")
+        for target in link_targets(body):
+            if target.startswith("UNDEFINED_REFERENCE:"):
+                continue
+            try:
+                dest = local_destination(root, path, urlsplit(unescape(target)))
+            except ValueError:
+                continue  # check_links reports malformed URLs
+            if dest is None or not dest.is_relative_to(root):
+                continue
+            dest_rel = dest.relative_to(root).as_posix()
+            target_lang = locales.get(dest_rel)
+            if target_lang and target_lang != lang:
+                desired = variants_by_path[dest_rel][lang]
+                errors.append(f"{rel}: {lang} link targets {target_lang} page {target!r}; use {desired}")
+    if groups is DOCUMENTS:
+        known = locales.keys() | CHANGELOGS | PACKAGE_NOTICES
+        for file in markdown_files(root):
+            rel = file.relative_to(root).as_posix()
+            if rel not in known:
+                errors.append(f"{rel}: add this page to the language inventory")
+    return errors
 
 
 def versions(root):
@@ -162,24 +341,30 @@ def check_versions(root):
     root = Path(root)
     standard, pro = versions(root)
     errors = []
-    for lang in LANGUAGES:
-        suffix = "." + lang if lang else ""
-        readme = root / ("README.md" if lang == "en" else ("docs/README.zh-CN.md" if not lang else f"docs/README{suffix}.md"))
-        log = root / f"docs/CHANGELOG{suffix}.md"
-        guide = root / f"docs/USER-GUIDE{suffix}.md"
-        for file in (readme, log, guide):
-            if not file.is_file():
-                errors.append(f"Missing language document: {file.relative_to(root)}")
-        if readme.exists():
-            lines = readme.read_text().splitlines()
-            rows = [line for line in lines if line.startswith("|") and re.search(r"\d+\.\d+\.\d+-\d+", line)]
-            if not rows or not all(f"\x60{x}\x60" in rows[0] for x in (standard, pro)):
-                errors.append(f"{readme.relative_to(root)}: current edition table must show {standard} / {pro}")
-        if log.exists():
-            heading = re.search(r"^## (.+)$", log.read_text(), re.M)
-            if not heading or not all(x in heading[1] for x in (standard, pro)):
-                errors.append(f"{log.relative_to(root)}: first release heading must show {standard} / {pro}")
-    pages = [root / "docs/USAGE.md", root / "docs/LINUX-AGENT-INSTALL.md"]
+    for rel in (*HOMEPAGES.values(), ENGLISH_HOME_ALIAS):
+        file = root / rel
+        if not file.is_file():
+            errors.append(f"Missing language document: {rel}")
+            continue
+        rows = [
+            line for line in file.read_text().splitlines()
+            if line.startswith("|") and re.search(r"\d+\.\d+\.\d+-\d+", line)
+        ]
+        if not rows or not all(f"\x60{x}\x60" in rows[0] for x in (standard, pro)):
+            errors.append(f"{rel}: current edition table must show {standard} / {pro}")
+    for rel in sorted(CHANGELOGS):
+        file = root / rel
+        if not file.is_file():
+            errors.append(f"Missing changelog: {rel}")
+            continue
+        content = file.read_text()
+        heading = re.search(r"^## (.+)$", content, re.M)
+        if not heading or not all(x in heading[1] for x in (standard, pro)):
+            errors.append(f"{rel}: first release heading must show {standard} / {pro}")
+        problem = check_prose_language(content, "en")
+        if problem:
+            errors.append(f"{rel}: {problem}")
+    pages = sorted(root.glob("docs/USAGE*.md")) + sorted(root.glob("docs/LINUX-AGENT-INSTALL*.md"))
     valid = expected_assets(standard, pro)
     artifact = re.compile(r"(?:luci-app-proxy-guard(?:-pro)?[_-][0-9][A-Za-z0-9._-]*\.(?:ipk|apk)|proxy-guard-source-[0-9][A-Za-z0-9._-]*\.tar\.gz)")
     for file in pages:
@@ -201,6 +386,21 @@ def check_release(root, release):
     names = {a.get("name") for a in release.get("assets", []) if isinstance(a, dict)}
     for missing in sorted(expected_assets(standard, pro) - names):
         errors.append(f"Stable Release missing asset: {missing}")
+    locales = page_locales()
+    locales[ENGLISH_HOME_ALIAS] = "en"
+    for target in link_targets(release.get("body") or ""):
+        url = urlsplit(unescape(target))
+        link = github_document(url)
+        if link and link[1].endswith(".md"):
+            ref, rel = link
+            if locales.get(rel) != "en" and rel not in CHANGELOGS:
+                errors.append(f"English Release links to a non-English document: {target}")
+            if ref == "main":
+                path = Path(root) / rel
+                if not path.is_file():
+                    errors.append(f"Release links to missing document: {target}")
+                elif url.fragment and unquote(url.fragment) not in anchor_ids(path.read_text()):
+                    errors.append(f"Release links to missing anchor: {target}")
     return errors
 
 
@@ -213,6 +413,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         errors, count = check_links(args.root)
+        errors += check_languages(args.root)
         errors += check_versions(args.root)
         if args.release_json:
             errors += check_release(args.root, json.loads(args.release_json.read_text()))
@@ -234,7 +435,10 @@ def main(argv=None):
         return 2
     for error in errors:
         print("ERROR:", error)
-    print(f"Checked {count} local references, five languages and source versions; {len(errors)} error(s).")
+    print(
+        f"Checked {len(DOCUMENTS)} five-language document sets, {count} local references, "
+        f"and source versions. {len(errors)} error(s)."
+    )
     return 1 if errors else 0
 
 

@@ -1,5 +1,7 @@
 # Cloudflare Worker 配套（Pro）
 
+[English](CLOUDFLARE-WORKER.en.md) · [简体中文](CLOUDFLARE-WORKER.md) · [日本語](CLOUDFLARE-WORKER.ja.md) · [Русский](CLOUDFLARE-WORKER.ru.md) · [فارسی](CLOUDFLARE-WORKER.fa.md)
+
 Worker 为 Pro 提供设备认证、家庭公网地址观察和策略转发，使用 Agent v3 协议。部署时需要兼容的 Pro 扩展和 VPS Agent。一个 Worker 对应一组设备身份和一个固定 `VPS_API` 绑定。
 
 ## 可复现的依赖和离线检查
@@ -66,4 +68,6 @@ Agent 同步确认按应用防火墙后的实际剩余单调时钟租期计算 e
 
 ## 只读出口候选接口
 
-`POST /v1/egress-info` 使用现有设备 Bearer 及非空 JSON `{ "device_id": "home" }`，只转发到固定 VPS_API 的同名 HMAC 接口。来源仅为 interface/panel/measured，未知内部字段不导出；空候选、过期及歧义以带警告的快照返回，不能自动写成预期出口。测量默认关闭，接口不续租、不记控制心跳、不确认配置。旧 Agent 返回 501 `egress_info_unsupported`。接口协议、固定测量目标和集成方式见 [Agent 接口说明](VPS-EGRESS-INFO.md)。
+`POST /v1/egress-info` 使用现有设备 Bearer 及非空 JSON `{ "device_id": "home" }`，只转发到固定 VPS_API 的同名 HMAC 接口。来源仅为 interface/panel/measured，未知内部字段不导出；空候选、过期及歧义以带警告的快照返回，不能自动写成预期出口。测量默认关闭，接口不续租、不记控制心跳、不确认配置。旧 Agent 返回 501 `egress_info_unsupported`。接口协议、固定测量目标和集成方式见 [Agent 接口说明](VPS-EGRESS-INFO.zh-CN.md)。
+
+[Worker 目录指南](../companion/worker/README.zh-CN.md)

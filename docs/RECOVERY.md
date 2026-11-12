@@ -1,5 +1,7 @@
 # 故障救援
 
+[English](RECOVERY.en.md) · [简体中文](RECOVERY.md) · [日本語](RECOVERY.ja.md) · [Русский](RECOVERY.ru.md) · [فارسی](RECOVERY.fa.md)
+
 适用于普通版 `0.3.0-21` 与 Pro `0.3.1-5`。先区分**路由器上的本地保护**和 **VPS 上的远端策略**；停用一端不会自动撤销另一端。
 
 本页的路由器停用与确认超时步骤已在 OpenWrt 24.10.8 隔离 VM 验证，VPS 卸载路径在 Ubuntu、Alpine 隔离 VM 及此前四发行版生命周期测试中验证。其他固件、损坏的文件系统和厂商恢复模式不能据此推定适用。测试范围见[矩阵](TEST-MATRIX.md)。

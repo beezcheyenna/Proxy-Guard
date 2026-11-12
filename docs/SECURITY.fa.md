@@ -1,8 +1,8 @@
-[简体中文](SECURITY.md) · [English](SECURITY.en.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
+# گزارش آسیب‌پذیری‌های امنیتی
+
+[English](SECURITY.en.md) · [简体中文](SECURITY.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
 
 <div dir="rtl" lang="fa">
-
-# گزارش آسیب‌پذیری‌های امنیتی
 
 **ایمیل گزارش امنیتی: [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com)**
 
@@ -33,6 +33,8 @@
 
 گزارش عادی در مخزن عمومی با علامت‌زدن گزینهٔ تأیید خصوصی نمی‌شود. مستندات و قالب‌ها فقط روند گزارش را هدایت می‌کنند؛ نمی‌توانند تضمین کنند هیچ‌کس اطلاعاتی منتشر نکند یا جای حفاظت خود VPS را بگیرند.
 
-[حریم خصوصی](PRIVACY.md)، [سلب ضمانت و خطرها](DISCLAIMER.fa.md) و [صفحهٔ اصلی](README.fa.md) را ببینید.
+[حریم خصوصی](PRIVACY.fa.md)، [سلب ضمانت و خطرها](DISCLAIMER.fa.md) و [صفحهٔ اصلی](README.fa.md) را ببینید.
+
+</div>
 
 </div>

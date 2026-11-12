@@ -1,6 +1,6 @@
 # Reporting security vulnerabilities
 
-[简体中文](SECURITY.md) · [English](SECURITY.en.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
+[English](SECURITY.en.md) · [简体中文](SECURITY.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
 
 **Security contact: [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com)**
 
@@ -31,4 +31,4 @@ The project currently promises no fixed response time, remediation deadline or b
 
 A normal issue form in a public repository does not become private when an acknowledgment box is checked. Documentation and templates guide reporting; they cannot guarantee that nobody publishes details or replace VPS security controls.
 
-See [privacy and redaction](PRIVACY.md), the [disclaimer](DISCLAIMER.en.md) and the [project homepage](README.en.md).
+See [privacy and redaction](PRIVACY.en.md), the [disclaimer](DISCLAIMER.en.md) and the [project homepage](../README.md).

@@ -1,5 +1,7 @@
 # Read-only IPv4 egress candidates (schema 1)
 
+[English](VPS-EGRESS-INFO.md) · [简体中文](VPS-EGRESS-INFO.zh-CN.md) · [日本語](VPS-EGRESS-INFO.ja.md) · [Русский](VPS-EGRESS-INFO.ru.md) · [فارسی](VPS-EGRESS-INFO.fa.md)
+
 This endpoint provides advisory evidence for the setup wizard. It never chooses or writes an expected IPv4, applies a policy, renews a household lease, notes an SSH control/proxy heartbeat, performs maintenance, or confirms/extends a pending configuration rollback. A network-interface address, a panel bind hint and a host-default-route source-IP observation are different evidence. They do not establish the selected proxy business path.
 
 ## API

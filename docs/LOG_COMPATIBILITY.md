@@ -1,5 +1,7 @@
 # Runtime log compatibility
 
+[English](LOG_COMPATIBILITY.md) · [简体中文](LOG_COMPATIBILITY.zh-CN.md) · [日本語](LOG_COMPATIBILITY.ja.md) · [Русский](LOG_COMPATIBILITY.ru.md) · [فارسی](LOG_COMPATIBILITY.fa.md)
+
 The LuCI interface supports Simplified Chinese, English, Japanese, Russian and Persian. **The interface language does not determine the language of upstream runtime logs.** Recognition follows the verified messages and formats of each supported client.
 
 ## Reviewed clients and messages
@@ -36,7 +38,7 @@ Timestamps are interpreted in the router's local time zone. The schedule's fixed
 
 The reader processes at most 64 KiB per round and supports CRLF, partial lines, truncation and rotation. Unknown formats, invalid or future timestamps and missing logs require attention. Polling cannot observe rule deletion before its message is written, and short changes between samples can be missed.
 
-Service monitoring and connectivity checks remain separate. Matching a log message does not prove that a process, listener or proxy route is healthy. See [compatibility](COMPATIBILITY.md) and [detection behavior](USAGE.md).
+Service monitoring and connectivity checks remain separate. Matching a log message does not prove that a process, listener or proxy route is healthy. See [compatibility](COMPATIBILITY.en.md) and [detection behavior](USAGE.en.md).
 
 ## Source material and regression fixtures
 

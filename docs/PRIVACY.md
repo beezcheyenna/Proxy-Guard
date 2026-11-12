@@ -1,6 +1,6 @@
 # 联网与公开材料的隐私
 
-[简体中文](PRIVACY.md) · [English](PRIVACY.en.md) · [日本語](PRIVACY.ja.md) · [Русский](PRIVACY.ru.md) · [فارسی](PRIVACY.fa.md)
+[English](PRIVACY.en.md) · [简体中文](PRIVACY.md) · [日本語](PRIVACY.ja.md) · [Русский](PRIVACY.ru.md) · [فارسی](PRIVACY.fa.md)
 
 ## 联网行为
 
@@ -11,6 +11,8 @@
 服务进程、监听端口、接口与运行日志监视是本机读取。它们不等于持续向维护者发送数据。频率还受到等待、增强监测、请求超时与普通轮询间隔影响，不承诺固定的公网请求总数。
 
 Pro 使用用户自己配置的控制入口。Cloudflare、自己的 VPS 或直接 HTTPS 入口会接触相应的连接来源、认证请求和状态；控制链路与独立代理路径心跳分别配置。默认控制配置采用 IPv4，家庭授权地址属于敏感运营数据。
+
+可选的 VPS 出口测量默认关闭。启用后，Agent 从 VPS 默认 IPv4 路由请求 ipify。该服务能看到请求的来源地址和时间。详见[出口候选接口](VPS-EGRESS-INFO.zh-CN.md)。
 
 本源码没有预填可用的账户、Worker/VPC 资源 ID 或个人出口地址。示例中的服务名与占位符必须由部署者自行替换。详见[Pro 配套](PRO-COMPANION.md)。
 

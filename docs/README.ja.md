@@ -4,7 +4,7 @@
 
 **プロキシ障害時に、保護対象端末の意図しない直接接続を防ぐ。**
 
-**対応プロキシクライアント：** PassWall · PassWall2 · OpenClash · Nikki · HomeProxy。[対応バージョンと動作モード](COMPATIBILITY.md)を確認してください。
+**対応プロキシクライアント：** PassWall · PassWall2 · OpenClash · Nikki · HomeProxy。[対応バージョンと動作モード](COMPATIBILITY.ja.md)を確認してください。
 
 Proxy Guard は OpenWrt / iStoreOS 向けのプロキシ接続保護プラグインです。保護を有効にすると、プロキシ障害の確認後に対象端末のインターネット通信を自動で遮断し、意図しない直接接続や実際の IP アドレスが露出するリスクを抑えます。復旧の検証に合格してから通信を再開します。
 
@@ -23,7 +23,7 @@ Proxy Guard は OpenWrt / iStoreOS 向けのプロキシ接続保護プラグイ
 | VPS の自宅 IP 認可と指定ポートルール | — | 対応 |
 | 緊急 SSH とリモート保守 | — | 個別の有効化と認可が必要 |
 
-ダウンロード：[GitHub Releases](https://github.com/beezcheyenna/Proxy-Guard/releases) · [インストールガイド](USER-GUIDE.ja.md#guide-setup) · [更新履歴](CHANGELOG.ja.md)
+ダウンロード：[GitHub Releases（英語）](https://github.com/beezcheyenna/Proxy-Guard/releases) · [インストールガイド](USER-GUIDE.ja.md#guide-setup) · [更新履歴（英語）](CHANGELOG.md)
 
 > **Pro の利用に関する注意：** 一般的な用途には通常版をおすすめします。VPS のアクセス制御など、特別な用途がない場合は Pro の導入をおすすめしません。
 
@@ -59,21 +59,21 @@ Proxy Guard は OpenWrt / iStoreOS 向けのプロキシ接続保護プラグイ
 - IPK と APK には互換性がありません。fw3/iptables のみのシステムには対応しません。フローオフロード、ブリッジフィルタリング、プロキシコアの制限は互換性ガイドを確認してください。
 - Pro は明示的に選択した VPS 本体のサービスポートだけを管理します。SSH は個別設定で、未選択ポートには既存のファイアウォールが適用されます。
 
-インストール、更新、画面操作、障害時の遮断と復旧、IPv4/IPv6、コールドスタートの機能テストを実施しています。まず端末 1 台の実際の通信経路を確認してから対象を広げてください。要件と既知の制限は[互換性](COMPATIBILITY.md)をご覧ください。
+インストール、更新、画面操作、障害時の遮断と復旧、IPv4/IPv6、コールドスタートの機能テストを実施しています。まず端末 1 台の実際の通信経路を確認してから対象を広げてください。要件と既知の制限は[互換性](COMPATIBILITY.ja.md)をご覧ください。
 
 <a id="guide-docs"></a>
 
 ## ドキュメント
 
 - [ユーザーガイド](USER-GUIDE.ja.md)
-- [インストール・更新・削除](USAGE.md)
-- [互換性](COMPATIBILITY.md)
-- [詳細なテストマトリクス](TEST-MATRIX.md)
-- [障害時の復旧](RECOVERY.md)
-- [Linux Agent の導入](LINUX-AGENT-INSTALL.md)
-- [Cloudflare 連携](CLOUDFLARE-WORKER.md)
-- [ログの互換性](LOG_COMPATIBILITY.md)
-- [ソースからのビルド](BUILDING.md)
+- [インストール・更新・削除](USAGE.ja.md)
+- [互換性](COMPATIBILITY.ja.md)
+- [詳細なテストマトリクス](TEST-MATRIX.ja.md)
+- [障害時の復旧](RECOVERY.ja.md)
+- [Linux Agent の導入](LINUX-AGENT-INSTALL.ja.md)
+- [Cloudflare 連携](CLOUDFLARE-WORKER.ja.md)
+- [ログの互換性](LOG_COMPATIBILITY.ja.md)
+- [ソースからのビルド](BUILDING.ja.md)
 
 ## ライセンスとサポート
 
@@ -81,6 +81,6 @@ Proxy Guard は OpenWrt / iStoreOS 向けのプロキシ接続保護プラグイ
 
 **本プロジェクトは、開発・テスト・技術研究を想定しています。** 許可を得た機器とネットワークで使用し、利用先・導入先で適用される法令を守ってください。ソフトウェアは既存の [MIT ライセンス](../LICENSE)に基づき「現状のまま」提供され、すべての状況への適合を保証しません。リスクと責任は、適用されるライセンスと法令に従います。本説明は既存のライセンスを変更せず、法令上排除できない責任を排除しません。
 
-[セキュリティ方針](SECURITY.ja.md) · [免責事項](DISCLAIMER.ja.md) · [プライバシー](PRIVACY.ja.md) · [第三者ソフトウェアの表示](THIRD_PARTY_NOTICES.md)
+[セキュリティ方針](SECURITY.ja.md) · [免責事項](DISCLAIMER.ja.md) · [プライバシー](PRIVACY.ja.md) · [第三者ソフトウェアの表示](THIRD_PARTY_NOTICES.ja.md)
 
-[貢献方法](../CONTRIBUTING.md)
+[貢献方法](CONTRIBUTING.ja.md)

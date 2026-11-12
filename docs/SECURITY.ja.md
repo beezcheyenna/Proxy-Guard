@@ -1,6 +1,6 @@
 # セキュリティ上の脆弱性の報告
 
-[简体中文](SECURITY.md) · [English](SECURITY.en.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
+[English](SECURITY.en.md) · [简体中文](SECURITY.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
 
 **報告先：[beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com)**
 
@@ -31,4 +31,4 @@ VPS へのアクセス、プロキシポートのポリシー、緊急 SSH、認
 
 公開リポジトリの通常の Issue は、確認欄にチェックしても非公開にはなりません。文書とテンプレートは報告方法を案内するもので、情報の公開を完全に防いだり、VPS 自体のセキュリティ対策を代替したりするものではありません。
 
-[プライバシー](PRIVACY.md)・[免責事項](DISCLAIMER.ja.md)・[プロジェクトのホーム](README.ja.md)もご確認ください。
+[プライバシー](PRIVACY.ja.md)・[免責事項](DISCLAIMER.ja.md)・[プロジェクトのホーム](README.ja.md)もご確認ください。

@@ -1,5 +1,7 @@
 # Linux VPS Agent 安装（Pro 配套）
 
+[English](LINUX-AGENT-INSTALL.en.md) · [简体中文](LINUX-AGENT-INSTALL.md) · [日本語](LINUX-AGENT-INSTALL.ja.md) · [Русский](LINUX-AGENT-INSTALL.ru.md) · [فارسی](LINUX-AGENT-INSTALL.fa.md)
+
 精确的发行版、内核、架构、客户端版本、测试日期与未验收范围见[测试矩阵](TEST-MATRIX.md)。
 
 普通版无需安装本组件。使用 Pro 的远程功能时，需要路由器上的基础包和 Pro 扩展，以及 Linux VPS 上的 Agent。控制链路可选**直接 HTTPS**，或 **Cloudflare Worker 与 Tunnel/VPC**；Cloudflare 并非必需。
@@ -214,3 +216,5 @@ sh ./uninstall.sh --remove
 ```
 
 卸载只移除本组件的服务和专属规则，保留配置、密钥和程序；不会刷新系统全部防火墙。详见 [Pro 配套说明](PRO-COMPANION.md)。
+
+[VPS Agent 目录指南](../companion/vps/README.zh-CN.md)

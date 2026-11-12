@@ -1,5 +1,7 @@
 # Pro VPS Agent 与控制链路
 
+[English](PRO-COMPANION.en.md) · [简体中文](PRO-COMPANION.md) · [日本語](PRO-COMPANION.ja.md) · [Русский](PRO-COMPANION.ru.md) · [فارسی](PRO-COMPANION.fa.md)
+
 Pro 的 Linux VPS Agent 与可选 Cloudflare Worker 源码位于仓库的 `companion/` 目录。远程功能支持直接 HTTPS，或 Cloudflare Worker 与 Tunnel/VPC 控制链路；组件须另行部署，不随路由器安装包自动安装。当前路由器包版本为普通版 `0.3.0-21`、Pro `0.3.1-5`；配套协议和 Worker 工具项目的版本独立编号。
 
 ## 准备与安装
@@ -41,7 +43,7 @@ sudo sh vps/uninstall.sh --remove
 - 标准（默认）：对未知来源按来源 IP、目的端口和协议限制新连接速率及并发连接；家庭或静态来源的豁免取决于该规则的来源模式，可信认证业务按既有策略处理。选择“所有来源”仍会执行标准限制；正常的大流量不等于滥用。
 - 观察：记录所选代理端口的事件，不拦截这些端口。单独开启的 SSH 托管仍按其自身配置工作。
 
-直接 HTTPS 配对时，在 LuCI 选择直接 HTTPS 控制，填写 Agent 根地址、`device_id`，并将 `direct_token` 填入“设备密钥”。两种控制链路均须绕过代理，并由用户确认直连分流；插件不自动调整分流。Agent 使用请求的实际来源；动态授权默认900秒、同步300秒，停止同步后内核按时过期。默认管理/授权配置采用 IPv4；可选 IPv6 行为依配置和链路另行验证，不据此声明 IPv6 云端控制链路已验收。静态规则不受动态租期影响。
+直接 HTTPS 配对时，在 LuCI 选择直接 HTTPS 控制，填写 Agent 根地址、`device_id`，并将 `direct_token` 填入“设备密钥”。两种控制链路均须绕过代理，并由用户确认直连分流；插件不自动调整分流。直连 HTTPS 由 Agent 读取真实来源 IP。Cloudflare 模式由 Worker 观察来源并签名转发给 Agent。动态授权默认900秒、同步300秒，停止同步后内核按时过期。默认管理/授权配置采用 IPv4；可选 IPv6 行为依配置和链路另行验证，不据此声明 IPv6 云端控制链路已验收。静态规则不受动态租期影响。
 
 可选远端健康条件默认关闭。报告缺失、过期或服务异常时不发放本地联网许可；恢复还须通过原有 SOCKS 外网核验。服务监听存在不能替代真实业务请求。
 

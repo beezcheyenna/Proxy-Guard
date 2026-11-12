@@ -4,7 +4,7 @@
 
 **Block unintended direct connections from protected devices when the proxy fails.**
 
-**Supported proxy clients:** PassWall · PassWall2 · OpenClash · Nikki · HomeProxy. See [version and mode compatibility](COMPATIBILITY.md).
+**Supported proxy clients:** PassWall · PassWall2 · OpenClash · Nikki · HomeProxy. See [version and mode compatibility](COMPATIBILITY.en.md).
 
 Proxy Guard protects proxy connections on OpenWrt / iStoreOS. With protection enabled, a confirmed proxy failure automatically blocks Internet traffic from selected devices, reducing the risk of unintended direct connections and exposure of your real IP. Access resumes after recovery checks pass.
 
@@ -23,7 +23,7 @@ Standard provides proxy connection protection on the router without cloud compon
 | VPS household IP authorization and selected-port rules | — | Included |
 | Emergency SSH and remote maintenance | — | Separate opt-in and authorization |
 
-Download: [GitHub Releases](https://github.com/beezcheyenna/Proxy-Guard/releases) · [Installation guide](USER-GUIDE.en.md#guide-setup) · [Changelog](CHANGELOG.en.md)
+Download: [GitHub Releases](https://github.com/beezcheyenna/Proxy-Guard/releases) · [Installation guide](USER-GUIDE.en.md#guide-setup) · [Changelog](CHANGELOG.md)
 
 > **Choosing Pro:** Most users should use Standard. Pro is not recommended unless you have a specific need for VPS access control or its other advanced features.
 
@@ -59,21 +59,21 @@ The router requires **opkg or apk, LuCI and firewall4/nftables**. The package fo
 - IPK and APK packages are not interchangeable. Systems with only fw3/iptables are unsupported. See the compatibility guide for flow offloading, bridge filtering and proxy-core limitations.
 - Pro manages explicitly selected VPS local service ports. SSH is configured separately; unselected ports remain subject to the existing firewall.
 
-Installation, upgrades, UI behavior, failure blocking and recovery, IPv4/IPv6 and cold startup have been tested. Start with one client and verify its actual path before expanding the scope. See [compatibility](COMPATIBILITY.md) for requirements and known limitations.
+Installation, upgrades, UI behavior, failure blocking and recovery, IPv4/IPv6 and cold startup have been tested. Start with one client and verify its actual path before expanding the scope. See [compatibility](COMPATIBILITY.en.md) for requirements and known limitations.
 
 <a id="guide-docs"></a>
 
 ## Documentation
 
 - [Full user guide](USER-GUIDE.en.md)
-- [Installation, upgrades and removal](USAGE.md)
-- [Compatibility](COMPATIBILITY.md)
-- [Exact test matrix](TEST-MATRIX.md)
-- [Recovery](RECOVERY.md)
-- [Linux Agent installation](LINUX-AGENT-INSTALL.md)
-- [Cloudflare companion](CLOUDFLARE-WORKER.md)
+- [Installation, upgrades and removal](USAGE.en.md)
+- [Compatibility](COMPATIBILITY.en.md)
+- [Exact test matrix](TEST-MATRIX.en.md)
+- [Recovery](RECOVERY.en.md)
+- [Linux Agent installation](LINUX-AGENT-INSTALL.en.md)
+- [Cloudflare companion](CLOUDFLARE-WORKER.en.md)
 - [Log compatibility](LOG_COMPATIBILITY.md)
-- [Building from source](BUILDING.md)
+- [Building from source](BUILDING.en.md)
 
 ## License and support
 
