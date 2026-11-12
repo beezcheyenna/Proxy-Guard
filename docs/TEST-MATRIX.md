@@ -51,7 +51,7 @@ ImmortalWrt 25.12 的 OpenClash redirect 首轮在启用保护前的 IPv6 TCP �
 | PassWall / Hysteria2 | 2.13.0 | ImmortalWrt 24.10.6 / 25.12.2，2026-11-11 | 原生程序、支持路径的阻断与恢复已验证 |
 | PassWall / Shadowsocks-Rust | 1.25.0 | ImmortalWrt 24.10.6 / 25.12.2，2026-11-11 | 已验证；默认 IPv4 监听不代表 IPv6 代理通过 |
 | PassWall / NaiveProxy | 154.0.8037.49，包修订 r5；ImmortalWrt 25 包为 154.0.8037.49.5-r1 | ImmortalWrt 24.10.6 / 25.12.2，2026-11-11 | HTTPS、QUIC 支持路径已验证；不提供 UDP 代理 |
-| PassWall / sing-box ShadowTLS v3 客户端 → 原生 ShadowTLS 服务端 | sing-box 1.14.4；shadow-tls 0.2.25 | ImmortalWrt 24.10.6、OpenWrt 25.12.6，2026-11-11 | 实际 TCP 通流、链路故障阻断、恢复与增强监测通过；使用有效私有测试 CA，未关闭 TLS 校验 |
+| PassWall / sing-box ShadowTLS v3 客户端 → 原生 ShadowTLS 服务端 | sing-box 1.14.4；shadow-tls 0.2.25 | ImmortalWrt 24.10.6、ImmortalWrt 25.12.2，2026-11-11 | 实际 TCP 通流、链路故障阻断、恢复与增强监测通过；使用有效私有测试 CA，未关闭 TLS 校验 |
 | 原生 ShadowTLS 客户端 | shadow-tls 0.2.25 | 同上 | **端到端未验收**：官方内置根不信任该私有测试 CA，不能用 sing-box 结果代替 |
 | Xray SOCKS5 UDP 多个并发关联 | Xray 26.11.9 | 不安装 Proxy Guard 的对照环境，2026-11-11 | **已复现上游临时 UDP 端口冲突**；该组合不能列为稳定 UDP 代理通过 |
 
