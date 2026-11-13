@@ -9,7 +9,7 @@ if action=='supervise' or action=='recovery_check' then
     print(json.stringify(ok and value or {ok=false,error='自检执行异常'}))
     os.exit(ok and value.ok~=false and 0 or 1)
 end
-local allowed={tick=true,apply=true,status=true,logs=true,clear_logs=true,stop=true,cleanup=true,maintenance=true}
+local allowed={tick=true,apply=true,status=true,logs=true,clear_logs=true,stop=true,cleanup=true}
 if not allowed[action] then io.stderr:write('Unsupported action\n'); os.exit(2) end
 local worker
 local ok,result=pcall(function()

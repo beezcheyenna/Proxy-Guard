@@ -5,8 +5,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this form for public documentation feedback only. Security reports: beezcheyenna268@gmail.com.
-        此表单仅用于公开文档反馈；安全问题请先发邮件。
+        Use this form for public documentation feedback only. Security reports: https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md.
+        此表单仅用于公开文档反馈；安全问题请按安全政策私下报告。
   - type: input
     id: page
     attributes:

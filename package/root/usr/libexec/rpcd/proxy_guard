@@ -2,9 +2,23 @@
 package.path='/usr/lib/?.lua;'..package.path
 local json=require 'luci.jsonc'
 local core=require 'proxy-guard.core'
-local methods={raw_info={},raw_parse={},status={},logs={},apply={},clear_logs={},preflight={},setup_info={},setup_discover={},setup_confirm={},setup_cancel={},setup_previous={},setup_claim={}}
-if arg[1]=='list' then print('{"raw_info":{"ubus_rpc_session":""},"raw_parse":{"ubus_rpc_session":"","text":"","token":""},"status":{},"logs":{},"apply":{"ubus_rpc_session":"","confirm_flow":false,"raw_token":""},"clear_logs":{},"preflight":{"draft":""},"setup_info":{"ubus_rpc_session":""},"setup_discover":{"proxy_client":""},"setup_confirm":{"ubus_rpc_session":"","id":"","token":""},"setup_cancel":{"ubus_rpc_session":"","id":"","token":""},"setup_previous":{},"setup_claim":{"ubus_rpc_session":""}}'); os.exit(0) end
+local methods={api_credentials={},raw_info={},raw_parse={},status={},logs={},apply={},clear_logs={},preflight={},test_proxy={},run_diagnostics={},setup_info={},setup_discover={},setup_confirm={},setup_cancel={},setup_previous={},setup_claim={}}
+if arg[1]=='list' then print('{"api_credentials":{"ubus_rpc_session":""},"raw_info":{"ubus_rpc_session":""},"raw_parse":{"ubus_rpc_session":"","text":"","token":""},"status":{},"logs":{"ubus_rpc_session":""},"apply":{"ubus_rpc_session":"","confirm_flow":false,"raw_token":""},"clear_logs":{},"preflight":{"draft":""},"test_proxy":{"ubus_rpc_session":"","draft":""},"run_diagnostics":{"ubus_rpc_session":""},"setup_info":{"ubus_rpc_session":""},"setup_discover":{"proxy_client":""},"setup_confirm":{"ubus_rpc_session":"","id":"","token":""},"setup_cancel":{"ubus_rpc_session":"","id":"","token":""},"setup_previous":{},"setup_claim":{"ubus_rpc_session":""}}'); os.exit(0) end
 if arg[1]~='call' or not methods[arg[2]] then print('{}'); os.exit(1) end
+if arg[2]=='api_credentials' or arg[2]=='logs' then
+    local good,request=pcall(json.parse,io.read(4097) or '{}')
+    local allowed=good and type(request)=='table' and
+        pcall(require('proxy-guard.extensions').luci_owner,request,'api_credentials')
+    if arg[2]=='api_credentials' then
+        local auth=require 'proxy-guard.api-auth'
+        local enabled=allowed and auth.enabled()
+        print(json.stringify(allowed and {ok=true,enabled=enabled,uuid=enabled and auth.current() or nil}
+            or {ok=false,error='access_denied'}))
+    else
+        print(json.stringify(require('proxy-guard.worker').logs(allowed)))
+    end
+    os.exit(0)
+end
 if arg[2]=='raw_info' or arg[2]=='raw_parse' then
     local ok,result=pcall(function()
         local raw=require 'proxy-guard.raw'
@@ -18,6 +32,10 @@ end
 if arg[2]=='apply' or arg[2]:match('^setup_') then
     if arg[2]=='apply' and io.open('/var/run/proxy-guard/removing','r') then print('{"ok":false,"error":"setup_removing"}');os.exit(1) end
     local rc=os.execute('umask 077; mkdir -p /var/lock; exec ucode /usr/lib/proxy-guard/setup-lock.uc '..core.quote(arg[2]));os.exit(rc==0 and 0 or 1)
+end
+if arg[2]=='test_proxy' or arg[2]=='run_diagnostics' then
+    local rc=os.execute('umask 077; mkdir -p /var/lock /var/run/proxy-guard && chmod 700 /var/run/proxy-guard && exec ucode /usr/lib/proxy-guard/extension-lock.uc '..core.quote(arg[2]))
+    os.exit(rc==0 and 0 or 1)
 end
 if arg[2]=='preflight' then
     local good,request=pcall(json.parse,io.read(20001) or '')

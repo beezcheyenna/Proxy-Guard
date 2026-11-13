@@ -74,14 +74,56 @@ msgstr "؛ دفعات شروع دوبارهٔ انتظار: "
 msgid "; waiting to restore access"
 msgstr "؛ در انتظار برقراری دسترسی"
 
+msgid "A diagnostic request is already running"
+msgstr "یک درخواست عیب‌یابی در حال اجراست"
+
 msgid "A package operation is in progress. Try again when it finishes."
 msgstr "عملیات بسته در حال انجام است. پس از پایان آن دوباره تلاش کنید."
+
+msgid "A proxy test is already running"
+msgstr "یک آزمایش پراکسی در حال اجراست"
 
 msgid "A required proxy client service stopped or restarted; protection triggered"
 msgstr "سرویس لازم کلاینت پراکسی متوقف یا دوباره راه‌اندازی شد؛ حفاظت فعال شد"
 
+msgid "API UUID"
+msgstr "UUID رابط API"
+
+msgid "API block cancellation request"
+msgstr "درخواست لغو مسدودی از طریق API"
+
+msgid "API block request withdrawn"
+msgstr "درخواست مسدودسازی API پس گرفته شد"
+
+msgid "API block state could not be reconciled"
+msgstr "تطبیق وضعیت قطع API ممکن نشد"
+
+msgid "API diagnostic request"
+msgstr "درخواست عیب‌یابی از طریق API"
+
+msgid "API refresh endpoint"
+msgstr "نشانی تازه‌سازی API"
+
+msgid "API status query"
+msgstr "درخواست وضعیت از طریق API"
+
+msgid "API timed block is active"
+msgstr "قطع موقت اینترنت از طریق API فعال است"
+
+msgid "API timed block request"
+msgstr "درخواست مسدودی مدت‌دار از طریق API"
+
+msgid "API timed block requested"
+msgstr "درخواست مسدودسازی موقت API ثبت شد"
+
 msgid "Accepts a plain-text IPv4 address or a Cloudflare trace response containing ip and colo. Requests always use the local SOCKS proxy; an unreachable service or unexpected exit counts as a failure."
 msgstr "پاسخ باید IPv4 متنی یا پاسخ trace مربوط به Cloudflare با فیلدهای ip و colo باشد. درخواست‌ها همیشه از SOCKS محلی عبور می‌کنند؛ در دسترس نبودن سرویس یا متفاوت‌بودن خروجی، شکست محسوب می‌شود."
+
+msgid "Access Client ID"
+msgstr "شناسه کارخواه Access"
+
+msgid "Access Client Secret"
+msgstr "کلید محرمانه کارخواه Access"
 
 msgid "Access is allowed during enhanced monitoring; a failure blocks it again"
 msgstr "هنگام پایش دقیق، دسترسی مجاز است؛ بروز اختلال آن را دوباره مسدود می‌کند"
@@ -98,8 +140,20 @@ msgstr "شرایط برقراری دسترسی"
 msgid "Activation parameters are valid. The runtime environment is checked when applying."
 msgstr "پارامترهای فعال‌سازی معتبر هستند. محیط اجرا هنگام اعمال بررسی می‌شود."
 
+msgid "Active block reasons"
+msgstr "دلایل فعال مسدودسازی"
+
+msgid "Active block requests:"
+msgstr "درخواست‌های فعال قطع: "
+
 msgid "Active kernel flowtables"
 msgstr "جدول‌های فعال تخلیهٔ جریان در هسته"
+
+msgid "Active timed block requests: %s"
+msgstr "درخواست‌های فعال قطع موقت اینترنت: %s"
+
+msgid "Advanced diagnostics"
+msgstr "عیب‌یابی پیشرفته"
 
 msgid "After recovery, allow Internet access while checking at one-second intervals during observation. Any failure blocks access and restarts the delay. Disabling observation still requires the original recovery checks."
 msgstr "پس از بازیابی، دسترسی به اینترنت برقرار می‌شود و در دورهٔ پایش دقیق، بررسی‌ها با فاصلهٔ یک ثانیه انجام می‌شوند. هر خطا دسترسی را مسدود می‌کند و دورهٔ انتظار را از نو آغاز می‌کند. غیرفعال‌کردن این دوره، بررسی‌های معمول بازیابی را حذف نمی‌کند."
@@ -118,6 +172,9 @@ msgstr "توقف یا راه‌اندازی مجدد هر سه سرویس"
 
 msgid "All three services stopped"
 msgstr "هر سه سرویس متوقف شد"
+
+msgid "Allow detailed public diagnostics"
+msgstr "اجازهٔ عیب‌یابی تفصیلی سرویس عمومی"
 
 msgid "Allowed LAN IPv4 networks"
 msgstr "شبکه‌های IPv4 مجاز در شبکهٔ محلی"
@@ -209,6 +266,9 @@ msgstr "قبلی"
 msgid "Backup HTTPS URL for exit verification"
 msgstr "نشانی پشتیبان HTTPS برای اعتبارسنجی خروجی"
 
+msgid "Basic response"
+msgstr "پاسخ پایه"
+
 msgid "Block Internet access on proxy failure"
 msgstr "مسدود کردن دسترسی به اینترنت هنگام اختلال پراکسی"
 
@@ -296,6 +356,9 @@ msgstr "خواندن وضعیت یا گزارش‌های افزونه ممکن �
 msgid "Cannot read status; protection cannot be confirmed:"
 msgstr "نمی توان وضعیت را خواند؛ حفاظت را نمی توان تایید کرد: "
 
+msgid "Cannot read the current API UUID"
+msgstr "خواندن UUID فعلی API ممکن نیست"
+
 msgid "Cannot read this session's plugin configuration"
 msgstr "خواندن پیکربندی افزونه برای این نشست ممکن نیست"
 
@@ -353,6 +416,9 @@ msgstr "قالب مقصد بررسی باید https://domain/path|status_code ب
 msgid "Check targets require an HTTPS domain without credentials or custom ports"
 msgstr "مقصد بررسی باید دامنهٔ HTTPS بدون اطلاعات ورود یا درگاه سفارشی باشد"
 
+msgid "Check the connection settings and try again"
+msgstr "تنظیمات اتصال را بررسی و دوباره تلاش کنید"
+
 msgid "Check the selected client every second using its configured TCP, UDP and DNS capabilities. Unconfigured capabilities are shown separately. Keep the existing real proxy checks and preserve router, LAN and DNS access."
 msgstr "کلاینت انتخابی هر ثانیه بر اساس قابلیت‌های پیکربندی‌شدهٔ TCP، UDP و DNS بررسی می‌شود. قابلیت‌های پیکربندی‌نشده جدا نمایش داده می‌شوند. بررسی واقعی پراکسی همچنان انجام می‌شود و دسترسی خود روتر، شبکهٔ محلی و DNS حفظ می‌شود."
 
@@ -371,14 +437,26 @@ msgstr "بررسی‌ها و گزارش‌گیری"
 msgid "Choose IPv6 scope"
 msgstr "محدودهٔ IPv6 را انتخاب کنید"
 
+msgid "Choose a connection check method. Both methods use the local SOCKS proxy. Changes take effect after Save & Apply."
+msgstr "روش بررسی اتصال را انتخاب کنید. هر دو روش از پراکسی محلی SOCKS استفاده می‌کنند. تغییرات پس از ذخیره و اعمال فعال می‌شوند."
+
 msgid "Choose an IPv6 protection scope explicitly."
 msgstr "محدودهٔ حفاظت IPv6 را به‌طور مشخص انتخاب کنید."
 
 msgid "Choose any combination of days. An overnight window belongs to its start day: Monday 23:00–01:00 continues into Tuesday morning."
 msgstr "هر ترکیبی از روزها را انتخاب کنید. بازهٔ عبوری از نیمه‌شب متعلق به روز آغاز است؛ مثلاً دوشنبه 23:00–01:00 تا صبح سه‌شنبه ادامه دارد."
 
+msgid "Choose one detection mode. All checks use the local SOCKS proxy. A mode change takes effect only after Save and Apply."
+msgstr "یک حالت بررسی را انتخاب کنید. همهٔ بررسی‌ها از پراکسی SOCKS محلی عبور می‌کنند. تغییر حالت فقط پس از ذخیره و اعمال انجام می‌شود."
+
 msgid "Clear logs"
 msgstr "پاک‌کردن گزارش‌ها"
+
+msgid "Clear logs and recovery history"
+msgstr "پاک کردن گزارش‌ها و سابقهٔ بازیابی"
+
+msgid "Clears plugin events, connection check details and recovery history."
+msgstr "گزارش رویدادهای افزونه، جزئیات بررسی اتصال و سابقهٔ بازیابی را پاک می‌کند."
 
 msgid "Client DNS listener could not be verified"
 msgstr "تأیید درگاه شنوندهٔ DNS کلاینت ممکن نیست"
@@ -413,6 +491,9 @@ msgstr "راه‌اندازی کلاینت و سرویس‌های پیکربند
 msgid "Close"
 msgstr "بستن"
 
+msgid "Cloudflare Trace"
+msgstr "Cloudflare Trace"
+
 msgid "Cloudflare data center"
 msgstr "مرکز دادهٔ Cloudflare"
 
@@ -422,11 +503,41 @@ msgstr "اعتبارسنجی رویداد با Cloudflare غیرفعال است"
 msgid "Cloudflare event verification:"
 msgstr "تایید رویداد Cloudflare: "
 
+msgid "Cloudflare heartbeat"
+msgstr "پایش اتصال Cloudflare"
+
+msgid "Cloudflare heartbeat failed"
+msgstr "بررسی ضربان Cloudflare ناموفق بود"
+
+msgid "Cloudflare heartbeat failure threshold pending"
+msgstr "بررسی Cloudflare ناموفق بود؛ هنوز به آستانهٔ مسدودسازی نرسیده است"
+
+msgid "Cloudflare heartbeat has not confirmed recovery"
+msgstr "بازیابی پایش Cloudflare هنوز تأیید نشده است"
+
+msgid "Cloudflare heartbeat is independent of Pro. Combined mode requires both checks. Heartbeat-only mode skips website and exit-IP checks."
+msgstr "پایش Cloudflare مستقل از Pro است. در حالت ترکیبی هر دو بررسی باید موفق باشند؛ حالت فقط Cloudflare بررسی وب و IP خروجی را انجام نمی‌دهد."
+
+msgid "Cloudflare heartbeat only"
+msgstr "فقط پایش Cloudflare"
+
+msgid "Cloudflare heartbeat recovery threshold pending"
+msgstr "بررسی Cloudflare بازیابی شده است؛ تأیید موفقیت‌های پی‌درپی لازم است"
+
+msgid "Cloudflare heartbeat verified"
+msgstr "بررسی ضربان Cloudflare موفق بود"
+
+msgid "Cloudflare monitor heartbeat expired"
+msgstr "مهلت ضربان فرایند بررسی Cloudflare پایان یافته است"
+
 msgid "Cloudflare reported a different exit; waiting for fresh exit verification"
 msgstr "Cloudflare یک خروجی متفاوت را گزارش کرد؛ انتظار برای تایید خروجی تازه"
 
 msgid "Combined LAN exemptions must not cover the entire Internet"
 msgstr "مجموع استثناهای شبکهٔ محلی نباید کل اینترنت را پوشش دهد"
+
+msgid "Configuration and diagnostics"
+msgstr "پیکربندی و عیب‌یابی"
 
 msgid "Configuration changed during UDP check; waiting for revalidation"
 msgstr "پیکربندی هنگام بررسی UDP تغییر کرد؛ در انتظار اعتبارسنجی دوباره"
@@ -488,8 +599,14 @@ msgstr "در حال تأیید بازیابی پراکسی"
 msgid "Confirming recovery"
 msgstr "در حال تأیید بازیابی"
 
+msgid "Connection check method"
+msgstr "روش بررسی اتصال"
+
 msgid "Connection checks"
 msgstr "بررسی‌های اتصال"
+
+msgid "Connectivity check failed"
+msgstr "بررسی اتصال ناموفق بود"
 
 msgid "Connectivity monitor delayed"
 msgstr "به‌روزرسانی پایش اتصال تأخیر دارد"
@@ -497,14 +614,29 @@ msgstr "به‌روزرسانی پایش اتصال تأخیر دارد"
 msgid "Connectivity monitor heartbeat expired"
 msgstr "مهلت پیام سلامت فرایند پایش اتصال گذشته است"
 
+msgid "Consecutive failed checks"
+msgstr "تعداد بررسی‌های ناموفق پیاپی"
+
 msgid "Consecutive failed rounds"
 msgstr "تعداد بررسی‌های ناموفق متوالی"
+
+msgid "Consecutive failures to confirm an outage"
+msgstr "تعداد بررسی‌های ناموفق پیاپی برای تأیید قطعی اتصال"
+
+msgid "Consecutive successes to confirm recovery"
+msgstr "تعداد بررسی‌های موفق پیاپی برای تأیید برقراری دوبارهٔ اتصال"
 
 msgid "Consecutive successful rounds for recovery"
 msgstr "تعداد بررسی‌های موفق متوالی برای بازیابی"
 
 msgid "Continue"
 msgstr "ادامه"
+
+msgid "Copy UUID"
+msgstr "کپی UUID"
+
+msgid "Could not reach the heartbeat endpoint through the proxy"
+msgstr "اتصال به نشانی بررسی از طریق پراکسی برقرار نشد"
 
 msgid "Current protection reason"
 msgstr "دلیل حفاظت فعلی"
@@ -524,6 +656,12 @@ msgstr "درگاه‌های سرویس DNS نباید با درگاه‌های �
 msgid "Days of the week"
 msgstr "روزهای هفته"
 
+msgid "Default API block duration (seconds)"
+msgstr "مدت پیش‌فرض قطع از طریق API (ثانیه)"
+
+msgid "Default API block duration must not exceed the maximum."
+msgstr "مدت پیش‌فرض قطع اینترنت از طریق API باید کمتر از یا برابر با حداکثر مدت باشد."
+
 msgid "Default template"
 msgstr "الگوی پیش‌فرض"
 
@@ -539,11 +677,23 @@ msgstr "رد اتصال‌های ورودی فهرست‌نشده"
 msgid "Detailed check logs"
 msgstr "گزارش‌های تفصیلی بررسی"
 
+msgid "Detailed diagnostics (%s)"
+msgstr "عیب‌یابی کامل (%s)"
+
+msgid "Detailed diagnostics use the applied proxy settings."
+msgstr "عیب‌یابی کامل از تنظیمات اعمال‌شدهٔ پراکسی استفاده می‌کند."
+
 msgid "Detect one installed client automatically. When several are installed, select the client to monitor. This does not modify the client configuration."
 msgstr "یک کلاینت نصب‌شده خودکار شناسایی می‌شود. اگر چند کلاینت نصب است، یکی را برای پایش انتخاب کنید. پیکربندی کلاینت تغییر نمی‌کند."
 
+msgid "Diagnostic freshness limit (seconds)"
+msgstr "مدت اعتبار نتیجهٔ عیب‌یابی (ثانیه)"
+
 msgid "Disabled"
 msgstr "غیرفعال"
+
+msgid "Disabled by default. Save and Apply enables the API and generates a UUID. Authenticated API requests show the UUID in the event log. Turning the API off and on generates a new UUID."
+msgstr "به‌طور پیش‌فرض غیرفعال است. با ذخیره و اعمال تنظیمات، API فعال و یک UUID ایجاد می‌شود. UUID درخواست‌های احرازشدهٔ API در گزارش رویدادها نمایش داده می‌شود. پس از خاموش و روشن کردن API، UUID جدیدی ایجاد می‌شود."
 
 msgid "Discover listening services automatically"
 msgstr "کشف خودکار سرویس‌های شنونده"
@@ -566,6 +716,9 @@ msgstr "دریافت گزارش تحلیل محلی"
 msgid "Download report"
 msgstr "دریافت گزارش"
 
+msgid "Duplicate heartbeat validation header"
+msgstr "سرآیند اعتبارسنجی پاسخ تکراری است"
+
 msgid "Edit the complete UCI configuration for this plugin. Save stages changes; Save & Apply validates and activates them. Existing secret values are preserved by placeholders."
 msgstr "پیکربندی کامل UCI این افزونه را ویرایش کنید. «ذخیره» فقط تغییرات را موقتاً ثبت می‌کند؛ «ذخیره و اعمال» آن‌ها را اعتبارسنجی و فعال می‌کند. مقادیر محرمانهٔ موجود با جای‌نگهدار حفظ می‌شوند."
 
@@ -577,6 +730,9 @@ msgstr "فعال‌سازی حفاظت هنگام راه‌اندازی"
 
 msgid "Enable enhanced monitoring after recovery"
 msgstr "فعال‌سازی پایش دقیق پس از بازیابی"
+
+msgid "Enable local control API"
+msgstr "فعال‌سازی API کنترل محلی"
 
 msgid "Enable protection"
 msgstr "فعال‌سازی حفاظت"
@@ -632,14 +788,38 @@ msgstr "پیش از فعال‌سازی، IPv4 واقعی خروجی پراکس�
 msgid "Event log"
 msgstr "گزارش رویدادها"
 
+msgid "Event verification failed; awaiting a new check"
+msgstr "بررسی رویداد ناموفق بود؛ در انتظار بررسی دوباره"
+
 msgid "Every day"
 msgstr "هر روز"
+
+msgid "Exit IP response source"
+msgstr "منبع پاسخ IP خروجی"
 
 msgid "Exit IP verification is disabled"
 msgstr "اعتبارسنجی IP خروجی غیرفعال است"
 
 msgid "Exit IP verification is optional. Pro can import an expected address from the VPS in General settings."
 msgstr "اعتبارسنجی IP خروجی اختیاری است. در نسخهٔ Pro می‌توان نشانی مورد انتظار را در تنظیمات عمومی از VPS دریافت کرد."
+
+msgid "Exit IPv4 could not be verified"
+msgstr "تأیید نشانی IPv4 خروجی ممکن نبود"
+
+msgid "Exit IPv4 differs from the expected address"
+msgstr "نشانی IPv4 خروجی با نشانی مورد انتظار مطابقت ندارد"
+
+msgid "Exit IPv4 lookup timed out"
+msgstr "مهلت دریافت نشانی IPv4 خروجی پایان یافت"
+
+msgid "Exit IPv4 verification"
+msgstr "تأیید نشانی IPv4 خروجی"
+
+msgid "Exit IPv4 verification uses the official HTTPS endpoint by default."
+msgstr "برای تأیید IPv4 خروجی به‌طور پیش‌فرض از نشانی رسمی HTTPS استفاده می‌شود."
+
+msgid "Exit IPv4 verified"
+msgstr "نشانی IPv4 خروجی تأیید شد"
 
 msgid "Exit has not been checked"
 msgstr "خروجی هنوز بررسی نشده است"
@@ -701,6 +881,9 @@ msgstr "به‌روزرسانی دیوار آتش ناموفق بود"
 msgid "Flow offloading is enabled; blocking existing connections cannot be guaranteed. System settings are unchanged."
 msgstr "تخلیهٔ جریان فعال است؛ مسدودسازی اتصال‌های موجود تضمین نمی‌شود. تنظیمات سیستم تغییر نکرده‌اند."
 
+msgid "Follow selected detection mode"
+msgstr "پیروی از حالت بررسی انتخاب‌شده"
+
 msgid "For a single-device trial, also limit its IPv6 addresses or explicitly empty this list. ::/0 includes all IPv6 sources on the ingress devices."
 msgstr "برای آزمایش یک دستگاه، نشانی‌های IPv6 آن را نیز محدود کنید یا این فهرست را صریحاً خالی بگذارید. ::/0 همهٔ مبدأهای IPv6 رابط‌های ورودی را شامل می‌شود."
 
@@ -713,6 +896,9 @@ msgstr "مثلاً br-lan. دستگاه‌های لایهٔ 3 موجود و فع
 msgid "Friday"
 msgstr "جمعه"
 
+msgid "Full response with nonce"
+msgstr "پاسخ کامل همراه با بررسی nonce"
+
 msgid "General settings"
 msgstr "تنظیمات عمومی"
 
@@ -721,6 +907,36 @@ msgstr "مقصدهای بررسی HTTPS"
 
 msgid "HTTPS connectivity checks"
 msgstr "بررسی اتصال HTTPS"
+
+msgid "Heartbeat"
+msgstr "ضربان اتصال"
+
+msgid "Heartbeat HTTPS URL"
+msgstr "نشانی HTTPS پایش"
+
+msgid "Heartbeat checks"
+msgstr "بررسی‌های ضربان اتصال"
+
+msgid "Heartbeat consecutive failures"
+msgstr "تعداد شکست‌های پیاپی پایش"
+
+msgid "Heartbeat consecutive successes for recovery"
+msgstr "تعداد موفقیت‌های پیاپی برای بازیابی"
+
+msgid "Heartbeat healthy"
+msgstr "پایش اتصال موفق"
+
+msgid "Heartbeat interval after each request (seconds)"
+msgstr "فاصله پس از هر درخواست پایش (ثانیه)"
+
+msgid "Heartbeat recovery pending"
+msgstr "در انتظار تأیید بازیابی اتصال"
+
+msgid "Heartbeat request timeout (seconds)"
+msgstr "مهلت درخواست پایش (ثانیه)"
+
+msgid "Heartbeat verification token does not match"
+msgstr "توکن اعتبارسنجی پاسخ مطابقت ندارد"
 
 msgid "Heartbeat waiting time"
 msgstr "مهلت پیام سلامت"
@@ -839,8 +1055,14 @@ msgstr "دسترسی اینترنت برقرار شد؛ پایش آغاز می�
 msgid "Interruption detected"
 msgstr "قطع ارتباط تشخیص داده شد"
 
+msgid "Interval after each HTTPS check (seconds)"
+msgstr "فاصله پس از پایان هر بررسی HTTPS (ثانیه)"
+
 msgid "Interval after each check round (seconds)"
 msgstr "فاصله پس از پایان هر بررسی (ثانیه)"
+
+msgid "Interval during enhanced monitoring (seconds)"
+msgstr "فاصلهٔ بررسی در پایش حساس (ثانیه)"
 
 msgid "Invalid HTTPS URL"
 msgstr "نشانی HTTPS نامعتبر است"
@@ -860,8 +1082,14 @@ msgstr "دامنهٔ بررسی نامعتبر است"
 msgid "Invalid configuration; changes were not committed:"
 msgstr "پیکربندی نامعتبر است؛ تغییرات ثبت نشدند: "
 
+msgid "Invalid exit IP address in the response"
+msgstr "نشانی IP خروجی در پاسخ نامعتبر است"
+
 msgid "Invalid firewall response format"
 msgstr "قالب پاسخ دیوار آتش نامعتبر است"
+
+msgid "Invalid heartbeat response headers"
+msgstr "سرآیندهای پاسخ بررسی اتصال معتبر نیستند"
 
 msgid "Invalid ingress device MAC:"
 msgstr "نشانی MAC رابط ورودی نامعتبر است: "
@@ -941,8 +1169,14 @@ msgstr "آخرین بررسی: "
 msgid "Last completed check"
 msgstr "آخرین بررسی تکمیل‌شده"
 
+msgid "Last startup or recovery verification"
+msgstr "آخرین اعتبارسنجی هنگام راه‌اندازی یا بازیابی"
+
 msgid "Latest connectivity check"
 msgstr "آخرین بررسی اتصال"
+
+msgid "Leave blank to use /f on the public heartbeat origin. Full responses use a fresh per-request nonce. Optional diagnostic fields do not decide protection."
+msgstr "برای استفاده از /f در همان مبدأ ضربان عمومی، خالی بگذارید. پاسخ کامل از nonce تازه برای هر درخواست استفاده می‌کند. فیلدهای اختیاری عیب‌یابی در تصمیم حفاظت نقشی ندارند."
 
 msgid "Link-local, multicast and the router's own management addresses remain accessible."
 msgstr "نشانی‌های link-local، چندپخشی و نشانی‌های مدیریت خود روتر همچنان در دسترس‌اند."
@@ -958,6 +1192,9 @@ msgstr "درگاه شنوندهٔ SOCKS محلی"
 
 msgid "Local SOCKS port"
 msgstr "درگاه محلی SOCKS"
+
+msgid "Local control API"
+msgstr "API کنترل شبکه محلی"
 
 msgid "Local diagnostic report"
 msgstr "گزارش تشخیصی محلی"
@@ -995,6 +1232,9 @@ msgstr "کم"
 msgid "Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."
 msgstr "یک درخواست اضافی پس از نخستین آماده‌شدن پراکسی در بوت و یک درخواست پس از بازیابی هر قطع ارتباط انجام می‌شود. نشانه‌های یک قطع ارتباط ادغام می‌شوند. زمان‌بندی روزانه یا درخواست مکرر وجود ندارد. پایان مهلت Cloudflare جایگزین اعتبارسنجی معمول و الزامی خروجی نیست؛ عدم تطابق خروجی نیازمند حفاظت است."
 
+msgid "Maximum API block duration (seconds)"
+msgstr "بیشینه مدت قطع از طریق API (ثانیه)"
+
 msgid "Maximum restarts within the window"
 msgstr "سقف دفعات راه‌اندازی مجدد در بازه"
 
@@ -1012,6 +1252,9 @@ msgstr "حداقل مهلت پیام سلامت (ثانیه)"
 
 msgid "Minimum successful targets per round"
 msgstr "حداقل مقصدهای موفق در هر بررسی"
+
+msgid "Minimum time between diagnostic requests (seconds)"
+msgstr "کمترین فاصلهٔ درخواست‌های عیب‌یابی (ثانیه)"
 
 msgid "Minimum time between restarts (seconds)"
 msgstr "حداقل فاصلهٔ راه‌اندازی‌های مجدد (ثانیه)"
@@ -1039,6 +1282,9 @@ msgstr "سرویس پایش متوقف شد"
 
 msgid "Monitor stopped; protection mode keeps blocking. Disable protection in settings to restore access."
 msgstr "پایشگر متوقف شد؛ حالت حفاظت مسدودسازی را حفظ می‌کند. برای برقراری دسترسی، حفاظت را در تنظیمات غیرفعال کنید."
+
+msgid "Monitoring configuration verified."
+msgstr "پیکربندی پایش تأیید شد."
 
 msgid "Monitoring enabled; no blocking rules added"
 msgstr "پایش فعال شد؛ قاعدهٔ مسدودسازی اضافه نشد"
@@ -1088,6 +1334,9 @@ msgstr "هنوز بررسی تکمیل‌شده‌ای وجود ندارد"
 msgid "No eligible LAN device was found. Configure the existing network first; this wizard does not create interfaces."
 msgstr "دستگاه ورودی مناسبی در شبکهٔ محلی یافت نشد. ابتدا شبکهٔ موجود را پیکربندی کنید؛ این راهنما رابط جدیدی ایجاد نمی‌کند."
 
+msgid "No exit IP address in the response"
+msgstr "پاسخ حاوی نشانی IP خروجی نیست"
+
 msgid "No log entries"
 msgstr "گزارشی ثبت نشده است"
 
@@ -1099,6 +1348,9 @@ msgstr "بازیابی در انتظار نیست"
 
 msgid "No schedule is prefilled. Set the time and repeat pattern before enabling scheduled protection. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. With service protection enabled, the window ends into enhanced monitoring without an extra delay; otherwise recovery checks are required."
 msgstr "به‌صورت پیش‌فرض برنامهٔ زمانی تنظیم نشده است. پیش از فعال‌کردن حفاظت زمان‌بندی‌شده، زمان و نحوهٔ تکرار را مشخص کنید. برای مسدودسازی، کلید اصلی و حالت حفاظت باید فعال باشند. دسترسی به DNS، شبکهٔ محلی و مدیریت حفظ می‌شود. اگر پایش سرویس فعال باشد، پس از پایان بازه پایش دقیق‌تر بدون انتظار اضافی آغاز می‌شود؛ در غیر این صورت، بازیابی باید بررسی شود."
+
+msgid "No startup or recovery verification yet"
+msgstr "هنوز اعتبارسنجی راه‌اندازی یا بازیابی ثبت نشده است"
 
 msgid "No supported proxy client found"
 msgstr "هیچ کلاینت پراکسی پشتیبانی‌شده‌ای یافت نشد"
@@ -1121,11 +1373,44 @@ msgstr "اجرا نمی‌شود"
 msgid "Observed proxy exit"
 msgstr "نشانی خروجی مشاهده‌شدهٔ پراکسی"
 
+msgid "Off by default. Authorized status API requests can queue a rate-limited refresh. Cached details include their source, collection time and freshness. Diagnostic failures do not block access."
+msgstr "به‌طور پیش‌فرض خاموش است. درخواست مجاز API وضعیت می‌تواند تازه‌سازی با محدودیت بسامد را در صف قرار دهد. جزئیات ذخیره‌شده شامل منبع، زمان گردآوری و اعتبار است. خطای عیب‌یابی دسترسی را مسدود نمی‌کند."
+
+msgid "Official HTTPS"
+msgstr "بررسی رسمی HTTPS"
+
+msgid "Official HTTPS check failed"
+msgstr "بررسی رسمی HTTPS ناموفق بود"
+
+msgid "Official HTTPS check failed below the blocking threshold"
+msgstr "بررسی رسمی HTTPS ناموفق بود و هنوز به آستانه مسدودسازی نرسیده است"
+
+msgid "Official HTTPS check passed"
+msgstr "بررسی رسمی HTTPS موفق بود"
+
+msgid "Official HTTPS is responding; waiting for consecutive successes"
+msgstr "نشانی رسمی HTTPS دوباره پاسخ می‌دهد و تأیید پیاپی در انتظار است"
+
+msgid "Official HTTPS monitor heartbeat expired"
+msgstr "مهلت دریافت سیگنال از فرایند بررسی رسمی HTTPS پایان یافت"
+
+msgid "Official HTTPS recovery is pending"
+msgstr "بازیابی بررسی رسمی HTTPS هنوز تأیید نشده است"
+
+msgid "Official HTTPS settings"
+msgstr "تنظیمات بررسی رسمی HTTPS"
+
+msgid "Official HTTPS uses the IPv4 reported by the official service. Enter the expected IPv4 to compare against it. No URL is required."
+msgstr "HTTPS رسمی از نشانی IPv4 گزارش‌شده توسط سرویس رسمی استفاده می‌کند. نشانی IPv4 مورد انتظار را برای مقایسه وارد کنید. نیازی به وارد کردن نشانی وب نیست."
+
 msgid "On boot or initial activation, keep protected clients blocked until TCP, UDP and DNS are all running, then use the delay and continuous stability settings below. Any interruption restarts qualification. The fixed startup wait is replaced. Router-originated traffic, LAN and DNS remain available. Blocking requires protection mode."
 msgstr "هنگام بوت یا نخستین فعال‌سازی، کلاینت‌های تحت حفاظت تا اجرای هر سه سرویس TCP، UDP و DNS مسدود می‌مانند؛ سپس تنظیمات انتظار و پایداری پیوستهٔ زیر اجرا می‌شود. هر اختلال تأیید را از نو آغاز می‌کند. این روند جایگزین انتظار ثابت راه‌اندازی می‌شود. ترافیک خود روتر، شبکهٔ محلی و DNS حفظ می‌شود. مسدودسازی به حالت حفاظت نیاز دارد."
 
 msgid "On proxy failure, block Internet traffic in both directions for selected devices where traffic actually passes through this router or proxy. LAN access remains available. Return traffic bypassing this device cannot be blocked. Disabled on first install; start with monitoring, then test one device."
 msgstr "هنگام خرابی پراکسی، ترافیک اینترنتِ دستگاه‌های انتخاب‌شده را فقط در مسیرهایی که واقعاً از این روتر یا پراکسی آن عبور می‌کنند، در هر دو جهت مسدود می‌کند. دسترسی به شبکهٔ محلی حفظ می‌شود. ترافیک برگشتی که از این دستگاه عبور نمی‌کند قابل مسدودسازی نیست. در نصب اولیه غیرفعال است؛ ابتدا حالت نظارت را انتخاب کنید و سپس با یک دستگاه آزمایش کنید."
+
+msgid "Only IPv6 was returned"
+msgstr "فقط نشانی IPv6 برگردانده شد"
 
 msgid "Only traffic passing through this router can be protected. Settings take effect only after Save & Apply."
 msgstr "فقط ترافیکی که از این مسیریاب عبور می‌کند قابل حفاظت است. تنظیمات تنها پس از انتخاب «ذخیره و اعمال» اجرا می‌شوند."
@@ -1187,11 +1472,17 @@ msgstr "درجهٔ اطمینان الگو"
 msgid "Per-target timeout"
 msgstr "مهلت هر مقصد"
 
+msgid "Plain-text or trace response"
+msgstr "پاسخ متن ساده یا قالب trace"
+
 msgid "Please verify"
 msgstr "لطفا تأیید کنید"
 
 msgid "Plugin configuration not found"
 msgstr "پیکربندی افزونه یافت نشد"
+
+msgid "Plugin health, logs and recovery"
+msgstr "سلامت افزونه، گزارش‌ها و بازیابی"
 
 msgid "Plugin heartbeat failed; retaining protection and queuing a plugin restart"
 msgstr "پیام سلامت افزونه ناموفق بود؛ حفاظت حفظ شد و راه‌اندازی مجدد افزونه در صف قرار گرفت"
@@ -1271,6 +1562,9 @@ msgstr "دستگاه های محافظت شده می توانند به اینت�
 msgid "Protected source addresses are required"
 msgstr "تعیین نشانی‌های مبدأ تحت حفاظت الزامی است"
 
+msgid "Protection could not be verified. Try again before the countdown ends."
+msgstr "وضعیت حفاظت تأیید نشد. پیش از پایان شمارش معکوس دوباره تلاش کنید."
+
 msgid "Protection disabled; this plugin's blocking rules were removed"
 msgstr "حفاظت غیرفعال شد؛ قواعد مسدودسازی این افزونه حذف شدند"
 
@@ -1307,6 +1601,12 @@ msgstr "قواعد حفاظت وجود ندارند؛ تأیید حفاظت مم
 msgid "Protection rules changed during checks; awaiting verification"
 msgstr "قواعد حفاظت هنگام بررسی تغییر کردند؛ در انتظار تأیید"
 
+msgid "Protection rules verified. Internet access is allowed."
+msgstr "قواعد حفاظت تأیید شدند. دسترسی به اینترنت برقرار است."
+
+msgid "Protection rules verified. Internet access is blocked."
+msgstr "قواعد حفاظت تأیید شدند. دسترسی به اینترنت مسدود است."
+
 msgid "Protection scope"
 msgstr "محدوده حفاظت"
 
@@ -1318,6 +1618,9 @@ msgstr "وضعیت حفاظت"
 
 msgid "Protection status needs verification"
 msgstr "وضعیت حفاظت نیازمند بررسی است"
+
+msgid "Protection status needs verification. You can keep these settings once the check passes."
+msgstr "وضعیت حفاظت باید بررسی شود. پس از تأیید می‌توانید تنظیمات را نگه دارید."
 
 msgid "Proxy Guard"
 msgstr "Proxy Guard"
@@ -1342,6 +1645,12 @@ msgstr "گزارش اجرای کلاینت پراکسی"
 
 msgid "Proxy client services"
 msgstr "سرویس‌های کلاینت پراکسی"
+
+msgid "Proxy connectivity failed"
+msgstr "آزمایش اتصال پراکسی ناموفق بود"
+
+msgid "Proxy connectivity passed"
+msgstr "آزمایش اتصال پراکسی موفق بود"
 
 msgid "Proxy exit verification failed: unexpected exit or unreachable verification service"
 msgstr "اعتبارسنجی خروجی پراکسی ناموفق بود: خروجی متفاوت است یا سرویس اعتبارسنجی در دسترس نیست"
@@ -1369,6 +1678,27 @@ msgstr "راه‌اندازی پراکسی ناموفق بود"
 
 msgid "Proxy verification passed; access restored with enhanced monitoring"
 msgstr "اعتبارسنجی پراکسی موفق بود؛ دسترسی برقرار شد و پایش دقیق ادامه دارد"
+
+msgid "Public HTTPS heartbeat"
+msgstr "ضربان HTTPS عمومی"
+
+msgid "Public HTTPS heartbeat recovery is not confirmed"
+msgstr "بازیابی ضربان عمومی HTTPS هنوز تأیید نشده است"
+
+msgid "Public diagnostics HTTPS URL"
+msgstr "نشانی HTTPS عیب‌یابی عمومی"
+
+msgid "Public event verification response"
+msgstr "پاسخ سرویس عمومی برای اعتبارسنجی رویداد"
+
+msgid "Public heartbeat HTTPS URL"
+msgstr "نشانی HTTPS ضربان عمومی"
+
+msgid "Public heartbeat event verification failed; awaiting confirmation"
+msgstr "بررسی رویداد ضربان عمومی ناموفق بود؛ در انتظار تأیید"
+
+msgid "Public heartbeat response header"
+msgstr "سرآیند پاسخ ضربان عمومی"
 
 msgid "Queried through the same SOCKS proxy only if the primary URL times out. Leave blank to use https://4.ident.me/ when the primary host is api.ipify.org. With a different primary host, leaving this blank disables the backup."
 msgstr "فقط وقتی مهلت درخواست به نشانی اصلی تمام شود، از طریق همان پراکسی SOCKS پرس‌وجو می‌شود. اگر این کادر خالی بماند و میزبان اصلی api.ipify.org باشد، از https://4.ident.me/ استفاده می‌شود. برای میزبان‌های اصلی دیگر، کادر خالی یعنی پرس‌وجوی پشتیبان انجام نمی‌شود."
@@ -1490,6 +1820,9 @@ msgstr "بازگردانی پیش‌فرض‌ها و پیکربندی دوبار
 msgid "Restore previous settings"
 msgstr "بازگردانی پیکربندی قبلی"
 
+msgid "Restoring the previous configuration…"
+msgstr "در حال بازگردانی پیکربندی قبلی…"
+
 msgid "Retained events"
 msgstr "رویدادهای نگهداری‌شده"
 
@@ -1520,11 +1853,17 @@ msgstr "قواعد هنگام بررسی UDP تغییر کردند"
 msgid "Rules, configuration and runtime state are not yet verified as consistent"
 msgstr "سازگاری قواعد، پیکربندی و وضعیت اجرا هنوز تأیید نشده است"
 
+msgid "Run detailed diagnostics"
+msgstr "اجرای عیب‌یابی کامل"
+
 msgid "Run setup wizard"
 msgstr "اجرای راهنمای پیکربندی"
 
 msgid "Running"
 msgstr "در حال اجرا"
+
+msgid "Running detailed diagnostics..."
+msgstr "در حال اجرای عیب‌یابی کامل…"
 
 msgid "Runtime log check interval"
 msgstr "فاصلهٔ بررسی گزارش اجرا"
@@ -1604,6 +1943,9 @@ msgstr "بازهٔ زمان‌بندی آغاز شد؛ بررسی‌ها پس ا
 msgid "Scope and exceptions"
 msgstr "دامنهٔ حفاظت و استثناها"
 
+msgid "Seconds remaining to confirm: %s"
+msgstr "زمان باقی‌مانده برای تأیید: %s ثانیه"
+
 msgid "Select a bridge device, not a switch port:"
 msgstr "دستگاه پل را انتخاب کنید، نه درگاه سوئیچ: "
 
@@ -1633,6 +1975,12 @@ msgstr "خودآزمایی موفق بود. زمان باقی‌مانده بر�
 
 msgid "Self-check validates configuration and real rule state. A proxy outage keeps protection blocked; it does not disable protection."
 msgstr "خودآزمایی پیکربندی و وضعیت واقعی قواعد را بررسی می‌کند. قطع پراکسی باعث تداوم مسدودسازی می‌شود و حفاظت را غیرفعال نمی‌کند."
+
+msgid "Self-hosted Cloudflare heartbeat"
+msgstr "ضربان Cloudflare اختصاصی"
+
+msgid "Send this UUID in the Authorization header. It grants access to the local API."
+msgstr "این UUID را در سرآیند Authorization بفرستید. داشتن آن دسترسی به API محلی را ممکن می‌کند."
 
 msgid "Sender attribution is unknown"
 msgstr "هویت فرستنده نامشخص است"
@@ -1715,11 +2063,20 @@ msgstr "برخی رکوردهای خراب گزارش نادیده گرفته ش
 msgid "Specify IPv6 addresses or prefixes"
 msgstr "تعیین نشانی‌ها یا پیشوندهای IPv6"
 
+msgid "Standard heartbeat (%s)"
+msgstr "بررسی عادی اتصال (%s)"
+
 msgid "Start time"
 msgstr "زمان آغاز"
 
 msgid "Startup"
 msgstr "راه‌اندازی"
+
+msgid "Startup and recovery verification is off"
+msgstr "اعتبارسنجی راه‌اندازی و بازیابی خاموش است"
+
+msgid "Startup and recovery verification source"
+msgstr "منبع اعتبارسنجی راه‌اندازی و بازیابی"
 
 msgid "Startup completed"
 msgstr "راه‌اندازی این نوبت کامل شد"
@@ -1775,17 +2132,41 @@ msgstr "زمان سیستم نامعتبر است؛ تأیید برنامه مم
 msgid "TCP, UDP and DNS are running; boot protection delay started"
 msgstr "TCP، UDP و DNS در حال اجرا هستند؛ دورهٔ انتظار حفاظت هنگام راه‌اندازی آغاز شد"
 
+msgid "Test current proxy"
+msgstr "آزمایش پراکسی فعلی"
+
+msgid "Testing the proxy with the current settings..."
+msgstr "پراکسی با تنظیمات فعلی در حال آزمایش است…"
+
+msgid "Tests the current form through SOCKS. Apply the settings separately to change protection."
+msgstr "تنظیمات فرم را از طریق SOCKS آزمایش می‌کند. برای تغییر محافظت، تنظیمات را جداگانه اعمال کنید."
+
+msgid "The API is disabled"
+msgstr "API غیرفعال است"
+
 msgid "The Worker did not confirm this update."
 msgstr "Worker این به‌روزرسانی را تأیید نکرد."
 
 msgid "The Worker observed the proxy exit. Configure a direct connection before synchronizing."
 msgstr "Worker نشانی خروجی پراکسی را مشاهده کرد. پیش از همگام‌سازی، اتصال مستقیم را تنظیم کنید."
 
+msgid "The basic endpoint does not require a nonce. Full verification sends a fresh nonce to the diagnostics endpoint and checks its echo."
+msgstr "نقطهٔ پایانی پایه به nonce نیاز ندارد. اعتبارسنجی کامل یک nonce تازه به نقطهٔ پایانی عیب‌یابی می‌فرستد و بازتاب آن را بررسی می‌کند."
+
+msgid "The detailed diagnostic could not run"
+msgstr "اجرای عیب‌یابی کامل ممکن نبود"
+
+msgid "The diagnostics endpoint returns this heartbeat response in the same request."
+msgstr "رابط عیب‌یابی پاسخ نشانی ضربان انتخاب‌شده را در همان درخواست برمی‌گرداند."
+
 msgid "The effective timeout also allows for a complete check round and the access permit lifetime, so it may exceed this minimum."
 msgstr "مهلت مؤثر، زمان یک بررسی کامل و مدت اعتبار مجوز دسترسی را نیز در نظر می‌گیرد؛ بنابراین ممکن است از این حداقل بیشتر باشد."
 
 msgid "The listener list is limited; unlisted inbound traffic remains subject to the configured policy."
 msgstr "فهرست سرویس‌های شنونده محدود است؛ ترافیک ورودی فهرست‌نشده همچنان تابع سیاست پیکربندی‌شده است."
+
+msgid "The official HTTPS request used TLS 1.2. TLS 1.3 is recommended."
+msgstr "درخواست HTTPS به سرویس رسمی از TLS 1.2 استفاده کرد. استفاده از TLS 1.3 توصیه می‌شود."
 
 msgid "The original 06:00 maintenance window is prefilled. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. After the window, consecutive successful checks are required again."
 msgstr "بازهٔ نگهداری ساعت 06:00 از پیش وارد شده است. مسدودسازی فقط با فعال‌بودن کلید اصلی و حالت محافظت انجام می‌شود. DNS، شبکهٔ محلی و دسترسی مدیریتی حفظ می‌شوند. پس از پایان بازه، بررسی‌های موفق متوالی دوباره لازم‌اند."
@@ -1796,17 +2177,29 @@ msgstr "پیکربندی قبلی در فرم بارگذاری شده است. آ
 msgid "The proxy has remained stable; restoring access and gradually reducing check frequency"
 msgstr "پراکسی پایدار مانده است؛ دسترسی برقرار می‌شود و بسامد بررسی‌ها به‌تدریج کاهش می‌یابد"
 
+msgid "The proxy test could not run"
+msgstr "آزمایش پراکسی اجرا نشد"
+
 msgid "The router restores the previous configuration if you do not confirm. Closing this page does not stop the rollback timer."
 msgstr "اگر تأیید نکنید، مسیریاب پیکربندی قبلی را بازمی‌گرداند. بستن این صفحه شمارش معکوس بازگردانی را متوقف نمی‌کند."
 
 msgid "The service monitor was interrupted; revalidating proxy stability"
 msgstr "پایشگر سرویس قطع شد؛ پایداری پراکسی دوباره بررسی می‌شود"
 
+msgid "The test time limit was reached before all checks finished"
+msgstr "زمان آزمایش پیش از پایان همهٔ بررسی‌ها به پایان رسید"
+
 msgid "These legacy options are ignored:"
 msgstr "این گزینه‌های قدیمی نادیده گرفته می‌شوند: "
 
 msgid "These networks remain reachable during failures. Do not enter 0.0.0.0/0."
 msgstr "این شبکه‌ها هنگام اختلال همچنان در دسترس می‌مانند. مقدار 0.0.0.0/0 را وارد نکنید."
+
+msgid "Third-party HTTPS"
+msgstr "بررسی HTTPS شخص ثالث"
+
+msgid "Third-party HTTPS settings"
+msgstr "تنظیمات بررسی HTTPS شخص ثالث"
 
 msgid "This configuration could not be read. A default template is shown for review."
 msgstr "خواندن این پیکربندی ممکن نشد. الگوی پیش‌فرض برای بررسی نمایش داده شده است."
@@ -1831,6 +2224,12 @@ msgstr "زمان و روزهای هفته بر اساس اختلاف ثابت UT
 
 msgid "Time zone"
 msgstr "منطقه زمانی"
+
+msgid "Timed API block"
+msgstr "مسدودسازی موقت از طریق API"
+
+msgid "Timeout per HTTPS request (seconds)"
+msgstr "مهلت هر درخواست HTTPS (ثانیه)"
 
 msgid "Timeout per target (seconds)"
 msgstr "مهلت هر مقصد (ثانیه)"
@@ -1874,6 +2273,9 @@ msgstr "بررسی UDP به luci-lib-nixio سازگار با میان‌افزا
 msgid "UDP proxy path check"
 msgstr "بررسی مسیر UDP از طریق پراکسی"
 
+msgid "UDP proxy path check failed"
+msgstr "بررسی مسیر UDP از طریق پراکسی ناموفق بود"
+
 msgid "UDP proxy path check is disabled"
 msgstr "بررسی مسیر UDP از طریق پراکسی غیرفعال است"
 
@@ -1901,6 +2303,12 @@ msgstr "در دسترس نیست"
 msgid "Unavailable; routine exit verification continues"
 msgstr "در دسترس نیست؛ اعتبارسنجی معمول خروجی ادامه دارد"
 
+msgid "Unexpected HTTP status"
+msgstr "کد وضعیت HTTP غیرمنتظره است"
+
+msgid "Unexpected heartbeat response body"
+msgstr "محتوای پاسخ بررسی اتصال غیرمنتظره است"
+
 msgid "Unknown"
 msgstr "ناشناخته"
 
@@ -1922,11 +2330,20 @@ msgstr "نوع رابط ورودی پشتیبانی نمی‌شود: "
 msgid "Unsupported proxy client"
 msgstr "کلاینت پراکسی پشتیبانی نمی‌شود"
 
+msgid "Up to %s seconds remaining"
+msgstr "حداکثر %s ثانیه باقی مانده است"
+
 msgid "Use 192.0.2.100/32 for a single-device trial, or 192.0.2.0/24 for the subnet."
 msgstr "برای آزمایش یک دستگاه از 192.0.2.100/32 و برای کل زیرشبکه از 192.0.2.0/24 استفاده کنید."
 
 msgid "Use HH:MM:SS in the selected time zone. Overnight windows are supported. Keep the router clock accurate; start and end must differ."
 msgstr "زمان را با قالب HH:MM:SS در منطقهٔ زمانی انتخابی وارد کنید. بازهٔ عبوری از نیمه‌شب پشتیبانی می‌شود. ساعت روتر باید دقیق و زمان آغاز و پایان متفاوت باشد."
+
+msgid "Use a dedicated Worker protected by Cloudflare Access Service Auth. Configure any country restrictions in the same Access policy. Requests always use local SOCKS."
+msgstr "از Worker اختصاصی با Cloudflare Access Service Auth استفاده کنید. محدودیت کشور را در همان خط‌مشی Access تنظیم کنید. درخواست‌ها همواره از SOCKS محلی عبور می‌کنند."
+
+msgid "Use credentials dedicated to this heartbeat. Configuration backups contain these secrets; share only redacted copies."
+msgstr "از اعتبارنامه اختصاصی این پایش استفاده کنید. نسخه پشتیبان تنظیمات شامل کلیدهاست؛ پیش از اشتراک‌گذاری آن‌ها را حذف کنید."
 
 msgid "Use detected client listener ports"
 msgstr "استفاده از درگاه‌های شنوندهٔ شناسایی‌شدهٔ کلاینت"
@@ -1939,6 +2356,9 @@ msgstr "استفاده از این نشانی"
 
 msgid "Use verified SOCKS, proxy listener and DNS redirect exception ports for this plugin. Keep this off to use manual ports. Client, DNS, route and NAT settings are not changed."
 msgstr "برای این افزونه از درگاه‌های تأییدشدهٔ SOCKS، شنوندهٔ پراکسی و استثناهای هدایت DNS استفاده می‌شود. برای واردکردن دستی درگاه‌ها، این گزینه را غیرفعال نگه دارید. تنظیمات کلاینت، DNS، مسیریابی و NAT تغییر نمی‌کند."
+
+msgid "Used when an authorized API request asks to refresh the heartbeat."
+msgstr "هنگامی که یک درخواست مجاز API خواستار تازه‌سازی وضعیت اتصال باشد، از این نشانی استفاده می‌شود."
 
 msgid "User cleared the plugin logs"
 msgstr "کاربر گزارش‌های افزونه را پاک کرد"
@@ -1970,6 +2390,12 @@ msgstr "اعتبارسنجی پراکسی قبل از بازیابی دسترس�
 msgid "Verify UDP through the proxy"
 msgstr "بررسی UDP از طریق پراکسی"
 
+msgid "Verify after startup or an interruption"
+msgstr "اعتبارسنجی پس از راه‌اندازی یا قطع اتصال"
+
+msgid "Verify once when the proxy first becomes ready and once after each interruption. This does not add another recurring detection mode. An unavailable event service does not replace routine checks; a confirmed exit mismatch requires new verification."
+msgstr "یک بار هنگام نخستین آماده‌شدن پراکسی و پس از هر قطع اتصال اعتبارسنجی می‌کند. حالت بررسی دوره‌ای دیگری اضافه نمی‌شود. در دسترس نبودن سرویس رویداد جای بررسی عادی را نمی‌گیرد؛ ناهماهنگی تأییدشدهٔ خروجی به اعتبارسنجی دوباره نیاز دارد."
+
 msgid "Verify proxy exit IPv4"
 msgstr "اعتبارسنجی IPv4 خروجی پراکسی"
 
@@ -1994,6 +2420,15 @@ msgstr "در انتظار پایان راه‌اندازی PassWall و بازی�
 msgid "Waiting for TCP, UDP and DNS to start"
 msgstr "در انتظار راه‌اندازی TCP، UDP و DNS"
 
+msgid "Waiting for a check after the scheduled window"
+msgstr "در انتظار بررسی پس از پایان بازهٔ زمان‌بندی‌شده"
+
+msgid "Waiting for a matching exit IPv4"
+msgstr "پس از مشاهده مغایرت، در انتظار نشانی IPv4 خروجی مطابق"
+
+msgid "Waiting for a new access permit"
+msgstr "در انتظار مجوز دسترسی جدید"
+
 msgid "Waiting for client startup and configured services to recover"
 msgstr "در انتظار راه‌اندازی کلاینت و بازیابی سرویس‌های پیکربندی‌شده"
 
@@ -2003,6 +2438,9 @@ msgstr "در انتظار راه‌اندازی سرویس‌های پراکسی
 msgid "Waiting for local proxy service protection"
 msgstr "در انتظار حفاظت سرویس پراکسی محلی"
 
+msgid "Waiting for proxy client services"
+msgstr "در انتظار سرویس‌های کارخواه پراکسی"
+
 msgid "Waiting for proxy startup"
 msgstr "در انتظار راه‌اندازی پراکسی"
 
@@ -2011,6 +2449,9 @@ msgstr "انتظار برای تأیید پراکسی قبل از بازیابی
 
 msgid "Waiting for startup"
 msgstr "در انتظار راه‌اندازی"
+
+msgid "Waiting for the API UUID after settings are confirmed"
+msgstr "UUID رابط API پس از تأیید تنظیمات نمایش داده می‌شود"
 
 msgid "Waiting for the required successful proxy checks"
 msgstr "در انتظار تعداد لازم از بررسی‌های موفق پراکسی"
@@ -2032,6 +2473,12 @@ msgstr "پایش گزارش اجرای PassWall"
 
 msgid "Watch proxy client runtime log"
 msgstr "پایش گزارش اجرای کلاینت پراکسی"
+
+msgid "Website and Cloudflare heartbeat"
+msgstr "وب‌سایت و پایش Cloudflare"
+
+msgid "Website checks"
+msgstr "بررسی وب‌سایت"
 
 msgid "Wednesday"
 msgstr "چهارشنبه"

@@ -9,13 +9,20 @@
 'require proxy_guard_setup as pgSetup';
 
 // Keep status separate from logs in LuCI's HTTP batcher as well as the UI.
-const setupInfoCall=rpc.declare({object:'proxy_guard',method:'setup_info',expect:{'':{}},reject:true,nobatch:true});
-const egressInfoCall=rpc.declare({object:'proxy_guard_access',method:'egress_info',params:['refresh'],expect:{'':{}},reject:true,nobatch:true});
 const statusCall = rpc.declare({ object: 'proxy_guard', method: 'status', expect: { '': {} }, reject: true, nobatch: true });
+const apiCredentialsCall = rpc.declare({ object: 'proxy_guard', method: 'api_credentials', expect: { '': {} }, reject: true, nobatch: true });
 const logsCall = rpc.declare({ object: 'proxy_guard', method: 'logs', expect: { '': {} }, reject: true, nobatch: true });
 const applyCall = rpc.declare({ object: 'proxy_guard', method: 'apply', params:['confirm_flow'], expect: { '': {} }, reject: true });
 const clearCall = rpc.declare({ object: 'proxy_guard', method: 'clear_logs', expect: { '': {} }, reject: true });
 const preflightCall = rpc.declare({ object: 'proxy_guard', method: 'preflight', params: ['draft'], expect: { '': {} }, reject: true });
+const testProxyCall = rpc.declare({ object: 'proxy_guard', method: 'test_proxy', params: ['draft'], expect: { '': {} }, reject: true, nobatch: true });
+const runDiagnosticsCall = rpc.declare({ object: 'proxy_guard', method: 'run_diagnostics', expect: { '': {} }, reject: true, nobatch: true });
+const blockLabels = {
+    schedule: _("Scheduled protection active"), schedule_confirmation: _("Waiting for a check after the scheduled window"),
+    api: _("Timed API block"), services: _("Waiting for proxy client services"),
+    exit_mismatch: _("Exit IPv4 differs from the expected address"), exit_unavailable: _("Exit IPv4 could not be verified"),
+    connectivity: _("Connectivity check failed"), udp: _("UDP proxy path check failed"), permit: _("Waiting for a new access permit")
+};
 const phases = {
     waiting_interface: _("Waiting for LAN interface"), disabled: _("Disabled"), starting: _("Waiting for proxy startup"), healthy: _("Proxy healthy"),
     suspect: _("Possible failure"), blocked: _("Internet blocked"), down: _("Proxy failure (monitor only)"),
@@ -26,6 +33,7 @@ const enforcement = {
     missing: _("Protection rules are missing; protection cannot be confirmed"), unknown: _("Cannot verify firewall state"),
     unverified: _("Configuration or environment error; protection is unverified")
 };
+const apiUuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 const weekdays = [_("Monday"), _("Tuesday"), _("Wednesday"), _("Thursday"), _("Friday"), _("Saturday"), _("Sunday")];
 
 function scheduleText(schedule) {
@@ -103,25 +111,33 @@ function activityText(s) {
     return pgI18n.runtime(s.reason) || phases[s.phase] || _("Unknown state");
 }
 
-function cfEventText(c) {
-    if (!c || typeof c !== 'object' || !c.enabled) return _("Cloudflare event verification is off");
-    const outcomes = {ok:_("Passed"), unavailable:_("Unavailable; routine exit verification continues"),
-        mismatch:_("Exit mismatch; protection requires verification"), interrupted:_("Attempt interrupted; routine exit verification continues")};
-    if (c.outcome === 'mismatch' && c.rechecking === false) outcomes.mismatch = _("Previous exit mismatch; routine verification has since passed");
-    const pending = c.pending ? _("Waiting to verify after proxy recovery") : '';
-    if (!c.attempted && !c.checked_at) return pending || _("No Cloudflare event check yet");
-    return (pending ? pending + ' · ' : '') + (outcomes[c.outcome] || _("Awaiting verification")) +
-        ' · ' + formatTime(c.checked_at) + (typeof c.observed === 'string' ? _("; observed ") + c.observed : '') +
-        (typeof c.colo === 'string' ? ' · ' + _("Cloudflare data center") + ': ' + c.colo : '');
+function exitResultText(exit, observed) {
+    if (!exit || !exit.enabled)
+        return observed ? observed + ' · ' + _("Exit IP verification is disabled") : _("Exit IP verification is disabled");
+    const labels = {
+        match: _("Passed"), mismatch: _("Exit IPv4 differs from the expected address"),
+        timeout: _("Exit IPv4 lookup timed out"), unavailable: _("Exit IPv4 could not be verified"),
+        skipped: _("Exit has not been checked")
+    };
+    const unavailable = {missing_ip: _("No exit IP address in the response"), invalid_ip: _("Invalid exit IP address in the response"),
+        ipv6_only: _("Only IPv6 was returned")};
+    const value = (exit.outcome === 'unavailable' && unavailable[exit.reason]) || labels[exit.outcome] || _("Exit has not been checked");
+    const addresses = exit.observed ? _("; observed ") + exit.observed + _("; expected ") + exit.expected : '';
+    const pending = exit.mismatch_pending && exit.outcome !== 'mismatch' ? ' · ' + _("Waiting for a matching exit IPv4") : '';
+    return value + addresses + pending + (exit.via ? ' · ' + exit.via : '');
 }
 
-const recoveryReasons = {main_heartbeat:_("Connectivity monitor heartbeat expired"),fast_heartbeat:_("Service monitor heartbeat expired"),
+const recoveryReasons = {heartbeat_monitor:_("Official HTTPS monitor heartbeat expired"),main_heartbeat:_("Connectivity monitor heartbeat expired"),fast_heartbeat:_("Service monitor heartbeat expired"),
     execution_errors:_("Repeated plugin execution errors"),recovery_timeout:_("Previous restart did not complete"),configuration:_("Configuration requires attention")};
 function checkResultText(s) {
+    if (s.check_mode === 'public') {
+        const h=s.heartbeat || {}, udp=s.udp_probe || {};
+        const failed=h.last_ok === false || s.exit_check && s.exit_check.ok === false || udp.enabled && udp.ok === false;
+        const passed=h.allowed === true && h.last_ok === true && (!udp.enabled || udp.ok === true);
+        return (!h.checked_at ? _("No completed checks yet") : (failed ? _("Failed") : passed ? _("Passed") : _("Awaiting verification")) + ' · ' + formatTime(h.checked_at)) + (h.stale ? _(" · No recent update from the monitor") : '');
+    }
     if (!s.last_probe_at) return _("No completed checks yet");
-    const failed=(s.probes || []).some(p => p.ok === false) || s.exit_check && s.exit_check.ok === false || s.udp_probe && s.udp_probe.enabled && s.udp_probe.ok === false;
-    const confirmed=(s.probes || []).length>0 && s.probes.every(p => p.ok === true) && s.exit_check && (s.exit_check.enabled === false || s.exit_check.ok === true) && !(s.udp_probe && s.udp_probe.enabled && s.udp_probe.ok !== true);
-    return (failed ? _("Failed") : confirmed ? _("Passed") : _("Awaiting verification")) + ' · ' + formatTime(s.last_probe_at) + (s.stale ? _(" · No recent update from the monitor") : '');
+    return (s.last_probe_ok === false ? _("Failed") : s.last_probe_ok === true ? _("Passed") : _("Awaiting verification")) + ' · ' + formatTime(s.last_probe_at) + (s.stale ? _(" · No recent update from the monitor") : '');
 }
 function recoveryText(s) {
     if (s.phase === 'disabled') return _("Protection is disabled; no recovery is pending");
@@ -180,11 +196,21 @@ function readLogs() {
     });
 }
 
+function apiRequestsText(status) {
+    if (!status || status.stale || !status.api)
+        return _("Awaiting verification");
+    if (!status.api.enabled)
+        return _("Disabled");
+    const { count, remaining } = status.api;
+    const requests = _("Active timed block requests: %s").replace('%s', count);
+    return count > 0 ? requests + ' · ' + _("Up to %s seconds remaining").replace('%s', remaining) : requests;
+}
+
 return view.extend({
     load: function() {
         // A temporary status/log failure must not prevent rendering the page
         // and registering its automatic retries.
-        return Promise.all([uci.load('proxy_guard'),setupInfoCall().then(info=>{this.proAvailable=info.pro_available===true;}).catch(()=>{this.proAvailable=false;})]);
+        return uci.load('proxy_guard');
     },
 
     updateStatus: function(s) {
@@ -198,23 +224,28 @@ return view.extend({
         const titles = {off: s.phase === 'disabled' ? _("Protection is turned off") : _("Monitoring only; Internet access allowed"),
             allowing: _("Internet access allowed"), blocked: _("Internet access blocked")};
         const row = (label, value) => E('div', { class: 'pg-status-row', style: 'display:flex;flex-wrap:wrap;gap:.3em 1em;margin:.5em 0;overflow-wrap:anywhere;' },
-            [E('strong', {style:'flex:0 0 11em;'}, [label]), E('span', {style:'flex:1 1 16em;min-width:0;'}, [value])]);
+            [E('strong', {style:'flex:0 0 15em;max-width:100%;'}, [label]), E('span', {style:'flex:1 1 16em;min-width:0;'}, [value])]);
         this.statusBox.className = 'alert-message ' + (fault ? 'danger' : waiting || s.enforcement === 'blocked' ? 'warning' : 'notice');
+        const failures=s.failure_progress;
+        const reasons=(s.block_reasons || []).map(code => Object.prototype.hasOwnProperty.call(blockLabels,code) ? blockLabels[code] : null).filter(Boolean);
         this.statusBox.replaceChildren(
             E('strong', {id:'pg-access-state'}, [fault ? _("Protection status needs verification") : waiting ? _("Waiting for LAN interface") : titles[s.enforcement] || _("Awaiting verification")]),
             row(_("Internet access"), waiting ? _("Interface not ready; protection coverage is unverified") : enforcement[s.enforcement] || _("Awaiting verification")),
             row(_("Latest connectivity check"), checkResultText(s)),
+            ...(failures && failures.count > 0 && failures.threshold > 0 && !s.stale ? [
+                row(_("Consecutive failed checks"), failures.count + ' / ' + failures.threshold)
+            ] : []),
+            ...(reasons.length && s.enforcement === 'blocked' ? [row(_("Active block reasons"), reasons.join(_("; ")))] : []),
             row(_("Current protection reason"), pgI18n.runtime(s.firewall_error) || activityText(s)),
             row(_("Access recovery"), recoveryText(s)),
-            ...(s.remote_health && s.remote_health.required ? [row(_("VPS service health"),s.remote_health.ok?_("Ready"):_("Unavailable"))] : []),
             row(_("Proxy client"), clientText(s.client)),
             row(_("Proxy client services"), fastText(s.fast_watch) || _("Service monitoring is disabled")),
             row(_("Proxy client runtime log"), passwallLogText(s.fast_watch)),
             row(_("Schedule"), s.phase === 'disabled' ? _("Protection is disabled; schedules will not run") : scheduleText(s.schedule) +
                 (s.schedule && s.schedule.enabled ? (s.mode === 'monitor' ? _(" · Monitor only; no blocking") : s.schedule.active ? _(" · Within the scheduled window") : '') : '')),
-            row(_("Observed proxy exit"), s.exit_check && s.exit_check.enabled === false ? _("Exit IP verification is disabled") : s.exit_check && s.exit_check.attempted !== false && s.exit_check.ok != null ? (s.exit_check.ok ? _("Passed") : _("Failed")) + _("; observed ") + (s.exit_check.observed || _("Unknown")) + _("; expected ") + (s.exit_check.expected || _("Not configured")) + (s.exit_check.via ? ' · ' + s.exit_check.via : '') : _("Exit has not been checked")),
-            row(_("Last Cloudflare event verification"), cfEventText(s.cf_event)),
-            row(_("HTTPS connectivity checks"), (s.probes || []).map(p => p.host + (p.via ? ' → ' + p.via : '') + _(": ") + (p.ok ? _("Success") : _("Failed")) + _(", ") + p.milliseconds + ' ms').join(_("; ")) || _("No completed checks yet")),
+            row(_("Observed proxy exit"), exitResultText(s.exit_check, s.observed_exit4)),
+            row(_("Local control API"), apiRequestsText(s)),
+            ...(s.check_mode === 'public' ? [] : [row(_("HTTPS connectivity checks"), (s.probes || []).map(p => p.host + (p.via ? ' → ' + p.via : '') + _(": ") + (p.ok ? _("Success") : _("Failed")) + _(", ") + p.milliseconds + ' ms').join(_("; ")) || _("No completed checks yet"))]),
             row(_("UDP proxy path check"), s.udp_probe && s.udp_probe.enabled ? (s.udp_probe.ok ? _("Passed") : _("Failed")) + ' · ' + (s.udp_probe.milliseconds || 0) + ' ms' : _("UDP proxy path check is disabled")),
             row(_("Plugin self-check"), supervisionText(s.supervision)),
             row(_("Plugin resource usage"), s.supervision && s.supervision.resources ?
@@ -222,7 +253,7 @@ return view.extend({
                 ' · ' + _("Logical processors") + ': ' + (s.supervision.resources.cpu_cores || _("Unknown")) +
                 ' · ' + _("Process count") + ': ' + s.supervision.resources.process_count + ' · ' + _("Logs in RAM") + ': ' + s.supervision.resources.log_bytes + ' B' : _("Resource statistics are disabled or awaiting the first sample")),
             row(_("Current recovery event"), incidentText(s.fast_watch && s.fast_watch.episode)),
-            row(_("Last completed check"), formatTime(s.last_probe_at) + (s.stale ? _(" · No recent update from the monitor") : '')),
+            row(_("Last completed check"), formatTime(s.check_mode === 'public' && s.heartbeat ? s.heartbeat.checked_at : s.last_probe_at) + (s.stale ? _(" · No recent update from the monitor") : '')),
             E('small', {}, [_("Status refreshes automatically every second. Last update: ") + new Date().toLocaleTimeString()])
         );
     },
@@ -235,10 +266,28 @@ return view.extend({
         if (this.incidentBox) this.incidentBox.textContent = (logs.incidents || []).slice(-10).map(item =>
             incidentText(item.summary) + '\n  ' + (item.steps || []).filter(step => Object.prototype.hasOwnProperty.call(stages,step.stage))
                 .map(step => '+' + Math.floor(step.elapsed || 0) + 's ' + stages[step.stage]).join(' → ')).join('\n\n') || _("No recovery event recorded");
-        const format = entries => entries.map(e => formatTime(e.time) + ' [' + e.level + '] ' + pgI18n.runtime(e.message)).join('\n') || _("No log entries");
+        const format = entries => entries.map(e => formatTime(e.time) + ' [' + e.level + '] ' + pgI18n.runtime(e.message) +
+            (apiUuidPattern.test(e.api_uuid || '') ? ' · UUID ' + e.api_uuid : '')).join('\n') || _("No log entries");
         this.logBox.textContent = format(logs.entries);
         this.checkLogBox.textContent = format(logs.details || []);
         this.logWarning.textContent = logs.skipped ? _("Some damaged log entries were skipped: ") + logs.skipped : '';
+    },
+
+    refreshApiCredentials: function() {
+        const field = this.apiUuidField;
+        if (!field || this.apiCredentialsRequest) return this.apiCredentialsRequest;
+        const hint = this.apiUuidHint;
+        const unavailable = () => {
+            field.value = '';
+            hint.textContent = _("Cannot read the current API UUID");
+        };
+        this.apiCredentialsRequest = apiCredentialsCall().then(result => {
+            if (!result.ok) return unavailable();
+            field.value = apiUuidPattern.test(result.uuid || '') ? result.uuid : '';
+            hint.textContent = field.value ? '' : result.enabled ?
+                _("Waiting for the API UUID after settings are confirmed") : _("The API is disabled");
+        }).catch(unavailable).finally(() => { this.apiCredentialsRequest = null; });
+        return this.apiCredentialsRequest;
     },
 
     refreshStatus: function() {
@@ -259,74 +308,153 @@ return view.extend({
         return this.statusRequest;
     },
 
-    refreshLogs: function() {
+    readLogSnapshot: function() {
         if (this.logsRequest) return this.logsRequest;
-        this.logsRequest = readLogs().then(logs => this.updateLogs(logs)).catch(err => {
+        const request = readLogs().then(logs => {
+            if (this.logsRequest === request) this.updateLogs(logs);
+        }).catch(err => {
+            if (this.logsRequest !== request) return;
+            this.lastLogs = null;
             this.logBox.textContent = _("Cannot read plugin logs: ") + pgI18n.runtime(err.message);
-            this.checkLogBox.textContent = ''; this.logWarning.textContent = '';
-        }).finally(() => { this.logsRequest = null; });
-        return this.logsRequest;
+            this.checkLogBox.textContent = '';
+            this.incidentBox.textContent = '';
+            this.logWarning.textContent = '';
+        }).finally(() => {
+            if (this.logsRequest === request) this.logsRequest = null;
+        });
+        this.logsRequest = request;
+        return request;
+    },
+
+    refreshLogs: function() {
+        return this.clearLogsRequest || this.readLogSnapshot();
+    },
+
+    clearLogs: function() {
+        if (this.clearLogsRequest) return this.clearLogsRequest;
+        this.clearLogsRequest = clearCall().then(result => {
+            if (!result.ok) throw new Error(pgI18n.runtime(result.error) || _("Failed to clear logs"));
+            // A read started before the clear can still return the old log.
+            this.logsRequest = null;
+            this.updateLogs({entries: []});
+            return this.readLogSnapshot();
+        }).catch(err => this.showActionError(err)).finally(() => { this.clearLogsRequest = null; });
+        return this.clearLogsRequest;
     },
 
     refresh: function() {
         return Promise.all([this.refreshStatus(), this.refreshLogs()]);
     },
 
-    fetchExit: function() {
-        if(this.exitRequest)return this.exitRequest;
-        const sourceOption=this.formSection.children.find(o=>o.option==='exit_source');
-        const source=sourceOption&&sourceOption.formvalue('main');
-        const read=async()=>{
-            let result=await egressInfoCall(true);
-            const deadline=performance.now()+35000;
-            while(result&&result.ok===true&&result.phase==='pending'&&performance.now()<deadline){
-                await new Promise(resolve=>setTimeout(resolve,1000));
-                result=await egressInfoCall(false);
-            }
-            if(result&&result.phase==='pending')throw new Error(_("VPS address read timed out"));
-            return result;
-        };
-        this.exitRequest=read().then(result=>{
-            if(!result||result.ok!==true||!Array.isArray(result.candidates))throw new Error(result&&result.error||_("Unable to read VPS address candidates"));
-            const candidates=result.candidates.filter(row=>Array.isArray(row.evidence)&&row.evidence.some(e=>e.source===String(source).replace('vps_','')));
-            let selected=candidates.length===1?candidates[0].ipv4:null;
-            const use=E('button',{type:'button',class:'cbi-button cbi-button-action',disabled:!selected?true:null,click:()=>{
-                const field=this.formSection.children.find(o=>o.option==='expected_exit4');
-                field.getUIElement('main').setValue(selected);
-                this.extraDraft=Object.assign({},this.extraDraft,{exit_fetched_at:String(result.generated_at)});
-                this.updateDraftIndicator();ui.hideModal();
-            }},[_("Use this address")]);
-            const choices=candidates.map(row=>E('label',{style:'display:block;margin:.6em 0;'},[
-                E('input',{type:'radio',name:'pg-vps-exit-candidate',value:row.ipv4,checked:selected===row.ipv4?true:null,change:()=>{selected=row.ipv4;use.disabled=false;}}),' ',
-                E('bdi',{dir:'ltr'},[row.ipv4])
-            ]));
-            pgI18n.modal(ui,_("Review VPS address candidates"),[
-                E('p',{},[_("Interface and panel addresses, and the VPS default-route address, may differ from the proxy exit. This import does not verify proxy traffic.")]),
-                E('p',{},[_("Retrieved at: ")+formatTime(result.generated_at)]),
-                ...choices,
-                candidates.length?'':E('p',{},[_("No usable IPv4 candidate exists for this source. Check the Agent settings or enter the expected address manually.")]),
-                E('button',{type:'button',class:'cbi-button',click:ui.hideModal},[_("Cancel")]),' ',use
-            ]);
-        }).catch(err=>this.showActionError(err)).finally(()=>{this.exitRequest=null;});
-        return this.exitRequest;
-    },
-
-    preflight: function() {
-        const draft = Object.assign({}, uci.get ? uci.get('proxy_guard', 'main') : {});
+    currentDraft: function() {
+        const draft = Object.assign({}, uci.get ? uci.get('proxy_guard', 'main') : {}, this.extraDraft || {});
         this.formSection.children.forEach(option => {
             const value = option.formvalue('main');
             if (value != null) draft[option.option] = value;
         });
-        this.preflightBox.textContent = _("Checking unsaved settings without saving or probing the Internet...");
-        return preflightCall(JSON.stringify(draft)).then(result => {
+        return draft;
+    },
+
+    diagnosticResult: function(id, message) {
+        return E('pre', {id, role:'status', dir:'auto',
+            style:'max-height:50vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;'}, message ? [message] : []);
+    },
+
+    showDiagnosticModal: function(title, children) {
+        pgI18n.modal(ui, title, [E('style', {}, [
+            '.pg-guard .pg-diagnostic-raw[hidden]{display:none}'
+        ]), ...children].concat(
+            E('button', {type:'button', class:'cbi-button cbi-button-neutral', click:ui.hideModal}, [_("Close")])
+        ));
+    },
+
+    testProxy: function() {
+        if (this.testProxyRequest) return this.testProxyRequest;
+        const draft = JSON.stringify(this.currentDraft());
+        const box = this.diagnosticResult('pg-test-proxy', _("Testing the proxy with the current settings..."));
+        const detail = this.diagnosticResult('pg-run-diagnostics');
+        detail.dir = 'ltr';
+        detail.hidden = true;
+        detail.classList.add('pg-diagnostic-raw');
+        const run = E('button', {type:'button', class:'cbi-button cbi-button-action important',
+            'aria-controls':'pg-run-diagnostics',
+            click:ui.createHandlerFn(this, () => this.runDiagnostics(detail))}, [_("Run detailed diagnostics")]);
+        this.showDiagnosticModal(_("Test current proxy"), [
+            E('p', {}, [_("Tests the current form through SOCKS. Apply the settings separately to change protection.")]),
+            box,
+            E('p', {class:'cbi-value-description'}, [_("Detailed diagnostics use the applied proxy settings.")]),
+            run, detail
+        ]);
+        const errors={busy:_("A proxy test is already running"), invalid_draft:_("Check the connection settings and try again")};
+        this.testProxyRequest=testProxyCall(draft).then(result => {
+            if (!result.ok) {
+                box.textContent=(errors[result.error] || _("The proxy test could not run")) + (result.detail ? ' · ' + pgI18n.runtime(result.detail) : '');
+                return;
+            }
+            const lines=[(result.connectivity_ok ? _("Proxy connectivity passed") : _("Proxy connectivity failed")) + ' · ' + result.milliseconds + ' ms'];
+            for (const check of result.checks || []) {
+                lines.push(check.host + ' · ' + (check.ok ? _("Passed") : _("Failed")) + ' · HTTP ' + check.http_code + ' · curl ' + check.curl_code + ' · ' + check.milliseconds + ' ms');
+            }
+            if (result.exit_check && result.exit_check.enabled || result.observed_exit4) {
+                lines.push(_("Observed proxy exit") + ' · ' + exitResultText(result.exit_check,result.observed_exit4));
+            }
+            if (!result.complete) lines.push(_("The test time limit was reached before all checks finished"));
+            box.textContent=lines.join('\n');
+        }).catch(() => { box.textContent=_("The proxy test could not run"); })
+            .finally(() => { this.testProxyRequest=null; });
+        return this.testProxyRequest;
+    },
+
+    runDiagnostics: function(box) {
+        box.hidden = false;
+        box.textContent = _("Running detailed diagnostics...");
+        if (!this.diagnosticRequest) {
+            this.diagnosticRequest = runDiagnosticsCall().finally(() => {
+                this.diagnosticRequest = null;
+            });
+        }
+        return this.diagnosticRequest.then(result => {
+            if (!result.ok || !result.diagnostics) {
+                box.textContent = result.error === 'busy' ?
+                    _("A diagnostic request is already running") : _("The detailed diagnostic could not run");
+                return;
+            }
+            const diagnostic = result.diagnostics;
+            const lines = [diagnostic.ok ? _("Passed") : _("Failed")];
+            const reason = {
+                http_status: _("Unexpected HTTP status"),
+                transport_error: _("Could not reach the heartbeat endpoint through the proxy"),
+                invalid_headers: _("Invalid heartbeat response headers"),
+                invalid_status: _("Unexpected HTTP status"),
+                duplicate_security_header: _("Duplicate heartbeat validation header"),
+                body_mismatch: _("Unexpected heartbeat response body"),
+                nonce_mismatch: _("Heartbeat verification token does not match")
+            };
+            if (diagnostic.reason) lines.push(reason[diagnostic.reason] || diagnostic.reason);
+            if (diagnostic.http_code) lines.push('HTTP ' + diagnostic.http_code);
+            if (Number.isFinite(diagnostic.milliseconds)) lines.push(diagnostic.milliseconds + ' ms');
+            const headers = Array.isArray(diagnostic.headers) ? diagnostic.headers.map(header =>
+                header.name + ': ' + header.value + (header.encoding === 'base64' ? ' [Base64]' : '')) : [];
+            box.textContent = lines.join(' · ') + (headers.length ? '\n\n' + headers.join('\n') : '');
+        }).catch(() => {
+            box.textContent = _("The detailed diagnostic could not run");
+        });
+    },
+
+    preflight: function() {
+        const draft = JSON.stringify(this.currentDraft());
+        const box = this.diagnosticResult('pg-preflight',
+            _("Checking unsaved settings without saving or probing the Internet..."));
+        this.showDiagnosticModal(_("Check settings and runtime environment"), [box]);
+        return preflightCall(draft).then(result => {
             const labels = {configured_offload:_("Configured flow offloading"),running_offload:_("Active kernel flowtables"),bridge_filtering:_("Bridge filtering"),kernel_features:_("Required nftables kernel features"),client_mode:_("Proxy client forwarding mode"),homeproxy_tun_ipv6_udp:_("HomeProxy TUN IPv6 UDP compatibility"),configuration:_("Configuration format"),interfaces:_("Ingress devices"),compatibility:_("Firewall compatibility"),
                 socks_listener:_("Local SOCKS listener"),udp_runtime:_("UDP check support library"),passwall_services:_("Proxy client services"),
                 ipv6_scope:_("IPv6 covers all sources on the selected devices"),schedule_clock:_("System clock"),
                 topology:_("Traffic bypassing this router cannot be protected; validate the actual topology")};
             const levels = {ok:_("Passed"),warning:_("Please verify"),error:_("Needs attention"),off:_("Disabled")};
-            this.preflightBox.textContent = (result.checks || []).map(row => (labels[row.code] || _("Unknown state")) + ': ' + (levels[row.level] || _("Unknown state")) + (row.detail ? ' · ' + pgI18n.runtime(row.detail) : '')).join('\n') +
+            box.textContent = (result.checks || []).map(row => (labels[row.code] || _("Unknown state")) + ': ' + (levels[row.level] || _("Unknown state")) + (row.detail ? ' · ' + pgI18n.runtime(row.detail) : '')).join('\n') +
                 (result.error ? '\n' + pgI18n.runtime(result.error) : '') + '\n' + _("Read-only check: settings have not been saved or applied, and proxy Internet connectivity has not been tested.");
-        }).catch(err => { this.preflightBox.textContent = pgI18n.runtime(err.message) || _("Cannot complete self-check"); });
+        }).catch(err => { box.textContent = pgI18n.runtime(err.message) || _("Cannot complete self-check"); });
     },
 
     diagnosticData: function() {
@@ -358,11 +486,11 @@ return view.extend({
             const anchor=E('a',{href:url,download:'proxy-guard-diagnostic.json'});anchor.click();
             setTimeout(() => URL.revokeObjectURL(url),1000);
         };
-        pgI18n.modal(ui,_("Local diagnostic report"),[
+        this.showDiagnosticModal(_("Local diagnostic report"), [
             E('p',{},[_("This report contains only state names and measurements. It excludes IP addresses, URLs, configuration and raw logs. Review it before sharing. Nothing is uploaded.")]),
             E('pre',{style:'max-height:50vh;overflow:auto;white-space:pre-wrap;'},[text]),
-            E('button',{type:'button',class:'cbi-button cbi-button-action',click:download},[_("Download report")]),
-            E('button',{type:'button',class:'cbi-button cbi-button-neutral',click:ui.hideModal},[_("Close")])]);
+            E('button',{type:'button',class:'cbi-button cbi-button-action',click:download},[_("Download report")])
+        ]);
     },
 
     formSnapshot: function() {
@@ -384,10 +512,11 @@ return view.extend({
         s.addremove = false;
         s.tab('general', _("General settings"));
         s.tab('scope', _("Protection scope"));
+        s.tab('connection', _("Connection checks"));
         s.tab('schedule', _("Scheduled protection"));
-        s.tab('health', _("Plugin self-check and recovery"));
-        s.tab('advanced', _("Connection checks"));
         s.tab('fast', _("Failure protection and recovery"));
+        s.tab('health', _("Plugin health, logs and recovery"));
+        s.tab('api', _("Local control API"));
         let o = s.taboption('general', form.Flag, 'enabled', _("Enable protection"));
         o.rmempty = false;
         o = s.taboption('general', form.ListValue, 'mode', _("Operating mode"));
@@ -396,25 +525,6 @@ return view.extend({
         o.default = 'monitor'; o.rmempty = false;
         o = s.taboption('general', form.Value, 'socks_port', _("Local SOCKS port"), _("Checks always use the SOCKS5 proxy on 127.0.0.1, with no direct fallback."));
         o.datatype = 'port'; o.default = '1070'; o.rmempty = false;
-        o = s.taboption('general', form.Flag, 'exit_check', _("Verify proxy exit IPv4"), _("Optional. When off, connectivity checks continue without requiring or comparing an expected exit address."));
-        o.default='0';o.rmempty=false;
-        o = s.taboption('general', form.Value, 'expected_exit4', _("Expected proxy exit IPv4"), _("Required only when exit IP verification is enabled. A different exit or an unreachable verification service is treated as a failure."));
-        o.datatype = 'ip4addr("nomask")'; o.rmempty = false; o.depends('exit_check','1');o.retain=true;
-        if(this.proAvailable){
-            o=s.taboption('general',form.ListValue,'exit_source',_("Expected IPv4 source"));
-            o.value('manual',_("Enter manually"));
-            o.value('vps_interface',_("VPS public interface address"));
-            o.value('vps_panel',_("IPv4 hints from panel configuration"));
-            o.value('vps_measured',_("VPS default-route measurement"));
-            o.default='manual';o.rmempty=false;o.depends('exit_check','1');o.retain=true;
-            o=s.taboption('general',form.Button,'_read_vps_exit',_("Import expected IPv4 from VPS"));
-            o.inputtitle=_("Read saved VPS connection");
-            o.description=_("Uses the saved Pro connection. Importing an address only edits this form; Save & Apply is still required.");
-            for(const value of ['vps_interface','vps_panel','vps_measured'])o.depends({exit_check:'1',exit_source:value});
-            o.onclick=()=>this.fetchExit();
-        }
-
-
         o = s.taboption('fast', form.ListValue, 'proxy_client', _("Proxy client"),
             _("Detect one installed client automatically. When several are installed, select the client to monitor. This does not modify the client configuration."));
         o.value('auto', _("Automatic detection"));
@@ -512,42 +622,141 @@ return view.extend({
             if(item[0]==='sources6'){option.depends('ipv6_protect','1');option.retain=true;option.rmempty=false;}
             if (item[0] === 'dns_ports') { option.default = ['53']; option.rmempty = false; }
         });
-        const fields = [
+        o = s.taboption('connection', form.ListValue, 'check_mode', _("Connection check method"),
+            _("Choose a connection check method. Both methods use the local SOCKS proxy. Changes take effect after Save & Apply."));
+        o.value('public', _("Official HTTPS"));
+        o.value('web', _("Third-party HTTPS"));
+        o.default='public'; o.rmempty=false;
+
+        const heading = (name, title, method) => {
+            const option = s.taboption('connection', form.DummyValue, name);
+            option.renderWidget = () => E('h4', {class:'pg-detection-heading'}, [title]);
+            option.parse = () => Promise.resolve();
+            if (method) option.depends('check_mode',method);
+        };
+        const numbers = (tab, fields, dependencies) => {
+            for (const [key, label, value, min, max] of fields) {
+                const option = s.taboption(tab, form.Value, key, label);
+                option.default=value; option.datatype='and(uinteger,range('+min+','+max+'))';
+                option.rmempty=false; option.retain=true;
+                if (dependencies) option.depends(dependencies);
+            }
+        };
+
+        heading('_official_https', _("Official HTTPS settings"), 'public');
+        numbers('connection', [
+            ['public_hb_interval', _("Interval after each HTTPS check (seconds)"), '3', 1, 300],
+            ['public_hb_timeout', _("Timeout per HTTPS request (seconds)"), '2', 1, 15],
+            ['public_hb_fail', _("Consecutive failures to confirm an outage"), '2', 1, 10],
+            ['public_hb_recover', _("Consecutive successes to confirm recovery"), '2', 1, 10],
+            ['public_hb_sensitive_interval', _("Interval during enhanced monitoring (seconds)"), '1', 1, 5]
+        ], {check_mode:'public'});
+
+        heading('_third_party_https', _("Third-party HTTPS settings"), 'web');
+        o = s.taboption('connection', form.DynamicList, 'targets', _("HTTPS check targets"),
+            _("Configure 2–4 targets as https://domain/path|expected_status. Connections use the proxy. This does not test the health of every UDP service."));
+        o.default=['https://www.gstatic.com/generate_204|204','https://connectivity-check.ubuntu.com/|204'];
+        o.rmempty=false; o.retain=true; o.depends('check_mode','web');
+        numbers('connection', [
             ['interval', _("Interval after each check round (seconds)"), '10', 5, 300],
             ['timeout', _("Timeout per target (seconds)"), '4', 1, 15],
+            ['min_success', _("Minimum successful targets per round"), '1', 1, 4],
             ['fail_threshold', _("Consecutive failed rounds"), '3', 1, 10],
             ['recover_threshold', _("Consecutive successful rounds for recovery"), '2', 1, 10],
-            ['startup_grace', _("Startup grace deadline (seconds since boot)"), '150', 0, 600],
-            ['min_success', _("Minimum successful targets per round"), '1', 1, 4],
-            ['log_kib', _("Maximum size per log file (KiB)"), '64', 16, 512]
-        ];
-        fields.forEach(item => {
-            const option = s.taboption('advanced', form.Value, item[0], item[1]);
-            option.default = item[2]; option.datatype = 'range(' + item[3] + ',' + item[4] + ')'; option.rmempty = false;
-            if (item[0] === 'startup_grace') option.description = _("Boot protection replaces this fixed startup grace period.");
-        });
-        o = s.taboption('advanced', form.DynamicList, 'targets', _("HTTPS check targets"), _("Configure 2–4 targets as https://domain/path|expected_status. Connections use the proxy. This does not test the health of every UDP service."));
-        o.rmempty = false;
-        o = s.taboption('advanced', form.Value, 'exit_url', _("Exit verification HTTPS URL"), _("Routine exit verification uses ipify by default. Accepts a plain-text IPv4 address or a compatible trace response. Requests always use the local SOCKS proxy. Keep Cloudflare trace out of recurring targets to avoid frequent Cloudflare requests."));
-        o.rmempty = false;o.depends('exit_check','1');o.retain=true;
-        o = s.taboption('advanced', form.Value, 'exit_fallback_url', _("Backup HTTPS URL for exit verification"),
+            ['web_sensitive_interval', _("Interval during enhanced monitoring (seconds)"), '1', 1, 5]
+        ], {check_mode:'web'});
+
+        heading('_exit_ipv4', _("Exit IPv4 verification"));
+        o = s.taboption('connection', form.Flag, 'exit_check', _("Verify proxy exit IPv4"),
+            _("Optional. When off, connectivity checks continue without requiring or comparing an expected exit address."));
+        o.default='0'; o.rmempty=false;
+        o = s.taboption('connection', form.Value, 'expected_exit4', _("Expected proxy exit IPv4"));
+        o.datatype='ip4addr("nomask")'; o.rmempty=false; o.retain=true; o.depends('exit_check','1');
+        o = s.taboption('connection', form.ListValue, 'exit_provider', _("Exit IP response source"),
+            _("Official HTTPS uses the IPv4 reported by the official service. Enter the expected IPv4 to compare against it. No URL is required."));
+        o.value('public', _("Official HTTPS")); o.value('text', _("Third-party HTTPS"));
+        o.default='public'; o.rmempty=false; o.retain=true; o.depends('exit_check','1');
+        o = s.taboption('connection', form.Value, 'exit_url', _("Exit verification HTTPS URL"));
+        o.default='https://api.ipify.org/'; o.rmempty=false; o.retain=true;
+        o.depends({exit_check:'1',exit_provider:'text'});
+        o = s.taboption('connection', form.Value, 'exit_fallback_url', _("Backup HTTPS URL for exit verification"),
             _("Queried through the same SOCKS proxy only if the primary URL times out. Leave blank to use https://4.ident.me/ when the primary host is api.ipify.org. With a different primary host, leaving this blank disables the backup."));
-        o.placeholder = 'https://backup.example/ip';
-        o.rmempty = true;
-        o.depends('exit_check', '1');
-        o.retain = true;
-        o = s.taboption('advanced', form.Flag, 'cf_event_check', _("Verify with Cloudflare after startup or an interruption"),
-            _("Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."));
-        o.default='1';o.rmempty=false;o.depends('exit_check','1');o.retain=true;
-        o = s.taboption('advanced', form.Flag, 'udp_check', _("Verify UDP through the proxy"),
+        o.placeholder='https://4.ident.me/'; o.rmempty=true; o.retain=true;
+        o.depends({exit_check:'1',exit_provider:'text'});
+
+        o = s.taboption('fast', form.Value, 'startup_grace', _("Startup grace deadline (seconds since boot)"),
+            _("Boot protection replaces this fixed startup grace period."));
+        o.default='150'; o.datatype='range(0,600)'; o.rmempty=false;
+        o = s.taboption('fast', form.Flag, 'udp_check', _("Verify UDP through the proxy"),
             _("Optional check: send a DNS-format UDP request through local SOCKS5 UDP ASSOCIATE. Requires luci-lib-nixio and a proxy with UDP support; never falls back to a direct connection. Failure counts as a failed check round. The result covers only this target, not every UDP service."));
         o.default='0';o.rmempty=false;
         [['udp_server',_("UDP check target IPv4"),'','ip4addr("nomask")'],
          ['udp_port',_("UDP check target port"),'53','port'],['udp_query',_("UDP query domain"),'example.com','hostname'],
          ['udp_timeout',_("UDP check timeout (seconds)"),'3','range(1,10)']].forEach(item => {
-            const option=s.taboption('advanced',form.Value,item[0],item[1]);option.depends('udp_check','1');option.retain=true;
+            const option=s.taboption('fast',form.Value,item[0],item[1]);option.depends('udp_check','1');option.retain=true;
             option.default=item[2];option.datatype=item[3];option.rmempty=false;
         });
+        o=s.taboption('api',form.Flag,'api_enabled',_("Enable local control API"),
+            _("Disabled by default. Save and Apply enables the API and generates a UUID. Authenticated API requests show the UUID in the event log. Turning the API off and on generates a new UUID."));
+        o.default='0';o.rmempty=false;
+        o=s.taboption('api',form.DummyValue,'_api_uuid',_("API UUID"),
+            _("Send this UUID in the Authorization header. It grants access to the local API."));
+        o.depends('api_enabled','1');
+        o.renderWidget = () => {
+            const field = E('input', {id:'pg-api-uuid', type:'text', class:'cbi-input-text',
+                readonly:'readonly', dir:'ltr', autocomplete:'off',
+                'aria-label':_("API UUID"), style:'width:100%;max-width:26em;'});
+            const hint = E('span', {id:'pg-api-uuid-status', role:'status', class:'cbi-value-description'});
+            this.apiUuidField = field;
+            this.apiUuidHint = hint;
+            const copy = E('button', {type:'button', class:'cbi-button cbi-button-neutral',
+                click:ui.createHandlerFn(this, async () => {
+                    if (!field.value) return;
+                    if (navigator.clipboard) await navigator.clipboard.writeText(field.value);
+                    else { field.focus(); field.select(); document.execCommand('copy'); }
+                })}, [_("Copy UUID")]);
+            return E('div', {}, [field, ' ', copy, hint]);
+        };
+        o.parse = () => Promise.resolve();
+        numbers('api', [
+            ['api_default_seconds', _("Default API block duration (seconds)"), '300', 1, 86400],
+            ['api_max_seconds', _("Maximum API block duration (seconds)"), '3600', 1, 86400]
+        ], {api_enabled:'1'});
+        const defaultDuration = s.getOption('api_default_seconds');
+        const maximumDuration = s.getOption('api_max_seconds');
+        defaultDuration.validate = (section, value) => {
+            const maximum = Number(maximumDuration.formvalue(section));
+            return !Number.isInteger(maximum) || maximum < 1 || maximum > 86400 ||
+                Number(value) <= maximum || _("Default API block duration must not exceed the maximum.");
+        };
+        o = s.taboption('api', form.ListValue, 'diagnostics_enabled', _("API refresh endpoint"),
+            _("The diagnostics endpoint returns this heartbeat response in the same request."));
+        const heartbeatOrigin = 'https://hb.pghb.app';
+        const apiEndpointLabel = (label, path) => label.replace('%s', '\u2066' + heartbeatOrigin + path + '\u2069');
+        o.value('0', apiEndpointLabel(_("Standard heartbeat (%s)"), '/'));
+        o.value('1', apiEndpointLabel(_("Detailed diagnostics (%s)"), '/f'));
+        o.default='0'; o.rmempty=false; o.retain=true; o.depends('api_enabled','1');
+        o = s.taboption('api', form.DummyValue, '_api_advanced');
+        o.renderWidget = () => E('details', {id:'pg-api-advanced'}, [
+            E('summary', {}, [_("Advanced diagnostics")])
+        ]);
+        o.parse = () => Promise.resolve();
+        o.depends('api_enabled','1');
+        numbers('api', [
+            ['diagnostics_interval', _("Minimum time between diagnostic requests (seconds)"), '60', 10, 3600],
+            ['diagnostics_ttl', _("Diagnostic freshness limit (seconds)"), '300', 30, 3600]
+        ], {api_enabled:'1'});
+        const renderOptions = s.renderOptions;
+        s.renderOptions = function(tab, section) {
+            const options = renderOptions.call(this, tab, section);
+            if (tab !== 'api') return options;
+            return options.then(rows => {
+                const details = rows.querySelector('#pg-api-advanced');
+                const fields = rows.querySelectorAll('[data-name="diagnostics_interval"], [data-name="diagnostics_ttl"]');
+                for (const field of fields) details.appendChild(field);
+                return rows;
+            });
+        };
         o=s.taboption('health',form.Flag,'self_heal',_("Automatically restart unresponsive plugin monitors"),
             _("An independent watchdog checks plugin heartbeats every five seconds using a clock unaffected by wall-clock adjustments. It restarts this plugin after persistent heartbeat or execution failures. Proxy outages and configuration errors do not trigger restart loops. Manual stop and disabling protection take precedence."));
         o.default='1';o.rmempty=false;
@@ -562,7 +771,8 @@ return view.extend({
         o=s.taboption('health',form.Flag,'resource_monitor',_("Show plugin resource use"),
             _("Sample plugin resources every five seconds. CPU usage is a percentage of the combined capacity of all online logical processors; 100% means all of them are fully used. Memory is the sum of process RSS and may include shared pages more than once. Sampling stores no history on flash. Heartbeat monitoring continues when resource sampling is off."));
         o.default='1';o.rmempty=false;
-        o = s.taboption('advanced', form.Flag, 'debug', _("Detailed check logs"), _("Changing only logging options does not restart checks or reset permits. Logs are stored in memory, cleared on reboot, and also sent to the system log."));
+        numbers('health', [['log_kib', _("Maximum size per log file (KiB)"), '64', 16, 512]]);
+        o = s.taboption('health', form.Flag, 'debug', _("Detailed check logs"), _("Changing only logging options does not restart checks or reset permits. Logs are stored in memory, cleared on reboot, and also sent to the system log."));
         o.rmempty = false;
 
         this.map = m;
@@ -571,7 +781,6 @@ return view.extend({
         this.logBox = E('pre', { style: 'max-height:22em;overflow:auto;white-space:pre-wrap;' });
         this.checkLogBox = E('pre', { style: 'max-height:16em;overflow:auto;white-space:pre-wrap;' });
         this.logWarning = E('p', {role:'status'});
-        this.preflightBox=E('pre',{id:'pg-preflight',role:'status',style:'white-space:pre-wrap;'});
         this.incidentBox=E('pre',{id:'pg-incidents',style:'max-height:12em;overflow:auto;white-space:pre-wrap;'});
         this.statusUpdatedAt = performance.now();
         // Keep the heading/status outside the rerendered form so Save does
@@ -579,42 +788,65 @@ return view.extend({
         return m.render().then(node => {
             this.refresh();
             poll.add(() => { this.refreshStatus(); }, 1);
-            poll.add(() => this.refreshLogs(), 5);
+            poll.add(() => { this.refreshLogs(); this.refreshApiCredentials(); }, 5);
+            setTimeout(() => this.refreshApiCredentials(), 0);
             this.savedFormSnapshot = this.formSnapshot();
             this.updateDraftIndicator();
             setTimeout(()=>pgSetup.attach(this),0);
             ['input', 'change', 'widget-change'].forEach(event =>
                 node.addEventListener(event, () => this.updateDraftIndicator()));
             return pgI18n.decorate(E('div', {}, [
-                E('style',{},['.pg-guard[dir=rtl] .cbi-value{display:flex;flex-wrap:wrap;gap:.4em}.pg-guard[dir=rtl] .cbi-value-title{float:none;text-align:start;flex:0 0 12em}.pg-guard[dir=rtl] .cbi-value-field{margin:0;flex:1;min-width:14em}.pg-guard .pg-status-row span{unicode-bidi:plaintext}@media(max-width:600px){.pg-guard[dir=rtl] .cbi-value-title{flex-basis:100%}}']),
+                E('style', {}, [
+                    '.pg-guard[dir=rtl] .cbi-value{display:flex;flex-wrap:wrap;gap:.4em}' +
+                    '.pg-guard[dir=rtl] .cbi-value.hidden{display:none}' +
+                    '.pg-guard[dir=rtl] .cbi-value-title{float:none;text-align:start;flex:0 0 12em}' +
+                    '.pg-guard[dir=rtl] .cbi-value-field{margin:0;flex:1;min-width:min(14em,100%)}' +
+                    '.pg-guard .pg-status-row span{unicode-bidi:plaintext}' +
+                    '.pg-guard[dir=rtl] .pg-status-row span{text-align:right}' +
+                    '.pg-guard [data-name="mode"] .cbi-value-field select,.pg-guard [data-tab="connection"] .cbi-value-field select,.pg-guard [data-tab="api"] .cbi-value-field select{width:auto;min-width:min(15em,100%);max-width:100%}' +
+                    '.pg-guard .pg-detection-heading{background:rgba(127,127,127,.12);border-radius:.35em;padding:.55em .8em;margin:.75em 0 .15em;font-size:1em}' +
+                    '.pg-guard .pg-tools-row{display:flex;flex-wrap:nowrap;align-items:stretch;gap:.45em;max-width:100%;overflow-x:auto;padding:.2em .1em .4em}' +
+                    '.pg-guard .pg-tools-row .cbi-button{flex:1 0 8em;min-width:0;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;margin:0;padding:.3em .55em;white-space:normal;word-break:normal;overflow-wrap:anywhere;text-align:center;line-height:1.3}' +
+                    '.pg-guard .pg-tools-row .cbi-button{color:#1f1f1f;background:#f0f0f0;border:1px solid transparent;border-radius:6px;box-shadow:none;text-shadow:none}' +
+                    '.pg-guard .pg-tools-row .cbi-button:not([disabled]):hover{color:#1f1f1f;background:#e4e4e4;text-decoration:none}' +
+                    '.pg-guard .pg-tools-row .cbi-button:focus-visible{outline:2px solid #125ab1;outline-offset:-3px}' +
+                    '.pg-guard summary{cursor:pointer}' +
+                    '.pg-guard .pg-log-actions{margin-block:.9em}' +
+                    '@media(max-width:600px){.pg-guard[dir=rtl] .cbi-value-title{flex-basis:100%}}'
+                ]),
                 E('h2', {}, [_("Proxy Guard")]), this.statusBox,
                 E('div', { class: 'cbi-map-descr' }, [
                     _("On proxy failure, block Internet traffic in both directions for selected devices where traffic actually passes through this router or proxy. LAN access remains available. Return traffic bypassing this device cannot be blocked. Disabled on first install; start with monitoring, then test one device.")
                 ]),
-                E('div',{class:'cbi-section'},[
-                    E('button',{type:'button',class:'cbi-button cbi-button-action',click:()=>pgSetup.open(false)},[_("Run setup wizard")]),' ',E('a',{class:'cbi-button',href:'proxy-guard-raw'},[_('Raw UCI configuration')]),' ',
-                    E('button',{type:'button',class:'cbi-button',click:()=>pgSetup.restorePrevious()},[_("Load previous confirmed settings")]),' ',
-                    E('button',{type:'button',class:'cbi-button',click:()=>pgI18n.modal(ui,_("Restore defaults and set up again"),[
-                        E('p',{},[_("This prepares default plugin settings for review. Existing protection continues until you Save & Apply.")]),
-                        E('button',{type:'button',class:'cbi-button',click:ui.hideModal},[_("Cancel")]),' ',
-                        E('button',{type:'button',class:'cbi-button cbi-button-action',click:()=>pgSetup.open(true)},[_("Continue")])
-                    ])},[_("Restore defaults and set up again")])
-                ]), node,
-                E('div',{class:'cbi-section'},[
-                    E('button',{type:'button',class:'cbi-button cbi-button-neutral',click:ui.createHandlerFn(this,this.preflight)},[_("Check settings and runtime environment")]),
-                    E('button',{type:'button',class:'cbi-button cbi-button-neutral',click:ui.createHandlerFn(this,this.showDiagnostics)},[_("View sanitized diagnostic report")]),
-                    this.preflightBox]),
+                node,
+                E('section', {id:'pg-tools', class:'cbi-section'}, [
+                    E('h3', {}, [_("Configuration and diagnostics")]),
+                    E('div', {class:'pg-tools-row', role:'group', 'aria-label':_("Configuration and diagnostics"), tabindex:'0'}, [
+                        E('button', {type:'button', class:'cbi-button cbi-button-neutral', click:()=>pgSetup.open(false)}, [_("Run setup wizard")]),
+                        E('a', {class:'cbi-button cbi-button-neutral', href:'proxy-guard-raw'}, [_("Raw UCI configuration")]),
+                        E('button', {type:'button', class:'cbi-button cbi-button-neutral', click:()=>pgSetup.restorePrevious()}, [_("Load previous confirmed settings")]),
+                        E('button', {type:'button', class:'cbi-button cbi-button-neutral', click:()=>pgI18n.modal(ui,_("Restore defaults and set up again"),[
+                            E('p', {}, [_("This prepares default plugin settings for review. Existing protection continues until you Save & Apply.")]),
+                            E('button', {type:'button', class:'cbi-button', click:ui.hideModal}, [_("Cancel")]), ' ',
+                            E('button', {type:'button', class:'cbi-button cbi-button-action', click:()=>pgSetup.open(true)}, [_("Continue")])
+                        ])}, [_("Restore defaults and set up again")]),
+                        E('button', {type:'button', class:'cbi-button cbi-button-neutral', 'aria-haspopup':'dialog',
+                            click:ui.createHandlerFn(this,this.preflight)}, [_("Check settings and runtime environment")]),
+                        E('button', {type:'button', class:'cbi-button cbi-button-neutral', 'aria-haspopup':'dialog',
+                            click:ui.createHandlerFn(this,this.testProxy)}, [_("Test current proxy")]),
+                        E('button', {type:'button', class:'cbi-button cbi-button-neutral', 'aria-haspopup':'dialog',
+                            click:ui.createHandlerFn(this,this.showDiagnostics)}, [_("View sanitized diagnostic report")])
+                    ])
+                ]),
                 E('h3', {}, [_("Event log")]),
                 E('p', {}, [_("Protection events stay here. Frequent website checks are listed separately below.")]),
                 this.logWarning, this.logBox,
                 E('details', {id:'pg-check-details'}, [E('summary', {}, [_("Recent connectivity check details")]), this.checkLogBox]),
-                E('button', { type: 'button', class: 'cbi-button cbi-button-neutral', click: ui.createHandlerFn(this, function() {
-                    return clearCall().then(result => {
-                        if (!result.ok) throw new Error(pgI18n.runtime(result.error) || _("Failed to clear logs"));
-                        return this.refresh();
-                    }).catch(err => this.showActionError(err));
-                }) }, [_("Clear logs")]),
-                E('details',{},[E('summary',{},[_("Recovery history")]),this.incidentBox])
+                E('details', {id:'pg-recovery-history'}, [E('summary', {}, [_("Recovery history")]), this.incidentBox]),
+                E('div', {class:'pg-log-actions'}, [
+                    E('button', {type:'button', class:'cbi-button cbi-button-neutral', click:ui.createHandlerFn(this,this.clearLogs)}, [_("Clear logs and recovery history")]),
+                    E('p', {}, [_("Clears plugin events, connection check details and recovery history.")])
+                ])
             ]));
         });
     },
@@ -658,7 +890,7 @@ return view.extend({
             pgSetup.begin(result);
             // Reload the indicator from rpcd: other pages may still have
             // pending changes, so never clear the global counter blindly.
-            return Promise.all([this.refresh(), ui.changes.init()]);
+            return Promise.all([this.refresh(), this.refreshApiCredentials(), ui.changes.init()]);
         }).catch(err => this.showActionError(err));
     }
 });

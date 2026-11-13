@@ -9,7 +9,7 @@ function fail(message, code) {
 }
 
 let action = ARGV[0];
-if (length(ARGV) != 1 || !({ tick: true, apply: true, try_apply: true, clear_logs: true, stop: true, cleanup: true, supervise: true, maintenance: true })[action])
+if (length(ARGV) != 1 || !({ tick: true, apply: true, try_apply: true, clear_logs: true, stop: true, cleanup: true, supervise: true })[action])
     fail('不支持的插件操作', 2);
 
 // Do not use CLOEXEC: the worker inherits the descriptor and keeps the lock
@@ -47,8 +47,18 @@ if (action == 'clear_logs') {
         sleep(100);
     }
 }
+let extension_handles=[];
+if (action=='clear_logs') {
+    for (let name in ['api','heartbeat','diagnostic']) {
+        let h=open('/var/lock/proxy-guard-'+name+'.lock','a',0o600);
+        while(h && !h.lock('xn') && clock(true)[0]<deadline)sleep(20);
+        if(!h || !h.lock('xn'))fail('插件正在执行其他操作，本次操作未执行，请稍后重试',75);
+        push(extension_handles,h);
+    }
+}
 // A fixed executable and whitelisted action: no shell interpretation.
 let result = system(['lua', '/usr/lib/proxy-guard/main.lua', action == 'try_apply' ? 'apply' : action]);
+for(let h in extension_handles)h.close();
 if (supervision_handle) supervision_handle.close();
 if (fast_handle) fast_handle.close();
 handle.close();

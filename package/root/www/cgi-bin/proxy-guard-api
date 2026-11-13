@@ -1,0 +1,3 @@
+#!/bin/sh
+umask 077
+exec lua /usr/lib/proxy-guard/http-api.lua

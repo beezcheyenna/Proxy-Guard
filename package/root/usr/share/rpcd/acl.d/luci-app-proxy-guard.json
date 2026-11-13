@@ -28,7 +28,10 @@
           "setup_cancel",
           "setup_previous",
           "setup_claim",
-          "raw_parse"
+          "raw_parse",
+          "test_proxy",
+          "run_diagnostics",
+          "api_credentials"
         ]
       }
     }

@@ -8,7 +8,7 @@ local base='/var/run/proxy-guard/raw'
 local marker='__KEEP_SAVED_SECRET__'
 local max=65536
 local function target(name)
- assert(name=='proxy_guard' or name=='proxy_guard_access','raw_target_invalid');return name
+ assert(name=='proxy_guard','raw_target_invalid');return name
 end
 local function read(path,limit)
  local f=io.open(path,'r');if not f then return nil end
@@ -38,9 +38,9 @@ local function parse_file(path,name)
   result[v['.name']]={section_type=v['.type'],options=options}
  end)
  c:unload(name)
- assert(result.main and result.main.section_type==(name=='proxy_guard' and 'proxy_guard' or 'access'),'raw_main_required')
+ assert(result.main and result.main.section_type==('proxy_guard'),'raw_main_required')
  for id,v in pairs(result) do
-  assert(id=='main' or name=='proxy_guard_access' and v.section_type=='rule','raw_section_invalid')
+  assert(id=='main','raw_section_invalid')
   for key,value in pairs(v.options) do
    assert(type(key)=='string' and #key<=64 and key:match('^[A-Za-z0-9_%-]+$'),'raw_option_invalid')
    if type(value)=='table' then assert(#value<=256,'raw_list_invalid');for _,item in ipairs(value) do assert(type(item)=='string' and not item:find('%z'),'raw_value_invalid') end

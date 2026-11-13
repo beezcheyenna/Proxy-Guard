@@ -1,13 +1,10 @@
 local core=require 'proxy-guard.core'
-local cf_event=require 'proxy-guard.cf-event'
 local json=require 'luci.jsonc'
 local uci=require 'uci'
 local clients=require 'proxy-guard.clients'
 local M={}
 local run='/var/run/proxy-guard'
 local status_path=run..'/status.json'
-local cf_event_path=run..'/cf-event.json'
-local cf_event_url='https://www.cloudflare.com/cdn-cgi/trace'
 local log_path=run..'/events.jsonl'
 local policy_path=run..'/firewall.json'
 local removing_path=run..'/removing'
@@ -47,10 +44,10 @@ local function fingerprint(value)
     return '{'..table.concat(out,';')..'}'
 end
 
-local function config()
-    local cursor=uci.cursor()
-    local raw=cursor:get_all('proxy_guard','main')
+local function config(raw)
+    raw=raw or uci.cursor():get_all('proxy_guard','main')
     local c=core.load_config(raw)
+    if not c.enabled then c.api_enabled=raw.api_enabled=='1' end
     if c.passwall_watch then
         c._client_profile=clients.resolve(c.proxy_client)
         local ok,previous=pcall(json.parse,read(status_path) or '')
@@ -68,15 +65,6 @@ local function decoded(path)
     return ok and type(s)=='table' and s or nil
 end
 local function saved() return decoded(status_path) end
-local function cf_saved()
-    local boot=(read('/proc/sys/kernel/random/boot_id') or ''):match('^[%x%-]+') or 'unknown'
-    return cf_event.load(decoded(cf_event_path),boot)
-end
-local function cf_save(state)
-    local value=json.stringify(state)
-    if read(cf_event_path)~=value then write(cf_event_path,value) end
-end
-
 function M.devices(c,allow_pending)
     local result={}
     -- br_netfilter rewrites PACKET_OTHERHOST to PACKET_HOST before inet hooks.
@@ -117,9 +105,13 @@ local function policy_stamp(c,devices)
     local ingress={}
     for name,d in pairs(devices) do ingress[name]={kind=d.kind,index=d.index,pending=d.pending,bridge_filter_mac=d.bridge_filter_mac} end
     local policy={version=core.VERSION,devices=ingress}
+    -- Settings that only govern observation must not reset packet permits.
+    local observation_only={debug=true,log_kib=true,resource_monitor=true,
+        diagnostics_enabled=true,diagnostics_interval=true,diagnostics_ttl=true}
     for k,v in pairs(c) do
-        -- Log verbosity/rotation has no effect on connectivity or health.
-        if not tostring(k):match('^_') and k~='debug' and k~='log_kib' and k~='resource_monitor' and not tostring(k):match('^self_heal') then policy[k]=v end
+        if not observation_only[k] and not tostring(k):match('^_') and not tostring(k):match('^self_heal') then
+            policy[k]=v
+        end
     end
     return fingerprint(policy)
 end
@@ -134,7 +126,7 @@ local function event(c,level,kind,message)
     if size+#line>(c and c.log_kib or 64)*1024 then assert(os.rename(path,path..'.1')) end
     f=assert(io.open(path,'a'))
     assert(f:write(line)); assert(f:close())
-    command('logger -t proxy-guard -p daemon.'..(level=='debug' and 'debug' or level=='error' and 'err' or 'notice')..' -- '..core.quote(message))
+    command('logger -t proxy-guard -p daemon.'..(level=='debug' and 'debug' or level=='error' and 'err' or level=='warning' and 'warning' or 'notice')..' -- '..core.quote(message))
 end
 
 local function stable(value)
@@ -155,7 +147,7 @@ local function table_state(stamp)
     end
     local data=json.parse(text)
     if type(data)~='table' or type(data.nftables)~='table' then return {exists=true,alive={},error='防火墙返回格式无效'} end
-    local alive,service_alive,objects={},{},{sets={},chains={},rules={}}
+    local alive,service_alive,heartbeat_alive,api_blocked,objects={},{},{},{},{sets={},chains={},rules={}}
     local time_alive=true
     local utc=os.date('!%Y-%m-%d %H:%M:%S')
     for _,entry in ipairs(data.nftables) do
@@ -169,7 +161,7 @@ local function table_state(stamp)
         local s=entry.set
         if s then
             local item=stable(s)
-            if s.name=='healthy_ifaces' or s.name=='healthy_times' or s.name=='service_ifaces' then item.elem=nil
+            if s.name=='healthy_ifaces' or s.name=='healthy_times' or s.name=='service_ifaces' or s.name=='heartbeat_ifaces' or s.name=='api_blocks' then item.elem=nil
             elseif item.elem then table.sort(item.elem,function(a,b) return fingerprint(a)<fingerprint(b) end) end
             objects.sets[s.name]=item
         end
@@ -183,6 +175,13 @@ local function table_state(stamp)
             for _,item in ipairs(s.elem or {}) do
                 local element=type(item)=='table' and (item.elem or item) or {val=item}
                 if element.val and (element.expires==nil or element.expires>0) then service_alive[element.val]=true end
+            end
+        end
+        if s and (s.name=='heartbeat_ifaces' or s.name=='api_blocks') then
+            local target=s.name=='heartbeat_ifaces' and heartbeat_alive or api_blocked
+            for _,item in ipairs(s.elem or {}) do
+                local e=type(item)=='table' and (item.elem or item) or {val=item}
+                if e.val and (e.expires==nil or e.expires>0) then target[e.val]=true end
             end
         end
         if s and s.name=='healthy_times' then
@@ -209,7 +208,7 @@ local function table_state(stamp)
     local signature=fingerprint(objects)
     local expected=decoded(policy_path)
     local complete=expected and expected.signature==signature and (not stamp or expected.stamp==stamp)
-    return {exists=true,complete=not not complete,alive=alive,service_alive=service_alive,time_alive=time_alive,signature=signature}
+    return {exists=true,complete=not not complete,alive=alive,service_alive=service_alive,heartbeat_alive=heartbeat_alive,api_blocked=api_blocked,time_alive=time_alive,signature=signature}
 end
 
 local function apply_nft(script)
@@ -300,8 +299,15 @@ local function publish(c,s)
     s.version=core.VERSION; s.enabled=c.enabled; s.mode=c.mode
     s.updated_at=os.time(); s.updated_uptime=now()
     s.lease_seconds=c.lease_seconds
+    s.control_generation=control_generation()
+    s.check_mode=c.check_mode
     s.probe_budget=c.probe_budget
-    s.cf_event=cf_event.status(cf_saved(),c.cf_event_check)
+    local ext=require('proxy-guard.extensions')
+    s.heartbeat=ext.heartbeat_state(c,s.config_stamp)
+    s.api=ext.api_summary(c,s.config_stamp)
+    s.cf_event=nil
+    s.heartbeat.public=nil
+    s.heartbeat.exit_check=nil
     s.interfaces=c.interfaces; s.sources4=c.sources4; s.sources6=c.sources6
     s.schedule=core.schedule(c,os.time())
     local profile=c._client_profile
@@ -316,14 +322,14 @@ local function publish(c,s)
     -- and serializes it as null. Keep the two published interface lists separate.
     local fast_interfaces={}
     for i,iface in ipairs(c.interfaces) do fast_interfaces[i]=iface end
-    s.fast_config={enabled=c.passwall_watch or s.remote_health and s.remote_health.required or s.fast_watch and s.fast_watch.enabled and s.fast_watch.phase~='normal' or false,services_watch=c.passwall_watch,mode=c.mode,interfaces=fast_interfaces,
+    s.fast_config={enabled=c.passwall_watch,services_watch=c.passwall_watch,mode=c.mode,interfaces=fast_interfaces,
         trigger_any=c.passwall_trigger=='any',
         boot_guard=c.boot_guard and c.passwall_watch,
         log_watch=c.passwall_log_watch,log_interval=c.passwall_log_interval,
         dns_mode=dns_mode,client_profile=profile,
         wait_enabled=c.fast_wait_enabled,wait_seconds=c.fast_wait_seconds,
         stable_enabled=c.fast_stable_enabled,stable_seconds=c.fast_stable_seconds,
-        interval=c.interval,probe_freshness=c.lease_seconds,log_kib=c.log_kib}
+        interval=c.interval,sensitive_interval=c.sensitive_interval,probe_freshness=c.lease_seconds,log_kib=c.log_kib}
     write(status_path,json.stringify(s))
 end
 
@@ -376,7 +382,8 @@ local function sync_schedule(c,s)
     if c.passwall_watch and (leaving or changed) and not hold and not jumped then
         s.schedule_waiting=false; s.schedule_release=(s.schedule_release or 0)+1
         local fast=fast_state(c,s.config_stamp)
-        if fast and (fast.must_wait or fast.log_pending or fast.phase=='log_wait' or
+        if require('proxy-guard.extensions').exit_mismatch_pending(c) or
+            fast and (fast.must_wait or fast.log_pending or fast.phase=='log_wait' or
             fast.holding and fast.log_recovery) then
             -- The planned window ending cannot satisfy a separate real fault
             -- or reset its consecutive-recovery counter to an allowed state.
@@ -411,7 +418,7 @@ local function sync_schedule(c,s)
     return false
 end
 
-local function https_probe(c,target,body_path)
+function M.https_probe(c,target,body_path)
     if body_path then os.remove(body_path) end
     local rc,out=command(core.probe_command(c,target,body_path))
     local code,seconds=out:match('(%d%d%d)%s+([%d%.]+)%s*$')
@@ -421,10 +428,15 @@ local function https_probe(c,target,body_path)
         milliseconds=math.floor((tonumber(seconds) or 0)*1000)}
 end
 
-local function exit_probe(c,target,body_path)
-    local primary=https_probe(c,target,body_path)
-    if primary.rc~=28 or not c.exit_fallback_url then return primary end
-    local backup=https_probe(c,{url=c.exit_fallback_url},body_path)
+function M.text_exit_probe(c,primary,request_ip)
+    request_ip=request_ip or function(url)
+        local path=run..'/exit-response-'..require('nixio').getpid()
+        return M.https_probe(c,{url=url},path)
+    end
+    primary=primary or request_ip(c.exit_url)
+    if not primary or primary.rc~=28 or not c.exit_fallback_url then return primary end
+    local backup=request_ip(c.exit_fallback_url)
+    if not backup then return nil end
     backup.fallback=true
     backup.milliseconds=primary.milliseconds+backup.milliseconds
     return backup
@@ -510,58 +522,18 @@ function M.tick(force)
             check_lease(c,s,fw)
         end
     end
-    -- A Pro module may require fresh remote service health. It can only
-    -- withhold a local permit; it never grants one without local probes.
-    local has_remote,remote_module=pcall(require,'proxy-guard.remote')
-    local remote_ok,remote=pcall(function()
-        if read('/var/run/proxy-guard-access/updating') then
-            local package_state=require('proxy-guard.package-state')
-            if package_state.in_progress() then return {required=true,ok=false,stale=true,reason='VPS 健康状态不可用'} end
-        end
-        if has_remote then return remote_module.status() end
-        -- A damaged installed Pro module must not silently remove its gate.
-        if read('/usr/share/proxy-guard/feature-pro.json') then
-            local cursor=require('uci').cursor()
-            local loaded=cursor:load('/etc/config/proxy_guard_access')
-            if not loaded or cursor:get('proxy_guard_access','main','enabled')==nil or
-                cursor:get('proxy_guard_access','main','enabled')=='1' and
-                cursor:get('proxy_guard_access','main','health_guard')=='1' then
-                return {required=true,ok=false,stale=true,reason='VPS 健康状态不可用'}
-            end
-        end
-        return {required=false}
-    end)
-    if not remote_ok or type(remote)~='table' then remote={required=true,ok=false,stale=true,reason='VPS 健康状态不可用'} end
-    local maintenance=decoded(run..'/maintenance.json')
-    if maintenance and type(maintenance.expires_uptime)=='number' and maintenance.expires_uptime>now() then
-        remote={required=true,ok=false,reason='远程维护进行中，保持外网保护'}
-        s.maintenance={active=true,operation_id=maintenance.operation_id,remaining=maintenance.expires_uptime-now()}
-    else
-        if maintenance then os.remove(run..'/maintenance.json') end
-        s.maintenance=nil
-    end
-    s.remote_health=remote
-    if remote.required and not remote.ok then
-        if c.mode=='guard' then assert(apply_nft(core.lease(c,false))) end
-        reset_fault(s,remote.reason,c.mode=='guard')
-        s.phase=c.mode=='guard' and 'blocked' or 'down';s.remote_fault=true;s.next_probe=now()+1
-        publish(c,s);return true
-    elseif s.remote_fault then
-        s.remote_fault=nil;s.successes=0;s.next_probe=0;s.last_probe=0;s.phase='recovering'
-    end
+    if c.api_enabled and c.mode=='guard' then
+        local rc=command('ucode /usr/lib/proxy-guard/extension-lock.uc api_sync')
+        -- A caller holding the API lock is not a fault. Its independent nft
+        -- gate stays authoritative and timed even when reconciliation is busy.
+        if rc~=0 and rc~=75 then assert(apply_nft(core.lease(c,false))); reset_fault(s,'无法核对 API 断网状态',true);publish(c,s);return false end
+    elseif read(run..'/api-requests.json') then os.remove(run..'/api-requests.json') end
     if read(run..'/recovery-hold.json') then
         if c.mode=='guard' then assert(apply_nft(core.lease(c,false))) end
         reset_fault(s,'插件自动恢复中，等待新的代理验证',c.mode=='guard');publish(c,s);return true
     end
     if sync_schedule(c,s) then publish(c,s); return true end
     local fast=sync_fast(c,s,stamp)
-    local cf_state=cf_saved()
-    if c.cf_event_check then
-        cf_event.observe(cf_state,{fault_id=fast and fast.cf_event_id,
-            primary_fault=s.primary_probe_ok==false and (s.phase=='blocked' or s.phase=='down'),
-            recovered=(s.phase=='healthy' or s.phase=='suspect') and (not fast or not fast.holding)})
-        cf_save(cf_state)
-    end
     if c.passwall_watch and s.schedule_release and
         (not fast or fast.schedule_release~=s.schedule_release) then publish(c,s); return true end
     -- A missing or stale monitor snapshot cannot define the required probe policy.
@@ -572,11 +544,33 @@ function M.tick(force)
         -- may still say delay for a tick after the deadline; probing then would
         -- use normal min_success instead of the sensitive all-target policy.
         fast.phase=='delay') then publish(c,s); return true end
+    local heartbeat_observation
+    if c.heartbeat_enabled then
+        heartbeat_observation=require('proxy-guard.extensions').heartbeat_state(c,stamp)
+        -- Waiting for a new heartbeat or its recovery threshold is not a new
+        -- failed probe. Otherwise the fast watcher can restart the delay before
+        -- the second successful heartbeat and prevent recovery indefinitely.
+        if not heartbeat_observation.allowed and (not heartbeat_observation.checked_uptime or
+            heartbeat_observation.checked_uptime<=(s.heartbeat_probe_seen or 0) or
+            heartbeat_observation.last_ok) then
+            publish(c,s);return true
+        end
+    end
+    -- A new tolerated heartbeat failure is observable but must not bypass
+    -- that mode's consecutive-failure threshold via the common worker.
+    if heartbeat_observation and heartbeat_observation.allowed and heartbeat_observation.last_ok==false then
+        publish(c,s);return true
+    end
     local probe_config=c
     if fast and fast.phase~='normal' then
         probe_config={}; for k,v in pairs(c) do probe_config[k]=v end
         probe_config.interval=math.min(c.interval,fast.interval or c.interval)
         s.next_probe=math.min(s.next_probe or 0,(s.last_probe or 0)+probe_config.interval)
+    end
+    if c.heartbeat_enabled then
+        if probe_config==c then probe_config={};for k,v in pairs(c)do probe_config[k]=v end end
+        probe_config.interval=1;probe_config.fail_threshold=1;probe_config.recover_threshold=1
+        s.next_probe=math.min(s.next_probe or 0,(s.last_probe or 0)+1)
     end
     if force or now()<math.max(s.next_probe or 0,core.startup_deadline(c)) then publish(c,s); return true end
     local probe_started=now()
@@ -585,39 +579,35 @@ function M.tick(force)
     local probe_generation=fast and fast.generation
     local strict_probe=fast and (fast.phase=='sensitive' or fast.phase=='ramp')
     local successes=0; local results={}
-    local reused
+    local exit_response
     for index,target in ipairs(c.targets) do
         local trace_url=core.is_trace_url(target.url)
-        local shared_exit=c.exit_check and target.url==c.exit_url
+        local shared_exit=c.exit_check and c.exit_provider=='text' and target.url==c.exit_url
         local body_path=(trace_url or shared_exit) and (run..'/target-response-'..index) or nil
-        -- Older configurations may use the exact exit URL as an HTTP target.
-        -- Share that response with exit verification. Reuse a fallback if an
-        -- old list repeats the URL; ordinary HTTP probes retain their cadence.
-        local response=shared_exit and
-            (reused and reused.fallback and reused or exit_probe(c,target,body_path)) or https_probe(c,target,body_path)
+        local response
+        if shared_exit then
+            exit_response=exit_response or M.text_exit_probe(c,M.https_probe(c,target,body_path))
+            response=exit_response
+        else
+            response=M.https_probe(c,target,body_path)
+        end
         if response.fallback then trace_url=core.is_trace_url(c.exit_fallback_url) end
-        local trace=trace_url and core.trace(response.body) or nil
-        local good=response.rc==0 and response.code==target.code and (not trace_url or trace~=nil)
+        local good=response.rc==0 and response.code==target.code and (not trace_url or core.trace(response.body)~=nil)
         if good then successes=successes+1 end
         local result={host=target.host,ok=good,curl_code=response.rc,http_code=response.code,milliseconds=response.milliseconds}
         if response.fallback then result.via=c.exit_fallback_host end
-        if trace then result.observed=trace.ip; result.colo=trace.colo end
         results[#results+1]=result
-        if shared_exit then reused=response end
         if strict_probe and not good then break end
     end
-    -- A strict connectivity failure skips the remaining checks. Preserve an
-    -- already shared exit response, but never report an unissued IP request
-    -- as a failed lookup.
-    local exit=reused or {rc=1,code=0,body=''}
-    local exit_attempted=reused~=nil
-    if c.exit_check and (not strict_probe or successes==#c.targets) then
-        exit=reused or exit_probe(c,{url=c.exit_url},run..'/exit-response')
-        exit_attempted=true
+    local official_observation
+    if not c.heartbeat_enabled and c.exit_check and not exit_response and (not strict_probe or successes==#c.targets) then
+        if c.exit_provider=='public' then
+            official_observation=require('proxy-guard.extensions').public_probe(c)
+            exit_response=official_observation
+        else
+            exit_response=M.text_exit_probe(c)
+        end
     end
-    local exit_url=exit.fallback and c.exit_fallback_url or c.exit_url
-    local exit_value=core.exit_response(exit_url,exit.body)
-    local exit_ok=not c.exit_check or exit.rc==0 and exit.code==200 and exit_value~=nil and exit_value.ip==c.expected_exit4
     if c.mode=='guard' then
         -- Probes can outlive a permit or an external rules/config change.
         -- Never renew based solely on the snapshot from before the probes.
@@ -657,32 +647,12 @@ function M.tick(force)
     if c.udp_check then
         udp_result=strict_probe and successes~=#c.targets and {enabled=true,ok=false,code='http_failed'} or require('proxy-guard.udp').probe(c)
     end
-    local primary_ok=successes>=(strict_probe and #c.targets or c.min_success) and exit_ok and (not c.udp_check or udp_result.ok)
-    local cf_attempted,cf_mismatch=false,false
-    if c.cf_event_check and primary_ok and cf_event.pending(cf_state) then
-        -- Reserve the single attempt durably in RAM before curl. A killed
-        -- process must not cause an unbounded retry burst on its restart.
-        cf_event.begin(cf_state,os.time(),c.expected_exit4);cf_save(cf_state)
-        cf_attempted=true
-        local path=run..'/cf-event-response';os.remove(path)
-        local rc,out=command(core.probe_command(c,{url=cf_event_url},path))
-        local code=tonumber(out:match('(%d%d%d)%s+[%d%.]+%s*$')) or 0
-        local trace=rc==0 and code==200 and core.trace(read(path) or '') or nil
-        os.remove(path)
-        cf_mismatch=trace~=nil and trace.ip~=c.expected_exit4
-        local outcome=cf_mismatch and 'mismatch' or trace and 'ok' or 'unavailable'
-        cf_event.finish(cf_state,{outcome=outcome,observed=trace and trace.ip,
-            colo=trace and trace.colo,http_code=code,curl_code=rc},os.time(),c.recover_threshold)
-        cf_save(cf_state)
-        event(c,cf_mismatch and 'error' or 'info','cf_event',
-            'CF 事件核验: '..outcome..', HTTP='..code..', curl='..rc..', IP='..(trace and trace.ip or ''))
-    end
-    -- UDP and the auxiliary CF I/O can outlive a permit/configuration.
+    -- The UDP probe can outlive a permit or configuration.
     if generation~=control_generation() or read(run..'/recovery-hold.json') or read(run..'/stopped') then
         if c.mode=='guard' then assert(apply_nft(core.lease(c,false))) end
         reset_fault(s,'检测轮次已取消，保持阻断并等待重新验证',c.mode=='guard');publish(c,s);return true
     end
-    if (c.udp_check or cf_attempted) and c.enabled and c.mode=='guard' then
+    if c.udp_check and c.enabled and c.mode=='guard' then
         local latest_ok,latest_config=pcall(config)
         local device_valid,latest_devices=false,nil
         if latest_ok then device_valid,latest_devices=pcall(M.devices,latest_config) end
@@ -705,33 +675,38 @@ function M.tick(force)
     end
     s.udp_probe=udp_result
     s.probe_cpu_ms=math.floor((os.clock()-probe_clock)*1000)
-    s.primary_probe_ok=primary_ok
-    -- A contradictory CF response cannot be overridden by the ipify result
-    -- obtained before it. Require fresh subsequent primary confirmations.
-    local cf_allowed=not c.cf_event_check or (not cf_mismatch and cf_event.qualify(cf_state,primary_ok))
-    if c.cf_event_check then cf_save(cf_state) end
-    s.last_probe_ok=primary_ok and cf_allowed
-    s.probe_started=probe_started
-    -- Sensitive observation fails on the first failed round, even though the
-    -- normal failure threshold remains unchanged outside that phase.
-    if (strict_probe and not s.last_probe_ok) or not cf_allowed then s.failures=c.fail_threshold-1 end
-    s=core.step(probe_config,s,s.last_probe_ok,now())
-    if c.cf_event_check then
-        -- Record a confirmed network outage in the same locked transaction.
-        -- A configuration apply before the next tick must not erase this event.
-        cf_event.observe(cf_state,{primary_fault=not primary_ok and (s.phase=='blocked' or s.phase=='down')})
-        cf_save(cf_state)
+    local ext=require 'proxy-guard.extensions'
+    local exit_check,exit_ok
+    local connectivity_ok
+    if c.heartbeat_enabled then
+        local heartbeat=ext.heartbeat_state(c,stamp)
+        connectivity_ok=heartbeat.allowed and heartbeat.last_ok==true
+        -- A still-tolerated failure must not become a main-worker failure
+        -- just because the watcher completed it during UDP I/O.
+        if heartbeat.allowed and not heartbeat.last_ok then publish(c,s);return true end
+        s.heartbeat_probe_seen=heartbeat.checked_uptime or s.heartbeat_probe_seen
+        exit_check=heartbeat.exit_check or {enabled=c.exit_check}
+        exit_ok=true -- The watcher already applies the exit policy and thresholds.
+    else
+        connectivity_ok=successes>=(strict_probe and #c.targets or c.min_success)
+        exit_check,exit_ok=ext.exit_result(c,exit_response)
+        if official_observation and ext.record_public(c,stamp,official_observation,generation) then
+            event(c,'warning','tls_fallback',ext.tls_fallback_message)
+        end
     end
+    local fallback_changed=(s.exit_check and s.exit_check.via)~=exit_check.via
+    local exit_changed=s.exit_check and (s.exit_check.outcome~=exit_check.outcome or s.exit_check.reason~=exit_check.reason)
+    s.exit_check=exit_check
+    s.last_probe_ok=connectivity_ok and exit_ok and (not c.udp_check or udp_result.ok==true)
+    s.probe_started=probe_started
+    -- Sensitive observation fails on the first failed round.
+    if strict_probe and not s.last_probe_ok then s.failures=probe_config.fail_threshold-1 end
+    s=core.step(probe_config,s,s.last_probe_ok,now())
     s.probes=results
     s.last_probe_at=os.time()
-    local fallback_changed=(s.exit_check and s.exit_check.via~=nil or false)~=(exit.fallback==true)
-    s.exit_check={enabled=c.exit_check,attempted=exit_attempted,expected=c.exit_check and c.expected_exit4 or '',
-        observed=exit_value and exit_value.ip or '',colo=exit_value and exit_value.colo or nil,
-        curl_code=exit_attempted and exit.rc or nil,http_code=exit_attempted and exit.code or nil,
-        via=exit.fallback and c.exit_fallback_host or nil}
-    if c.exit_check and exit_attempted then s.exit_check.ok=exit_ok end
-    if c.exit_check and exit_attempted and not exit_ok then s.reason='代理出口验证失败：出口不符或验证服务不可达' end
-    if not cf_allowed then s.reason='CF 出口核验不一致，等待新的出口验证确认' end
+    if not s.last_probe_ok and exit_check.outcome=='mismatch' then s.reason='出口 IPv4 与预期不符'
+    elseif not s.last_probe_ok and exit_check.mismatch_pending then s.reason='出口 IPv4 曾不符，等待匹配的地址'
+    elseif not s.last_probe_ok and exit_check.outcome=='unavailable' then s.reason='无法校验出口 IPv4' end
     if c.mode=='guard' then
         local script,allowed=core.lease(c,not s.blocked,os.time())
         if not s.blocked and not allowed then
@@ -748,17 +723,19 @@ function M.tick(force)
         end
         event(c,s.phase=='blocked' and 'error' or 'info',s.phase,reason..(c.mode=='monitor' and '（仅监测，未阻断）' or ''))
     end
-    if c.debug or old_phase~=s.phase or fallback_changed then
+    if c.debug or old_phase~=s.phase or fallback_changed or exit_changed then
         local detail={}
         for _,r in ipairs(results) do
             local host=r.host..(r.via and ' → '..r.via or '')
             detail[#detail+1]=host..': curl='..r.curl_code..', HTTP='..r.http_code..', '..r.milliseconds..'ms'
         end
-        if c.exit_check then
-            local via=exit.fallback and c.exit_host..' curl=28 → '..c.exit_fallback_host..', ' or ''
-            detail[#detail+1]=exit_attempted and
-                ('出口验证: '..(exit_ok and '成功' or '失败')..', '..via..'curl='..exit.rc..', HTTP='..exit.code..', IP='..s.exit_check.observed) or
-                '出口验证: 连通性检查失败，本轮未执行'
+        if exit_check.enabled then
+            local messages={match='通过',mismatch='出口 IPv4 与预期不符',timeout='出口 IPv4 查询超时，暂未取得地址',
+                unavailable='无法校验出口 IPv4',skipped='连通性检查失败，本轮未执行'}
+            local exit_message=ext.exit_unavailable_message(exit_check.reason) or messages[exit_check.outcome]
+            local via=exit_check.via and c.exit_host..' curl=28 → '..exit_check.via..', ' or ''
+            detail[#detail+1]='出口验证: '..(exit_message or '等待验证')..(exit_check.attempted and
+                (', '..via..'curl='..exit_check.curl_code..', HTTP='..exit_check.http_code..', IP='..(exit_check.observed or '')) or '')
         end
         event(c,c.debug and 'debug' or 'info','probe',table.concat(detail,'; '))
     end
@@ -768,11 +745,10 @@ end
 
 M.compatibility=compatibility
 
-function M.status()
+function M.status(with_apply_match,raw)
     local previous=saved()
     local s=previous or {phase='unavailable',reason='运行状态缺失，等待检测服务重新核验'}
-    local config_ok,c=pcall(config)
-    if config_ok and not c.exit_check then s.exit_check={enabled=false} end
+    local config_ok,c=pcall(config,raw)
     local device_ok,devices=true,{}
     if config_ok and c.enabled and c.mode=='guard' then device_ok,devices=pcall(M.devices,c) end
     local pending=false
@@ -782,14 +758,18 @@ function M.status()
     end
     local stamp=config_ok and (device_ok or pending) and policy_stamp(c,devices) or nil
     local applied=previous and previous.config_stamp==stamp
+    local gates={}
+    s.block_reasons={}
     s.interfaces_ready=not pending
     s.config_stamp=nil
     s.fast_config=nil
+    s.control_generation=nil
+    s.cf_event=nil
     local fw=table_state(stamp)
     -- A fresh, deliberately disabled install has no daemon or saved status.
     -- Only report it as disabled when the owned firewall table is also absent.
     if config_ok and not c.enabled and not fw.error and not fw.exists and not update_guard_present() then
-        return {version=core.VERSION,phase='disabled',reason='插件未启用',enforcement='off',firewall_present=false,stale=false,exit_check={enabled=c.exit_check},supervision=decoded(run..'/supervision.json')}
+        return {version=core.VERSION,phase='disabled',reason='插件未启用',enforcement='off',firewall_present=false,stale=false,enabled=false,mode=c.mode,check_mode=c.check_mode,heartbeat={enabled=false,allowed=true},api={enabled=c.api_enabled,count=0,remaining=0},exit_check={enabled=c.exit_check},supervision=decoded(run..'/supervision.json')}
     end
     s.firewall_present=fw.exists
     s.stale=type(s.updated_uptime)~='number' or s.updated_uptime>now()+2 or now()-s.updated_uptime>math.max(15,(tonumber(s.probe_budget) or 0)+10)
@@ -798,14 +778,35 @@ function M.status()
     elseif fw.exists and (not fw.complete or not applied) then s.enforcement='unverified'; s.firewall_error='规则、配置或运行状态尚未核验一致'
     elseif not fw.exists then s.enforcement=(c.enabled and c.mode=='guard') and 'missing' or 'off'
     else
-        local all=true
         for _,iface in ipairs(c.interfaces) do
-            if not fw.alive[iface] or c.passwall_watch and not (fw.service_alive or {})[iface] then all=false end
+            if not fw.alive[iface] then gates.health=true end
+            if c.passwall_watch and not (fw.service_alive or {})[iface] then gates.services=true end
+            if c.heartbeat_enabled and not (fw.heartbeat_alive or {})[iface] then gates.heartbeat=true end
+            if c.api_enabled and (fw.api_blocked or {})[iface] then gates.api=true end
         end
-        s.enforcement=all and (not c.schedule_enabled or fw.time_alive~=false) and 'allowing' or 'blocked'
+        gates.schedule=c.schedule_enabled and fw.time_alive==false or nil
+        s.enforcement=next(gates) and 'blocked' or 'allowing'
     end
-    if config_ok and (not c.enabled or not c.exit_check) then s.exit_check={enabled=false} end
     if config_ok then
+        s.check_mode=c.check_mode
+        if not applied or not c.exit_check then s.exit_check={enabled=c.exit_check} end
+        local ext=require('proxy-guard.extensions')
+        s.heartbeat=ext.heartbeat_state(c,stamp)
+        if c.enabled and c.heartbeat_enabled then
+            s.exit_check=s.heartbeat.exit_check or {enabled=c.exit_check}
+            local public=s.heartbeat.public
+            local observed=public and public.ok and public.metadata and public.metadata.ip
+            if observed and core.cidr(observed,4) then s.observed_exit4=observed end
+        end
+        s.heartbeat.public=nil
+        s.heartbeat.exit_check=nil
+        if c.enabled then
+            s.failure_progress={
+                count=c.heartbeat_enabled and (s.heartbeat.failures or 0) or (s.failures or 0),
+                threshold=c.heartbeat_enabled and c.public_hb_fail or c.fail_threshold
+            }
+        end
+        s.api=ext.api_summary(c,stamp)
         if c.enabled and c.passwall_watch then
             local fast=fast_state(c,stamp)
             if fast then
@@ -813,9 +814,17 @@ function M.status()
                     boot_pending=fast.boot_pending,log_watch=fast.log_watch,
                     wait_remaining=math.max(0,(fast.delay_until or 0)-now()),
                     stable_elapsed=fast.stable_elapsed,stable_required=fast.stable_required,
-                    holding=fast.holding,stale=fast.stale,gate_ok=fast.gate_ok,episode=fast.episode}
-                if c.mode=='guard' and fast.gate_ok==false then
-                    s.enforcement='unverified'; s.firewall_error='快速检查无法更新防火墙许可'
+                    holding=fast.holding,stale=fast.stale,gate_ok=fast.gate_ok,gate_busy=fast.gate_busy,episode=fast.episode}
+                if s.failure_progress and (fast.phase=='sensitive' or fast.phase=='ramp') then
+                    s.failure_progress.threshold=1
+                end
+                -- A busy lock does not invalidate a still-live lease verified
+                -- above. A pending revocation or a failed write is different.
+                local live_during_contention=fast.gate_busy and not fast.holding and not fast.stale and s.enforcement=='allowing'
+                if c.mode=='guard' and fast.gate_ok==false and not live_during_contention and
+                    (s.enforcement=='blocked' or s.enforcement=='allowing') then
+                    if s.enforcement=='allowing' then s.enforcement='unverified' end
+                    s.firewall_error='快速检查无法更新防火墙许可'
                 end
                 if device_ok and c.mode=='guard' and fw.complete and applied and s.enforcement=='blocked' then
                     if fast.phase=='log_wait' or fast.log_pending then s.phase='blocked'; s.reason='等待客户端本轮启动及已配置服务恢复'
@@ -827,6 +836,8 @@ function M.status()
                 s.fast_watch={enabled=true,stale=true}
                 if c.mode=='guard' and s.enforcement=='blocked' then
                     s.phase='blocked'; s.reason='快速检查尚未就绪，保持外网阻断'
+                elseif c.mode=='guard' and s.enforcement=='allowing' then
+                    s.enforcement='unverified';s.firewall_error='快速状态尚未就绪，等待核验'
                 end
             end
         end
@@ -849,11 +860,34 @@ function M.status()
     if update_guard_present() then
         s.enforcement='unverified';s.firewall_error='规则、配置或运行状态尚未核验一致'
     end
+    if config_ok and c.enabled and c.mode=='guard' and s.enforcement=='blocked' then
+        if c.heartbeat_enabled and not s.heartbeat.allowed and not (s.fast_watch and s.fast_watch.holding)
+            and s.phase~='scheduled' then
+            s.phase='blocked'
+            if s.exit_check and s.exit_check.outcome=='mismatch' then s.reason='出口 IPv4 与预期不符'
+            elseif s.exit_check and s.exit_check.mismatch_pending then s.reason='出口 IPv4 曾不符，等待匹配的地址'
+            else s.reason='官方 HTTPS 检测尚未确认恢复' end
+        end
+        if gates.api and s.phase~='scheduled' then s.phase='blocked';s.reason='API 限时断网生效中' end
+    end
     if s.phase=='error' then s.enforcement='unverified' end
     -- RPC consumers must see the combined kernel gates, not just the slower
     -- network worker's internal blocked flag while fast protection is holding.
     if s.enforcement=='blocked' then
         s.blocked=true
+        local reasons=s.block_reasons
+        if s.schedule and s.schedule.active then reasons[#reasons+1]='schedule'
+        elseif gates.schedule then reasons[#reasons+1]='schedule_confirmation' end
+        if gates.api then reasons[#reasons+1]='api' end
+        if gates.services then reasons[#reasons+1]='services' end
+        if gates.heartbeat or gates.health and not (gates.schedule or gates.services) then
+            local exit=s.exit_check or {}
+            if exit.outcome=='mismatch' or exit.mismatch_pending then reasons[#reasons+1]='exit_mismatch'
+            elseif exit.enabled and exit.ok==false then reasons[#reasons+1]='exit_unavailable'
+            elseif s.udp_probe and s.udp_probe.enabled and s.udp_probe.ok==false and not gates.heartbeat then reasons[#reasons+1]='udp'
+            elseif s.last_probe_ok==false or gates.heartbeat and s.heartbeat.last_ok==false then reasons[#reasons+1]='connectivity'
+            else reasons[#reasons+1]='permit' end
+        end
         -- The last successful worker snapshot can outlive the kernel permit.
         -- Do not report its healthy phase as the current protection reason.
         if s.phase=='healthy' or s.phase=='suspect' then
@@ -867,16 +901,18 @@ function M.status()
         if not s.supervision then s.supervision={state='unavailable',enabled=true,stale=true}
         else s.supervision.stale=type(s.supervision.checked_uptime)~='number' or s.supervision.checked_uptime>now()+2 or now()-s.supervision.checked_uptime>20 end
     end
+    if with_apply_match then return s,applied==true end
     return s
 end
 
-function M.logs()
+function M.logs(include_api_uuid)
     local all,skipped={},0
-    for _,path in ipairs({log_path..'.1',log_path,run..'/fast-events.jsonl.1',run..'/fast-events.jsonl',run..'/checks.jsonl.1',run..'/checks.jsonl',run..'/supervision-events.jsonl.1',run..'/supervision-events.jsonl'}) do
+    for _,path in ipairs({log_path..'.1',log_path,run..'/fast-events.jsonl.1',run..'/fast-events.jsonl',run..'/checks.jsonl.1',run..'/checks.jsonl',run..'/supervision-events.jsonl.1',run..'/supervision-events.jsonl',run..'/heartbeat-events.jsonl.1',run..'/heartbeat-events.jsonl',run..'/api-events.jsonl.1',run..'/api-events.jsonl',run..'/diagnostic-events.jsonl.1',run..'/diagnostic-events.jsonl'}) do
         for line in (read(path) or ''):gmatch('[^\n]+') do
             local good,item=pcall(json.parse,line)
             if good and type(item)=='table' and type(item.time)=='number' and item.time>=0 and item.time<math.huge
                 and type(item.message)=='string' and type(item.level)=='string' and type(item.event)=='string' then
+                if not include_api_uuid then item.api_uuid=nil end
                 item._order=#all+1; all[#all+1]=item
             else skipped=skipped+1 end
         end
@@ -900,6 +936,7 @@ function M.clear_logs()
     os.remove(run..'/checks.jsonl.1'); os.remove(run..'/checks.jsonl')
     os.remove(run..'/fast-events.jsonl.1'); os.remove(run..'/fast-events.jsonl')
     os.remove(run..'/supervision-events.jsonl.1');os.remove(run..'/supervision-events.jsonl')
+    for _,name in ipairs({'heartbeat-events.jsonl','api-events.jsonl','diagnostic-events.jsonl'})do os.remove(run..'/'..name);os.remove(run..'/'..name..'.1')end
     event(nil,'info','log_clear','用户清空插件日志')
     return {ok=true}
 end
@@ -914,13 +951,17 @@ function M.cleanup()
     assert(not fw.error and not fw.exists,fw.error or '插件规则未清理完成')
     os.remove(policy_path)
     os.remove(status_path)
-    os.remove(cf_event_path); os.remove(cf_event_path..'.new')
+    os.remove(run..'/cf-event.json'); os.remove(run..'/cf-event.json.new')
     os.remove(run..'/update-guard.nft');os.remove(run..'/update-guard.nft.new')
     os.remove(run..'/cf-event-response'); os.remove(run..'/cf-event-response.new')
     os.remove(run..'/fast.json')
     os.remove(run..'/fast-poll')
     os.remove(run..'/fast-transaction.nft')
-    for _,name in ipairs({'supervision.json','worker-health.json','recovery-hold.json','service-start-uptime','daemon.pid','fast_watch.pid','supervisor.pid','maintenance.json'}) do os.remove(run..'/'..name) end
+    for _,name in ipairs({'supervision.json','worker-health.json','recovery-hold.json','service-start-uptime','daemon.pid','fast_watch.pid','supervisor.pid','maintenance.json','heartbeat_watch.pid','heartbeat-health.json','heartbeat.json','heartbeat-poll','api-requests.json','api-uuid','heartbeat-events.jsonl','heartbeat-events.jsonl.1','api-events.jsonl','api-events.jsonl.1','diagnostic_watch.pid','diagnostic-request-id',
+        'diagnostic-request.json','diagnostics.json','event-diagnostics.json','exit-mismatch.json','public-observation.json','diagnostic-events.jsonl','diagnostic-events.jsonl.1'}) do os.remove(run..'/'..name);os.remove(run..'/'..name..'.new') end
+    for _,pattern in ipairs({'exit-response-*','public-basic-*','public-full-*'}) do
+        for path in require('nixio.fs').glob(run..'/'..pattern) do os.remove(path) end
+    end
     return {ok=true}
 end
 
@@ -950,25 +991,5 @@ function M.fail(message)
     if old_reason~=s.reason then event(nil,'error','internal_error',s.reason) end
 end
 
-function M.maintenance()
-    assert(not read(removing_path) and not read(run..'/stopped'),'local_protection_not_ready')
-    local generation=control_generation()
-    local c=config()
-    local job=decoded('/var/run/proxy-guard-access/pending/job.json')
-    assert(job and (job.action=='restart_xray' or job.action=='reboot_vps') and type(job.operation_id)=='string' and #job.operation_id==36,'invalid_maintenance_request')
-    assert(type(job.created_uptime)=='number' and type(job.timeout)=='number' and job.timeout>=30 and job.timeout<=600 and now()-job.created_uptime<job.timeout,'expired_maintenance_request')
-    if not c.enabled or c.mode~='guard' then return {ok=true,protection_required=false} end
-    local devices=M.devices(c,true)
-    if not table_state().exists then assert(apply_nft(core.rules(c,devices))) end
-    write(run..'/maintenance.json',json.stringify({operation_id=job.operation_id,expires_uptime=job.created_uptime+job.timeout}))
-    assert(apply_nft(core.lease(c,false)))
-    local s=saved() or core.initial(c,now())
-    reset_fault(s,'远程维护进行中，保持外网保护',true)
-    s.phase='blocked';s.remote_fault=true;s.remote_health={required=true,ok=false,reason=s.reason}
-    s.maintenance={active=true,operation_id=job.operation_id,remaining=job.created_uptime+job.timeout-now()}
-    assert(generation==control_generation() and not read(removing_path),'local_protection_not_ready')
-    publish(c,s);event(c,'info','maintenance','远程维护前已启用本地保护，等待重新验证')
-    return {ok=true,protection_required=true}
-end
-
+M.config=config;M.policy_stamp=policy_stamp;M.table_state=table_state
 return M

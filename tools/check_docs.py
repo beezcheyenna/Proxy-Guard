@@ -43,18 +43,13 @@ DOCUMENTS = (
     HOMEPAGES,
     CONTRIBUTING,
     *(localized_pages(f"docs/{name}", "zh-CN") for name in (
-        "BUILDING", "CLOUDFLARE-WORKER", "COMPATIBILITY", "DISCLAIMER",
-        "EDITION-MATRIX", "GUIDED-SETUP", "LICENSING", "LINUX-AGENT-INSTALL",
-        "PRIVACY", "PRO-COMPANION", "RECOVERY", "SECURITY", "TEST-MATRIX",
+        "BUILDING", "COMPATIBILITY", "DISCLAIMER", "GUIDED-SETUP", "LICENSING",
+        "PRIVACY", "RECOVERY", "SECURITY", "TEST-MATRIX",
         "USAGE", "USER-GUIDE",
     )),
     *(localized_pages(name, "en") for name in (
-        "docs/LOG_COMPATIBILITY", "docs/THIRD_PARTY_NOTICES", "docs/VPS-EGRESS-INFO",
-        "LICENSES/README", "companion/vps/README",
-        "companion/worker/README", "companion/worker/THIRD_PARTY_NOTICES",
+        "docs/LOG_COMPATIBILITY", "docs/THIRD_PARTY_NOTICES", "LICENSES/README",
     )),
-    localized_pages("companion/vps/LICENSING", None),
-    localized_pages("companion/vps/THIRD_PARTY_NOTICES", None),
 )
 # Published changelogs are English, including the older localized URLs.
 CHANGELOGS = {"docs/CHANGELOG.md", *(
@@ -63,15 +58,12 @@ CHANGELOGS = {"docs/CHANGELOG.md", *(
 # These copies ship with the router packages or the VPS installer. Repository
 # navigation uses the localized notices without relying on installed-file layout.
 PACKAGE_NOTICES = {
-    "companion/vps/LICENSING.md",
-    "companion/vps/THIRD_PARTY_NOTICES.md",
-    "package/pro/root/usr/share/proxy-guard-pro/LICENSING.md",
-    "package/pro/root/usr/share/proxy-guard-pro/THIRD_PARTY_NOTICES.md",
     "package/root/usr/share/proxy-guard/LICENSES/README.md",
     "package/root/usr/share/proxy-guard/LICENSING.md",
     "package/root/usr/share/proxy-guard/THIRD_PARTY_NOTICES.md",
 }
 ENGLISH_HOME_ALIAS = "docs/README.en.md"
+ARCHIVE_INDEX = "archive/0.3/README.md"
 REPO = "beezcheyenna/Proxy-Guard"
 
 SKIP_DIRS = {".git", "node_modules", ".venv", "__pycache__"}
@@ -300,13 +292,17 @@ def check_languages(root, groups=DOCUMENTS):
                 continue  # check_links reports malformed URLs
             if dest is None or not dest.is_relative_to(root):
                 continue
+            # GitHub renders a directory's README; do not let a directory
+            # link silently bypass the same-language navigation check.
+            if dest.is_dir() and (dest / 'README.md').is_file():
+                dest = dest / 'README.md'
             dest_rel = dest.relative_to(root).as_posix()
             target_lang = locales.get(dest_rel)
             if target_lang and target_lang != lang:
                 desired = variants_by_path[dest_rel][lang]
                 errors.append(f"{rel}: {lang} link targets {target_lang} page {target!r}; use {desired}")
     if groups is DOCUMENTS:
-        known = locales.keys() | CHANGELOGS | PACKAGE_NOTICES
+        known = locales.keys() | CHANGELOGS | PACKAGE_NOTICES | {ARCHIVE_INDEX}
         for file in markdown_files(root):
             rel = file.relative_to(root).as_posix()
             if rel not in known:
@@ -321,7 +317,33 @@ def versions(root):
         if not match:
             raise ValueError(f"Missing {key} in package/Makefile")
         return match[1]
+    published = re.findall(r"^PG_DOC_RELEASE_(STANDARD|EXTENSION|PRO):=(\S+)$", text, re.M)
+    if published:
+        pair = {("PRO" if key == "EXTENSION" else key): value for key,value in published}
+        if len(published) != 2 or set(pair) != {"STANDARD", "PRO"} or any(not re.fullmatch(r"\d+\.\d+\.\d+-\d+", v) for v in pair.values()):
+            raise ValueError("Invalid documented published release pair")
+        return pair["STANDARD"], pair["PRO"]
     return value("PKG_VERSION") + "-" + value("PKG_RELEASE"), value("PG_PRO_VERSION") + "-" + value("PG_PRO_RELEASE")
+
+
+def standalone_version(make):
+    if not re.search(r"^PG_DOC_RELEASE_STANDARD:=", make, re.M):
+        return None
+    version = re.search(r"^PKG_VERSION:=(\d+\.\d+\.\d+)$", make, re.M)
+    release = re.search(r"^PKG_RELEASE:=(\d+)$", make, re.M)
+    if not version or not release:
+        raise ValueError("Invalid standalone package version")
+    return version[1], release[1]
+
+
+def standalone_assets(version, release):
+    return {
+        f"luci-app-proxy-guard_{version}-{release}_all.ipk",
+        f"luci-app-proxy-guard-{version}-r{release}.apk",
+        f"proxy-guard-source-{version}-r{release}.tar.gz",
+        "CHANGELOG.en.md",
+        "SHA256SUMS",
+    }
 
 
 def expected_assets(standard, pro):
@@ -341,51 +363,77 @@ def check_versions(root):
     root = Path(root)
     standard, pro = versions(root)
     errors = []
+    make = (root / "package/Makefile").read_text()
+    candidate = standalone_version(make)
     for rel in (*HOMEPAGES.values(), ENGLISH_HOME_ALIAS):
         file = root / rel
         if not file.is_file():
             errors.append(f"Missing language document: {rel}")
             continue
-        rows = [
-            line for line in file.read_text().splitlines()
-            if line.startswith("|") and re.search(r"\d+\.\d+\.\d+-\d+", line)
-        ]
-        if not rows or not all(f"\x60{x}\x60" in rows[0] for x in (standard, pro)):
-            errors.append(f"{rel}: current edition table must show {standard} / {pro}")
+        content = file.read_text()
+        if candidate:
+            if candidate[0] not in content:
+                errors.append(f"{rel}: missing current standalone source version")
+        else:
+            rows = [line for line in content.splitlines()
+                    if line.startswith("|") and re.search(r"\d+\.\d+\.\d+-\d+", line)]
+            if not rows or not all(f"\x60{x}\x60" in rows[0] for x in (standard, pro)):
+                errors.append(f"{rel}: current edition table must show {standard} / {pro}")
     for rel in sorted(CHANGELOGS):
         file = root / rel
         if not file.is_file():
             errors.append(f"Missing changelog: {rel}")
             continue
         content = file.read_text()
-        heading = re.search(r"^## (.+)$", content, re.M)
-        if not heading or not all(x in heading[1] for x in (standard, pro)):
-            errors.append(f"{rel}: first release heading must show {standard} / {pro}")
+        if candidate:
+            if not re.search(r"^## " + re.escape(candidate[0]) + r"(?: \(unreleased\))?$", content, re.M):
+                errors.append(f"{rel}: missing changelog for {candidate[0]}")
+        else:
+            heading = re.search(r"^## (?!Unreleased(?:\s|$))(.+)$", content, re.M)
+            if not heading or not all(x in heading[1] for x in (standard, pro)):
+                errors.append(f"{rel}: first release heading must show {standard} / {pro}")
         problem = check_prose_language(content, "en")
         if problem:
             errors.append(f"{rel}: {problem}")
     pages = sorted(root.glob("docs/USAGE*.md")) + sorted(root.glob("docs/LINUX-AGENT-INSTALL*.md"))
-    valid = expected_assets(standard, pro)
+    legacy_assets = expected_assets(standard, pro)
     artifact = re.compile(r"(?:luci-app-proxy-guard(?:-pro)?[_-][0-9][A-Za-z0-9._-]*\.(?:ipk|apk)|proxy-guard-source-[0-9][A-Za-z0-9._-]*\.tar\.gz)")
     for file in pages:
         if file.exists():
-            for name in artifact.findall(file.read_text()):
-                if name not in valid:
-                    errors.append(f"{file.relative_to(root)}: stale artifact example {name}")
+            current = candidate and file.name.startswith("USAGE")
+            valid = standalone_assets(*candidate) if current else legacy_assets
+            names = set(artifact.findall(file.read_text()))
+            if current and not {name for name in valid if name.endswith((".ipk", ".apk"))} <= names:
+                errors.append(f"{file.relative_to(root)}: missing current installation examples")
+            for name in sorted(names - valid):
+                errors.append(f"{file.relative_to(root)}: stale artifact example {name}")
     return errors
 
 
 def check_release(root, release):
     standard, pro = versions(root)
-    tag = f"v{standard}-pro-{pro}"
+    candidate = standalone_version((Path(root) / "package/Makefile").read_text())
+    historical_tag = f"v{standard}-pro-{pro}"
+    tag = f"v{candidate[0]}" if candidate else historical_tag
+    # A standalone candidate can be reviewed while the previous family is
+    # still the latest public release.
+    if candidate and release.get("tag_name") == historical_tag:
+        tag = historical_tag
+    valid = standalone_assets(*candidate) if candidate and tag != historical_tag else expected_assets(standard, pro)
     errors = []
     if release.get("tag_name") != tag:
         errors.append(f"Latest stable Release must be {tag}; found {release.get('tag_name')!r}")
     if release.get("draft") is not False or release.get("prerelease") is not False:
         errors.append("Expected a published stable Release, not draft/prerelease/unknown")
     names = {a.get("name") for a in release.get("assets", []) if isinstance(a, dict)}
-    for missing in sorted(expected_assets(standard, pro) - names):
+    for missing in sorted(valid - names):
         errors.append(f"Stable Release missing asset: {missing}")
+    if candidate and tag != historical_tag:
+        for extra in sorted(names - valid):
+            errors.append(f"Unexpected standalone Release asset: {extra}")
+    # Historical release notes refer to the source tree in the archive.
+    if candidate and tag == historical_tag:
+        return errors
     locales = page_locales()
     locales[ENGLISH_HOME_ALIAS] = "en"
     for target in link_targets(release.get("body") or ""):

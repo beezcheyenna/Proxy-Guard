@@ -9,16 +9,16 @@
 - [建议功能](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=feature_request.yml)
 - [反馈文档](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=documentation.yml)
 
-**安全问题请先私下报告。** 涉及 VPS、认证、SSH 或保护绕过时，先发邮件至 [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com)，参见[安全政策](SECURITY.md)。公开报告请去掉凭据、私钥、完整生产配置、HAR 和实际部署地址。
+安全漏洞请按安全政策私下报告。普通问题可在脱敏后公开反馈。 [安全问题报告](SECURITY.md)
 
 ## 修改行为前
 
 1. 说明触发条件、预期和实际结果。用文档地址和最小脱敏拓扑。
-2. 记录固件或发行版、内核、架构、包格式、普通版和 Pro、实际代理内核及转发模式。区分包元数据与正在运行的程序。
+2. 记录固件、内核、架构、包格式、已安装的 Proxy Guard 版本、实际代理内核及转发模式。区分包元数据与正在运行的程序。
 3. 使用获授权的隔离环境。管理服务、路由和防火墙的脚本在一次性 VM 内执行。
 4. 保持修改聚焦。保留 ACL、证书校验和无关的 NAT/DNS/网络配置。
 
-参见[构建](BUILDING.md)、[测试矩阵](TEST-MATRIX.md)和[版本兼容](EDITION-MATRIX.md)。实机安装与数据路径另行验证。
+参见[构建](BUILDING.md)和[测试矩阵](TEST-MATRIX.md)。实机安装与数据路径另行验证。
 
 ## 文档与翻译
 

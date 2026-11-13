@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Do not include live deployment addresses or secrets. Report vulnerabilities privately to beezcheyenna268@gmail.com.
+        Do not include live deployment addresses or secrets. Report vulnerabilities privately to https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md.
         请勿填写真实部署地址或密钥；漏洞请先私下反馈。
   - type: textarea
     id: problem

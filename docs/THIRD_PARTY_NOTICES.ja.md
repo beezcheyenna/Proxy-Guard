@@ -2,13 +2,13 @@
 
 [English](THIRD_PARTY_NOTICES.md) · [简体中文](THIRD_PARTY_NOTICES.zh-CN.md) · [日本語](THIRD_PARTY_NOTICES.ja.md) · [Русский](THIRD_PARTY_NOTICES.ru.md) · [فارسی](THIRD_PARTY_NOTICES.fa.md)
 
-記録日 2026-11-08。通常版、Pro、VPS Agent、Worker の公開ソースが対象です。適用条件は各上流の原文を参照してください。
+この通知の対象はルーター用プラグインです。
 
 ## 独自コード
 
 Copyright (c) 2026 Proxy Guard contributors.
 
-独自コードと文書はルートの [MIT ライセンス](../LICENSE) で公開します。通常版と Pro に共通です。上流の文字列、パッチ、ライブラリー、インタープリター、ツール、コア、ファームウェアは各自の許諾条件を維持します。
+独自コードと文書はルートの [MIT ライセンス](../LICENSE) で公開します。上流の文字列、パッチ、ライブラリー、インタープリター、ツール、コア、ファームウェアは各自の許諾条件を維持します。
 
 ## 上流のログメッセージ
 
@@ -55,21 +55,9 @@ PassWall: Copyright (C) 2018-2020 L-WRT Team, Copyright (C) 2021-2025 xiaorouji,
 
 UCI のパッケージ単位 LGPL 表記と Lua バインディングの GPL v2 ヘッダーは区別します。外部コマンドとプロセス内読み込みは異なります。複合ランタイムやファームウェア配布は実際の版、結合方式、適用例外を確認します。
 
-## Pro Agent と Cloudflare
-
-Agent は Python 標準ライブラリーと外部 Linux ツールを使用します。Python、nftables、iproute2、systemd/OpenRC、プロキシ、パネルは別に提供されます。cloudflared は別の Apache-2.0 プログラムです。Worker は Cloudflare のサービス条件に従うホスト API を使います。開発依存関係は以下のとおりです。
-
-- Wrangler 4.156.0 — MIT OR Apache-2.0
-- Miniflare 5.20261023.3-beta — MIT
-- workerd 1.20261023.1 — Apache-2.0
-
-<https://github.com/cloudflare/cloudflared/blob/master/LICENSE>
-
-[ロックファイル一覧](../companion/worker/THIRD_PARTY_DEPENDENCIES.json) のルート以外の 91 件には、プラットフォーム別の任意項目が含まれます。ツール、node_modules、cloudflared はアプリパッケージに収録しません。別途配布する場合は実際のパッケージの通知と対応ソースの義務を保持します。
-
 ## プロキシクライアント、コア、パネル
 
-PassWall、PassWall2、OpenClash、Nikki、HomeProxy、Xray、sing-box、Mihomo、3x-ui は別プロジェクトです。本プラグインは設定・ログ・サービスを参照し、許可された管理操作を行います。別途再配布するソースやバイナリは、個別の通知とソース要件を確認します。
+PassWall、PassWall2、OpenClash、Nikki、HomeProxy、Xray、sing-box、Mihomo は別プロジェクトです。本プラグインは対応クライアントの設定・ログ・サービス状態を参照します。別途再配布するソースやバイナリは、個別の通知とソース要件を確認します。
 
 ## ライセンスの範囲
 

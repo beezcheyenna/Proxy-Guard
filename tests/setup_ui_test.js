@@ -8,15 +8,18 @@ function E(tag,attrs={},children=[]){
  if(tag==='select'){const selected=children.filter(x=>x.attrs.selected!=null);node.value=(selected.at(-1)||children[0]).value;}
  return node;
 }
-let setupInfo={ok:true,wizard_complete:true};
+let setupInfo={ok:true,wizard_complete:true},rpcError=false;
 const ui={showModal:(title,body)=>{modal=body;},hideModal(){modal=[];}};
 const profiles={auto:discovery.client,passwall2:discovery.client,nikki:{available:true,client:'nikki',socks_port:1080,proxy_ports:[7891,7892],dns_ports:[1053]}};
-const rpc={declare:definition=>(...args)=>{calls.push(definition.method);return Promise.resolve(definition.method==='setup_discover'?{...discovery,client:profiles[args[0]||'auto']||{available:false,client:args[0]}}:setupInfo);}};
+const rpc={declare:definition=>(...args)=>{calls.push(definition.method);if(rpcError)return Promise.reject(new Error('RPC timeout'));return Promise.resolve(definition.method==='setup_discover'?{...discovery,client:profiles[args[0]||'auto']||{available:false,client:args[0]}}:setupInfo);}};
 const pgI18n={runtime:x=>x,modal:(_ui,title,body)=>{modal=body;}};
 const pg=new Function('baseclass','ui','rpc','poll','uci','pgI18n','_','E',fs.readFileSync(process.env.PG_SETUP_MODULE||root+'/package/root/www/luci-static/resources/proxy_guard_setup.js','utf8'))({extend:x=>x},ui,rpc,{add(){}},{get:()=>draft},pgI18n,x=>x,E);
 pg.info={wizard_complete:true};pg.view={showActionError:e=>{throw e;},handleSaveApply:()=>{throw Error('unexpected apply');}};
 function button(label){let found;function visit(v){if(!v||typeof v!=='object')return;if(v.tag==='button'&&v.children[0]===label)found=v;for(const x of v.children||[])visit(x);}for(const row of modal)visit(row);assert(found,label);return found;}
 (async()=>{
+ draft.sources4=['192.0.2.20/32'];
+ draft.sources6=['2001:db8:1::/64'];
+ draft.ipv6_protect='1';
  await pg.open(false);
  assert(!button('Next').disabled,'available LAN must allow Next');
  assert(pg.inputs['br-lan'].checked&&!pg.inputs['br-guest'].checked,'false checked must be omitted, not emitted as an HTML attribute');
@@ -27,6 +30,8 @@ function button(label){let found;function visit(v){if(!v||typeof v!=='object')re
  pg.enable.checked=true;pg.watch.checked=false;pg.socks.value='12345';pg.client.value='nikki';
  await button('Next').attrs.click();
  assert.equal(pg.step,2);assert(!pg.exitCheck.checked,'optional exit validation defaults off');
+ assert.equal(pg.inputs.sources4.value,'192.0.2.20/32','same ingress retains saved IPv4 scope');
+ assert.equal(pg.inputs.sources6.value,'2001:db8:1::/64','same ingress retains saved IPv6 scope');
  assert.equal(pg.inputs.proxy_ports.value,'7891\n7892','selected client, rather than initial auto client, supplies proxy ports');
  assert(pg.inputs.dns_ports.value.includes('1053'),'selected client supplies DNS exception ports');
  pg.inputs.proxy_ports.value='45000';pg.inputs.sources4.value='192.0.2.99/32';
@@ -44,9 +49,41 @@ function button(label){let found;function visit(v){if(!v||typeof v!=='object')re
  assert(calls.length>=3&&calls.every(x=>x==='setup_discover'),'wizard navigation only reads discovery and never saves or activates protection');
  pg.reset=true;pg.step=1;pg.draft.mode='guard';pg.draft.boot_guard='1';pg.renderWizard();assert.equal(pg.mode.value,'boot','Back retains chosen preset during a factory setup too');
  await pg.open(true);await button('Next').attrs.click();pg.client.value='nikki';await button('Next').attrs.click();await button('Back').attrs.click();assert.equal(pg.socks.value,'1080','selecting another client follows its detected SOCKS port unless manually overridden');
+ draft.interfaces=['br-guest','br-lan'];
+ draft.sources4=['192.0.2.88/32'];
+ draft.sources6=['2001:db8:1::/64'];
+ draft.proxy_client='passwall2';
+ draft.passwall_watch='1';draft.passwall_log_watch='0';draft.client_auto_ports='0';
+ draft.proxy_ports=['45001'];draft.dns_ports=['53','11555'];
+ await pg.open(false);await button('Next').attrs.click();await button('Next').attrs.click();
+ assert.equal(pg.inputs.sources4.value,'192.0.2.88/32','same selected interfaces in a different order retain custom scope');
+ assert.equal(pg.inputs.proxy_ports.value,'45001','rerunning with the same client retains custom proxy ports');
+ assert.equal(pg.inputs.dns_ports.value,'53\n11555','rerunning with the same client retains custom DNS ports');
+ assert.equal(pg.draft.client_auto_ports,'0','rerunning does not re-enable automatic ports');
+ assert.equal(pg.draft.passwall_log_watch,'0','rerunning does not re-enable client log monitoring');
  discovery.interfaces=[];await pg.open(false);assert(button('Next').disabled,'no eligible LAN must block navigation without throwing');
  pg.active={id:'x',token:'y',owned:true,phase:'checking'};pg.showTransaction();assert(pg.confirmButton.disabled);
- pg.active.phase='confirming';pg.active.remaining=30;pg.renderTransaction();assert(!pg.confirmButton.disabled);
+ const first={id:'x',token:'y',owned:true,phase:'confirming',remaining_ms:30000};
+ pg.setTransaction(first,performance.now());pg.renderTransaction();
+ assert(pg.confirmButton.disabled&&!pg.cancelButton.disabled,'no live verdict must prevent confirmation');
+ setupInfo={ok:true,transaction:{...first,verification:'allowing',remaining_ms:28000}};
+ await pg.pollTransaction();assert(!pg.confirmButton.disabled);
+ const deadline=pg.transactionDeadline.at;
+ assert(pg.transactionMessage.textContent.includes('Internet access is allowed'));
+ setupInfo={ok:true,transaction:{...first,verification:'unverified',remaining_ms:29000}};
+ await pg.pollTransaction();assert(pg.confirmButton.disabled&&!pg.cancelButton.disabled);
+ assert.equal(pg.transactionDeadline.at,deadline,'an invalid verdict cannot restart the timer');
+ await pg.finish(false);assert(!calls.includes('setup_confirm'),'local guard prevents a click after the verdict becomes invalid');
+ setupInfo={ok:true,transaction:{...first,verification:'blocked',remaining_ms:27000}};
+ await pg.pollTransaction();assert(!pg.confirmButton.disabled);
+ assert(pg.transactionMessage.textContent.includes('Internet access is blocked'),'verified blocking still permits retaining configuration');
+ assert(pg.transactionDeadline.at<=deadline,'recovery cannot restart the timer');
+ pg.setTransaction({...first,verification:'blocked',remaining_ms:25000},performance.now()-4000);pg.renderTransaction();
+ assert(!pg.confirmButton.disabled,'a freshly received verified result remains usable after a slow request');
+ rpcError=true;await pg.pollTransaction();rpcError=false;
+ assert(pg.confirmButton.disabled&&!pg.cancelButton.disabled,'loss of RPC invalidates the latest verdict');
+ pg.setTransaction({...first,verification:'allowing',remaining_ms:1000},performance.now()-1100);pg.renderTransaction();
+ assert(pg.confirmButton.disabled,'expired local deadline must disable confirmation');
  pg.active.owned=false;pg.renderTransaction();assert(pg.confirmButton.disabled&&pg.cancelButton.disabled);
  let reloaded=0;pg.reloadForm=async()=>{reloaded++;};
  setupInfo={ok:true,transaction:{id:'second-session-new',owned:false,phase:'checking'}};

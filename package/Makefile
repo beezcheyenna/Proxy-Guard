@@ -1,16 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-proxy-guard
-PKG_VERSION:=0.3.0
-PKG_RELEASE:=21
+PKG_VERSION:=1.0.0
+PKG_RELEASE:=8
 
-# Pro is independently released against a stable base interface.
-PG_PRO_VERSION:=0.3.1
-PG_PRO_RELEASE:=5
-PG_BASE_API:=1
-PG_PRO_BASE_API:=1
-PG_PRO_MIN_BASE:=0.3.0-13
-PG_PRO_MIN_BASE_APK:=0.3.0-r20
+# The repository still links to historical releases until 1.0.0 is published.
+PG_DOC_RELEASE_STANDARD:=0.3.0-21
+PG_DOC_RELEASE_EXTENSION:=0.3.1-5
 PKG_LICENSE:=MIT
 PKG_MAINTAINER:=Proxy Guard contributors
 
@@ -46,55 +42,31 @@ define ProxyGuard/FixPermissions
 	[ ! -d $(1)/etc/init.d ] || find $(1)/etc/init.d -type f -exec chmod 755 {} +
 	[ ! -d $(1)/etc/hotplug.d ] || find $(1)/etc/hotplug.d -type f -exec chmod 755 {} +
 	[ ! -d $(1)/usr/libexec ] || find $(1)/usr/libexec -type f -exec chmod 755 {} +
+	chmod 755 $(1)/www/cgi-bin/proxy-guard-api
 endef
 
 define Package/luci-app-proxy-guard/install
 	$(CP) ./root/* $(1)/
 	$(call ProxyGuard/FixPermissions,$(1))
+	chmod 600 $(1)/etc/config/proxy_guard
 endef
 
 define Package/luci-app-proxy-guard/preinst
 #!/bin/sh
 [ -n "$${IPKG_INSTROOT}" ] && exit 0
-# Refuse incompatible base updates before stopping any installed service.
-if [ -f /usr/share/proxy-guard/pro-requires-api ]; then
- pg_pro_api=$$(cat /usr/share/proxy-guard/pro-requires-api 2>/dev/null) || exit 1
- if [ "$$pg_pro_api" != "$(PG_BASE_API)" ]; then
-  printf '%s\n' 'Installed Pro requires an incompatible base API; keep the current base or install a compatible Pro release.' >&2
-  exit 1
- fi
-fi
 umask 077
 mkdir -p /var/run/proxy-guard /var/lock || exit 1
 chmod 700 /var/run/proxy-guard || exit 1
-# An installed pre-split Pro still looks up unscoped gettext keys. Preserve
-# the local catalog until postinst can retain only keys the new base dropped.
-if [ -f /usr/share/proxy-guard/pro-requires-api ] && [ ! -s /usr/lib/lua/luci/i18n/proxy-guard-pro.en.lmo ]; then
-    pg_lmo_dir=/usr/lib/lua/luci/i18n
-    pg_lmo_saved=/var/run/proxy-guard/legacy-lmo
-    mkdir -p "$$pg_lmo_saved" || exit 1
-    for pg_lang in en zh-cn ja ru fa; do
-        pg_old="$$pg_lmo_dir/proxy-guard-legacy-pro.$$pg_lang.lmo"
-        [ -s "$$pg_old" ] || pg_old="$$pg_lmo_dir/proxy-guard.$$pg_lang.lmo"
-        [ -s "$$pg_old" ] || continue
-        cp "$$pg_old" "$$pg_lmo_saved/$$pg_lang.new" || exit 1
-        mv -f "$$pg_lmo_saved/$$pg_lang.new" "$$pg_lmo_saved/$$pg_lang.lmo" || exit 1
-    done
-fi
 pg_pkg_done=0
 pg_pkg_setup_stopped=0
 pg_pkg_main_stopped=0
-pg_pkg_access_stopped=0
 pg_pkg_main_running=0
-pg_pkg_access_running=0
 [ ! -x /etc/init.d/proxy-guard ] || ! /etc/init.d/proxy-guard running || pg_pkg_main_running=1
-[ ! -x /etc/init.d/proxy-guard-access ] || ! /etc/init.d/proxy-guard-access running || pg_pkg_access_running=1
 pg_pkg_abort() {
     [ "$$pg_pkg_done" = 1 ] && return 0
     rm -f /var/run/proxy-guard/removing
     if [ "$$pg_pkg_setup_stopped" = 1 ]; then /etc/init.d/proxy-guard-setup start >/dev/null 2>&1 || true; fi
     if [ "$$pg_pkg_main_stopped:$$pg_pkg_main_running" = 1:1 ]; then /etc/init.d/proxy-guard start >/dev/null 2>&1 || true; fi
-    if [ "$$pg_pkg_access_stopped:$$pg_pkg_access_running" = 1:1 ]; then /etc/init.d/proxy-guard-access start >/dev/null 2>&1 || true; fi
 }
 trap pg_pkg_abort EXIT
 pg_pkg_drain_setup() {
@@ -132,10 +104,6 @@ pg_pkg_drain_setup || exit 1
 if [ -x /etc/init.d/proxy-guard-setup ]; then
     /etc/init.d/proxy-guard-setup stop || exit 1
     pg_pkg_setup_stopped=1
-fi
-if [ -x /etc/init.d/proxy-guard-access ]; then
-    /etc/init.d/proxy-guard-access stop || exit 1
-    pg_pkg_access_stopped=1
 fi
 if [ -x /etc/init.d/proxy-guard ]; then
     /etc/init.d/proxy-guard stop || exit 1
@@ -189,18 +157,17 @@ define Package/luci-app-proxy-guard/postinst
 [ -n "$${IPKG_INSTROOT}" ] && exit 0
 rm -f /var/run/proxy-guard/removing
 /usr/libexec/proxy-guard-migrate || exit 1
+chmod 600 /etc/config/proxy_guard || exit 1
 /etc/init.d/proxy-guard enable
 /etc/init.d/proxy-guard-setup enable || exit 1
 /etc/init.d/proxy-guard-setup start || exit 1
 /usr/libexec/proxy-guard-languages || exit 1
-if [ -d /var/run/proxy-guard/legacy-lmo ]; then
-    /usr/libexec/proxy-guard-legacy-catalogs
-fi
 (umask 077; /usr/libexec/proxy-guard-policy-refresh) || exit 1
 rm -f /tmp/luci-indexcache /tmp/luci-indexcache.*
 rm -rf /tmp/luci-modulecache/
 /etc/init.d/rpcd reload 2>/dev/null || exit 1
 /usr/libexec/proxy-guard-rpc-ready proxy_guard || exit 1
+[ -x /www/cgi-bin/proxy-guard-api ] || exit 1
 # Clear stale owned policy even when a disabled installation has no daemon.
 if [ "$$(uci -q get proxy_guard.main.enabled)" = 0 ]; then
     /usr/libexec/proxy-guard apply >/dev/null 2>&1 || exit 1
@@ -209,9 +176,6 @@ if /etc/init.d/proxy-guard running; then
     /etc/init.d/proxy-guard restart || exit 1
 elif [ "$$(uci -q get proxy_guard.main.enabled)" = 1 ]; then
     /etc/init.d/proxy-guard start || exit 1
-fi
-if [ -x /etc/init.d/proxy-guard-access ] && [ "$$(uci -q get proxy_guard_access.main.enabled)" = 1 ]; then
-    /etc/init.d/proxy-guard-access restart || exit 1
 fi
 ucode /usr/lib/proxy-guard/setup-lock.uc installed || exit 1
 rm -f /var/run/proxy-guard/opkg-context.uc
@@ -235,7 +199,6 @@ if [ "$${PKG_UPGRADE:-0}" != 1 ]; then
         cp /usr/lib/proxy-guard/opkg-context.uc /var/run/proxy-guard/opkg-context.uc || exit 1
         chmod 600 /var/run/proxy-guard/opkg-context.uc || exit 1
         touch /var/run/proxy-guard/removing || exit 1
-        if [ -x /etc/init.d/proxy-guard-access ]; then /etc/init.d/proxy-guard-access stop || exit 1; fi
         /etc/init.d/proxy-guard stop || exit 1
         ucode -e 'import { open } from "fs"; let f=open("/var/lock/proxy-guard.lock","a",0o600); if (!f) exit(75); let deadline=clock(true)[0]+15; while (!f.lock("xn")) { if (clock(true)[0]>=deadline) exit(75); sleep(100); } f.close();' || exit 1
         exit 0
@@ -247,8 +210,7 @@ if [ "$${PKG_UPGRADE:-0}" != 1 ]; then
     touch /var/run/proxy-guard/removing || exit 1
     /etc/init.d/proxy-guard-setup stop || exit 1
     /etc/init.d/proxy-guard-setup disable || exit 1
-    rm -rf /etc/proxy-guard/setup /var/run/proxy-guard/legacy-lmo
-    rm -f /usr/lib/lua/luci/i18n/proxy-guard-legacy-pro.*.lmo
+    rm -rf /etc/proxy-guard/setup
     if ! /etc/init.d/proxy-guard stop ||
        ! /usr/libexec/proxy-guard cleanup ||
        ! /etc/init.d/proxy-guard disable; then
@@ -262,109 +224,6 @@ endef
 define Package/luci-app-proxy-guard/postrm
 #!/bin/sh
 [ -n "$${IPKG_INSTROOT}" ] && exit 0
-rm -f /var/run/proxy-guard-access/headers /var/run/proxy-guard-access/headers.new /var/run/proxy-guard-access/request /var/run/proxy-guard-access/request.new /var/run/proxy-guard-access/response-4 /var/run/proxy-guard-access/response-6
-rm -f /tmp/luci-indexcache /tmp/luci-indexcache.*
-rm -rf /tmp/luci-modulecache/
-/etc/init.d/rpcd reload 2>/dev/null
-exit 0
-endef
-
-
-
-define Package/luci-app-proxy-guard-pro
-  VERSION:=$(PG_PRO_VERSION)$(if $(CONFIG_USE_APK),-r,-)$(PG_PRO_RELEASE)
-  SECTION:=luci
-  CATEGORY:=LuCI
-  SUBMENU:=3. Applications
-  TITLE:=Proxy Guard Pro
-  DEPENDS:=+luci-app-proxy-guard
-  # APK SDK FormatDepends treats the parenthesized constraint as one word.
-  EXTRA_DEPENDS:=luci-app-proxy-guard ($(if $(CONFIG_USE_APK),>=$(PG_PRO_MIN_BASE_APK),>= $(PG_PRO_MIN_BASE)))
-  PKGARCH:=all
-endef
-
-define Package/luci-app-proxy-guard-pro/install
-	$(CP) ./pro/root/* $(1)/
-	$(call ProxyGuard/FixPermissions,$(1))
-	chmod 600 $(1)/etc/config/proxy_guard_access
-endef
-
-define Package/luci-app-proxy-guard-pro/conffiles
-/etc/config/proxy_guard_access
-endef
-
-define Package/luci-app-proxy-guard-pro/preinst
-#!/bin/sh
-[ -n "$${IPKG_INSTROOT}" ] && exit 0
-pg_base_api=$$(cat /usr/share/proxy-guard/pro-api 2>/dev/null) || pg_base_api=
-if [ "$$pg_base_api" != "$(PG_PRO_BASE_API)" ]; then
- printf '%s\n' 'This Pro release requires Proxy Guard base API $(PG_PRO_BASE_API) (base >= $(PG_PRO_MIN_BASE)); the installed base API is missing or incompatible.' >&2
- exit 1
-fi
-# The old preinst may already have been removed by force-reinstall. The
-# prerm copy below sets the same live transaction marker before removal.
-if [ -x /usr/libexec/proxy-guard-access-update ]; then
- /usr/libexec/proxy-guard-access-update || exit 1
-fi
-[ ! -x /etc/init.d/proxy-guard-access ] || /etc/init.d/proxy-guard-access stop || exit 1
-exit 0
-endef
-
-define Package/luci-app-proxy-guard-pro/postinst
-#!/bin/sh
-[ -n "$${IPKG_INSTROOT}" ] && exit 0
-chmod 600 /etc/config/proxy_guard_access || exit 1
-/usr/libexec/proxy-guard-access-migrate-secrets || exit 1
-rm -f /usr/lib/lua/luci/i18n/proxy-guard-legacy-pro.*.lmo
-rm -rf /var/run/proxy-guard/legacy-lmo
-/etc/init.d/proxy-guard-access enable || exit 1
-if [ "$$(uci -q get proxy_guard_access.main.enabled)" = 1 ]; then /etc/init.d/proxy-guard-access restart || exit 1; fi
-rm -f /tmp/luci-indexcache /tmp/luci-indexcache.*
-rm -rf /tmp/luci-modulecache/
-/etc/init.d/rpcd reload 2>/dev/null || exit 1
-/usr/libexec/proxy-guard-rpc-ready proxy_guard_access || exit 1
-rm -f /var/run/proxy-guard-access/updating /var/run/proxy-guard-access/updating.new /var/run/proxy-guard-access/installing /var/run/proxy-guard-access/installing.new
-# RPC registration alone can succeed while new executables are still cached.
-/bin/sync || exit 1
-exit 0
-endef
-
-define Package/luci-app-proxy-guard-pro/prerm
-#!/bin/sh
-[ -n "$${IPKG_INSTROOT}" ] && exit 0
-if [ "$${PKG_UPGRADE:-0}" != 1 ]; then
- pg_context=/usr/lib/proxy-guard/opkg-context.uc
- [ -r "$$pg_context" ] || pg_context=/var/run/proxy-guard/opkg-context.uc
- pg_context_rc=0
- ucode "$$pg_context" >/dev/null || pg_context_rc=$$?
- if [ "$$pg_context_rc" = 0 ]; then
-  /usr/libexec/proxy-guard-access-update || exit 1
-  /etc/init.d/proxy-guard-access stop || exit 1
- elif [ "$$pg_context_rc" = 2 ]; then
-  umask 077
-  mkdir -p /var/run/proxy-guard-access || exit 1
-  touch /var/run/proxy-guard-access/installing || exit 1
-  /etc/init.d/proxy-guard-access stop || exit 1
-  /etc/init.d/proxy-guard-access disable || exit 1
-  rm -f /var/run/proxy-guard-access/updating /var/run/proxy-guard-access/updating.new
- else
-  exit "$$pg_context_rc"
- fi
-fi
-exit 0
-endef
-
-define Package/luci-app-proxy-guard-pro/postrm
-#!/bin/sh
-[ -n "$${IPKG_INSTROOT}" ] && exit 0
-# Keep the file-replacement barrier through an upgrade or force-reinstall.
-pg_context=/usr/lib/proxy-guard/opkg-context.uc
-[ -r "$$pg_context" ] || pg_context=/var/run/proxy-guard/opkg-context.uc
-pg_context_rc=0
-ucode "$$pg_context" >/dev/null 2>&1 || pg_context_rc=$$?
-if [ "$$pg_context_rc" = 2 ]; then
- rm -f /var/run/proxy-guard-access/installing /var/run/proxy-guard-access/installing.new
-fi
 rm -f /tmp/luci-indexcache /tmp/luci-indexcache.*
 rm -rf /tmp/luci-modulecache/
 /etc/init.d/rpcd reload 2>/dev/null
@@ -372,6 +231,3 @@ exit 0
 endef
 
 $(eval $(call BuildPackage,luci-app-proxy-guard))
-
-$(eval $(call BuildPackage,luci-app-proxy-guard-pro))
-

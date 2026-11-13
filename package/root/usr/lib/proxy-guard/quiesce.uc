@@ -23,11 +23,11 @@ function collect(pid) {
     push(victims,{pid,id});
     for (let child in children[pid] || []) collect(child);
 }
-for (let role in ['daemon','fast_watch']) {
+for (let role in ['daemon','fast_watch','heartbeat_watch']) {
     let pid=trim(readfile('/var/run/proxy-guard/'+role+'.pid') || '');
     if (!match(pid,/^\d+$/)) continue;
     let argv=split(readfile('/proc/'+pid+'/cmdline') || '', '\x00');
-    if (!(role=='daemon' && argv[1]=='/usr/libexec/proxy-guard' && argv[2]=='daemon') &&
+    if (!((role=='daemon' || role=='heartbeat_watch') && argv[1]=='/usr/libexec/proxy-guard' && argv[2]==role) &&
         !(role=='fast_watch' && argv[1]=='/usr/lib/proxy-guard/fast-watch.uc')) continue;
     collect(pid);
 }
@@ -35,8 +35,10 @@ for (let role in ['daemon','fast_watch']) {
 // only exact plugin worker/runner paths and actions, then verify start time.
 for (let path in glob('/proc/[0-9]*/cmdline') || []) {
     let argv=split(readfile(path) || '', '\x00');
-    if ((argv[1]=='/usr/lib/proxy-guard/main.lua' || argv[1]=='/usr/lib/proxy-guard/locked.uc') &&
-        (argv[2]=='tick' || argv[2]=='apply')) {
+    if (((argv[1]=='/usr/lib/proxy-guard/main.lua' || argv[1]=='/usr/lib/proxy-guard/locked.uc') &&
+        (argv[2]=='tick' || argv[2]=='apply')) ||
+        ((argv[1]=='/usr/lib/proxy-guard/extension-main.lua' || argv[1]=='/usr/lib/proxy-guard/extension-lock.uc') &&
+        (argv[2]=='heartbeat' || argv[2]=='heartbeat_gate' || argv[2]=='api_sync'))) {
         let matched=match(path, /^\/proc\/(\d+)\/cmdline$/);
         if (matched) collect(matched[1]);
     }

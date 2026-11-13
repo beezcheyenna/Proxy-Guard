@@ -3,8 +3,8 @@ local core=require 'proxy-guard.core'
 local n=0
 local function check(ok,name) assert(ok,name);n=n+1 end
 local trace='https://www.cloudflare.com/cdn-cgi/trace'
-check(core.config().targets[1].url=='https://www.gstatic.com/generate_204','Google default')
-check(core.config().targets[2].url=='https://connectivity-check.ubuntu.com/' and core.config().targets[2].code==204,'default recurring targets do not perform extra IP lookup')
+check(core.config({check_mode="web"}).targets[1].url=='https://www.gstatic.com/generate_204','Google default')
+check(core.config({check_mode="web"}).targets[2].url=='https://connectivity-check.ubuntu.com/' and core.config({check_mode="web"}).targets[2].code==204,'default recurring targets do not perform extra IP lookup')
 check(core.config().exit_url=='https://api.ipify.org/','reuse ipify for exit')
 for _,url in ipairs({trace,trace..'?x=1','https://fixture.test/cdn-cgi/trace'}) do check(core.is_trace_url(url),url) end
 for _,url in ipairs({trace..'evil',trace..'/other',trace..'#frag','http://www.cloudflare.com/cdn-cgi/trace','https://foo.test/?/cdn-cgi/trace'}) do check(not core.is_trace_url(url),'reject false trace '..url) end

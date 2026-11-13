@@ -2,13 +2,13 @@
 
 [English](THIRD_PARTY_NOTICES.md) · [简体中文](THIRD_PARTY_NOTICES.zh-CN.md) · [日本語](THIRD_PARTY_NOTICES.ja.md) · [Русский](THIRD_PARTY_NOTICES.ru.md) · [فارسی](THIRD_PARTY_NOTICES.fa.md)
 
-记录日期 2026-11-08。范围为普通版、Pro、VPS Agent 和 Worker 的公开源码。适用条款以各上游的原始声明为准。
+本说明适用于路由器插件。
 
 ## 自有代码
 
 Copyright (c) 2026 Proxy Guard contributors.
 
-自有代码和原创文档按根目录的 [MIT 许可](../LICENSE) 发布。普通版与 Pro 适用同一政策。上游消息、补丁、库、解释器、工具、代理内核和固件保留各自许可。
+自有代码和原创文档按根目录的 [MIT 许可](../LICENSE) 发布。上游消息、补丁、库、解释器、工具、代理内核和固件保留各自许可。
 
 ## 上游日志消息
 
@@ -55,21 +55,9 @@ PassWall: Copyright (C) 2018-2020 L-WRT Team, Copyright (C) 2021-2025 xiaorouji,
 
 UCI 的包级 LGPL 元数据与 Lua 绑定的 GPL v2 文件头并存。外部命令与进程内导入不同。再分发固件或组合运行环境时核对实际版本、组合与适用例外。
 
-## Pro Agent 与 Cloudflare 配套
-
-Agent 使用 Python 标准库和外部 Linux 工具，Python、nftables、iproute2、systemd/OpenRC 及代理和面板单独提供。cloudflared 是单独的 Apache-2.0 程序。Cloudflare Worker 使用托管 API，服务适用平台条款。锁文件声明以下开发依赖：
-
-- Wrangler 4.156.0 — MIT OR Apache-2.0
-- Miniflare 5.20261023.3-beta — MIT
-- workerd 1.20261023.1 — Apache-2.0
-
-<https://github.com/cloudflare/cloudflared/blob/master/LICENSE>
-
-[锁文件清单](../companion/worker/THIRD_PARTY_DEPENDENCIES.json) 有 91 个非根条目，包含可选的平台包。工具、node_modules 与 cloudflared 不打进应用包。若再分发它们，保留实际包的版权、NOTICE 和适用源码。
-
 ## 代理客户端、内核与面板
 
-PassWall、PassWall2、OpenClash、Nikki、HomeProxy、Xray、sing-box、Mihomo 和 3x-ui 独立维护。插件读取配置、日志与服务，或调用已授权接口。另行分发上述项目的源码或二进制须按组件核对声明和源码要求。
+PassWall、PassWall2、OpenClash、Nikki、HomeProxy、Xray、sing-box 和 Mihomo 独立维护。插件读取受支持客户端的配置、日志与服务状态。另行分发上述项目的源码或二进制须按组件核对声明和源码要求。
 
 ## 许可范围
 

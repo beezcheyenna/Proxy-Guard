@@ -1,35 +1,27 @@
 const fs=require('fs'), assert=require('assert');
 const root=process.env.PG_SOURCE || require('path').resolve(__dirname,'..');
 const readRows=folder=>fs.readFileSync(root+'/'+folder+'/messages.tsv','utf8').split('\n').filter(line=>line&&!line.startsWith('#')).map(line=>line.split('\t'));
-const rows=readRows('package/i18n'), proRows=readRows('package/i18n/pro');
+const rows=readRows('package/i18n');
 const runtimeSource=fs.readFileSync(root+'/package/root/www/luci-static/resources/proxy_guard_i18n.js','utf8');
 const keys=new Set(rows.map(row=>row[1]));
-const proKeys=new Set(proRows.map(row=>row[1]));
 const basePath='package/root/www/luci-static/resources/';
-const proPath='package/pro/root/www/luci-static/resources/';
-for (const [file,allowPro] of [
-    [basePath+'proxy_guard_remote_trial.js',true], [basePath+'view/proxy-guard/raw.js',true],
-    [basePath+'proxy_guard_setup.js',false], [basePath+'view/proxy-guard/overview.js',false],
-    [proPath+'view/proxy-guard/access.js',true], [proPath+'view/proxy-guard/access-raw.js',true],
-    [proPath+'proxy_guard_pro_remote_trial.js',true]
+for (const file of [
+    basePath+'view/proxy-guard/raw.js',
+    basePath+'proxy_guard_setup.js',
+    basePath+'view/proxy-guard/overview.js'
 ]) {
     const source=fs.readFileSync(root+'/'+file,'utf8');
     for(const match of source.matchAll(/\b(?:_|t|pgI18n\.gettext)\(((?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'))\)/g)) {
         const key=require('vm').runInNewContext(match[1]);
-        assert(keys.has(key) || allowPro && proKeys.has(key),file+': '+key);
+        assert(keys.has(key),file+': '+key);
     }
-}
-for (const key of ['VPS access rules','SSH management','Remote maintenance','Keep VPS policy']) {
-    assert(proKeys.has(key) && !keys.has(key),'Pro-only ownership: '+key);
 }
 for(const [locale,index] of [['zh-CN',0],['en',1],['ja',2],['ru',null],['fa',null]]) {
     const extra=index===null?JSON.parse(fs.readFileSync(root+'/package/i18n/'+locale+'.json','utf8')):null;
-    const proExtra=index===null?JSON.parse(fs.readFileSync(root+'/package/i18n/pro/'+locale+'.json','utf8')):null;
-    const allRows=rows.concat(proRows);
-    const catalog=Object.fromEntries(allRows.map(row=>[row[1],index===null?(extra[row[1]]||proExtra[row[1]]):row[index]]));
+    const catalog=Object.fromEntries(rows.map(row=>[row[1],index===null?extra[row[1]]:row[index]]));
     const formatTokens=value=>(value.match(/%(?:\d+\$)?[-+ #0]*\d*(?:\.\d+)?[sdifgeuxX]/g)||[]).sort();
     const ipTokens=value=>value.match(/\b(?:\d{1,3}\.){3}\d{1,3}(?:\/\d{1,2})?/g)||[];
-    for(const row of allRows){
+    for(const row of rows){
         assert.deepStrictEqual(formatTokens(catalog[row[1]]),formatTokens(row[1]),locale+' format placeholders: '+row[1]);
         for(const ip of ipTokens(row[1]))assert(catalog[row[1]].includes(ip),locale+' technical address: '+ip);
         for(const token of row[1].match(/HH:MM:SS|±HH:MM|::\/0|\/tmp\/log\/passwall\.log|65535/g)||[])assert(catalog[row[1]].includes(token),locale+' technical format: '+row[1]);
@@ -69,28 +61,19 @@ console.log('PASS translation coverage and Chinese/English/Japanese/Russian/Pers
             }
             return catalog;
         }
-        const base=lmo('package/root/usr/lib/lua/luci/i18n/proxy-guard');
-        const pro=lmo('package/pro/root/usr/lib/lua/luci/i18n/proxy-guard-pro');
-        for (const hash of Object.keys(pro)) assert(!(hash in base),locale+' catalogs overlap at '+hash);
-        const catalog={...base,...pro};
+        const catalog=lmo('package/root/usr/lib/lua/luci/i18n/proxy-guard');
         const context={window:{TR:catalog},TR:catalog};
         vm.createContext(context);vm.runInContext(gettextSource,context);
         const extra=column===null?JSON.parse(fs.readFileSync(root+'/package/i18n/'+locale+'.json','utf8')):null;
-        const proExtra=column===null?JSON.parse(fs.readFileSync(root+'/package/i18n/pro/'+locale+'.json','utf8')):null;
-        const proGettext=key=>{const id='proxy-guard-pro:'+key; const value=context._(id);return value===id?context._(key):value;};
         for(const row of rows) assert.equal(context._(row[1]),column===null?extra[row[1]]:row[column],locale+': '+row[1]);
-        for(const row of proRows) {
-            const actual=row[1]==='VPS access rules (Pro)'?context._(row[1]):proGettext(row[1]);
-            assert.equal(actual,column===null?proExtra[row[1]]:row[column],locale+' Pro: '+row[1]);
-        }
-        viewChecks.push(checkLocalizedViews(locale,key=>context._(key),proGettext));
+        viewChecks.push(checkLocalizedViews(locale,key=>context._(key)));
     }
     console.log('PASS all packaged LMO entries using actual LuCI gettext and hash implementation');
-    Promise.all(viewChecks).then(locales=>console.log('PASS all localized settings groups, Pro, raw editors, wizard steps, RTL and technical inputs (actual LuCI gettext; form/RPC stubs): '+locales.join(', '))).catch(e=>{console.error(e);process.exitCode=1;});
+    Promise.all(viewChecks).then(locales=>console.log('PASS all localized settings groups, raw editor, wizard steps, RTL and technical inputs (actual LuCI gettext; form/RPC stubs): '+locales.join(', '))).catch(e=>{console.error(e);process.exitCode=1;});
 
 }
 
-async function checkLocalizedViews(locale, gettext, proGettext) {
+async function checkLocalizedViews(locale, gettext) {
     const vm = require('vm');
     const tabs = [], sections = [], fields = [], rpcCalls = [];
     let modal;
@@ -103,11 +86,12 @@ async function checkLocalizedViews(locale, gettext, proGettext) {
     }
     function E(tag, attrs = {}, children = []) {
         if (!Array.isArray(children)) children = [children];
-        const node = { tag, attrs, children, id:attrs.id, textContent:'', className:attrs.class || '',
+        const node = { tag, attrs, children, id:attrs.id, dir:attrs.dir, textContent:'', className:attrs.class || '',
             value:attrs.value == null ? '' : String(attrs.value), checked:attrs.checked != null,
             disabled:attrs.disabled != null, classList:{add(){}}, addEventListener(){},
             replaceChildren(...values){this.children=values;this.textContent='';},
             appendChild(value){this.children.push(value);return value;},
+            hasAttribute(name){return this.attrs[name]!=null;},
             querySelectorAll(selector){return walk(this).slice(1).filter(n => selector === 'input,textarea' && ['input','textarea'].includes(n.tag));} };
         if (tag === 'textarea') node.value = children.join('');
         if (tag === 'select') node.value = (children.find(n => n.attrs.selected != null) || children[0]).value;
@@ -121,7 +105,7 @@ async function checkLocalizedViews(locale, gettext, proGettext) {
                 const item={option:name,name,title,description,choices:[],value(key,label){this.choices.push([key,label]);},depends(){},formvalue(){return this.default ?? null;}};
                 list.push(item);fields.push(item);return item;
             };
-            const section={children:list,option,tab(id,title){tabs.push([id,title]);},taboption(id,...values){return option(...values);}};
+            const section={children:list,option,getOption(name){return list.find(field=>field.name===name);},tab(id,title){tabs.push([id,title]);},taboption(id,...values){const field=option(...values);field.tab=id;return field;}};
             this.children.push(section);sections.push(args);return section;
         }
         async render(){return E('form',{},this.children.flatMap(s => s.children.map(f => E('label',{},[f.title || '',E('input',{id:f.name}),...f.choices.map(v=>E('option',{},[v[1]]))]))));}
@@ -133,68 +117,67 @@ async function checkLocalizedViews(locale, gettext, proGettext) {
     const rpc={declare:spec=>async()=>{rpcCalls.push(spec.method);
         if(spec.method==='setup_discover')return discovery;
         if(spec.method==='raw_info')return {ok:true,text:"config proxy_guard 'main'\n",template:"config proxy_guard 'main'\n",token:'fixture',validation:{activation_parameters_valid:true}};
-        if(spec.method==='status')return spec.object==='proxy_guard_access'?{phase:'disabled',enabled:false}:{phase:'disabled',enforcement:'off',enabled:false};
+        if(spec.method==='status')return {phase:'disabled',enforcement:'off',enabled:false};
         return {ok:true,entries:[]};
     }};
     const ctx={view:{extend:x=>x},baseclass:{extend:x=>x},form,rpc,ui,poll:{add(){}},
         uci:{load:async()=>{},get:(config,section,key)=>key?draft[key]:draft},
         E,_:gettext,document:{documentElement:{lang}},window:{location:{pathname:'/admin/services/proxy-guard'}},
-        Date,URL,Blob,TextEncoder,performance,setTimeout:()=>0,
-        pgSetup:{attach:async()=>{}},pgTrial:{attach:async()=>{}},pgRemoteTrial:{attach:async()=>{}}};
+        Date,URL,Blob,TextEncoder,performance,setTimeout:()=>0,clearTimeout:()=>{},
+        pgSetup:{attach:async()=>{}}};
     vm.createContext(ctx);
     const load = name => vm.runInContext('(function(){'+fs.readFileSync(root+'/'+name,'utf8')+'\n})()',ctx);
     ctx.pgI18n=load('package/root/www/luci-static/resources/proxy_guard_i18n.js');
     const overview=load('package/root/www/luci-static/resources/view/proxy-guard/overview.js');
     const page=await overview.render();await overview.statusRequest;
     assert.equal(page.dir,direction,locale+' main direction');
-    const labels=['General settings','Protection scope','Scheduled protection','Plugin self-check and recovery','Connection checks','Failure protection and recovery'];
+    const labels=['General settings','Protection scope','Connection checks','Scheduled protection','Failure protection and recovery','Plugin health, logs and recovery','Local control API'];
     assert.deepStrictEqual(tabs.map(v=>v[1]),labels.map(gettext),locale+' all settings groups');
     assert(fields.some(f=>f.name==='expected_exit4')&&fields.some(f=>f.name==='schedule_utc_offset'));
     assert.equal(fields.find(f=>f.name==='schedule_utc_offset').default,'+00:00');
     assert.equal(fields.find(f=>f.name==='exit_check').default,'0');
+    assert.equal(fields.find(f=>f.name==='check_mode').default,'public');
+    assert.deepStrictEqual(fields.filter(f=>f.tab==='connection'&&f.name.startsWith('_')).map(f=>f.renderWidget().children[0]),
+        ['Official HTTPS settings','Third-party HTTPS settings','Exit IPv4 verification'].map(gettext));
     assert(walk(page).some(n=>n.tag==='h3'&&n.children[0]===gettext('Event log')),locale+' event heading');
-    assert.equal(page.children.at(-2).children[0],gettext('Clear logs'));
-    assert.equal(page.children.at(-1).children[0].children[0],gettext('Recovery history'),locale+' recovery history heading');
+    assert.equal(page.children.at(-1).children[0].children[0],gettext('Clear logs and recovery history'));
+    assert.equal(page.children.at(-2).children[0].children[0],gettext('Recovery history'),locale+' recovery history heading');
+    assert.equal(walk(page).find(n=>n.id==='pg-tools').children[0].children[0],gettext('Configuration and diagnostics'));
+    assert.equal(fields.find(f=>f.name==='_api_advanced').renderWidget().children[0].children[0],gettext('Advanced diagnostics'));
+    for (const name of ['log_kib','debug']) assert.equal(fields.find(f=>f.name===name).tab,'health');
     assert.equal(walk(page).find(n=>n.id==='expected_exit4').dir,'ltr',locale+' technical input direction');
-    const standardI18n=ctx.pgI18n;
-    ctx.shared=standardI18n;
-    const proI18n=load(proPath+'proxy_guard_pro_i18n.js');
-    ctx.pgI18n=proI18n;
-    const access=load(proPath+'view/proxy-guard/access.js');
-    const start=sections.length;const pro=await access.render();await access.statusRequest;
-    assert.equal(pro.dir,direction,locale+' Pro direction');
-    const proGroups=['Connection settings','VPS service rules','Services','Independent proxy heartbeat','SSH management','Remote maintenance'];
-    for(const key of proGroups)assert(sections.slice(start).some(row=>row.includes(proGettext(key))),locale+' Pro group '+key);
-    assert.equal(fields.find(f=>f.name==='ssh_open_seconds').default,'0');
-    for(const key of ['Check management readiness','Restart proxy core','Reboot VPS','Raw UCI configuration'])assert(walk(pro).some(n=>n.children.includes(proGettext(key))),locale+' Pro action '+key);
-    for(const path of ['proxy-guard-raw','proxy-guard-access-raw']){
-        ctx.window.location.pathname='/admin/services/'+path;
-        const isPro=path==='proxy-guard-access-raw';
-        ctx.pgI18n=isPro?proI18n:standardI18n;
-        const raw=load(isPro?proPath+'view/proxy-guard/access-raw.js':basePath+'view/proxy-guard/raw.js');
-        const editor=raw.render(await raw.load());
-        assert.equal(editor.dir,direction,locale+' raw direction');
-        assert.equal(raw.editor.value,"config proxy_guard 'main'\n");
-        assert(raw.editor.attrs.style.includes('direction:ltr'),locale+' UCI syntax remains LTR');
-        for(const key of ['Validate configuration','Load default template','Download configuration'])assert(walk(editor).some(n=>n.children.includes(gettext(key))),locale+' raw action '+key);
+    ctx.window.location.pathname='/admin/services/proxy-guard-raw';
+    const raw=load(basePath+'view/proxy-guard/raw.js');
+    const editor=raw.render(await raw.load());
+    assert.equal(editor.dir,direction,locale+' raw direction');
+    assert.equal(raw.editor.value,"config proxy_guard 'main'\n");
+    assert(raw.editor.attrs.style.includes('direction:ltr'),locale+' UCI syntax remains LTR');
+    assert.equal(raw.editor.dir,'ltr',locale+' decoration preserves the explicit raw editor direction');
+    for(const key of ['Validate configuration','Load default template','Download configuration']) {
+        assert(walk(editor).some(n=>n.children.includes(gettext(key))),locale+' raw action '+key);
     }
-    ctx.pgI18n=standardI18n;
     const setup=load(basePath+'proxy_guard_setup.js');
     setup.info={wizard_complete:true};setup.view={showActionError(e){throw e;}};
     const button=key=>{
         const result=modal.body.flatMap(walk).find(n=>n.tag==='button'&&n.children[0]===gettext(key));
         assert(result,locale+' wizard button '+key);return result;
     };
+    const titles=['LAN ingress devices','Protection preset','Scope and exceptions','Review settings'];
     const before=rpcCalls.length;await setup.open(false);
-    for(let step=0;step<3;step++){
+    for(let step=0;step<4;step++){
         assert.equal(setup.step,step);
+        assert.equal(modal.title,gettext('Protection setup wizard')+' · \u2066'+(step+1)+' / 4\u2069 · '+gettext(titles[step]));
         assert.equal(modal.body[0].dir,direction);
+        assert(!button(step===3?'Save & Apply':'Next').disabled);
         if(step===2){setup.ipv6Mode.value='none';setup.ipv6Acknowledge.checked=true;}
-        await button('Next').attrs.click();
+        if(step<3) await button('Next').attrs.click();
     }
-    assert.equal(setup.step,3);assert(!button('Save & Apply').disabled);
     assert(rpcCalls.slice(before).every(name=>name==='setup_discover'),locale+' wizard remains draft only');
-    setup.active={owned:true,phase:'confirming',remaining:30};setup.showTransaction();
+    setup.setTransaction({id:'test',token:'test-token',owned:true,phase:'confirming',remaining_ms:30000,verification:'blocked'},performance.now());
+    setup.showTransaction();
     assert.equal(modal.title,gettext('Confirm protection settings'));assert(!setup.confirmButton.disabled);
+    assert(setup.transactionMessage.textContent.includes(gettext('Protection rules verified. Internet access is blocked.')));
+    setup.active.verification='unverified';setup.renderTransaction();assert(setup.confirmButton.disabled);
+    assert(setup.transactionMessage.textContent.includes(gettext('Protection status needs verification. You can keep these settings once the check passes.')));
     return locale;
 }

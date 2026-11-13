@@ -29,7 +29,6 @@ end
 if raw.setup_complete==nil then set('setup_complete','1') end
 if raw.exit_check==nil then set('exit_check',raw.expected_exit4 and raw.expected_exit4~='' and '1' or '0') end
 if raw.proxy_client==nil and raw.passwall_watch=='1' then set('proxy_client','passwall') end
-if raw.cf_event_check==nil then set('cf_event_check','1') end
 -- Private builds carry an exact old-to-new migration map. Public exports omit
 -- this file entirely; arbitrary user exits are never replaced.
 local map=io.open('/usr/share/proxy-guard/private-exit-migration','r')

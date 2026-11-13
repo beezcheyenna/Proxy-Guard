@@ -2,7 +2,7 @@
 local json=require 'luci.jsonc'
 local core=require 'proxy-guard.core'
 local uci=require 'uci'
-local package_state=require 'proxy-guard.package-state'
+local api_auth=require 'proxy-guard.api-auth'
 local M={}
 local dir='/etc/proxy-guard/setup'
 local config_path='/etc/config/proxy_guard'
@@ -73,6 +73,7 @@ local function restore(p,reason)
  if current~=p.candidate then complete(p,'conflict','configuration_changed');return {ok=false,phase='conflict'} end
  -- A delayed kernel recovery must not rewrite the same flash config on every tick.
  if current~=p.previous then write(config_path,p.previous) end
+ api_auth.sync(api_auth.enabled())
  -- Restore effective rules before reporting completion. A probe holding the
  -- main lock cannot delay rollback indefinitely or renew a stale permit.
  local applied=os.execute('/usr/libexec/proxy-guard try_apply >/dev/null 2>&1')==0
@@ -104,20 +105,40 @@ local function installer_active(p)
  return name=='opkg' or name=='opkg-cl' or name=='apk'
 end
 local function package_busy()
- if read('/var/run/proxy-guard/removing',128)~=nil or package_state.state()=='active' then return true end
+ if read('/var/run/proxy-guard/removing',128)~=nil then return true end
  local good,p=pcall(pending)
  return good and installer_active(p)
+end
+local function verification(p,c)
+ if p.boot~=boot() or current_generation()~=p.generation or read(config_path)~=p.candidate or not monitor_running() then
+  return 'unverified'
+ end
+ local ok,s,applied=pcall(function()return require('proxy-guard.worker').status(true)end)
+ if not ok or not applied or not s or s.enabled~=true or s.mode~=c.mode or s.stale or s.phase=='error' then
+  return 'unverified'
+ end
+ if c.mode=='monitor' and s.enforcement=='off' and s.firewall_present==false then return 'monitor' end
+ if c.mode=='guard' and (s.enforcement=='allowing' or s.enforcement=='blocked') then return s.enforcement end
+ return 'unverified'
 end
 function M.info(owner)
  local p=pending()
  local raw=cursor_raw()
  local active_enabled
  if raw.enabled=='0' then active_enabled=false elseif raw.enabled=='1' then active_enabled=true end
- local pro=io.open('/usr/lib/proxy-guard/access.lua','r');local pro_available=pro~=nil;if pro then pro:close() end
- local result={ok=true,active_enabled=active_enabled,wizard_complete=raw.setup_complete=='1',has_confirmed=read(dir..'/confirmed')~=nil,pro_available=pro_available}
+ local result={ok=true,active_enabled=active_enabled,wizard_complete=raw.setup_complete=='1',has_confirmed=read(dir..'/confirmed')~=nil}
  if p then
-  result.transaction={id=p.id,phase=p.phase,remaining=math.max(0,math.ceil((p.deadline or 0)-up())),owned=owner~=nil and p.owner==owner,claimable=p.owner=='unclaimed' and p.phase~='rollback_pending'}
-  if result.transaction.owned then result.transaction.token=p.token end
+  local t={id=p.id,phase=p.phase,owned=owner~=nil and p.owner==owner,claimable=p.owner=='unclaimed' and p.phase~='rollback_pending'}
+  if t.owned then
+   t.token=p.token
+   if p.phase=='confirming' and up()<p.deadline then
+    local ok,value=pcall(function()return verification(p,core.load_config(raw))end)
+    t.verification=ok and value or 'unverified'
+   end
+  end
+  t.remaining_ms=math.max(0,math.floor(((p.deadline or 0)-up())*1000))
+  t.remaining=math.ceil(t.remaining_ms/1000)
+  result.transaction=t
  end
  result.last_result=decoded(result_path)
  return result
@@ -167,10 +188,12 @@ function M.apply(request)
   end
  end
  p.candidate=assert(read(config_path),'setup_configuration_unreadable')
+ if not api_auth.enabled() then api_auth.sync(false) end
  if c.enabled then
   save(pending_path,p)
  else
   os.remove(pending_path)
+  api_auth.sync(api_auth.enabled())
   write(dir..'/previous',before);write(dir..'/confirmed',p.candidate)
   complete(p,'confirmed','explicit_off')
  end
@@ -187,7 +210,10 @@ function M.tick(on_boot)
  end
  if installer_active(p) and os.getenv('PG_SETUP_PREINSTALL')~='1' then return {ok=true,phase='package_updating'} end
  if not p then
-  if on_boot and not read(dir..'/confirmed') then core.load_config(cursor_raw());write(dir..'/confirmed',assert(read(config_path)));assert(os.execute('/bin/sync')==0,'setup_sync_failed') end
+  if on_boot then
+   if not read(dir..'/confirmed') then core.load_config(cursor_raw());write(dir..'/confirmed',assert(read(config_path)));assert(os.execute('/bin/sync')==0,'setup_sync_failed') end
+   api_auth.sync(api_auth.enabled())
+  end
   return {ok=true,phase='idle'}
  end
  if p.candidate==nil then
@@ -200,10 +226,8 @@ function M.tick(on_boot)
  if current_generation()~=p.generation then return restore(p,'service_stopped') end
  if up()>=(p.deadline or 0) then return restore(p,p.phase=='confirming' and 'confirmation_timeout' or 'self_check_timeout') end
  if p.phase=='checking' then
-  local ok,s=pcall(function()return require('proxy-guard.worker').status()end)
   local c=core.load_config(cursor_raw())
-  if ok and s and s.enabled==true and monitor_running() and not s.stale and s.phase~='error' and
-    ((c.mode=='monitor' and s.enforcement=='off') or (c.mode=='guard' and (s.enforcement=='blocked' or s.enforcement=='allowing'))) then
+  if verification(p,c)~='unverified' and up()<p.deadline then
    p.phase='confirming';p.deadline=up()+30;save(pending_path,p)
   end
  end
@@ -218,10 +242,13 @@ function M.confirm(request,cancel)
  assert(p.phase=='confirming','setup_self_check_pending')
  assert(read(config_path)==p.candidate,'setup_configuration_changed')
  local c=core.load_config(cursor_raw())
- local status=require('proxy-guard.worker').status()
- if not monitor_running() or status.stale or status.phase=='error' or c.mode=='guard' and status.enforcement~='blocked' and status.enforcement~='allowing' then
-  restore(p,'runtime_self_check_failed');error('setup_runtime_self_check_failed')
+ if verification(p,c)=='unverified' then
+  return {ok=false,error='Protection could not be verified. Try again before the countdown ends.'}
  end
+ if up()>=p.deadline then restore(p,'confirmation_timeout');error('setup_confirmation_expired') end
+ assert(read(config_path)==p.candidate,'setup_configuration_changed')
+ assert(current_generation()==p.generation,'setup_control_invalid')
+ api_auth.sync(api_auth.enabled())
  write(dir..'/previous',p.previous);write(dir..'/confirmed',p.candidate)
  complete(p,'confirmed','user_confirmed')
  return {ok=true,phase='confirmed'}
@@ -293,6 +320,7 @@ function M.observe()
  if read(pending_path) then return {ok=true,phase='pending'} end
  local baseline=read(dir..'/confirmed')
  if not baseline or read(config_path)==baseline then return {ok=true,phase='idle'} end
+ if not api_auth.enabled() then api_auth.sync(false) end
  local good,result=pcall(M.apply,{})
  if not good then
   return restore({id=uuid(),candidate=read(config_path),previous=baseline,owner='unclaimed',boot=boot(),generation=current_generation()},'external_self_check_failed')
@@ -317,6 +345,7 @@ function M.installed()
  local p=pending()
  assert(not p or p.package_install==true,'setup_transaction_busy')
  core.load_config(cursor_raw())
+ api_auth.sync(api_auth.enabled())
  write(dir..'/confirmed',assert(read(config_path),'setup_configuration_unreadable'))
  complete(p or {id=uuid()},'confirmed','package_installed')
  return {ok=true,phase='installed'}

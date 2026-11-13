@@ -9,20 +9,20 @@ Proxy Guard welcomes reproducible bug reports, compatibility results, documentat
 - [Feature request](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=feature_request.yml)
 - [Documentation feedback](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=documentation.yml)
 
-**Security reports must be private.** Email [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com) before publishing exploitable details, especially VPS access, authentication, SSH or protection bypasses. Read the [security policy](docs/SECURITY.en.md). Do not upload credentials, private keys, full production configurations, HAR files or real deployment addresses.
+Report security issues privately according to the security policy. Share redacted evidence in public issues. [Security policy](docs/SECURITY.en.md)
 
 ## Before changing behavior
 
 1. Describe the trigger, expected behavior and actual result. Use documentation addresses and a minimal sanitized topology.
-2. Record firmware/distribution, kernel, architecture, package format, Standard/Pro versions, actual proxy core and forwarding mode. Distinguish package metadata from the running binary.
+2. Record firmware, kernel, architecture, package format, installed Proxy Guard version, actual proxy core and forwarding mode. Distinguish package metadata from the running binary.
 3. Use an authorized isolated environment. Scripts that manage services, routes or firewall rules belong inside disposable VMs, not a workstation or production host.
 4. Keep changes focused. Do not weaken ACLs, bypass certificate verification or change unrelated NAT/DNS/network configuration to make a test pass.
 
-See [building](docs/BUILDING.en.md), [test matrix](docs/TEST-MATRIX.en.md) and [component compatibility](docs/EDITION-MATRIX.en.md). A passing mock test does not establish native installation or packet-path compatibility.
+See [building](docs/BUILDING.en.md) and the [test matrix](docs/TEST-MATRIX.en.md). A passing mock test does not establish native installation or packet-path compatibility.
 
 ## Documentation and translations
 
-The five user-facing languages are Simplified Chinese, English, Japanese, Russian and Persian. The repository homepage is English, with Simplified Chinese as the second language entry. Update the affected pages in all five languages when behavior changes. Keep links in the reader's language and use the page's language menu for switching languages. Changelogs are English, including older changelog URLs. Preserve the original license texts and distribution notices.
+The five user-facing languages are Simplified Chinese, English, Japanese, Russian and Persian. The repository homepage is English, with Simplified Chinese as the second language entry. Update the affected pages in all five languages when behavior changes. Keep links in the reader's language and use the page's language menu for switching languages. Changelogs are English, across the documentation. Preserve the original license texts and distribution notices.
 
 Run the lightweight documentation checks from the repository root:
 

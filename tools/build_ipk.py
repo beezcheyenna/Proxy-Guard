@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build reproducible modular IPKs; SDK and custom packages share the hook bodies."""
+"""Build the reproducible Proxy Guard IPK from the SDK hook bodies."""
 from pathlib import Path
 import argparse,gzip,hashlib,io,json,re,sys,tarfile
 sys.dont_write_bytecode=True
@@ -9,13 +9,11 @@ MAKEFILE=(ROOT/'package/Makefile').read_text()
 PACKAGE_VERSION=re.search(r'^PKG_VERSION:=(\S+)$',MAKEFILE,re.M).group(1)
 PACKAGE_RELEASE=re.search(r'^PKG_RELEASE:=(\S+)$',MAKEFILE,re.M).group(1)
 VERSION=PACKAGE_VERSION+'-'+PACKAGE_RELEASE
-MAKE_VALUES={name:re.search(r'^'+name+r':=(\S+)$',MAKEFILE,re.M).group(1) for name in ('PKG_VERSION','PKG_RELEASE','PG_PRO_VERSION','PG_PRO_RELEASE','PG_BASE_API','PG_PRO_BASE_API','PG_PRO_MIN_BASE')}
-PRO_VERSION=MAKE_VALUES['PG_PRO_VERSION']+'-'+MAKE_VALUES['PG_PRO_RELEASE']
+MAKE_VALUES={'PKG_VERSION':PACKAGE_VERSION,'PKG_RELEASE':PACKAGE_RELEASE}
 EPOCH=1792108800
 BASE_DEPENDS='luci-base, lua, libuci-lua, luci-lib-jsonc, luci-lib-nixio, rpcd-mod-file, firewall4, curl, ca-bundle, ucode, ucode-mod-fs, ucode-mod-uci'
 SPECS=[
  ('luci-app-proxy-guard',VERSION,'package/root',BASE_DEPENDS,['/etc/config/proxy_guard'],'Local proxy fault protection'),
- ('luci-app-proxy-guard-pro',PRO_VERSION,'package/pro/root','luci-app-proxy-guard (>= '+MAKE_VALUES['PG_PRO_MIN_BASE']+')',['/etc/config/proxy_guard_access'],'Authenticated VPS authorization and remote health'),
 ]
 def tar_gz(files):
     stream=io.BytesIO()
@@ -34,37 +32,22 @@ def tar_gz(files):
     return gzip.compress(stream.getvalue(),mtime=EPOCH)
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--edition",choices=("standard","pro"),default="pro")
     parser.add_argument("--output",type=Path)
-    parser.add_argument("--only",choices=("standard","pro"),help="Build only this package; a Pro update does not rebuild the base package")
+    parser.add_argument("--only",choices=("standard",),help=argparse.SUPPRESS)
     args=parser.parse_args()
     core=(ROOT/'package/root/usr/lib/proxy-guard/core.lua').read_text()
     assert re.search(r"M\.VERSION\s*=\s*['\"]([^'\"]+)['\"]",core).group(1)==PACKAGE_VERSION
-    for rel,key in [('package/root/usr/share/proxy-guard/pro-api','PG_BASE_API'),('package/pro/root/usr/share/proxy-guard/pro-requires-api','PG_PRO_BASE_API')]:
-        assert (ROOT/rel).read_text().strip()==MAKE_VALUES[key], 'Base API manifest differs from Makefile: '+rel
     dest=args.output or ROOT/'dist';dest.mkdir(parents=True,exist_ok=True)
-    sums=[];manifest={};owners={}
-    selected=[SPECS[{"standard":0,"pro":1}[args.only]]] if args.only else SPECS[:{"standard":1,"pro":2}[args.edition]]
-    for spec in selected:
-        verify_translations("pro" if spec[0].endswith("-pro") else "standard")
-    # Pro-only releases must still reject files owned by the base package.
-    # Inventory every prerequisite before emitting any package, so an overlap
-    # cannot leave a plausible partial release in the output directory.
-    last=max(SPECS.index(spec) for spec in selected)
-    for owner,_,relative,_,_,_ in SPECS[:last+1]:
-        for path in (ROOT/relative).rglob('*'):
-            if not path.is_file():continue
-            key=path.relative_to(ROOT/relative).as_posix()
-            assert key not in owners,('Duplicate package ownership',key,owners.get(key),owner)
-            owners[key]=owner
+    sums=[];manifest={}
+    verify_translations()
+    selected=SPECS
     for name,version,relative,dependencies,conffiles,description in selected:
         root=ROOT/relative;files=[]
         for path in root.rglob('*'):
             if not path.is_file():continue
             key=path.relative_to(root).as_posix()
-            assert owners[key]==name,('Package inventory changed',key)
-            mode=0o755 if key.startswith(('etc/init.d/','etc/hotplug.d/','usr/libexec/')) else 0o644
-            if key=='etc/config/proxy_guard_access':mode=0o600
+            mode=0o755 if key.startswith(('etc/init.d/','etc/hotplug.d/','usr/libexec/','www/cgi-bin/')) else 0o644
+            if key in ('etc/config/proxy_guard_access','etc/config/proxy_guard'):mode=0o600
             files.append(('./'+key,path.read_bytes(),mode))
         control=(f'Package: {name}\nVersion: {version}\nArchitecture: all\nMaintainer: Proxy Guard contributors\n'
                  f'Section: luci\nPriority: optional\nLicense: MIT\nDepends: {dependencies}\n'

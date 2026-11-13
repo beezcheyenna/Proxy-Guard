@@ -74,14 +74,56 @@ msgstr "; сбросов ожидания: "
 msgid "; waiting to restore access"
 msgstr "; ожидание восстановления доступа"
 
+msgid "A diagnostic request is already running"
+msgstr "Диагностика уже выполняется"
+
 msgid "A package operation is in progress. Try again when it finishes."
 msgstr "Выполняется операция с пакетом. Повторите попытку после её завершения."
+
+msgid "A proxy test is already running"
+msgstr "Проверка прокси уже выполняется"
 
 msgid "A required proxy client service stopped or restarted; protection triggered"
 msgstr "Необходимая служба прокси-клиента остановлена или перезапущена; срабатывает защита"
 
+msgid "API UUID"
+msgstr "UUID API"
+
+msgid "API block cancellation request"
+msgstr "Запрос отмены блокировки через API"
+
+msgid "API block request withdrawn"
+msgstr "Запрос блокировки API отозван"
+
+msgid "API block state could not be reconciled"
+msgstr "Не удалось согласовать состояние блокировки API"
+
+msgid "API diagnostic request"
+msgstr "Запрос диагностики через API"
+
+msgid "API refresh endpoint"
+msgstr "Адрес для обновления через API"
+
+msgid "API status query"
+msgstr "Запрос статуса через API"
+
+msgid "API timed block is active"
+msgstr "Действует временная блокировка API"
+
+msgid "API timed block request"
+msgstr "Запрос временной блокировки через API"
+
+msgid "API timed block requested"
+msgstr "Получен запрос временной блокировки API"
+
 msgid "Accepts a plain-text IPv4 address or a Cloudflare trace response containing ip and colo. Requests always use the local SOCKS proxy; an unreachable service or unexpected exit counts as a failure."
 msgstr "Принимает адрес IPv4 в простом тексте или ответ трассировки Cloudflare, содержащий ip и colo.Запросы всегда используют локальный прокси-сервер SOCKS; недосягаемый сервис или неожиданный выход считается сбоем."
+
+msgid "Access Client ID"
+msgstr "Идентификатор клиента Access"
+
+msgid "Access Client Secret"
+msgstr "Секрет клиента Access"
 
 msgid "Access is allowed during enhanced monitoring; a failure blocks it again"
 msgstr "Доступ разрешен при усиленном мониторинге; отказ снова блокирует его."
@@ -98,8 +140,20 @@ msgstr "Условия восстановления доступа"
 msgid "Activation parameters are valid. The runtime environment is checked when applying."
 msgstr "Параметры включения корректны. Среда выполнения будет проверена при применении."
 
+msgid "Active block reasons"
+msgstr "Текущие причины блокировки"
+
+msgid "Active block requests:"
+msgstr "Активные запросы блокировки: "
+
 msgid "Active kernel flowtables"
 msgstr "Активные таблицы разгрузки потоков в ядре"
+
+msgid "Active timed block requests: %s"
+msgstr "Активные запросы временной блокировки: %s"
+
+msgid "Advanced diagnostics"
+msgstr "Расширенная диагностика"
 
 msgid "After recovery, allow Internet access while checking at one-second intervals during observation. Any failure blocks access and restarts the delay. Disabling observation still requires the original recovery checks."
 msgstr "После восстановления разрешить доступ в Интернет при проверке с интервалом в одну секунду во время наблюдения. Любой сбой блокирует доступ и перезапускает задержку. Отключение наблюдения по-прежнему требует первоначальных проверок восстановления."
@@ -118,6 +172,9 @@ msgstr "Все три службы прекращают или перезапу�
 
 msgid "All three services stopped"
 msgstr "Все три службы остановлены"
+
+msgid "Allow detailed public diagnostics"
+msgstr "Разрешить подробную диагностику публичного сервиса"
 
 msgid "Allowed LAN IPv4 networks"
 msgstr "Разрешенные сети LAN IPv4"
@@ -209,6 +266,9 @@ msgstr "Назад"
 msgid "Backup HTTPS URL for exit verification"
 msgstr "Резервный HTTPS-адрес для проверки выхода"
 
+msgid "Basic response"
+msgstr "Базовый ответ"
+
 msgid "Block Internet access on proxy failure"
 msgstr "Блокировать доступ в Интернет при сбое прокси"
 
@@ -296,6 +356,9 @@ msgstr "Не удалось прочитать состояние или жур�
 msgid "Cannot read status; protection cannot be confirmed:"
 msgstr "Статус не может быть прочитан; защита не может быть подтверждена: "
 
+msgid "Cannot read the current API UUID"
+msgstr "Не удалось получить текущий UUID API"
+
 msgid "Cannot read this session's plugin configuration"
 msgstr "Не удалось прочитать конфигурацию плагина для этого сеанса"
 
@@ -353,6 +416,9 @@ msgstr "Формат цели проверки: https://domain/path|status_code"
 msgid "Check targets require an HTTPS domain without credentials or custom ports"
 msgstr "Для проверки целей требуется домен HTTPS без учетных данных или пользовательских портов."
 
+msgid "Check the connection settings and try again"
+msgstr "Проверьте настройки подключения и повторите попытку"
+
 msgid "Check the selected client every second using its configured TCP, UDP and DNS capabilities. Unconfigured capabilities are shown separately. Keep the existing real proxy checks and preserve router, LAN and DNS access."
 msgstr "Выбранный клиент проверяется каждую секунду по настроенным компонентам TCP, UDP и DNS. Ненастроенные компоненты показаны отдельно. Реальные проверки прокси продолжаются; доступ самого маршрутизатора, LAN и DNS сохраняется."
 
@@ -371,14 +437,26 @@ msgstr "Проверки и журналирование"
 msgid "Choose IPv6 scope"
 msgstr "Выберите область IPv6"
 
+msgid "Choose a connection check method. Both methods use the local SOCKS proxy. Changes take effect after Save & Apply."
+msgstr "Выберите способ проверки соединения. Оба способа используют локальный прокси SOCKS. Изменения вступают в силу после сохранения и применения."
+
 msgid "Choose an IPv6 protection scope explicitly."
 msgstr "Явно выберите область защиты IPv6."
 
 msgid "Choose any combination of days. An overnight window belongs to its start day: Monday 23:00–01:00 continues into Tuesday morning."
 msgstr "Выберите любую комбинацию дней. Период через полночь относится к дню начала: понедельник 23:00–01:00 продолжается до утра вторника."
 
+msgid "Choose one detection mode. All checks use the local SOCKS proxy. A mode change takes effect only after Save and Apply."
+msgstr "Выберите один режим проверки. Все проверки идут через локальный SOCKS-прокси. Режим меняется только после сохранения и применения."
+
 msgid "Clear logs"
 msgstr "Очистить журналы"
+
+msgid "Clear logs and recovery history"
+msgstr "Очистить журналы и историю восстановления"
+
+msgid "Clears plugin events, connection check details and recovery history."
+msgstr "Удаляет журнал событий, подробности проверок соединения и историю восстановления плагина."
 
 msgid "Client DNS listener could not be verified"
 msgstr "Прослушатель DNS не может быть проверен"
@@ -413,6 +491,9 @@ msgstr "Запуск клиента и настроенные службы го�
 msgid "Close"
 msgstr "Закрыть"
 
+msgid "Cloudflare Trace"
+msgstr "Cloudflare Trace"
+
 msgid "Cloudflare data center"
 msgstr "Центр обработки данных Cloudflare"
 
@@ -422,11 +503,41 @@ msgstr "Проверка событий Cloudflare отключена"
 msgid "Cloudflare event verification:"
 msgstr "Проверка событий Cloudflare: "
 
+msgid "Cloudflare heartbeat"
+msgstr "Контроль связи через Cloudflare"
+
+msgid "Cloudflare heartbeat failed"
+msgstr "Проверка Cloudflare завершилась ошибкой"
+
+msgid "Cloudflare heartbeat failure threshold pending"
+msgstr "Ошибка проверки Cloudflare: порог блокировки ещё не достигнут"
+
+msgid "Cloudflare heartbeat has not confirmed recovery"
+msgstr "Восстановление Cloudflare еще не подтверждено"
+
+msgid "Cloudflare heartbeat is independent of Pro. Combined mode requires both checks. Heartbeat-only mode skips website and exit-IP checks."
+msgstr "Проверка Cloudflare не зависит от Pro. В совместном режиме нужны обе проверки; в режиме только Cloudflare проверки сайтов и выходного IP не выполняются."
+
+msgid "Cloudflare heartbeat only"
+msgstr "Только Cloudflare"
+
+msgid "Cloudflare heartbeat recovery threshold pending"
+msgstr "Проверка Cloudflare восстановлена: ожидаются последовательные успешные ответы"
+
+msgid "Cloudflare heartbeat verified"
+msgstr "Проверка Cloudflare выполнена успешно"
+
+msgid "Cloudflare monitor heartbeat expired"
+msgstr "Истёк срок служебного сигнала процесса проверки Cloudflare"
+
 msgid "Cloudflare reported a different exit; waiting for fresh exit verification"
 msgstr "Cloudflare сообщила о другом выходе, ожидая новой проверки выхода"
 
 msgid "Combined LAN exemptions must not cover the entire Internet"
 msgstr "Исключения LAN в совокупности не должны охватывать весь Интернет"
+
+msgid "Configuration and diagnostics"
+msgstr "Настройка и диагностика"
 
 msgid "Configuration changed during UDP check; waiting for revalidation"
 msgstr "Конфигурация изменилась во время проверки UDP; ожидание валидации"
@@ -488,8 +599,14 @@ msgstr "Проверка восстановления прокси"
 msgid "Confirming recovery"
 msgstr "Проверка восстановления"
 
+msgid "Connection check method"
+msgstr "Способ проверки соединения"
+
 msgid "Connection checks"
 msgstr "Проверка соединения"
+
+msgid "Connectivity check failed"
+msgstr "Проверка подключения не прошла"
 
 msgid "Connectivity monitor delayed"
 msgstr "Обновление проверки соединения задерживается"
@@ -497,14 +614,29 @@ msgstr "Обновление проверки соединения задерж�
 msgid "Connectivity monitor heartbeat expired"
 msgstr "Истёк срок контрольного сигнала процесса проверки связи"
 
+msgid "Consecutive failed checks"
+msgstr "Число неудачных проверок подряд"
+
 msgid "Consecutive failed rounds"
 msgstr "Последовательные неудачные раунды"
+
+msgid "Consecutive failures to confirm an outage"
+msgstr "Число последовательных неудачных проверок для подтверждения сбоя"
+
+msgid "Consecutive successes to confirm recovery"
+msgstr "Число последовательных успешных проверок для подтверждения восстановления"
 
 msgid "Consecutive successful rounds for recovery"
 msgstr "Последовательные успешные раунды восстановления"
 
 msgid "Continue"
 msgstr "Продолжить"
+
+msgid "Copy UUID"
+msgstr "Скопировать UUID"
+
+msgid "Could not reach the heartbeat endpoint through the proxy"
+msgstr "Не удалось связаться с сервером проверки связи через прокси"
 
 msgid "Current protection reason"
 msgstr "Текущая причина защиты"
@@ -524,6 +656,12 @@ msgstr "Порты DNS не должны совпадать с входными 
 msgid "Days of the week"
 msgstr "Дни недели"
 
+msgid "Default API block duration (seconds)"
+msgstr "Блокировка API по умолчанию (секунды)"
+
+msgid "Default API block duration must not exceed the maximum."
+msgstr "Длительность блокировки по умолчанию не должна превышать максимальную."
+
 msgid "Default template"
 msgstr "Шаблон по умолчанию"
 
@@ -539,11 +677,23 @@ msgstr "Отклонять неуказанные входящие соедин�
 msgid "Detailed check logs"
 msgstr "Подробные журналы проверок"
 
+msgid "Detailed diagnostics (%s)"
+msgstr "Подробная диагностика (%s)"
+
+msgid "Detailed diagnostics use the applied proxy settings."
+msgstr "Для подробной диагностики используются применённые настройки прокси."
+
 msgid "Detect one installed client automatically. When several are installed, select the client to monitor. This does not modify the client configuration."
 msgstr "Один установленный клиент определяется автоматически. Если клиентов несколько, выберите наблюдаемый клиент. Его конфигурация не меняется."
 
+msgid "Diagnostic freshness limit (seconds)"
+msgstr "Срок актуальности диагностики (секунды)"
+
 msgid "Disabled"
 msgstr "Отключено"
+
+msgid "Disabled by default. Save and Apply enables the API and generates a UUID. Authenticated API requests show the UUID in the event log. Turning the API off and on generates a new UUID."
+msgstr "По умолчанию API отключён. Сохраните и примените настройки, чтобы включить API и создать UUID. UUID авторизованных запросов отображается в журнале событий. При повторном включении создаётся новый UUID."
 
 msgid "Discover listening services automatically"
 msgstr "Автоматически обнаруживать прослушиваемые службы"
@@ -566,6 +716,9 @@ msgstr "Скачать локальный аналитический отчет"
 msgid "Download report"
 msgstr "Скачать отчет"
 
+msgid "Duplicate heartbeat validation header"
+msgstr "Заголовок проверки подлинности ответа повторяется"
+
 msgid "Edit the complete UCI configuration for this plugin. Save stages changes; Save & Apply validates and activates them. Existing secret values are preserved by placeholders."
 msgstr "Редактируйте полную конфигурацию UCI этого плагина. «Сохранить» сохраняет черновик; «Сохранить и применить» проверяет и активирует изменения. Существующие секреты сохраняются с помощью заполнителей."
 
@@ -577,6 +730,9 @@ msgstr "Включить защиту при загрузке"
 
 msgid "Enable enhanced monitoring after recovery"
 msgstr "Усиленное наблюдение после восстановления"
+
+msgid "Enable local control API"
+msgstr "Включить локальный API управления"
 
 msgid "Enable protection"
 msgstr "Включить защиту"
@@ -632,14 +788,38 @@ msgstr "Перед включением введите свой фактичес
 msgid "Event log"
 msgstr "Журнал событий"
 
+msgid "Event verification failed; awaiting a new check"
+msgstr "Проверка события не прошла; ожидание новой проверки"
+
 msgid "Every day"
 msgstr "Каждый день"
+
+msgid "Exit IP response source"
+msgstr "Источник ответа с выходным IP"
 
 msgid "Exit IP verification is disabled"
 msgstr "Проверка IP-адреса выхода отключена"
 
 msgid "Exit IP verification is optional. Pro can import an expected address from the VPS in General settings."
 msgstr "Проверка IP-адреса выхода необязательна. В Pro ожидаемый адрес можно получить с VPS в основных настройках."
+
+msgid "Exit IPv4 could not be verified"
+msgstr "Не удалось проверить исходящий IPv4"
+
+msgid "Exit IPv4 differs from the expected address"
+msgstr "Исходящий IPv4 не совпадает с ожидаемым"
+
+msgid "Exit IPv4 lookup timed out"
+msgstr "Истекло время ожидания исходящего адреса IPv4"
+
+msgid "Exit IPv4 verification"
+msgstr "Проверка исходящего адреса IPv4"
+
+msgid "Exit IPv4 verification uses the official HTTPS endpoint by default."
+msgstr "По умолчанию исходящий IPv4 проверяется через официальный HTTPS-адрес."
+
+msgid "Exit IPv4 verified"
+msgstr "Исходящий IPv4 подтверждён"
 
 msgid "Exit has not been checked"
 msgstr "Выход ещё не проверен"
@@ -701,6 +881,9 @@ msgstr "Обновление Firewall провалилось"
 msgid "Flow offloading is enabled; blocking existing connections cannot be guaranteed. System settings are unchanged."
 msgstr "Разгрузка потоков включена; блокировка существующих соединений не гарантируется. Настройки системы не изменены."
 
+msgid "Follow selected detection mode"
+msgstr "Следовать выбранному режиму проверки"
+
 msgid "For a single-device trial, also limit its IPv6 addresses or explicitly empty this list. ::/0 includes all IPv6 sources on the ingress devices."
 msgstr "Для испытания одного устройства также ограничьте его адреса IPv6 или явно опустошите этот список. ::/0 включает в себя все источники IPv6 на входных устройствах."
 
@@ -713,6 +896,9 @@ msgstr "Например, br-lan. Используйте существующи�
 msgid "Friday"
 msgstr "Пятница"
 
+msgid "Full response with nonce"
+msgstr "Полный ответ с проверкой nonce"
+
 msgid "General settings"
 msgstr "Общие настройки"
 
@@ -721,6 +907,36 @@ msgstr "Цели проверки HTTPS"
 
 msgid "HTTPS connectivity checks"
 msgstr "Проверка подключения HTTPS"
+
+msgid "Heartbeat"
+msgstr "Heartbeat"
+
+msgid "Heartbeat HTTPS URL"
+msgstr "HTTPS-адрес проверки"
+
+msgid "Heartbeat checks"
+msgstr "Проверки heartbeat"
+
+msgid "Heartbeat consecutive failures"
+msgstr "Число последовательных сбоев"
+
+msgid "Heartbeat consecutive successes for recovery"
+msgstr "Число успешных проверок для восстановления"
+
+msgid "Heartbeat healthy"
+msgstr "Проверка связи успешна"
+
+msgid "Heartbeat interval after each request (seconds)"
+msgstr "Интервал после запроса (секунды)"
+
+msgid "Heartbeat recovery pending"
+msgstr "Ожидание подтверждения восстановления"
+
+msgid "Heartbeat request timeout (seconds)"
+msgstr "Тайм-аут запроса (секунды)"
+
+msgid "Heartbeat verification token does not match"
+msgstr "Не совпадает проверочный токен ответа"
 
 msgid "Heartbeat waiting time"
 msgstr "Ожидание контрольного сигнала"
@@ -839,8 +1055,14 @@ msgstr "Интернет восстановлен; начинается набл
 msgid "Interruption detected"
 msgstr "Обнаружен обрыв"
 
+msgid "Interval after each HTTPS check (seconds)"
+msgstr "Интервал после каждой проверки HTTPS (с)"
+
 msgid "Interval after each check round (seconds)"
 msgstr "Интервал после завершения каждой проверки (сек.)"
+
+msgid "Interval during enhanced monitoring (seconds)"
+msgstr "Интервал усиленного мониторинга (секунды)"
 
 msgid "Invalid HTTPS URL"
 msgstr "Недействительный HTTPS URL"
@@ -860,8 +1082,14 @@ msgstr "Недопустимый домен проверки"
 msgid "Invalid configuration; changes were not committed:"
 msgstr "Недопустимая конфигурация; изменения не зафиксированы: "
 
+msgid "Invalid exit IP address in the response"
+msgstr "В ответе указан недопустимый исходящий IP-адрес"
+
 msgid "Invalid firewall response format"
 msgstr "Недействительный формат ответа брандмауэра"
+
+msgid "Invalid heartbeat response headers"
+msgstr "Недействительные заголовки ответа проверки связи"
 
 msgid "Invalid ingress device MAC:"
 msgstr "Недопустимый MAC входного интерфейса: "
@@ -941,8 +1169,14 @@ msgstr "Последняя проверка: "
 msgid "Last completed check"
 msgstr "Последняя завершенная проверка"
 
+msgid "Last startup or recovery verification"
+msgstr "Последняя проверка при запуске или восстановлении"
+
 msgid "Latest connectivity check"
 msgstr "Последняя проверка подключения"
+
+msgid "Leave blank to use /f on the public heartbeat origin. Full responses use a fresh per-request nonce. Optional diagnostic fields do not decide protection."
+msgstr "Оставьте пустым для /f на том же узле публичного heartbeat. Для каждого полного ответа используется новый nonce. Необязательные диагностические поля не влияют на защиту."
 
 msgid "Link-local, multicast and the router's own management addresses remain accessible."
 msgstr "Адреса link-local, многоадресной рассылки и управления самим маршрутизатором остаются доступны."
@@ -958,6 +1192,9 @@ msgstr "Локальная служба SOCKS"
 
 msgid "Local SOCKS port"
 msgstr "Локальный порт SOCKS"
+
+msgid "Local control API"
+msgstr "API управления в локальной сети"
 
 msgid "Local diagnostic report"
 msgstr "Локальный диагностический отчёт"
@@ -995,6 +1232,9 @@ msgstr "низкий"
 msgid "Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."
 msgstr "Выполняется один дополнительный запрос после первой готовности прокси при загрузке и один после восстановления каждого обрыва. Сигналы одного обрыва объединяются. Ежедневного таймера и повторного опроса нет. Тайм-аут Cloudflare не заменяет обязательную регулярную проверку выхода; несовпадение выхода требует защиты."
 
+msgid "Maximum API block duration (seconds)"
+msgstr "Максимальное время блокировки API (секунды)"
+
 msgid "Maximum restarts within the window"
 msgstr "Максимум перезапусков за период"
 
@@ -1012,6 +1252,9 @@ msgstr "Минимальный срок контрольного сигнала 
 
 msgid "Minimum successful targets per round"
 msgstr "Минимум успешных целей за проверку"
+
+msgid "Minimum time between diagnostic requests (seconds)"
+msgstr "Минимальный интервал диагностических запросов (секунды)"
 
 msgid "Minimum time between restarts (seconds)"
 msgstr "Минимальное время между перезагрузками (секунды)"
@@ -1039,6 +1282,9 @@ msgstr "Служба мониторинга остановлена"
 
 msgid "Monitor stopped; protection mode keeps blocking. Disable protection in settings to restore access."
 msgstr "Процесс наблюдения остановлен; в режиме защиты блокировка сохраняется. Для восстановления доступа отключите защиту в настройках."
+
+msgid "Monitoring configuration verified."
+msgstr "Настройки мониторинга проверены."
 
 msgid "Monitoring enabled; no blocking rules added"
 msgstr "Мониторинг включен, правила блокировки не добавлены"
@@ -1088,6 +1334,9 @@ msgstr "Завершенных проверок пока нет"
 msgid "No eligible LAN device was found. Configure the existing network first; this wizard does not create interfaces."
 msgstr "Подходящее входное устройство LAN не найдено. Сначала настройте сеть; мастер не создаёт интерфейсы."
 
+msgid "No exit IP address in the response"
+msgstr "В ответе нет исходящего IP-адреса"
+
 msgid "No log entries"
 msgstr "Никаких записей"
 
@@ -1099,6 +1348,9 @@ msgstr "Восстановление не ожидается"
 
 msgid "No schedule is prefilled. Set the time and repeat pattern before enabling scheduled protection. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. With service protection enabled, the window ends into enhanced monitoring without an extra delay; otherwise recovery checks are required."
 msgstr "Расписание по умолчанию не задано. Перед включением защиты по расписанию укажите время и режим повторения. Блокировка требует включения основного переключателя и режима защиты. DNS, локальная сеть и доступ к управлению сохраняются. При включённом мониторинге служб после окончания периода сразу начинается усиленный мониторинг без дополнительного ожидания; иначе требуется проверка восстановления."
+
+msgid "No startup or recovery verification yet"
+msgstr "Проверок при запуске или восстановлении пока нет"
 
 msgid "No supported proxy client found"
 msgstr "Поддерживаемый прокси-клиент не найден"
@@ -1121,11 +1373,44 @@ msgstr "Не работает"
 msgid "Observed proxy exit"
 msgstr "Обнаруженный адрес выхода прокси"
 
+msgid "Off by default. Authorized status API requests can queue a rate-limited refresh. Cached details include their source, collection time and freshness. Diagnostic failures do not block access."
+msgstr "По умолчанию выключено. Авторизованные запросы API состояния могут поставить обновление в очередь с ограничением частоты. Кэшированные данные содержат источник, время сбора и актуальность. Ошибка диагностики не блокирует доступ."
+
+msgid "Official HTTPS"
+msgstr "Официальная проверка HTTPS"
+
+msgid "Official HTTPS check failed"
+msgstr "Официальная проверка HTTPS не пройдена"
+
+msgid "Official HTTPS check failed below the blocking threshold"
+msgstr "Официальная проверка HTTPS не пройдена, порог блокировки ещё не достигнут"
+
+msgid "Official HTTPS check passed"
+msgstr "Официальная проверка HTTPS пройдена"
+
+msgid "Official HTTPS is responding; waiting for consecutive successes"
+msgstr "Официальный HTTPS снова отвечает, ожидаются повторные успешные проверки"
+
+msgid "Official HTTPS monitor heartbeat expired"
+msgstr "Истекло время ожидания сигнала процесса официальной проверки HTTPS"
+
+msgid "Official HTTPS recovery is pending"
+msgstr "Восстановление официальной проверки HTTPS пока не подтверждено"
+
+msgid "Official HTTPS settings"
+msgstr "Настройки официальной проверки HTTPS"
+
+msgid "Official HTTPS uses the IPv4 reported by the official service. Enter the expected IPv4 to compare against it. No URL is required."
+msgstr "Официальная проверка HTTPS использует IPv4-адрес, который сообщает официальный сервис. Укажите ожидаемый IPv4-адрес для сравнения. URL вводить не нужно."
+
 msgid "On boot or initial activation, keep protected clients blocked until TCP, UDP and DNS are all running, then use the delay and continuous stability settings below. Any interruption restarts qualification. The fixed startup wait is replaced. Router-originated traffic, LAN and DNS remain available. Blocking requires protection mode."
 msgstr "При загрузке или первом включении защищаемые клиенты блокируются до запуска TCP, UDP и DNS. Затем действуют указанные ниже ожидание и период стабильности. При обрыве проверка начинается заново. Это заменяет фиксированное ожидание запуска. Трафик самого маршрутизатора, LAN и DNS сохраняется. Блокировка требует режима защиты."
 
 msgid "On proxy failure, block Internet traffic in both directions for selected devices where traffic actually passes through this router or proxy. LAN access remains available. Return traffic bypassing this device cannot be blocked. Disabled on first install; start with monitoring, then test one device."
 msgstr "При сбое прокси блокируйте интернет-трафик в обоих направлениях для выбранных устройств, где трафик фактически проходит через этот маршрутизатор или прокси. Доступ к локальной сети остается доступным. Возврат трафика в обход этого устройства не может быть заблокирован. Отключен при первой установке; начните с мониторинга, затем протестируйте одно устройство."
+
+msgid "Only IPv6 was returned"
+msgstr "Получен только адрес IPv6"
 
 msgid "Only traffic passing through this router can be protected. Settings take effect only after Save & Apply."
 msgstr "Защитить можно только трафик, проходящий через этот роутер. Настройки вступают в силу после нажатия «Сохранить и применить»."
@@ -1187,11 +1472,17 @@ msgstr "Уверенность в совпадении с шаблоном"
 msgid "Per-target timeout"
 msgstr "Тайм-аут каждой цели"
 
+msgid "Plain-text or trace response"
+msgstr "Ответ обычным текстом или в формате trace"
+
 msgid "Please verify"
 msgstr "Пожалуйста, проверьте"
 
 msgid "Plugin configuration not found"
 msgstr "Конфигурация плагина не найдена"
+
+msgid "Plugin health, logs and recovery"
+msgstr "Состояние, журналы и восстановление"
 
 msgid "Plugin heartbeat failed; retaining protection and queuing a plugin restart"
 msgstr "Контрольный сигнал плагина не получен; защита сохраняется, перезапуск плагина поставлен в очередь"
@@ -1271,6 +1562,9 @@ msgstr "Защищенные устройства могут получить д
 msgid "Protected source addresses are required"
 msgstr "Защищенные исходные адреса необходимы"
 
+msgid "Protection could not be verified. Try again before the countdown ends."
+msgstr "Не удалось проверить состояние защиты. Повторите попытку до окончания обратного отсчёта."
+
 msgid "Protection disabled; this plugin's blocking rules were removed"
 msgstr "Защита отключена; правила блокировки этого плагина были удалены"
 
@@ -1307,6 +1601,12 @@ msgstr "Правила защиты отсутствуют, защита не м
 msgid "Protection rules changed during checks; awaiting verification"
 msgstr "Правила защиты изменились во время проверок; в ожидании проверки"
 
+msgid "Protection rules verified. Internet access is allowed."
+msgstr "Правила защиты проверены. Доступ в интернет разрешён."
+
+msgid "Protection rules verified. Internet access is blocked."
+msgstr "Правила защиты проверены. Доступ в интернет заблокирован."
+
 msgid "Protection scope"
 msgstr "Область защиты"
 
@@ -1318,6 +1618,9 @@ msgstr "Статус защиты"
 
 msgid "Protection status needs verification"
 msgstr "Состояние защиты требует проверки"
+
+msgid "Protection status needs verification. You can keep these settings once the check passes."
+msgstr "Состояние защиты требует проверки. После успешной проверки настройки можно сохранить."
 
 msgid "Proxy Guard"
 msgstr "Proxy Guard"
@@ -1342,6 +1645,12 @@ msgstr "Журнал работы прокси-клиента"
 
 msgid "Proxy client services"
 msgstr "Службы прокси-клиента"
+
+msgid "Proxy connectivity failed"
+msgstr "Проверка подключения через прокси не прошла"
+
+msgid "Proxy connectivity passed"
+msgstr "Проверка подключения через прокси прошла"
 
 msgid "Proxy exit verification failed: unexpected exit or unreachable verification service"
 msgstr "Прокси-проверка выхода не удалась: неожиданный выход или недостижимая служба проверки"
@@ -1369,6 +1678,27 @@ msgstr "Не удалось запустить прокси"
 
 msgid "Proxy verification passed; access restored with enhanced monitoring"
 msgstr "Проверка прокси успешна; доступ восстановлен, усиленное наблюдение продолжается"
+
+msgid "Public HTTPS heartbeat"
+msgstr "Публичный HTTPS heartbeat"
+
+msgid "Public HTTPS heartbeat recovery is not confirmed"
+msgstr "Восстановление публичного HTTPS heartbeat не подтверждено"
+
+msgid "Public diagnostics HTTPS URL"
+msgstr "HTTPS URL публичной диагностики"
+
+msgid "Public event verification response"
+msgstr "Ответ публичного сервиса для проверки события"
+
+msgid "Public heartbeat HTTPS URL"
+msgstr "HTTPS URL публичного heartbeat"
+
+msgid "Public heartbeat event verification failed; awaiting confirmation"
+msgstr "Проверка события публичного heartbeat не прошла; ожидание подтверждения"
+
+msgid "Public heartbeat response header"
+msgstr "Заголовок ответа публичного heartbeat"
 
 msgid "Queried through the same SOCKS proxy only if the primary URL times out. Leave blank to use https://4.ident.me/ when the primary host is api.ipify.org. With a different primary host, leaving this blank disables the backup."
 msgstr "Запрос выполняется через тот же прокси SOCKS только при истечении времени ожидания основного адреса. Если поле пустое и основной хост — api.ipify.org, используется https://4.ident.me/. При другом основном хосте пустое поле отключает резервный запрос."
@@ -1490,6 +1820,9 @@ msgstr "Восстановить настройки по умолчанию и �
 msgid "Restore previous settings"
 msgstr "Восстановить предыдущую конфигурацию"
 
+msgid "Restoring the previous configuration…"
+msgstr "Восстанавливаются предыдущие настройки…"
+
 msgid "Retained events"
 msgstr "Сохранённые события"
 
@@ -1520,11 +1853,17 @@ msgstr "Правила изменились во время проверки UDP
 msgid "Rules, configuration and runtime state are not yet verified as consistent"
 msgstr "Правила, конфигурация и состояние выполнения еще не проверены как согласованные."
 
+msgid "Run detailed diagnostics"
+msgstr "Запустить подробную диагностику"
+
 msgid "Run setup wizard"
 msgstr "Запустить мастер настройки"
 
 msgid "Running"
 msgstr "Работает"
+
+msgid "Running detailed diagnostics..."
+msgstr "Выполняется подробная диагностика…"
 
 msgid "Runtime log check interval"
 msgstr "Интервал проверки рабочего журнала"
@@ -1604,6 +1943,9 @@ msgstr "Период расписания начался; проверки во�
 msgid "Scope and exceptions"
 msgstr "Область защиты и исключения"
 
+msgid "Seconds remaining to confirm: %s"
+msgstr "До подтверждения осталось секунд: %s"
+
 msgid "Select a bridge device, not a switch port:"
 msgstr "Выберите устройство моста, а не порт переключателя: "
 
@@ -1633,6 +1975,12 @@ msgstr "Самопроверка пройдена. Осталось секунд
 
 msgid "Self-check validates configuration and real rule state. A proxy outage keeps protection blocked; it does not disable protection."
 msgstr "Самопроверка проверяет конфигурацию и фактическое состояние правил. При сбое прокси блокировка сохраняется, защита не отключается."
+
+msgid "Self-hosted Cloudflare heartbeat"
+msgstr "Собственный Cloudflare heartbeat"
+
+msgid "Send this UUID in the Authorization header. It grants access to the local API."
+msgstr "Передавайте UUID в заголовке Authorization. Он предоставляет доступ к локальному API."
 
 msgid "Sender attribution is unknown"
 msgstr "Принадлежность отправителя неизвестна"
@@ -1715,11 +2063,20 @@ msgstr "Некоторые поврежденные записи журнала 
 msgid "Specify IPv6 addresses or prefixes"
 msgstr "Указать адреса или префиксы IPv6"
 
+msgid "Standard heartbeat (%s)"
+msgstr "Обычная проверка связи (%s)"
+
 msgid "Start time"
 msgstr "Время старта"
 
 msgid "Startup"
 msgstr "Загрузка"
+
+msgid "Startup and recovery verification is off"
+msgstr "Проверка при запуске и восстановлении выключена"
+
+msgid "Startup and recovery verification source"
+msgstr "Источник проверки при запуске и восстановлении"
 
 msgid "Startup completed"
 msgstr "Текущий запуск завершён"
@@ -1775,17 +2132,41 @@ msgstr "Системное время недействительно; графи
 msgid "TCP, UDP and DNS are running; boot protection delay started"
 msgstr "TCP, UDP и DNS работают; началась задержка защиты загрузки"
 
+msgid "Test current proxy"
+msgstr "Проверить текущий прокси"
+
+msgid "Testing the proxy with the current settings..."
+msgstr "Проверяется прокси с текущими настройками…"
+
+msgid "Tests the current form through SOCKS. Apply the settings separately to change protection."
+msgstr "Проверяет настройки формы через SOCKS. Чтобы изменить защиту, отдельно примените настройки."
+
+msgid "The API is disabled"
+msgstr "API отключён"
+
 msgid "The Worker did not confirm this update."
 msgstr "Worker не подтвердил это обновление."
 
 msgid "The Worker observed the proxy exit. Configure a direct connection before synchronizing."
 msgstr "Worker обнаружил адрес выхода прокси. Перед синхронизацией настройте прямое соединение."
 
+msgid "The basic endpoint does not require a nonce. Full verification sends a fresh nonce to the diagnostics endpoint and checks its echo."
+msgstr "Базовому адресу nonce не нужен. Полная проверка отправляет новый nonce диагностическому адресу и проверяет его возврат."
+
+msgid "The detailed diagnostic could not run"
+msgstr "Не удалось запустить подробную диагностику"
+
+msgid "The diagnostics endpoint returns this heartbeat response in the same request."
+msgstr "API диагностики возвращает ответ выбранной проверки в рамках того же запроса."
+
 msgid "The effective timeout also allows for a complete check round and the access permit lifetime, so it may exceed this minimum."
 msgstr "Фактический тайм-аут также учитывает полный цикл проверки и срок действия разрешения доступа, поэтому может превышать этот минимум."
 
 msgid "The listener list is limited; unlisted inbound traffic remains subject to the configured policy."
 msgstr "Список слушателей ограничен; незарегистрированный входящий трафик по-прежнему зависит от настроенной политики."
+
+msgid "The official HTTPS request used TLS 1.2. TLS 1.3 is recommended."
+msgstr "Запрос к официальной службе HTTPS использовал TLS 1.2. Рекомендуется TLS 1.3."
 
 msgid "The original 06:00 maintenance window is prefilled. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. After the window, consecutive successful checks are required again."
 msgstr "Оригинальное окно обслуживания 06:00 предварительно заполнено. Блокировка требует основного переключателя и режима защиты. DNS, LAN и управление остаются доступными. После окна снова требуются последовательные успешные проверки."
@@ -1796,17 +2177,29 @@ msgstr "Предыдущая конфигурация загружена в фо
 msgid "The proxy has remained stable; restoring access and gradually reducing check frequency"
 msgstr "Прокси остается стабильным, восстанавливая доступ и постепенно снижая частоту проверок."
 
+msgid "The proxy test could not run"
+msgstr "Не удалось запустить проверку прокси"
+
 msgid "The router restores the previous configuration if you do not confirm. Closing this page does not stop the rollback timer."
 msgstr "Если вы не подтвердите настройки, роутер восстановит предыдущую конфигурацию. Закрытие страницы не останавливает таймер восстановления."
 
 msgid "The service monitor was interrupted; revalidating proxy stability"
 msgstr "Наблюдение за службами прервано; стабильность прокси проверяется заново"
 
+msgid "The test time limit was reached before all checks finished"
+msgstr "За отведённое время выполнены не все проверки"
+
 msgid "These legacy options are ignored:"
 msgstr "Эти устаревшие параметры игнорируются: "
 
 msgid "These networks remain reachable during failures. Do not enter 0.0.0.0/0."
 msgstr "Эти сети остаются доступными во время сбоев. Не вводите 0.0.0.0/0."
+
+msgid "Third-party HTTPS"
+msgstr "Сторонняя проверка HTTPS"
+
+msgid "Third-party HTTPS settings"
+msgstr "Настройки сторонней проверки HTTPS"
 
 msgid "This configuration could not be read. A default template is shown for review."
 msgstr "Не удалось прочитать настройки. Для проверки показан шаблон по умолчанию."
@@ -1831,6 +2224,12 @@ msgstr "Время и дни недели рассчитываются с выб
 
 msgid "Time zone"
 msgstr "Часовой пояс"
+
+msgid "Timed API block"
+msgstr "Временная блокировка по API"
+
+msgid "Timeout per HTTPS request (seconds)"
+msgstr "Время ожидания одного запроса HTTPS (с)"
 
 msgid "Timeout per target (seconds)"
 msgstr "Тайм-аут на цель (секунды)"
@@ -1874,6 +2273,9 @@ msgstr "Проверки UDP требуют соответствия luci-lib-ni
 msgid "UDP proxy path check"
 msgstr "Проверка UDP через прокси"
 
+msgid "UDP proxy path check failed"
+msgstr "Проверка пути UDP через прокси не прошла"
+
 msgid "UDP proxy path check is disabled"
 msgstr "Проверка UDP через прокси отключена"
 
@@ -1901,6 +2303,12 @@ msgstr "Недоступно"
 msgid "Unavailable; routine exit verification continues"
 msgstr "Недоступно; регулярная проверка выхода продолжается"
 
+msgid "Unexpected HTTP status"
+msgstr "Неожиданный код состояния HTTP"
+
+msgid "Unexpected heartbeat response body"
+msgstr "Неожиданное тело ответа проверки связи"
+
 msgid "Unknown"
 msgstr "Неизвестно"
 
@@ -1922,11 +2330,20 @@ msgstr "Неподдерживаемый тип входного интерфе�
 msgid "Unsupported proxy client"
 msgstr "Неподдерживаемый прокси-клиент"
 
+msgid "Up to %s seconds remaining"
+msgstr "Осталось не более %s с"
+
 msgid "Use 192.0.2.100/32 for a single-device trial, or 192.0.2.0/24 for the subnet."
 msgstr "Используйте 192.0.2.100/32 для испытания одного устройства или 192.0.2.0/24 для подсети."
 
 msgid "Use HH:MM:SS in the selected time zone. Overnight windows are supported. Keep the router clock accurate; start and end must differ."
 msgstr "Используйте HH:MM:SS в выбранном часовом поясе. Поддерживаются периоды через полночь. Часы маршрутизатора должны быть точными; начало и конец должны различаться."
+
+msgid "Use a dedicated Worker protected by Cloudflare Access Service Auth. Configure any country restrictions in the same Access policy. Requests always use local SOCKS."
+msgstr "Используйте отдельный Worker с Cloudflare Access Service Auth. Ограничения стран задаются в той же политике Access. Запросы всегда идут через локальный SOCKS."
+
+msgid "Use credentials dedicated to this heartbeat. Configuration backups contain these secrets; share only redacted copies."
+msgstr "Используйте отдельные учетные данные. Резервные копии конфигурации содержат секреты; удаляйте их перед передачей."
 
 msgid "Use detected client listener ports"
 msgstr "Использовать обнаруженные порты служб клиента"
@@ -1939,6 +2356,9 @@ msgstr "Использовать этот адрес"
 
 msgid "Use verified SOCKS, proxy listener and DNS redirect exception ports for this plugin. Keep this off to use manual ports. Client, DNS, route and NAT settings are not changed."
 msgstr "Использовать проверенные порты SOCKS, входящих соединений прокси и исключений перенаправления DNS. Отключите этот параметр, чтобы задать порты вручную. Настройки клиента, DNS, маршрутизации и NAT не изменяются."
+
+msgid "Used when an authorized API request asks to refresh the heartbeat."
+msgstr "Этот адрес используется, когда авторизованный вызов API запрашивает обновление проверки связи."
 
 msgid "User cleared the plugin logs"
 msgstr "Пользователь очистил журналы плагина"
@@ -1970,6 +2390,12 @@ msgstr "Проверка прокси перед восстановлением 
 msgid "Verify UDP through the proxy"
 msgstr "Проверить UDP через прокси"
 
+msgid "Verify after startup or an interruption"
+msgstr "Проверять после запуска или перерыва"
+
+msgid "Verify once when the proxy first becomes ready and once after each interruption. This does not add another recurring detection mode. An unavailable event service does not replace routine checks; a confirmed exit mismatch requires new verification."
+msgstr "Проверять один раз при первой готовности прокси и после каждого перерыва. Дополнительный периодический режим не запускается. Недоступность сервиса событий не заменяет обычные проверки; подтверждённое несовпадение выхода требует повторной проверки."
+
 msgid "Verify proxy exit IPv4"
 msgstr "Проверять IPv4-адрес выхода прокси"
 
@@ -1994,6 +2420,15 @@ msgstr "В ожидании завершения запуска PassWall и во
 msgid "Waiting for TCP, UDP and DNS to start"
 msgstr "В ожидании запуска TCP, UDP и DNS"
 
+msgid "Waiting for a check after the scheduled window"
+msgstr "Ожидание проверки после окончания расписания"
+
+msgid "Waiting for a matching exit IPv4"
+msgstr "Ожидание совпадения исходящего IPv4 после обнаруженного несоответствия"
+
+msgid "Waiting for a new access permit"
+msgstr "Ожидание нового разрешения на доступ"
+
 msgid "Waiting for client startup and configured services to recover"
 msgstr "Ожидание запуска клиента и настроенных сервисов для восстановления"
 
@@ -2003,6 +2438,9 @@ msgstr "Ожидание запуска настроенных служб про
 msgid "Waiting for local proxy service protection"
 msgstr "В ожидании защиты местного прокси-сервиса"
 
+msgid "Waiting for proxy client services"
+msgstr "Ожидание служб прокси-клиента"
+
 msgid "Waiting for proxy startup"
 msgstr "Ожидание запуска прокси"
 
@@ -2011,6 +2449,9 @@ msgstr "Ожидание проверки прокси перед восстан
 
 msgid "Waiting for startup"
 msgstr "Ожидание запуска"
+
+msgid "Waiting for the API UUID after settings are confirmed"
+msgstr "UUID API появится после подтверждения настроек"
 
 msgid "Waiting for the required successful proxy checks"
 msgstr "Ожидание необходимых успешных проверок прокси"
@@ -2032,6 +2473,12 @@ msgstr "Наблюдать за рабочим журналом PassWall"
 
 msgid "Watch proxy client runtime log"
 msgstr "Отслеживать журнал работы прокси-клиента"
+
+msgid "Website and Cloudflare heartbeat"
+msgstr "Сайты и Cloudflare"
+
+msgid "Website checks"
+msgstr "Проверка сайтов"
 
 msgid "Wednesday"
 msgstr "Среда"

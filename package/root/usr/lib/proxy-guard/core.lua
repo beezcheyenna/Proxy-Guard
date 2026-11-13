@@ -1,6 +1,8 @@
 -- Pure configuration, state and firewall policy; no network or filesystem effects.
 local M = {}
-M.VERSION = '0.3.0'
+M.VERSION = '1.0.0'
+local official_host = 'hb.pghb.app'
+local official_url = 'https://' .. official_host .. '/'
 
 function M.quote(value)
     return "'" .. tostring(value):gsub("'", "'\\''") .. "'"
@@ -149,6 +151,22 @@ function M.config(raw)
     local c = {
         enabled = raw.enabled == '1' or raw.enabled == true,
         mode = raw.mode or 'monitor',
+        check_mode = raw.check_mode or 'public',
+        web_sensitive_interval = number(raw.web_sensitive_interval,1,1,5,'Website sensitive interval'),
+        public_hb_url = official_url,
+        public_diag_url = official_url .. 'f',
+        public_hb_interval = number(raw.public_hb_interval,3,1,300,'Public heartbeat interval'),
+        public_hb_timeout = number(raw.public_hb_timeout,2,1,15,'Public heartbeat timeout'),
+        public_hb_fail = number(raw.public_hb_fail,2,1,10,'Public heartbeat failure threshold'),
+        public_hb_recover = number(raw.public_hb_recover,2,1,10,'Public heartbeat recovery threshold'),
+        public_hb_sensitive_interval = number(raw.public_hb_sensitive_interval,1,1,5,'Public sensitive interval'),
+        diagnostics_enabled = raw.diagnostics_enabled == '1' or raw.diagnostics_enabled == true,
+        diagnostics_interval = number(raw.diagnostics_interval,60,10,3600,'Diagnostic refresh cooldown'),
+        diagnostics_ttl = number(raw.diagnostics_ttl,300,30,3600,'Diagnostic freshness'),
+        exit_provider = raw.exit_provider or 'public',
+        api_enabled = raw.api_enabled == '1' or raw.api_enabled == true,
+        api_default_seconds = number(raw.api_default_seconds,300,1,86400,'API default duration'),
+        api_max_seconds = number(raw.api_max_seconds,3600,1,86400,'API maximum duration'),
         interfaces = list(raw.interfaces or {'br-lan'}),
         sources4 = networks(raw.sources4 or {'192.0.2.0/24'},4,'保护 IPv4'),
         ipv6_protect = raw.ipv6_protect~='0' and raw.ipv6_protect~=false,
@@ -192,12 +210,19 @@ function M.config(raw)
         schedule_repeat = raw.schedule_repeat or ((raw.schedule_start and raw.schedule_start~='' and raw.schedule_end and raw.schedule_end~='') and 'daily' or ''),
         schedule_weekdays = {},
         exit_url = raw.exit_url or 'https://api.ipify.org/',
-        cf_event_check = raw.cf_event_check == nil or raw.cf_event_check == '1' or raw.cf_event_check == true,
         expected_exit4 = raw.expected_exit4 or '',
-        exit_check = raw.exit_check == '1' or raw.exit_check == true or raw.exit_check == nil and type(raw.expected_exit4)=='string' and raw.expected_exit4~='',
-        exit_source = raw.exit_source or 'manual',
+        exit_check = raw.exit_check == '1' or raw.exit_check == true,
         proxy_ports = {}, dns_ports = {}, targets = {}
     }
+    assert(c.check_mode=='web' or c.check_mode=='public','Choose one connection check mode: web or public')
+    assert(raw.api_enabled==nil or raw.api_enabled=='0' or raw.api_enabled=='1' or type(raw.api_enabled)=='boolean','Invalid API switch')
+    assert(c.api_default_seconds<=c.api_max_seconds,'API default duration exceeds maximum')
+    assert(({text=true,public=true})[c.exit_provider],'Invalid exit verification provider')
+    assert(raw.diagnostics_enabled==nil or raw.diagnostics_enabled=='0' or raw.diagnostics_enabled=='1' or type(raw.diagnostics_enabled)=='boolean','Invalid diagnostics switch')
+    c.heartbeat_enabled=c.check_mode=='public'
+    c.sensitive_interval=c.heartbeat_enabled and c.public_hb_sensitive_interval or c.web_sensitive_interval
+    local official_ip=c.exit_check and c.exit_provider=='public'
+    if official_ip then c.exit_url=official_url end
     assert(c.mode == 'monitor' or c.mode == 'guard','模式无效')
     assert(({auto=true,passwall=true,passwall2=true,openclash=true,nikki=true,homeproxy=true})[c.proxy_client],'代理客户端类型无效')
     assert(raw.client_auto_ports==nil or raw.client_auto_ports=='0' or raw.client_auto_ports=='1' or type(raw.client_auto_ports)=='boolean','客户端端口开关无效')
@@ -205,7 +230,7 @@ function M.config(raw)
     for _,key in ipairs({'passwall_watch','passwall_log_watch','boot_guard','fast_wait_enabled','fast_stable_enabled'}) do
         assert(raw[key]==nil or raw[key]=='0' or raw[key]=='1' or type(raw[key])=='boolean','快速保护开关无效')
     end
-    for _,key in ipairs({'self_heal','resource_monitor','udp_check','cf_event_check','exit_check','ipv6_protect'}) do
+    for _,key in ipairs({'self_heal','resource_monitor','udp_check','exit_check','ipv6_protect'}) do
         assert(raw[key]==nil or raw[key]=='0' or raw[key]=='1' or type(raw[key])=='boolean','自检或 UDP 开关无效')
     end
     assert(type(c.udp_server)=='string' and (c.udp_server=='' or ipv4(c.udp_server)),'UDP 检查目标须为 IPv4 地址')
@@ -252,35 +277,54 @@ function M.config(raw)
         c.dns_ports[#c.dns_ports+1]=port
     end
     assert(#c.dns_ports>=1 and #c.dns_ports<=16,'配置 1 至 16 个 DNS 服务端口')
+    local function routine_https(url)
+        local host=https_host(url)
+        local path=url:match('^https://[^/?#]+(/[^?#]*)')
+        if path then
+            path=path:gsub('%%(%x%x)',function(byte) return string.char(tonumber(byte,16)) end)
+            local parts={}
+            for segment in path:gmatch('[^/]+') do
+                if segment=='..' then parts[#parts]=nil
+                elseif segment~='.' then parts[#parts+1]=segment end
+            end
+            assert(not (host:lower()==official_host and table.concat(parts,'/')=='f'),
+                'Official diagnostics are available through the authorized API only')
+        end
+        return host
+    end
     local targets=list(raw.targets or {
         'https://www.gstatic.com/generate_204|204',
         'https://connectivity-check.ubuntu.com/|204'
     })
-    assert(#targets>=2 and #targets<=4,'配置 2 至 4 个 HTTPS 检测目标')
+    if c.check_mode~='web' then targets={} end
+    assert(c.check_mode~='web' or #targets>=2 and #targets<=4,'配置 2 至 4 个 HTTPS 检测目标')
     for _,v in ipairs(targets) do
         local url,code=v:match('^(https://[^|]+)|(%d%d%d)$')
         assert(url and not url:find('[%c%s]') and #url<=512,'检测目标格式须为 https://域名/路径|状态码')
-        local host=https_host(url)
+        local host=routine_https(url)
         c.targets[#c.targets+1]={url=url,host=host,code=number(code,204,200,299,'成功状态码')}
     end
-    assert(({manual=true,vps_interface=true,vps_panel=true,vps_measured=true})[c.exit_source],'出口 IPv4 来源无效')
-    c.exit_host=c.exit_check and https_host(c.exit_url) or nil
+    c.exit_host=c.exit_check and routine_https(c.exit_url) or nil
     assert(not c.exit_check or ipv4(c.expected_exit4),'预期出口必须填写一个 IPv4 地址')
-    c.cf_event_check=c.exit_check and c.cf_event_check
-    c.min_success=number(raw.min_success,1,1,#c.targets,'每轮最少成功目标数')
-    if c.exit_check then
+    c.min_success=number(c.check_mode~='web' and 1 or raw.min_success,1,1,math.max(1,#c.targets),'每轮最少成功目标数')
+    if c.exit_check and c.exit_provider=='text' then
         local backup_url=raw.exit_fallback_url
         if (backup_url==nil or backup_url=='') and c.exit_host:lower()=='api.ipify.org' then
             backup_url='https://4.ident.me/'
         end
         if backup_url~=nil and backup_url~='' then
-            c.exit_fallback_host=https_host(backup_url)
+            c.exit_fallback_host=routine_https(backup_url)
             c.exit_fallback_url=backup_url
         end
     end
-    -- Reserve time for at most one fallback in a sequential probe round.
-    c.probe_budget=c.timeout*(#c.targets+1+(c.cf_event_check and 1 or 0)+(c.exit_fallback_url and 1 or 0))+(c.udp_check and c.udp_timeout or 0)
-    c.lease_seconds=math.max(30,c.interval+c.probe_budget+15)
+    -- An IP lookup may share the official heartbeat. A separate third-party
+    -- lookup may consume two timeouts before the next heartbeat can run.
+    local text_ip=c.exit_check and c.exit_provider=='text'
+    local text_budget=text_ip and c.timeout*(c.exit_fallback_url and 2 or 1) or 0
+    local ip_budget=not c.exit_check and 0 or text_ip and text_budget or c.public_hb_timeout
+    c.heartbeat_lease=math.max(c.public_hb_interval,c.public_hb_sensitive_interval)+c.public_hb_timeout+text_budget+5
+    c.probe_budget=c.timeout*#c.targets+(not c.heartbeat_enabled and ip_budget or 0)+(c.udp_check and c.udp_timeout or 0)
+    c.lease_seconds=math.max(30,(c.heartbeat_enabled and c.heartbeat_lease or c.interval)+c.probe_budget+15)
     return c
 end
 
@@ -289,7 +333,10 @@ function M.load_config(raw)
     -- Only an explicit off value may remove an existing protection policy.
     -- Missing/corrupt activation fields are faults, not requests to disable it.
     assert(raw.enabled=='0' or raw.enabled=='1','总开关无效，必须明确设置为 0 或 1')
-    if raw.enabled=='0' then return M.config({enabled=false}) end
+    if raw.enabled=='0' then
+        local mode=raw.check_mode=='web' and 'web' or 'public'
+        return M.config({enabled=false,check_mode=mode})
+    end
     assert(raw.mode=='monitor' or raw.mode=='guard','模式无效')
     assert(raw['.type']==nil or raw['.type']=='proxy_guard','插件配置类型无效')
     local values={}
@@ -379,6 +426,8 @@ function M.rules(c, devices)
         ' set interfaces { type ifname; elements = { '..elements(c.interfaces,true)..' }; }',
         ' set healthy_ifaces { type ifname; flags timeout; timeout '..c.lease_seconds..'s; }'
     }
+    if c.heartbeat_enabled then lines[#lines+1]=' set heartbeat_ifaces { type ifname; flags timeout; timeout '..c.heartbeat_lease..'s; }' end
+    if c.api_enabled then lines[#lines+1]=' set api_blocks { type ifname; flags timeout; timeout '..c.api_max_seconds..'s; }' end
     if c.passwall_watch then
         lines[#lines+1]=' set service_ifaces { type ifname; flags timeout; timeout 4s; }'
     end
@@ -426,8 +475,8 @@ function M.rules(c, devices)
         lines[#lines+1]=' set local'..family..' { type '..kind..'; flags interval; auto-merge; elements = { '..elements(allowed)..' }; }'
     end
     local schedule=c.schedule_enabled and 'jump schedule_gate; ' or ''
-    lines[#lines+1]=' chain decision { '..(c.passwall_watch and 'iifname != @service_ifaces counter drop; ' or '')..schedule..'iifname @healthy_ifaces return; counter drop; }'
-    lines[#lines+1]=' chain reply_decision { '..(c.passwall_watch and 'oifname != @service_ifaces counter drop; ' or '')..schedule..'oifname @healthy_ifaces return; counter drop; }'
+    lines[#lines+1]=' chain decision { '..(c.passwall_watch and 'iifname != @service_ifaces counter drop; ' or '')..(c.heartbeat_enabled and 'iifname != @heartbeat_ifaces counter drop; ' or '')..(c.api_enabled and 'iifname @api_blocks counter drop; ' or '')..schedule..'iifname @healthy_ifaces return; counter drop; }'
+    lines[#lines+1]=' chain reply_decision { '..(c.passwall_watch and 'oifname != @service_ifaces counter drop; ' or '')..(c.heartbeat_enabled and 'oifname != @heartbeat_ifaces counter drop; ' or '')..(c.api_enabled and 'oifname @api_blocks counter drop; ' or '')..schedule..'oifname @healthy_ifaces return; counter drop; }'
     for _,family in ipairs({4,6}) do
         local selector=family==4 and 'ip' or 'ip6'
         lines[#lines+1]=' chain guard'..family..' {'
@@ -557,9 +606,11 @@ function M.proxy_options(c)
     end
     return options
 end
-function M.probe_command(c,t,body_path)
+function M.probe_command(c,t,body_path,tls)
+    local versions=tls=='1.3' and ' --tlsv1.3 --tls-max 1.3'
+        or tls=='1.2' and ' --tlsv1.2 --tls-max 1.2' or ' --tlsv1.2'
     return 'curl -q --globoff --silent --show-error '..M.proxy_options(c)..
-        ' --noproxy '..M.quote('')..' --proto =https --connect-timeout '..c.timeout..
+        ' --noproxy '..M.quote('')..' --proto =https'..versions..' --connect-timeout '..c.timeout..
         ' --max-time '..c.timeout..' --retry 0 --max-filesize 4096 --output '..M.quote(body_path or '/dev/null')..
         ' --write-out '..M.quote('%{http_code} %{time_total}')..' '..M.quote(t.url)
 end
@@ -595,6 +646,29 @@ function M.exit_response(url,body)
     return {ip=value}
 end
 
+-- A transport timeout cannot prove an exit mismatch or clear one already seen.
+function M.exit_outcome(c,response)
+    if not c.exit_check then return 'off' end
+    if not response then return 'skipped' end
+    if response.fallback and response.rc==28 then return 'timeout' end
+    if response.rc~=0 or response.code~=200 then return 'unavailable',nil,'request_failed' end
+    local observed
+    if response.public then
+        if not response.ok then return 'unavailable',nil,'request_failed' end
+        observed=response.observed
+        if not observed then return 'unavailable',nil,response.ip_reason or 'missing_ip' end
+    else
+        local body=response.body or ''
+        local parsed=M.exit_response(response.fallback and c.exit_fallback_url or c.exit_url,body)
+        if not parsed then return 'unavailable',nil,body:match('^%s*$') and 'missing_ip' or 'invalid_ip' end
+        observed=parsed.ip
+    end
+    if type(observed)~='string' then return 'unavailable',nil,'invalid_ip' end
+    if ipv6(observed) then return 'unavailable',nil,'ipv6_only' end
+    if not ipv4(observed) then return 'unavailable',nil,'invalid_ip' end
+    return observed==c.expected_exit4 and 'match' or 'mismatch',observed
+end
+
 -- Idempotent fw4 include: refresh static rules atomically, preserve the
 -- permission elements and their original deadlines without renewing them.
 function M.bootstrap(c,devices)
@@ -611,7 +685,7 @@ function M.bootstrap(c,devices)
         if name then
             local definition,items=body:match('^(.-) elements = { (.-) };%s*$')
             out[#out+1]='add set inet proxy_guard '..name..' { '..(definition or body)..' }'
-            if name~='healthy_ifaces' and name~='service_ifaces' and name~='healthy_times' then
+            if name~='healthy_ifaces' and name~='service_ifaces' and name~='healthy_times' and name~='heartbeat_ifaces' and name~='api_blocks' then
                 out[#out+1]='flush set inet proxy_guard '..name
                 if items then out[#out+1]='add element inet proxy_guard '..name..' { '..items..' }' end
             end

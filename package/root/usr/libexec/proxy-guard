@@ -21,7 +21,16 @@ case "${1:-}" in
         printf '%s\n' "$$" > /var/run/proxy-guard/daemon.pid
         while [ ! -e /var/run/proxy-guard/removing ]; do
             "$0" tick >/dev/null 2>&1 || true
-            if [ -e /var/run/proxy-guard/fast-poll ]; then sleep 1; else sleep 5; fi
+            if [ -e /var/run/proxy-guard/fast-poll ] || [ -e /var/run/proxy-guard/heartbeat-poll ]; then sleep 1; else sleep 5; fi
+        done
+        ;;
+    heartbeat_watch)
+        mkdir -p /var/run/proxy-guard /var/lock
+        chmod 700 /var/run/proxy-guard
+        printf '%s\n' "$$" > /var/run/proxy-guard/heartbeat_watch.pid
+        while [ ! -e /var/run/proxy-guard/removing ] && [ ! -e /var/run/proxy-guard/stopped ]; do
+            ucode /usr/lib/proxy-guard/extension-lock.uc heartbeat >/dev/null 2>&1 || true
+            if [ -e /var/run/proxy-guard/heartbeat-poll ]; then sleep 1; else sleep 5; fi
         done
         ;;
     fast_watch)
@@ -30,7 +39,7 @@ case "${1:-}" in
         printf '%s\n' "$$" > /var/run/proxy-guard/fast_watch.pid
         exec ucode /usr/lib/proxy-guard/fast-watch.uc
         ;;
-    tick|apply|try_apply|clear_logs|stop|cleanup|supervise|maintenance)
+    tick|apply|try_apply|clear_logs|stop|cleanup|supervise)
         mkdir -p /var/run/proxy-guard /var/lock
         chmod 700 /var/run/proxy-guard
         # BusyBox flock lacks -w. OpenWrt provides ucode via our dependencies.

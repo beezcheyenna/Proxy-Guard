@@ -4,19 +4,30 @@ let status = { phase: 'blocked', enforcement: 'blocked', reason: '<script>bad()<
 let fail = false;
 let saveFailure = false;
 let applyResult = { ok: true };
+let diagnosticHeaders = [
+    {name:'x-pghb-delivery-rate', value:'000'}, {name:'x-pghb-unknown', value:'<b>literal</b>'}
+];
 let delayedStatus = null, delayedLogs = null;
 let logs = { entries: [{ level: 'error', time: 1, message: '<img onerror=bad()>' }] };
 const calls = [], fields = [], notifications = [];
 const indicators = new Set();
 const declarations = [];
+let modal;
 const rpc = { declare: spec => { declarations.push(spec); return async () => {
     calls.push(spec.method);
     if (spec.method === 'status' && delayedStatus) await delayedStatus;
-    if (spec.method === 'logs' && delayedLogs) await delayedLogs;
+    if (spec.method === 'logs' && delayedLogs) {
+        const snapshot = logs;
+        await delayedLogs;
+        if (!fail) return snapshot;
+    }
     if (fail) throw new Error('offline');
     if (spec.method === 'status') return status;
     if (spec.method === 'logs') return logs;
     if (spec.method === 'apply') return applyResult;
+    if (spec.method === 'test_proxy') return {ok:true,connectivity_ok:true,milliseconds:1,complete:true};
+    if (spec.method === 'preflight') return {ok:true,checks:[]};
+    if (spec.method === 'run_diagnostics') return {ok:true, diagnostics:{ok:true, http_code:200, headers:diagnosticHeaders}};
     return { ok: true };
 }; }};
 function E(tag, attrs={}, children=[]) {
@@ -28,7 +39,7 @@ function E(tag, attrs={}, children=[]) {
     };
 }
 class Map {
-    section() { return { children:fields, tab() {}, taboption(tab, type, name) { const item={name, option:name, choices:[], value(key,label) {this.choices.push([key,label]);}, depends() {}, formvalue() {return this.current ?? this.default ?? null;}}; fields.push(item); return item; } }; }
+    section() { return { children:fields, tab() {}, getOption(name) {return fields.find(field=>field.name===name);}, taboption(tab, type, name) { const item={name, option:name, choices:[], value(key,label) {this.choices.push([key,label]);}, depends() {}, formvalue() {return this.current ?? this.default ?? null;}}; fields.push(item); return item; } }; }
     async render() { return E('form'); }
     async save() { calls.push('map.save'); if (saveFailure) throw new Error('invalid form'); }
     async reset() { calls.push('map.reset'); }
@@ -36,13 +47,15 @@ class Map {
 const uci = { load: async () => {}, save: async () => calls.push('uci.save'), apply: async () => calls.push('uci.apply') };
 const ui = { createHandlerFn: (self, fn) => fn.bind(self), addNotification: (...args) => notifications.push(args),
     showIndicator: id => indicators.add(id), hideIndicator: id => indicators.delete(id),
+    showModal: (title, content) => { modal={title,content}; },
+    hideModal: () => { modal=null; },
     changes: { init: async () => calls.push('changes.init') } };
 const form = { Map, NamedSection: 0, Flag: 0, ListValue: 0, Value: 0, DynamicList: 0, MultiValue: 0 };
 const root = process.env.PG_SOURCE || '/src';
 const translations = Object.fromEntries(fs.readFileSync(root+'/package/i18n/messages.tsv','utf8').split('\n').filter(line=>line && !line.startsWith('#')).map(line=>{ const [zh,en]=line.split('\t'); return [en,zh]; }));
 const gettext = key => translations[key] || key;
 const i18nSource = fs.readFileSync(root+'/package/root/www/luci-static/resources/proxy_guard_i18n.js','utf8');
-const pgI18n = new Function('baseclass','_',i18nSource)({extend:x=>x},gettext);
+const pgI18n = new Function('baseclass','_','E',i18nSource)({extend:x=>x},gettext,E);
 const source = fs.readFileSync(root + '/package/root/www/luci-static/resources/view/proxy-guard/overview.js', 'utf8');
 const pollers = [];
 const pgSetup={attach:async()=>{},begin:()=>{},open:async()=>{},restorePrevious:async()=>{}};
@@ -70,25 +83,113 @@ const screen = new Function('view','form','rpc','poll','ui','uci','E','_','pgI18
     assert(layout.children.indexOf(heading)<layout.children.indexOf(screen.statusBox));
     assert(layout.children.indexOf(screen.statusBox)<layout.children.indexOf(description));
     assert(layout.children.indexOf(description)<layout.children.indexOf(formNode));
-    const clearLogs = layout.children.at(-2);
-    const recoveryHistory = layout.children.at(-1);
+    const tools = layout.children.find(node=>node.attrs?.id==='pg-tools');
+    assert(layout.children.indexOf(tools)>layout.children.indexOf(formNode),'configuration tools follow the form');
+    const [toolsHeading, toolRow] = tools.children;
+    assert.equal(tools.children.length,2,'no result is inserted below the button row');
+    assert.deepStrictEqual(toolsHeading.children,[gettext('Configuration and diagnostics')]);
+    assert.deepStrictEqual(toolRow.children.map(node=>node.children[0]), [
+        'Run setup wizard', 'Raw UCI configuration', 'Load previous confirmed settings',
+        'Restore defaults and set up again', 'Check settings and runtime environment',
+        'Test current proxy', 'View sanitized diagnostic report'
+    ].map(gettext));
+    assert(toolRow.children.every(node=>node.className===toolRow.children[0].className));
+    const modalResult = id => modal.content[0].children.find(node=>node.attrs.id===id);
+    await toolRow.children[4].attrs.click();
+    assert.equal(modal.title,gettext('Check settings and runtime environment'));
+    assert(modalResult('pg-preflight').textContent.includes(gettext('Read-only check: settings have not been saved or applied, and proxy Internet connectivity has not been tested.')));
+    modal.content[0].children.at(-1).attrs.click();
+    assert.equal(modal,null);
+    await toolRow.children[5].attrs.click();
+    assert.equal(modal.title,gettext('Test current proxy'));
+    assert(modalResult('pg-test-proxy').textContent.includes(gettext('Proxy connectivity passed')));
+    const diagnosticButton = modal.content[0].children.find(node=>node.children[0]===gettext('Run detailed diagnostics'));
+    const beforeDiagnostic=calls.length;
+    assert.equal(modalResult('pg-run-diagnostics').hidden,true);
+    await Promise.all([diagnosticButton.attrs.click(),diagnosticButton.attrs.click()]);
+    assert.equal(modal.title,gettext('Test current proxy'));
+    assert.equal(modalResult('pg-run-diagnostics').hidden,false);
+    assert.deepStrictEqual(calls.slice(beforeDiagnostic),['run_diagnostics']);
+    assert(modalResult('pg-run-diagnostics').textContent.includes('x-pghb-delivery-rate: 000'));
+    assert(modalResult('pg-run-diagnostics').textContent.includes('x-pghb-unknown: <b>literal</b>'));
+    diagnosticHeaders = {};
+    await diagnosticButton.attrs.click();
+    assert(modalResult('pg-run-diagnostics').textContent.includes('HTTP 200'),'an empty response header object still shows the result');
+    ui.hideModal();
+    assert.equal(modal,null);
+    const recoveryHistory = layout.children.at(-2);
+    const clearLogs = layout.children.at(-1).children[0];
     assert.strictEqual(clearLogs.tag,'button');
-    assert.deepStrictEqual(clearLogs.children,[gettext('Clear logs')]);
-    assert(layout.children.indexOf(screen.logBox)<layout.children.indexOf(clearLogs),'clear button follows the event log');
+    assert.strictEqual(clearLogs.attrs.type,'button');
+    assert.deepStrictEqual(clearLogs.children,[gettext('Clear logs and recovery history')]);
     assert.strictEqual(recoveryHistory.tag,'details');
-    assert.strictEqual(recoveryHistory.children[1],screen.incidentBox,'recovery history follows the event log controls');
+    assert.strictEqual(recoveryHistory.children[1],screen.incidentBox);
+    assert(layout.children.indexOf(screen.logBox)<layout.children.indexOf(recoveryHistory));
     assert(!source.includes('设置已提交'));
     assert(!source.includes('saveNotice'));
-    assert.equal(layout.children.find(node=>node.tag==='button').attrs.type,'button');
     assert(screen.statusBox.className.includes('warning'));
     assert(screen.logBox.textContent.includes('<img onerror=bad()>'));
     assert(!source.includes('innerHTML'));
-    logs={entries:[{time:1,level:'error',message:'important-event'}],details:[{time:2,level:'debug',message:'<img onerror=bad()>'}],skipped:2};
+    const loggedUuid='00000000-0000-4000-8000-000000000001';
+    logs={entries:[{time:1,level:'error',message:'important-event',api_uuid:loggedUuid}],details:[{time:2,level:'debug',message:'<img onerror=bad()>'}],skipped:2};
     await screen.refreshLogs();
     assert(screen.logBox.textContent.includes('important-event') && !screen.logBox.textContent.includes('onerror'));
+    assert(screen.logBox.textContent.includes(loggedUuid));
     assert(screen.checkLogBox.textContent.includes('<img onerror=bad()>'));
     assert(screen.logWarning.textContent.includes('2'));
+    let releaseOldLogs;
+    delayedLogs = new Promise(resolve=>{releaseOldLogs=resolve;});
+    const oldLogRequest = screen.refreshLogs();
+    delayedLogs = null;
+    logs = {entries:[],details:[],incidents:[]};
+    const clearRequest = clearLogs.attrs.click();
+    assert.strictEqual(screen.refreshLogs(),clearRequest,'poll shares the in-flight clear');
+    assert.strictEqual(clearLogs.attrs.click(),clearRequest,'multiple clears share one RPC');
+    await clearRequest;
+    releaseOldLogs(); await oldLogRequest;
+    assert(!screen.logBox.textContent.includes('important-event'),'an old reply cannot restore cleared events');
+    assert.equal(screen.incidentBox.textContent,gettext('No recovery event recorded'));
     for (const name of ['enabled','mode','sources4','sources6','ipv6_protect','debug','expected_exit4','exit_fallback_url','targets','dns_ports','schedule_enabled','schedule_start','schedule_end','schedule_utc_offset','schedule_repeat','schedule_weekdays']) assert(fields.some(f=>f.name===name));
+    assert.equal(fields.find(f=>f.name==='api_enabled').default,'0');
+    const method=fields.find(f=>f.name==='check_mode');
+    assert.equal(method.default,'public');
+    assert.deepStrictEqual(method.choices.map(v=>v[0]),['public','web']);
+    assert.deepStrictEqual(fields.filter(f=>f.name.startsWith('_')).map(f=>f.name),
+        ['_official_https','_third_party_https','_exit_ipv4','_api_uuid','_api_advanced']);
+    for(const key of ['public_hb_interval','public_hb_sensitive_interval','public_hb_timeout',
+        'public_hb_fail','public_hb_recover','web_sensitive_interval','diagnostics_enabled',
+        'diagnostics_interval','diagnostics_ttl','exit_provider','api_enabled','api_default_seconds','api_max_seconds']) {
+        const field=fields.find(f=>f.name===key);assert(field,key);assert(!field.onchange,key+' does not auto apply');
+    }
+    assert.equal(fields.find(f=>f.name==='exit_provider').default,'public');
+    assert.equal(fields.find(f=>f.name==='exit_check').default,'0');
+    const apiEndpoint=fields.find(f=>f.name==='diagnostics_enabled');
+    assert.equal(apiEndpoint.default,'0');
+    assert.deepStrictEqual(apiEndpoint.choices.map(choice=>choice[0]),['0','1']);
+    const apiDefault=fields.find(f=>f.name==='api_default_seconds');
+    const apiMax=fields.find(f=>f.name==='api_max_seconds');
+    for (const field of [apiDefault,apiMax,fields.find(f=>f.name==='diagnostics_interval'),fields.find(f=>f.name==='diagnostics_ttl')]) {
+        assert(/^and\(uinteger,range\(/.test(field.datatype),'API and diagnostic seconds require whole numbers in range');
+        assert(field.retain,'inactive fields retain their stored values');
+    }
+    apiMax.current='60';
+    assert.equal(apiDefault.validate('main','60'),true);
+    assert.equal(apiDefault.validate('main','61'),gettext('Default API block duration must not exceed the maximum.'));
+    apiMax.current='bad';
+    assert.equal(apiDefault.validate('main','61'),true,'invalid maximum has its own validation error');
+    apiMax.current=null;
+
+    assert(!fields.some(f=>/^cf_|^public_(hb|diag)_url$/.test(f.name)),'fixed official endpoints and removed CF controls have no input fields');
+    screen.updateStatus({phase:'healthy',enforcement:'allowing',check_mode:'web',last_probe_ok:true,last_probe_at:1,
+        exit_check:{enabled:true,attempted:true,outcome:'timeout',mismatch_pending:false},
+        cf_event:{observed:'203.0.113.80',colo:'OLD'}});
+    const statusText=JSON.stringify(screen.statusBox.children);
+    assert(statusText.includes(gettext('Local control API')));
+    assert(!fields.some(field=>field.name==='_api_summary'));
+    assert(statusText.includes(gettext('Exit IPv4 lookup timed out')) && statusText.includes(gettext('Passed')));
+    assert(!statusText.includes('203.0.113.80') && !statusText.includes('OLD'));
+    assert(!declarations.some(d=>d.object==='proxy_guard_access'),'Standard has no private Pro RPC dependency');
+    assert(!fields.some(f=>f.name==='exit_source'||f.name==='_read_vps_exit'),'Pro import controls stay outside Standard');
     assert.equal(fields.find(f=>f.name==='schedule_enabled').default,'0');
     assert.equal(fields.find(f=>f.name==='schedule_utc_offset').default,'+00:00');
     assert.equal(fields.find(f=>f.name==='schedule_repeat').default,'');
@@ -186,6 +287,11 @@ const screen = new Function('view','form','rpc','poll','ui','uci','E','_','pgI18
     delete status.supervision.resources.cpu_basis;
     await screen.refresh();
     assert(!JSON.stringify(screen.statusBox).includes('1.6%'),'legacy samples cannot be presented as whole-system CPU');
+    for (const [heartbeat,expected] of [[{enabled:true,allowed:true,last_ok:true,checked_at:1},'Passed'],[{enabled:true,allowed:false,last_ok:true,checked_at:1},'Awaiting verification'],[{enabled:true,allowed:false,last_ok:false,checked_at:1},'Failed']]) {
+        status={phase:'healthy',enforcement:'allowing',check_mode:'public',heartbeat,probes:[],last_probe_at:1};await screen.refresh();
+        const row=screen.statusBox.children.find(item=>JSON.stringify(item).includes(gettext('Latest connectivity check')));
+        assert(JSON.stringify(row).includes(gettext(expected)),'official HTTPS summary follows the actual heartbeat result');
+    }
     status={phase:'disabled',enforcement:'off',stale:false}; await screen.refresh();
     assert(screen.statusBox.className.includes('notice'));
     assert(JSON.stringify(screen.statusBox).includes('总开关关闭，定时保护不执行'));

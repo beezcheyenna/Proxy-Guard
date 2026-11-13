@@ -1,8 +1,0 @@
-#!/bin/sh
-umask 077
-if [ "${1:-}" = call ]; then
-    case "${2:-}" in
-        apply|egress_info|policy_confirm|policy_cancel) exec ucode /usr/lib/proxy-guard/access-rpc-lock.uc "$@" ;;
-    esac
-fi
-exec lua /usr/lib/proxy-guard/access-rpc.lua "$@"

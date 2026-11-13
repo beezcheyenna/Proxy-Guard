@@ -694,3 +694,153 @@ IPv4 与 IPv6 范围独立。选择一台 IPv4 设备不会自动选中它的 IP
 IPv6 匹配范围与 IPv4 独立。关闭此项后，IPv6 流量不在本插件保护范围内。	IPv6 matching is independent of IPv4. Turning this off leaves IPv6 traffic outside plugin protection.	IPv6 の対象範囲は IPv4 と独立しています。無効にすると IPv6 通信はこのプラグインの保護対象外になります。
 测试单台设备时，请单独填写其 IPv6 地址或前缀。::/0 匹配经所选入口路由的全部 IPv6 来源；如需排除 IPv6，请明确关闭 IPv6 保护开关。	For a single-device trial, specify its IPv6 addresses or prefixes separately. ::/0 matches all IPv6 sources routed through selected ingress devices. Use the IPv6 switch to exclude this family explicitly.	1台で試す場合は、その端末の IPv6 アドレスまたはプレフィックスを別途指定してください。::/0 は選択した入口を経由するすべての IPv6 送信元に一致します。IPv6 を除外する場合は保護スイッチを明示的に無効にしてください。
 出口验证: 连通性检查失败，本轮未执行	Exit verification: not performed because the connectivity check failed	出口確認: 接続確認に失敗したため、今回は未実行
+Cloudflare 心跳检测	Cloudflare heartbeat	Cloudflare ハートビート監視
+内网控制 API	Local control API	LAN 制御 API
+连接检测方式	Connection check method	接続確認方式
+Cloudflare 心跳独立于 Pro。组合模式要求两路检测均通过；仅心跳模式不执行网页和出口 IP 校验。	Cloudflare heartbeat is independent of Pro. Combined mode requires both checks. Heartbeat-only mode skips website and exit-IP checks.	Cloudflare ハートビートは Pro から独立しています。併用時は両方の確認が必要です。ハートビート専用モードでは Web と出口 IP の確認を行いません。
+网页检测	Website checks	Web サイト確認
+仅 Cloudflare 心跳	Cloudflare heartbeat only	Cloudflare ハートビートのみ
+网页与 Cloudflare 心跳	Website and Cloudflare heartbeat	Web と Cloudflare ハートビート
+心跳 HTTPS 地址	Heartbeat HTTPS URL	ハートビートの HTTPS URL
+使用独立的 Worker，并由 Cloudflare Access Service Auth 保护。国家限制在同一 Access 策略中设置；请求始终经过本机 SOCKS。	Use a dedicated Worker protected by Cloudflare Access Service Auth. Configure any country restrictions in the same Access policy. Requests always use local SOCKS.	Cloudflare Access の Service Auth で保護した専用 Worker を使用します。国による制限は同じ Access ポリシーで設定します。要求は常にローカル SOCKS を経由します。
+Access 客户端 ID	Access Client ID	Access クライアント ID
+Access 客户端密钥	Access Client Secret	Access クライアントシークレット
+使用此心跳专用的凭据。配置备份包含密钥；分享前请脱敏。	Use credentials dedicated to this heartbeat. Configuration backups contain these secrets; share only redacted copies.	この監視専用の認証情報を使ってください。設定バックアップにはシークレットが含まれます。共有前に削除してください。
+每次心跳请求后的间隔（秒）	Heartbeat interval after each request (seconds)	各ハートビート要求後の間隔（秒）
+心跳请求超时（秒）	Heartbeat request timeout (seconds)	ハートビート要求のタイムアウト（秒）
+心跳连续失败次数	Heartbeat consecutive failures	ハートビートの連続失敗回数
+恢复所需的心跳连续成功次数	Heartbeat consecutive successes for recovery	復旧に必要なハートビート連続成功回数
+启用内网控制 API	Enable local control API	LAN 制御 API を有効にする
+API 默认断网时长（秒）	Default API block duration (seconds)	API 遮断の既定時間（秒）
+API 最长断网时长（秒）	Maximum API block duration (seconds)	API 遮断の最長時間（秒）
+心跳检测正常	Heartbeat healthy	ハートビート正常
+等待心跳恢复确认	Heartbeat recovery pending	ハートビートの復旧確認待ち
+生效的断网请求数：	Active block requests: 	有効な遮断要求数：
+Cloudflare 心跳尚未确认恢复	Cloudflare heartbeat has not confirmed recovery	Cloudflare ハートビートの復旧を未確認
+API 限时断网生效中	API timed block is active	API による一時遮断中
+无法核对 API 断网状态	API block state could not be reconciled	API 遮断状態を照合できません
+Cloudflare 检测进程心跳过期	Cloudflare monitor heartbeat expired	Cloudflare 監視プロセスのハートビート期限切れ
+Cloudflare 心跳验证通过	Cloudflare heartbeat verified	Cloudflare ハートビート確認成功
+Cloudflare 心跳验证失败	Cloudflare heartbeat failed	Cloudflare ハートビート確認失敗
+Cloudflare 心跳失败，尚未达到阻断阈值	Cloudflare heartbeat failure threshold pending	Cloudflare ハートビート失敗、遮断しきい値未到達
+Cloudflare 心跳恢复，等待连续成功确认	Cloudflare heartbeat recovery threshold pending	Cloudflare ハートビート復旧、連続成功の確認待ち
+API 断网请求已撤回	API block request withdrawn	API 遮断要求を取り消しました
+API 限时断网已请求	API timed block requested	API 一時遮断を要求しました
+
+允许详细公共诊断	Allow detailed public diagnostics	詳細な公開診断を許可
+基础响应	Basic response	基本応答
+仅选择一种检测模式。所有检测都经过本机 SOCKS 代理，保存并应用后才切换模式。	Choose one detection mode. All checks use the local SOCKS proxy. A mode change takes effect only after Save and Apply.	検査モードを一つ選択します。すべての検査はローカル SOCKS プロキシを使用し、「保存して適用」後に切り替わります。
+Cloudflare Trace	Cloudflare Trace	Cloudflare Trace
+诊断结果有效时长（秒）	Diagnostic freshness limit (seconds)	診断結果の有効期間（秒）
+出口 IP 响应来源	Exit IP response source	出口 IP の応答元
+跟随所选检测模式	Follow selected detection mode	選択した検査モードに従う
+完整响应并校验 nonce	Full response with nonce	nonce を検証する完全応答
+心跳检测结果	Heartbeat	ハートビート
+心跳检测设置	Heartbeat checks	ハートビート検査
+敏感期检测间隔（秒）	Interval during enhanced monitoring (seconds)	強化監視中の検査間隔（秒）
+最近一次开机或恢复核验	Last startup or recovery verification	前回の起動・復旧時検証
+留空时使用公共心跳同一站点的 /f。完整响应使用每次请求新生成的 nonce，可选诊断字段不参与保护判定。	Leave blank to use /f on the public heartbeat origin. Full responses use a fresh per-request nonce. Optional diagnostic fields do not decide protection.	空欄では公開ハートビートと同じオリジンの /f を使用します。完全応答ではリクエストごとに新しい nonce を使用します。任意の診断項目は保護の判定に影響しません。
+诊断请求最短间隔（秒）	Minimum time between diagnostic requests (seconds)	診断リクエストの最短間隔（秒）
+尚无开机或恢复核验记录	No startup or recovery verification yet	起動・復旧時の検証記録はまだありません
+默认关闭。已授权的状态 API 请求可以排队触发限频刷新。缓存结果包含来源、采集时间和有效性；诊断失败不触发断网。	Off by default. Authorized status API requests can queue a rate-limited refresh. Cached details include their source, collection time and freshness. Diagnostic failures do not block access.	既定では無効です。認証済みの状態 API から、頻度制限付きの更新を要求できます。保存された詳細には取得元、取得時刻、有効性を含みます。診断失敗による遮断は行いません。
+纯文本或 trace 响应	Plain-text or trace response	プレーンテキストまたは trace 応答
+公共 HTTPS 心跳	Public HTTPS heartbeat	公開 HTTPS ハートビート
+公共诊断 HTTPS 地址	Public diagnostics HTTPS URL	公開診断の HTTPS URL
+公共接口事件核验响应	Public event verification response	公開サービスによるイベント検証の応答
+公共心跳 HTTPS 地址	Public heartbeat HTTPS URL	公開ハートビートの HTTPS URL
+公共心跳响应标头	Public heartbeat response header	公開ハートビートの応答ヘッダー
+自建 Cloudflare 心跳	Self-hosted Cloudflare heartbeat	自分で構築した Cloudflare ハートビート
+开机与恢复核验已关闭	Startup and recovery verification is off	起動・復旧時の検証は無効です
+开机与恢复核验来源	Startup and recovery verification source	起動・復旧時の検証元
+基础接口无需 nonce。完整核验向诊断接口发送新的 nonce，并校验响应中的回显。	The basic endpoint does not require a nonce. Full verification sends a fresh nonce to the diagnostics endpoint and checks its echo.	基本エンドポイントに nonce は不要です。完全検証では診断エンドポイントに新しい nonce を送り、応答の値を照合します。
+开机或中断恢复后核验	Verify after startup or an interruption	起動・中断からの復旧後に検証
+代理首次就绪及每次中断恢复时各核验一次，不新增周期性检测模式。事件服务不可用不替代常规检测；确认出口不符后需要重新核验。	Verify once when the proxy first becomes ready and once after each interruption. This does not add another recurring detection mode. An unavailable event service does not replace routine checks; a confirmed exit mismatch requires new verification.	プロキシが初めて使用可能になった時と中断から復旧した時に、それぞれ一度検証します。別の定期検査モードは追加しません。イベント検証サービスが利用できなくても通常検査の代わりにはなりません。出口の不一致が確認された場合は再検証が必要です。
+事件核验失败，等待重新检查	Event verification failed; awaiting a new check	イベント検証に失敗しました。再検証を待っています
+公共 HTTPS 心跳尚未确认恢复	Public HTTPS heartbeat recovery is not confirmed	公開 HTTPS ハートビートの復旧は未確認です
+公共心跳事件核验失败，等待新的检测确认	Public heartbeat event verification failed; awaiting confirmation	公開ハートビートのイベント検証に失敗しました。確認を待っています
+官方 HTTPS	Official HTTPS	公式 HTTPS
+第三方 HTTPS	Third-party HTTPS	外部 HTTPS
+官方 HTTPS 设置	Official HTTPS settings	公式 HTTPS の設定
+第三方 HTTPS 设置	Third-party HTTPS settings	外部 HTTPS の設定
+出口 IPv4 校验	Exit IPv4 verification	出口 IPv4 アドレスの照合
+出口 IPv4 校验默认使用官方 HTTPS 接口。	Exit IPv4 verification uses the official HTTPS endpoint by default.	出口 IPv4 アドレスの照合には既定で公式 HTTPS エンドポイントを使用します。
+出口 IPv4 与预期不符	Exit IPv4 differs from the expected address	出口 IPv4 アドレスが想定値と一致しません
+出口 IPv4 查询超时，暂未取得地址	Exit IPv4 lookup timed out	出口 IPv4 アドレスの取得がタイムアウトしました
+无法校验出口 IPv4	Exit IPv4 could not be verified	出口 IPv4 アドレスを照合できませんでした
+出口 IPv4 曾不符，等待匹配的地址	Waiting for a matching exit IPv4	出口 IPv4 が不一致のため、想定アドレスの確認を待っています
+出口 IPv4 校验通过	Exit IPv4 verified	出口 IPv4 アドレスを確認しました
+官方 HTTPS 检测进程心跳已超时	Official HTTPS monitor heartbeat expired	公式 HTTPS 監視プロセスのハートビートがタイムアウトしました
+官方 HTTPS 检测通过	Official HTTPS check passed	公式 HTTPS の検査に成功しました
+官方 HTTPS 检测失败	Official HTTPS check failed	公式 HTTPS の検査に失敗しました
+官方 HTTPS 检测失败，尚未达到阻断阈值	Official HTTPS check failed below the blocking threshold	公式 HTTPS の検査に失敗しましたが、遮断のしきい値には達していません
+官方 HTTPS 检测恢复，等待连续成功确认	Official HTTPS is responding; waiting for consecutive successes	公式 HTTPS から応答があり、連続成功の確認を待っています
+官方 HTTPS 检测尚未确认恢复	Official HTTPS recovery is pending	公式 HTTPS の復旧確認を待っています
+官方 HTTPS 使用官方服务返回的 IPv4 地址。填写预期 IPv4 即可校验，无需填写网址。	Official HTTPS uses the IPv4 reported by the official service. Enter the expected IPv4 to compare against it. No URL is required.	公式 HTTPS は公式サービスが返す IPv4 アドレスを使います。照合する IPv4 アドレスを入力してください。URL の指定は不要です。
+等待定时保护结束后的检测	Waiting for a check after the scheduled window	定時保護の終了後に検査を待っています
+API 限时断网	Timed API block	API による一時遮断
+等待代理客户端服务	Waiting for proxy client services	プロキシクライアントのサービスを待っています
+连通性检测失败	Connectivity check failed	接続チェックに失敗しました
+UDP 代理通路检测失败	UDP proxy path check failed	プロキシ経由の UDP 経路チェックに失敗しました
+等待新的联网许可	Waiting for a new access permit	新しい通信許可を待っています
+响应中未提供出口 IP 地址	No exit IP address in the response	応答に出口 IP アドレスがありません
+返回的出口 IP 地址格式无效	Invalid exit IP address in the response	応答の出口 IP アドレスが無効です
+服务只返回了 IPv6，无法校验出口 IPv4	Only IPv6 was returned	IPv6 アドレスだけが返されました
+连续失败次数	Consecutive failed checks	連続失敗回数
+当前阻断原因	Active block reasons	現在の遮断理由
+测试当前代理	Test current proxy	現在のプロキシをテスト
+正在用当前设置测试代理…	Testing the proxy with the current settings...	現在の設定でプロキシをテストしています…
+已有代理测试正在运行	A proxy test is already running	プロキシのテストを実行中です
+请检查连接设置后重试	Check the connection settings and try again	接続設定を確認してから再試行してください
+无法运行代理测试	The proxy test could not run	プロキシのテストを実行できませんでした
+代理连通性测试通过	Proxy connectivity passed	プロキシの接続テストに成功しました
+代理连通性测试失败	Proxy connectivity failed	プロキシの接続テストに失敗しました
+已达到测试时限，部分检查未完成	The test time limit was reached before all checks finished	制限時間内にすべてのチェックを完了できませんでした
+通过 SOCKS 测试当前表单中的连接设置。要更改保护，请另行保存并应用。	Tests the current form through SOCKS. Apply the settings separately to change protection.	フォームの接続設定を SOCKS 経由でテストします。保護の変更は別途適用してください。
+插件自检、日志与恢复	Plugin health, logs and recovery	プラグインの状態・ログ・復旧
+请选择连接检测方式。两种方式均使用本机 SOCKS 代理，修改在「保存并应用」后生效。	Choose a connection check method. Both methods use the local SOCKS proxy. Changes take effect after Save & Apply.	接続確認の方法を選択します。どちらもローカルの SOCKS プロキシを使用します。変更は「保存して適用」の後に反映されます。
+每次 HTTPS 检测结束后的间隔（秒）	Interval after each HTTPS check (seconds)	HTTPS 確認の終了から次回までの間隔（秒）
+单次 HTTPS 请求超时（秒）	Timeout per HTTPS request (seconds)	HTTPS リクエストごとのタイムアウト（秒）
+确认故障所需的连续失败次数	Consecutive failures to confirm an outage	障害と判定するまでの連続失敗回数
+确认恢复所需的连续成功次数	Consecutive successes to confirm recovery	復旧と判定するまでの連続成功回数
+生效的限时断网请求：%s	Active timed block requests: %s	有効な一時遮断リクエスト：%s 件
+最长剩余 %s 秒	Up to %s seconds remaining	最長で残り %s 秒
+高级诊断	Advanced diagnostics	詳細診断
+配置与诊断	Configuration and diagnostics	設定と診断
+清空日志和恢复记录	Clear logs and recovery history	ログと復旧履歴を消去
+清除本插件的事件日志、连接检测明细和恢复记录。	Clears plugin events, connection check details and recovery history.	プラグインのイベントログ、接続確認の詳細、復旧履歴を消去します。
+API 默认断网时长不得超过允许的最长时长。	Default API block duration must not exceed the maximum.	API の既定の遮断時間は、最大遮断時間以下にしてください。
+官方 HTTPS 请求使用了 TLS 1.2，建议使用 TLS 1.3。	The official HTTPS request used TLS 1.2. TLS 1.3 is recommended.	公式 HTTPS リクエストは TLS 1.2 を使用しました。TLS 1.3 の使用を推奨します。
+API 刷新地址	API refresh endpoint	API 更新先
+授权的 API 请求主动刷新心跳时使用此地址。	Used when an authorized API request asks to refresh the heartbeat.	認証済みの API からハートビートの更新を要求したときに使います。
+普通心跳（%s）	Standard heartbeat (%s)	標準ハートビート (%s)
+详细诊断（%s）	Detailed diagnostics (%s)	詳細診断 (%s)
+运行详细诊断	Run detailed diagnostics	詳細診断を実行
+正在运行详细诊断…	Running detailed diagnostics...	詳細診断を実行中…
+已有诊断请求正在运行	A diagnostic request is already running	別の診断が実行中です
+无法运行详细诊断	The detailed diagnostic could not run	詳細診断を実行できませんでした
+详细诊断使用已应用的代理设置。	Detailed diagnostics use the applied proxy settings.	詳細診断では適用済みのプロキシ設定を使います。
+HTTP 状态码不符合预期	Unexpected HTTP status	想定外の HTTP ステータス
+无法通过代理连接心跳地址	Could not reach the heartbeat endpoint through the proxy	プロキシ経由でハートビート先に接続できませんでした
+心跳响应标头无效	Invalid heartbeat response headers	ハートビートの応答ヘッダーが無効です
+心跳校验标头重复	Duplicate heartbeat validation header	ハートビートの検証ヘッダーが重複しています
+心跳响应正文不符合预期	Unexpected heartbeat response body	ハートビートの応答本文が想定と異なります
+心跳校验令牌不匹配	Heartbeat verification token does not match	ハートビートの検証トークンが一致しません
+保护规则已核验。当前允许访问外网。	Protection rules verified. Internet access is allowed.	保護ルールを確認しました。インターネット接続は許可されています。
+保护规则已核验。当前正在阻断外网。	Protection rules verified. Internet access is blocked.	保護ルールを確認しました。インターネット接続は遮断されています。
+监测配置已核验。	Monitoring configuration verified.	監視設定を確認しました。
+保护状态待核验。通过核验后可保留设置。	Protection status needs verification. You can keep these settings once the check passes.	保護状態の確認が必要です。確認でき次第、設定を維持できます。
+剩余确认时间：%s 秒	Seconds remaining to confirm: %s	確認までの残り時間：%s 秒
+正在恢复之前的配置…	Restoring the previous configuration…	以前の設定を復元しています…
+无法核验保护状态。请在倒计时结束前重试。	Protection could not be verified. Try again before the countdown ends.	保護状態を確認できませんでした。カウントダウンが終わる前にもう一度お試しください。
+默认关闭。保存并应用后启用接口并生成 UUID。已认证的 API 请求会在事件日志中显示 UUID。关闭后重新启用会生成新的 UUID。	Disabled by default. Save and Apply enables the API and generates a UUID. Authenticated API requests show the UUID in the event log. Turning the API off and on generates a new UUID.	初期状態では無効です。「保存して適用」で API を有効にし、UUID を生成します。認証済みの API リクエストの UUID はイベントログに表示されます。無効にしてから再び有効にすると、新しい UUID が生成されます。
+API UUID	API UUID	API UUID
+在 Authorization 请求头中发送此 UUID。持有者可以调用内网 API。	Send this UUID in the Authorization header. It grants access to the local API.	この UUID を Authorization ヘッダーで送信します。UUID を持つクライアントはローカル API を呼び出せます。
+复制 UUID	Copy UUID	UUID をコピー
+无法读取当前 API UUID	Cannot read the current API UUID	現在の API UUID を取得できません
+确认设置后将显示 API UUID	Waiting for the API UUID after settings are confirmed	設定を確定すると API UUID が表示されます
+API 已关闭	The API is disabled	API は無効です
+诊断接口在本次请求中返回所选的心跳响应。	The diagnostics endpoint returns this heartbeat response in the same request.	診断 API は選んだハートビートの応答を同じリクエストで返します。
+API 查询状态	API status query	API 状態照会
+API 请求诊断	API diagnostic request	API 診断要求
+API 请求限时断网	API timed block request	API 時間制限付き遮断の要求
+API 撤回断网请求	API block cancellation request	API 遮断の取り消し要求

@@ -8,8 +8,7 @@ export function step(c, old, o) {
         boot_pending: c.boot_guard == true, generation: o.generation,
         must_wait: reconfigured && old.must_wait == true,
         log_seen: old ? (old.log_seen || 0) : 0,
-        schedule_release: o.schedule_release || 0,
-        cf_event_id: old ? old.cf_event_id : null
+        schedule_release: o.schedule_release || 0
     };
     let restarted = s.updated_uptime != null && (o.up - s.updated_uptime > 4 ||
         (s.generation && o.generation && s.generation != o.generation));
@@ -59,7 +58,11 @@ export function step(c, old, o) {
         s.stable_since = o.up; s.probe_after = o.up; s.probe_floor = o.probe;
         s.delay_until = null; s.notice = 'schedule_sensitive'; s.log_recovery = false;
     }
-    let bad_probe = fresh_probe && !o.probe_ok && !schedule_started;
+    // A heartbeat awaiting its recovery count is not a new failure. Consume
+    // each completed heartbeat once, independently of website probe cadence.
+    let heartbeat_probe = o.heartbeat_probe || 0;
+    let heartbeat_failed = heartbeat_probe > (s.heartbeat_seen || 0) && o.heartbeat_ok == false;
+    let bad_probe = (fresh_probe && !o.probe_ok || heartbeat_failed) && !schedule_started;
 
     // Normal operation retains the original network failure threshold. After
     // a local outage, any local or network failure restarts sensitive recovery.
@@ -68,11 +71,6 @@ export function step(c, old, o) {
         (schedule_release && !schedule_started && !s.holding) || (s.phase == 'normal' && (local_trigger || o.network_blocked)) ||
         (s.phase != 'normal' && (local_fell || any_restart || (s.phase != 'delay' && s.phase != 'boot_wait' && bad_probe)));
     if (trigger) {
-        // Only a genuine new local outage after release creates a CF event.
-        // Network outages are deduplicated by the main probe worker; its CF
-        // mismatch result must not recursively schedule another CF request.
-        if (!s.holding && !boot_start && !reconfigured && (log_trigger || local_trigger))
-            s.cf_event_id = (o.generation || 'local')+':'+o.up+':'+((s.trip || 0)+1);
         // A failure during the 60-second open observation always retains the
         // ordinary 15-second hold, even if a completion/schedule follows it.
         if (was_observing || (s.phase == 'sensitive' && bad_probe) || restarted || o.stale ||
@@ -114,7 +112,7 @@ export function step(c, old, o) {
             // used to establish recovery, even if they finish afterwards.
             s.probe_after = o.up;
         }
-        let eligible = !o.stale && !log_pending && all_up && o.probe_ok && o.probe > (s.probe_floor || 0) && o.probe_started >= s.probe_after &&
+        let eligible = o.heartbeat_allowed != false && !o.stale && !log_pending && all_up && o.probe_ok && o.probe > (s.probe_floor || 0) && o.probe_started >= s.probe_after &&
             o.probe >= s.probe_after && o.up - o.probe <= c.probe_freshness;
         if (eligible && o.network_healthy && s.holding) {
             s.holding = false; s.boot_pending = false;
@@ -142,7 +140,7 @@ export function step(c, old, o) {
     s.wait_remaining = s.phase == 'delay' ? s.delay_until - o.up : 0;
     s.stable_elapsed = s.stable_since == null ? 0 : o.up - s.stable_since;
     s.stable_required = c.stable_enabled ? c.stable_seconds : 0;
-    s.interval = s.phase == 'sensitive' ? 1 : s.phase == 'ramp' ? 5 : c.interval;
+    s.interval = s.phase == 'sensitive' ? (c.sensitive_interval || 1) : s.phase == 'ramp' ? 5 : c.interval;
     if (s.interval > c.interval) s.interval = c.interval;
     if (s.episode) {
         s.episode.phase=s.phase;s.episode.holding=s.holding;
@@ -151,6 +149,7 @@ export function step(c, old, o) {
         s.episode.wait_remaining=max(0,s.wait_remaining);
         s.episode.stable_elapsed=s.episode.completed_uptime==null ? s.stable_elapsed : min(s.stable_elapsed,s.stable_required);s.episode.stable_required=s.stable_required;
     }
+    s.heartbeat_seen = max(s.heartbeat_seen || 0, heartbeat_probe);
     s.updated_uptime = o.up;
     return s;
 };

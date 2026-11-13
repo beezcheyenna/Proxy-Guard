@@ -6,4 +6,4 @@
 
 [Third-party licensing](LICENSING.en.md)
 
-Report security vulnerabilities privately to [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com) under the [security policy](SECURITY.en.md).
+Report security issues privately according to the security policy. Share redacted evidence in public issues. [Security policy](SECURITY.en.md)

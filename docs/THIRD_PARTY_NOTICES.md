@@ -2,13 +2,13 @@
 
 [English](THIRD_PARTY_NOTICES.md) · [简体中文](THIRD_PARTY_NOTICES.zh-CN.md) · [日本語](THIRD_PARTY_NOTICES.ja.md) · [Русский](THIRD_PARTY_NOTICES.ru.md) · [فارسی](THIRD_PARTY_NOTICES.fa.md)
 
-Updated: 2026-11-08. Scope: Proxy Guard Standard, Pro, the VPS Agent and the companion Worker source. This is a component and provenance notice, not a replacement for the upstream license texts.
+This notice covers the router application.
 
 ## Project-owned code
 
 Copyright (c) 2026 Proxy Guard contributors.
 
-Original Proxy Guard code and original documentation are offered under the MIT license in LICENSE. This statement does not relicense upstream message strings, patches, libraries, interpreters, tools, proxy cores or firmware. Standard and Pro use the same licensing policy; the name “Pro” does not imply a proprietary license.
+Original project code and documentation use the [MIT license](../LICENSE). Upstream message strings, patches, libraries, interpreters, tools, proxy cores and firmware retain their original terms.
 
 ## Upstream message material
 
@@ -54,25 +54,9 @@ These components are supplied by the target firmware/package feeds, not copied i
 
 Recipe metadata is not a substitute for a file-level license declaration. In particular, the UCI package-level LGPL declaration does not erase the GPL-v2 header on the Lua binding. Calling external commands and importing an in-process binding are different integration mechanisms. This document records the distinction and does not declare a blanket GPL linking exception or grant permission on behalf of upstream authors. Redistributors of combined runtimes or firmware must assess the actual versions, combination and applicable exceptions.
 
-## Pro Agent and Cloudflare companion / Pro 配套
+## Proxy clients and cores
 
-The VPS Agent is original project code using Python's standard library and external Linux facilities. Python, nftables, iproute2, systemd/OpenRC and any managed proxy/panel are supplied separately and keep their upstream licenses.
-
-cloudflared is a separate Apache-2.0 tunnel program:
-https://github.com/cloudflare/cloudflared/blob/master/LICENSE
-
-The Worker uses Cloudflare platform APIs. Cloudflare's hosted service is subject to its service terms; it is not relicensed by this project.
-
-The Worker package declares development dependencies, not production npm dependencies:
-- Wrangler 4.156.0: MIT OR Apache-2.0, as declared by the lockfile.
-- Miniflare 5.20261023.3-beta: MIT, as declared by the lockfile.
-- workerd 1.20261023.1: Apache-2.0, as declared by the lockfile.
-
-The lockfile has 91 non-root package entries, including platform-specific optional entries. Their exact versions, integrity values and declared licenses are listed in companion/worker/THIRD_PARTY_DEPENDENCIES.json. That is a lockfile inventory, not a claim that all entries are installed or shipped. node_modules, Wrangler, Miniflare, workerd and cloudflared binaries are not bundled in the application's LuCI IPK/APK packages. A future vendored or bundled distribution must preserve the actual packages' notices, including transitive and native-library notices; generic license texts alone are insufficient.
-
-## Proxy cores and panels
-
-PassWall, PassWall2, OpenClash, Nikki, HomeProxy, Xray, sing-box, Mihomo and 3x-ui are separately maintained projects. Reading their configuration/logs, observing their services or invoking an authorized management interface does not transfer their copyright to Proxy Guard. The LuCI IPK/APK packages do not contain or automatically replace these proxy cores or panels. Inclusion of a third-party binary or source in another distribution requires a separate component-specific notice/source check.
+PassWall, PassWall2, OpenClash, Nikki, HomeProxy, Xray, sing-box and Mihomo are separately maintained projects. Proxy Guard reads supported client settings, logs and service state. Install proxy clients and their cores through the appropriate firmware feeds or upstream instructions. Inclusion of a third-party binary or source in another distribution requires a separate component-specific notice/source check.
 
 ## Licensing scope
 

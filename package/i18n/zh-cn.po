@@ -74,14 +74,56 @@ msgstr "；等待重置次数："
 msgid "; waiting to restore access"
 msgstr "；等待恢复联网"
 
+msgid "A diagnostic request is already running"
+msgstr "已有诊断请求正在运行"
+
 msgid "A package operation is in progress. Try again when it finishes."
 msgstr "软件包操作正在进行，请完成后重试。"
+
+msgid "A proxy test is already running"
+msgstr "已有代理测试正在运行"
 
 msgid "A required proxy client service stopped or restarted; protection triggered"
 msgstr "代理客户端的必需服务中断或重启，已触发快速保护"
 
+msgid "API UUID"
+msgstr "API UUID"
+
+msgid "API block cancellation request"
+msgstr "API 撤回断网请求"
+
+msgid "API block request withdrawn"
+msgstr "API 断网请求已撤回"
+
+msgid "API block state could not be reconciled"
+msgstr "无法核对 API 断网状态"
+
+msgid "API diagnostic request"
+msgstr "API 请求诊断"
+
+msgid "API refresh endpoint"
+msgstr "API 刷新地址"
+
+msgid "API status query"
+msgstr "API 查询状态"
+
+msgid "API timed block is active"
+msgstr "API 限时断网生效中"
+
+msgid "API timed block request"
+msgstr "API 请求限时断网"
+
+msgid "API timed block requested"
+msgstr "API 限时断网已请求"
+
 msgid "Accepts a plain-text IPv4 address or a Cloudflare trace response containing ip and colo. Requests always use the local SOCKS proxy; an unreachable service or unexpected exit counts as a failure."
 msgstr "支持纯文本 IPv4 或包含 ip、colo 的 Cloudflare trace 响应。请求始终通过本机 SOCKS 代理；验证服务不可达或出口不符都会计为失败。"
+
+msgid "Access Client ID"
+msgstr "Access 客户端 ID"
+
+msgid "Access Client Secret"
+msgstr "Access 客户端密钥"
 
 msgid "Access is allowed during enhanced monitoring; a failure blocks it again"
 msgstr "敏感观察期间允许联网；再次失败会重新阻断"
@@ -98,8 +140,20 @@ msgstr "恢复联网条件"
 msgid "Activation parameters are valid. The runtime environment is checked when applying."
 msgstr "启用参数校验通过，实际运行环境将在应用时检查。"
 
+msgid "Active block reasons"
+msgstr "当前阻断原因"
+
+msgid "Active block requests:"
+msgstr "生效的断网请求数："
+
 msgid "Active kernel flowtables"
 msgstr "内核中生效的流量卸载"
+
+msgid "Active timed block requests: %s"
+msgstr "生效的限时断网请求：%s"
+
+msgid "Advanced diagnostics"
+msgstr "高级诊断"
 
 msgid "After recovery, allow Internet access while checking at one-second intervals during observation. Any failure blocks access and restarts the delay. Disabling observation still requires the original recovery checks."
 msgstr "恢复后放行联网，在观察期内以一秒间隔检测。任何失败都会阻断并重新等待。关闭观察期仍须满足原有恢复验证。"
@@ -118,6 +172,9 @@ msgstr "三项全部停止或重启"
 
 msgid "All three services stopped"
 msgstr "三项服务均停止"
+
+msgid "Allow detailed public diagnostics"
+msgstr "允许详细公共诊断"
 
 msgid "Allowed LAN IPv4 networks"
 msgstr "允许访问的局域网 IPv4"
@@ -209,6 +266,9 @@ msgstr "上一步"
 msgid "Backup HTTPS URL for exit verification"
 msgstr "出口验证备用 HTTPS 地址"
 
+msgid "Basic response"
+msgstr "基础响应"
+
 msgid "Block Internet access on proxy failure"
 msgstr "代理故障时阻断外网"
 
@@ -296,6 +356,9 @@ msgstr "无法读取插件状态或日志"
 msgid "Cannot read status; protection cannot be confirmed:"
 msgstr "无法读取状态，不能据此判断网络已受保护："
 
+msgid "Cannot read the current API UUID"
+msgstr "无法读取当前 API UUID"
+
 msgid "Cannot read this session's plugin configuration"
 msgstr "无法读取当前会话中的插件配置"
 
@@ -353,6 +416,9 @@ msgstr "检测目标格式须为 https://域名/路径|状态码"
 msgid "Check targets require an HTTPS domain without credentials or custom ports"
 msgstr "检测目标必须使用 HTTPS 域名，不支持认证信息或自定义端口"
 
+msgid "Check the connection settings and try again"
+msgstr "请检查连接设置后重试"
+
 msgid "Check the selected client every second using its configured TCP, UDP and DNS capabilities. Unconfigured capabilities are shown separately. Keep the existing real proxy checks and preserve router, LAN and DNS access."
 msgstr "每秒按所选客户端已配置的 TCP、UDP、DNS 能力检查，未配置的能力单独显示。保留真实代理验证及路由器、局域网和 DNS 访问。"
 
@@ -371,14 +437,26 @@ msgstr "检测与日志"
 msgid "Choose IPv6 scope"
 msgstr "请选择 IPv6 范围"
 
+msgid "Choose a connection check method. Both methods use the local SOCKS proxy. Changes take effect after Save & Apply."
+msgstr "请选择连接检测方式。两种方式均使用本机 SOCKS 代理，修改在「保存并应用」后生效。"
+
 msgid "Choose an IPv6 protection scope explicitly."
 msgstr "请明确选择 IPv6 保护范围。"
 
 msgid "Choose any combination of days. An overnight window belongs to its start day: Monday 23:00–01:00 continues into Tuesday morning."
 msgstr "可任意勾选多天。跨午夜的窗口归开始当天，例如勾选星期一、23:00–01:00，会持续到星期二凌晨。"
 
+msgid "Choose one detection mode. All checks use the local SOCKS proxy. A mode change takes effect only after Save and Apply."
+msgstr "仅选择一种检测模式。所有检测都经过本机 SOCKS 代理，保存并应用后才切换模式。"
+
 msgid "Clear logs"
 msgstr "清空日志"
+
+msgid "Clear logs and recovery history"
+msgstr "清空日志和恢复记录"
+
+msgid "Clears plugin events, connection check details and recovery history."
+msgstr "清除本插件的事件日志、连接检测明细和恢复记录。"
 
 msgid "Client DNS listener could not be verified"
 msgstr "无法确认客户端 DNS 监听"
@@ -413,6 +491,9 @@ msgstr "代理客户端本轮运行完成且已配置服务正常，直接验证
 msgid "Close"
 msgstr "关闭窗口"
 
+msgid "Cloudflare Trace"
+msgstr "Cloudflare Trace"
+
 msgid "Cloudflare data center"
 msgstr "Cloudflare 接入机房"
 
@@ -422,11 +503,41 @@ msgstr "Cloudflare 事件验证已关闭"
 msgid "Cloudflare event verification:"
 msgstr "CF 事件核验: "
 
+msgid "Cloudflare heartbeat"
+msgstr "Cloudflare 心跳检测"
+
+msgid "Cloudflare heartbeat failed"
+msgstr "Cloudflare 心跳验证失败"
+
+msgid "Cloudflare heartbeat failure threshold pending"
+msgstr "Cloudflare 心跳失败，尚未达到阻断阈值"
+
+msgid "Cloudflare heartbeat has not confirmed recovery"
+msgstr "Cloudflare 心跳尚未确认恢复"
+
+msgid "Cloudflare heartbeat is independent of Pro. Combined mode requires both checks. Heartbeat-only mode skips website and exit-IP checks."
+msgstr "Cloudflare 心跳独立于 Pro。组合模式要求两路检测均通过；仅心跳模式不执行网页和出口 IP 校验。"
+
+msgid "Cloudflare heartbeat only"
+msgstr "仅 Cloudflare 心跳"
+
+msgid "Cloudflare heartbeat recovery threshold pending"
+msgstr "Cloudflare 心跳恢复，等待连续成功确认"
+
+msgid "Cloudflare heartbeat verified"
+msgstr "Cloudflare 心跳验证通过"
+
+msgid "Cloudflare monitor heartbeat expired"
+msgstr "Cloudflare 检测进程心跳过期"
+
 msgid "Cloudflare reported a different exit; waiting for fresh exit verification"
 msgstr "CF 出口核验不一致，等待新的出口验证确认"
 
 msgid "Combined LAN exemptions must not cover the entire Internet"
 msgstr "局域网豁免合并后不能覆盖整个互联网"
+
+msgid "Configuration and diagnostics"
+msgstr "配置与诊断"
 
 msgid "Configuration changed during UDP check; waiting for revalidation"
 msgstr "UDP 检查期间配置变化，等待重新验证"
@@ -488,8 +599,14 @@ msgstr "代理恢复确认中"
 msgid "Confirming recovery"
 msgstr "恢复确认中"
 
+msgid "Connection check method"
+msgstr "连接检测方式"
+
 msgid "Connection checks"
 msgstr "连接检测"
+
+msgid "Connectivity check failed"
+msgstr "连通性检测失败"
 
 msgid "Connectivity monitor delayed"
 msgstr "网络检测延迟"
@@ -497,14 +614,29 @@ msgstr "网络检测延迟"
 msgid "Connectivity monitor heartbeat expired"
 msgstr "连通性检测进程心跳超时"
 
+msgid "Consecutive failed checks"
+msgstr "连续失败次数"
+
 msgid "Consecutive failed rounds"
 msgstr "连续失败轮数"
+
+msgid "Consecutive failures to confirm an outage"
+msgstr "确认故障所需的连续失败次数"
+
+msgid "Consecutive successes to confirm recovery"
+msgstr "确认恢复所需的连续成功次数"
 
 msgid "Consecutive successful rounds for recovery"
 msgstr "连续恢复轮数"
 
 msgid "Continue"
 msgstr "继续"
+
+msgid "Copy UUID"
+msgstr "复制 UUID"
+
+msgid "Could not reach the heartbeat endpoint through the proxy"
+msgstr "无法通过代理连接心跳地址"
 
 msgid "Current protection reason"
 msgstr "当前保护原因"
@@ -524,6 +656,12 @@ msgstr "DNS 服务端口不能与代理入口端口重叠"
 msgid "Days of the week"
 msgstr "星期"
 
+msgid "Default API block duration (seconds)"
+msgstr "API 默认断网时长（秒）"
+
+msgid "Default API block duration must not exceed the maximum."
+msgstr "API 默认断网时长不得超过允许的最长时长。"
+
 msgid "Default template"
 msgstr "默认模板"
 
@@ -539,11 +677,23 @@ msgstr "默认拒绝未列出的入站连接"
 msgid "Detailed check logs"
 msgstr "详细检测日志"
 
+msgid "Detailed diagnostics (%s)"
+msgstr "详细诊断（%s）"
+
+msgid "Detailed diagnostics use the applied proxy settings."
+msgstr "详细诊断使用已应用的代理设置。"
+
 msgid "Detect one installed client automatically. When several are installed, select the client to monitor. This does not modify the client configuration."
 msgstr "仅安装一个客户端时自动识别；安装多个时须指定监视对象。不会修改客户端配置。"
 
+msgid "Diagnostic freshness limit (seconds)"
+msgstr "诊断结果有效时长（秒）"
+
 msgid "Disabled"
 msgstr "已关闭"
+
+msgid "Disabled by default. Save and Apply enables the API and generates a UUID. Authenticated API requests show the UUID in the event log. Turning the API off and on generates a new UUID."
+msgstr "默认关闭。保存并应用后启用接口并生成 UUID。已认证的 API 请求会在事件日志中显示 UUID。关闭后重新启用会生成新的 UUID。"
 
 msgid "Discover listening services automatically"
 msgstr "自动发现监听服务"
@@ -566,6 +716,9 @@ msgstr "下载本地分析报告"
 msgid "Download report"
 msgstr "下载报告"
 
+msgid "Duplicate heartbeat validation header"
+msgstr "心跳校验标头重复"
+
 msgid "Edit the complete UCI configuration for this plugin. Save stages changes; Save & Apply validates and activates them. Existing secret values are preserved by placeholders."
 msgstr "可编辑本插件的完整 UCI 配置。保存仅暂存更改；保存并应用会校验并启用。已有敏感值以占位符保留。"
 
@@ -577,6 +730,9 @@ msgstr "启用开机保护"
 
 msgid "Enable enhanced monitoring after recovery"
 msgstr "恢复联网后加强监测"
+
+msgid "Enable local control API"
+msgstr "启用内网控制 API"
 
 msgid "Enable protection"
 msgstr "启用保护功能"
@@ -632,14 +788,38 @@ msgstr "启用前请填写实际的代理出口 IPv4。出口不符或验证服�
 msgid "Event log"
 msgstr "事件日志"
 
+msgid "Event verification failed; awaiting a new check"
+msgstr "事件核验失败，等待重新检查"
+
 msgid "Every day"
 msgstr "每天"
+
+msgid "Exit IP response source"
+msgstr "出口 IP 响应来源"
 
 msgid "Exit IP verification is disabled"
 msgstr "未启用出口 IP 校验"
 
 msgid "Exit IP verification is optional. Pro can import an expected address from the VPS in General settings."
 msgstr "出口 IP 校验为可选功能。Pro 可在基本设置中从 VPS 导入预期地址。"
+
+msgid "Exit IPv4 could not be verified"
+msgstr "无法校验出口 IPv4"
+
+msgid "Exit IPv4 differs from the expected address"
+msgstr "出口 IPv4 与预期不符"
+
+msgid "Exit IPv4 lookup timed out"
+msgstr "出口 IPv4 查询超时，暂未取得地址"
+
+msgid "Exit IPv4 verification"
+msgstr "出口 IPv4 校验"
+
+msgid "Exit IPv4 verification uses the official HTTPS endpoint by default."
+msgstr "出口 IPv4 校验默认使用官方 HTTPS 接口。"
+
+msgid "Exit IPv4 verified"
+msgstr "出口 IPv4 校验通过"
 
 msgid "Exit has not been checked"
 msgstr "出口尚未检测"
@@ -701,6 +881,9 @@ msgstr "防火墙更新失败"
 msgid "Flow offloading is enabled; blocking existing connections cannot be guaranteed. System settings are unchanged."
 msgstr "当前启用了流量卸载，无法保证阻断已有连接；插件不会擅自修改系统设置"
 
+msgid "Follow selected detection mode"
+msgstr "跟随所选检测模式"
+
 msgid "For a single-device trial, also limit its IPv6 addresses or explicitly empty this list. ::/0 includes all IPv6 sources on the ingress devices."
 msgstr "单设备试验须同时限制该设备的 IPv6 地址，或明确清空此列表；::/0 表示入口上的所有 IPv6 来源。"
 
@@ -713,6 +896,9 @@ msgstr "例如 br-lan，须为存在且已启用的三层设备，不能填写�
 msgid "Friday"
 msgstr "星期五"
 
+msgid "Full response with nonce"
+msgstr "完整响应并校验 nonce"
+
 msgid "General settings"
 msgstr "基本设置"
 
@@ -721,6 +907,36 @@ msgstr "HTTPS 检测目标"
 
 msgid "HTTPS connectivity checks"
 msgstr "HTTPS 连通性检测"
+
+msgid "Heartbeat"
+msgstr "心跳检测结果"
+
+msgid "Heartbeat HTTPS URL"
+msgstr "心跳 HTTPS 地址"
+
+msgid "Heartbeat checks"
+msgstr "心跳检测设置"
+
+msgid "Heartbeat consecutive failures"
+msgstr "心跳连续失败次数"
+
+msgid "Heartbeat consecutive successes for recovery"
+msgstr "恢复所需的心跳连续成功次数"
+
+msgid "Heartbeat healthy"
+msgstr "心跳检测正常"
+
+msgid "Heartbeat interval after each request (seconds)"
+msgstr "每次心跳请求后的间隔（秒）"
+
+msgid "Heartbeat recovery pending"
+msgstr "等待心跳恢复确认"
+
+msgid "Heartbeat request timeout (seconds)"
+msgstr "心跳请求超时（秒）"
+
+msgid "Heartbeat verification token does not match"
+msgstr "心跳校验令牌不匹配"
 
 msgid "Heartbeat waiting time"
 msgstr "异常心跳等待秒数"
@@ -839,8 +1055,14 @@ msgstr "已恢复联网，开始观察"
 msgid "Interruption detected"
 msgstr "检测到中断"
 
+msgid "Interval after each HTTPS check (seconds)"
+msgstr "每次 HTTPS 检测结束后的间隔（秒）"
+
 msgid "Interval after each check round (seconds)"
 msgstr "每轮结束后的检测间隔（秒）"
+
+msgid "Interval during enhanced monitoring (seconds)"
+msgstr "敏感期检测间隔（秒）"
 
 msgid "Invalid HTTPS URL"
 msgstr "HTTPS 地址无效"
@@ -860,8 +1082,14 @@ msgstr "检测域名无效"
 msgid "Invalid configuration; changes were not committed:"
 msgstr "配置无效，未提交："
 
+msgid "Invalid exit IP address in the response"
+msgstr "返回的出口 IP 地址格式无效"
+
 msgid "Invalid firewall response format"
 msgstr "防火墙返回格式无效"
+
+msgid "Invalid heartbeat response headers"
+msgstr "心跳响应标头无效"
 
 msgid "Invalid ingress device MAC:"
 msgstr "入口设备 MAC 无效："
@@ -941,8 +1169,14 @@ msgstr "最后检测："
 msgid "Last completed check"
 msgstr "上次检查完成时间"
 
+msgid "Last startup or recovery verification"
+msgstr "最近一次开机或恢复核验"
+
 msgid "Latest connectivity check"
 msgstr "最近一次连通性检测"
+
+msgid "Leave blank to use /f on the public heartbeat origin. Full responses use a fresh per-request nonce. Optional diagnostic fields do not decide protection."
+msgstr "留空时使用公共心跳同一站点的 /f。完整响应使用每次请求新生成的 nonce，可选诊断字段不参与保护判定。"
 
 msgid "Link-local, multicast and the router's own management addresses remain accessible."
 msgstr "链路本地地址、多播和路由器本机管理地址始终保留。"
@@ -958,6 +1192,9 @@ msgstr "本地 SOCKS 监听"
 
 msgid "Local SOCKS port"
 msgstr "本机 SOCKS 端口"
+
+msgid "Local control API"
+msgstr "内网控制 API"
 
 msgid "Local diagnostic report"
 msgstr "本地诊断报告"
@@ -995,6 +1232,9 @@ msgstr "低"
 msgid "Make one extra request when the proxy first becomes ready after boot, and once after each interruption recovers. Signals from the same interruption are combined. No daily timer or repeated polling. A Cloudflare timeout does not replace the required routine exit check; a mismatching exit requires protection."
 msgstr "开机后代理首次就绪时额外请求一次，每次中断恢复后再请求一次。同一次中断的多个信号会合并，不设每日定时，也不连续轮询。Cloudflare 超时不会替代必需的日常出口验证；出口不匹配时需要保护。"
 
+msgid "Maximum API block duration (seconds)"
+msgstr "API 最长断网时长（秒）"
+
 msgid "Maximum restarts within the window"
 msgstr "统计窗口内最多重启次数"
 
@@ -1012,6 +1252,9 @@ msgstr "心跳超时下限（秒）"
 
 msgid "Minimum successful targets per round"
 msgstr "每轮最少成功目标数"
+
+msgid "Minimum time between diagnostic requests (seconds)"
+msgstr "诊断请求最短间隔（秒）"
 
 msgid "Minimum time between restarts (seconds)"
 msgstr "两次自动重启的最短间隔（秒）"
@@ -1039,6 +1282,9 @@ msgstr "检测服务已停止"
 
 msgid "Monitor stopped; protection mode keeps blocking. Disable protection in settings to restore access."
 msgstr "检测服务停止；保护模式保留阻断，关闭保护请使用总开关"
+
+msgid "Monitoring configuration verified."
+msgstr "监测配置已核验。"
 
 msgid "Monitoring enabled; no blocking rules added"
 msgstr "仅监测已开启，不添加阻断规则"
@@ -1088,6 +1334,9 @@ msgstr "尚无已完成的检测"
 msgid "No eligible LAN device was found. Configure the existing network first; this wizard does not create interfaces."
 msgstr "未找到可用的局域网入口。请先配置现有网络；引导不会创建接口。"
 
+msgid "No exit IP address in the response"
+msgstr "响应中未提供出口 IP 地址"
+
 msgid "No log entries"
 msgstr "暂无日志"
 
@@ -1099,6 +1348,9 @@ msgstr "当前无需等待恢复"
 
 msgid "No schedule is prefilled. Set the time and repeat pattern before enabling scheduled protection. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. With service protection enabled, the window ends into enhanced monitoring without an extra delay; otherwise recovery checks are required."
 msgstr "默认不预填定时计划。启用定时保护前，请设置时间和重复方式。阻断需要开启总开关并选择保护模式。DNS、局域网与管理访问继续保留。启用服务监视时，定时结束直接进入敏感监测，不额外等待；否则仍需恢复验证。"
+
+msgid "No startup or recovery verification yet"
+msgstr "尚无开机或恢复核验记录"
 
 msgid "No supported proxy client found"
 msgstr "未发现支持的代理客户端"
@@ -1121,11 +1373,44 @@ msgstr "未运行"
 msgid "Observed proxy exit"
 msgstr "检测到的代理出口"
 
+msgid "Off by default. Authorized status API requests can queue a rate-limited refresh. Cached details include their source, collection time and freshness. Diagnostic failures do not block access."
+msgstr "默认关闭。已授权的状态 API 请求可以排队触发限频刷新。缓存结果包含来源、采集时间和有效性；诊断失败不触发断网。"
+
+msgid "Official HTTPS"
+msgstr "官方 HTTPS"
+
+msgid "Official HTTPS check failed"
+msgstr "官方 HTTPS 检测失败"
+
+msgid "Official HTTPS check failed below the blocking threshold"
+msgstr "官方 HTTPS 检测失败，尚未达到阻断阈值"
+
+msgid "Official HTTPS check passed"
+msgstr "官方 HTTPS 检测通过"
+
+msgid "Official HTTPS is responding; waiting for consecutive successes"
+msgstr "官方 HTTPS 检测恢复，等待连续成功确认"
+
+msgid "Official HTTPS monitor heartbeat expired"
+msgstr "官方 HTTPS 检测进程心跳已超时"
+
+msgid "Official HTTPS recovery is pending"
+msgstr "官方 HTTPS 检测尚未确认恢复"
+
+msgid "Official HTTPS settings"
+msgstr "官方 HTTPS 设置"
+
+msgid "Official HTTPS uses the IPv4 reported by the official service. Enter the expected IPv4 to compare against it. No URL is required."
+msgstr "官方 HTTPS 使用官方服务返回的 IPv4 地址。填写预期 IPv4 即可校验，无需填写网址。"
+
 msgid "On boot or initial activation, keep protected clients blocked until TCP, UDP and DNS are all running, then use the delay and continuous stability settings below. Any interruption restarts qualification. The fixed startup wait is replaced. Router-originated traffic, LAN and DNS remain available. Blocking requires protection mode."
 msgstr "开机或首次启用时先阻断受保护客户端，等待 TCP、UDP、DNS 全部运行，再执行下方的等待和连续稳定验证。中断会重新验证，不再叠加固定开机等待。路由器自身联网、局域网和 DNS 保留；实际阻断需要保护模式。"
 
 msgid "On proxy failure, block Internet traffic in both directions for selected devices where traffic actually passes through this router or proxy. LAN access remains available. Return traffic bypassing this device cannot be blocked. Disabled on first install; start with monitoring, then test one device."
 msgstr "代理故障时，双向阻断指定设备实际经过本机路由或代理的外网收发，保留局域网访问。绕过本机的回程无法拦截。首次安装默认关闭，建议先仅监测、再单设备验证。"
+
+msgid "Only IPv6 was returned"
+msgstr "服务只返回了 IPv6，无法校验出口 IPv4"
 
 msgid "Only traffic passing through this router can be protected. Settings take effect only after Save & Apply."
 msgstr "仅保护实际经过本机的流量。配置须点击“保存并应用”才会生效。"
@@ -1187,11 +1472,17 @@ msgstr "特征匹配置信度"
 msgid "Per-target timeout"
 msgstr "单目标超时"
 
+msgid "Plain-text or trace response"
+msgstr "纯文本或 trace 响应"
+
 msgid "Please verify"
 msgstr "请核对"
 
 msgid "Plugin configuration not found"
 msgstr "找不到插件配置"
+
+msgid "Plugin health, logs and recovery"
+msgstr "插件自检、日志与恢复"
 
 msgid "Plugin heartbeat failed; retaining protection and queuing a plugin restart"
 msgstr "插件心跳异常，已保持保护并排队重新启动本插件"
@@ -1271,6 +1562,9 @@ msgstr "受保护设备正常联网"
 msgid "Protected source addresses are required"
 msgstr "必须指定保护源地址"
 
+msgid "Protection could not be verified. Try again before the countdown ends."
+msgstr "无法核验保护状态。请在倒计时结束前重试。"
+
 msgid "Protection disabled; this plugin's blocking rules were removed"
 msgstr "保护已关闭，已撤销插件自己的阻断规则"
 
@@ -1307,6 +1601,12 @@ msgstr "保护规则缺失，不能确认已受保护"
 msgid "Protection rules changed during checks; awaiting verification"
 msgstr "检测期间保护规则已变化，等待重新核验"
 
+msgid "Protection rules verified. Internet access is allowed."
+msgstr "保护规则已核验。当前允许访问外网。"
+
+msgid "Protection rules verified. Internet access is blocked."
+msgstr "保护规则已核验。当前正在阻断外网。"
+
 msgid "Protection scope"
 msgstr "保护范围"
 
@@ -1318,6 +1618,9 @@ msgstr "当前保护状态"
 
 msgid "Protection status needs verification"
 msgstr "保护状态待核验"
+
+msgid "Protection status needs verification. You can keep these settings once the check passes."
+msgstr "保护状态待核验。通过核验后可保留设置。"
 
 msgid "Proxy Guard"
 msgstr "代理连接保护"
@@ -1342,6 +1645,12 @@ msgstr "代理客户端运行日志"
 
 msgid "Proxy client services"
 msgstr "代理客户端服务"
+
+msgid "Proxy connectivity failed"
+msgstr "代理连通性测试失败"
+
+msgid "Proxy connectivity passed"
+msgstr "代理连通性测试通过"
 
 msgid "Proxy exit verification failed: unexpected exit or unreachable verification service"
 msgstr "代理出口验证失败：出口不符或验证服务不可达"
@@ -1369,6 +1678,27 @@ msgstr "代理启动失败"
 
 msgid "Proxy verification passed; access restored with enhanced monitoring"
 msgstr "代理验证通过，已放行并进入敏感观察"
+
+msgid "Public HTTPS heartbeat"
+msgstr "公共 HTTPS 心跳"
+
+msgid "Public HTTPS heartbeat recovery is not confirmed"
+msgstr "公共 HTTPS 心跳尚未确认恢复"
+
+msgid "Public diagnostics HTTPS URL"
+msgstr "公共诊断 HTTPS 地址"
+
+msgid "Public event verification response"
+msgstr "公共接口事件核验响应"
+
+msgid "Public heartbeat HTTPS URL"
+msgstr "公共心跳 HTTPS 地址"
+
+msgid "Public heartbeat event verification failed; awaiting confirmation"
+msgstr "公共心跳事件核验失败，等待新的检测确认"
+
+msgid "Public heartbeat response header"
+msgstr "公共心跳响应标头"
 
 msgid "Queried through the same SOCKS proxy only if the primary URL times out. Leave blank to use https://4.ident.me/ when the primary host is api.ipify.org. With a different primary host, leaving this blank disables the backup."
 msgstr "仅在主地址请求超时后，才通过同一个 SOCKS 代理查询备用地址。主域名为 api.ipify.org 时，留空使用 https://4.ident.me/。使用其他主域名时，留空则不查询备用地址。"
@@ -1490,6 +1820,9 @@ msgstr "恢复默认并重新引导"
 msgid "Restore previous settings"
 msgstr "恢复之前的配置"
 
+msgid "Restoring the previous configuration…"
+msgstr "正在恢复之前的配置…"
+
 msgid "Retained events"
 msgstr "保留的事件"
 
@@ -1520,11 +1853,17 @@ msgstr "UDP 检查期间规则变化"
 msgid "Rules, configuration and runtime state are not yet verified as consistent"
 msgstr "规则、配置或运行状态尚未核验一致"
 
+msgid "Run detailed diagnostics"
+msgstr "运行详细诊断"
+
 msgid "Run setup wizard"
 msgstr "重新运行设置引导"
 
 msgid "Running"
 msgstr "运行中"
+
+msgid "Running detailed diagnostics..."
+msgstr "正在运行详细诊断…"
 
 msgid "Runtime log check interval"
 msgstr "运行日志检查间隔"
@@ -1604,6 +1943,9 @@ msgstr "进入定时保护窗口，等待窗口结束后重新检测"
 msgid "Scope and exceptions"
 msgstr "保护范围与放行例外"
 
+msgid "Seconds remaining to confirm: %s"
+msgstr "剩余确认时间：%s 秒"
+
 msgid "Select a bridge device, not a switch port:"
 msgstr "请选择网桥设备，不能选择交换端口："
 
@@ -1633,6 +1975,12 @@ msgstr "自检通过，请确认保留。剩余秒数："
 
 msgid "Self-check validates configuration and real rule state. A proxy outage keeps protection blocked; it does not disable protection."
 msgstr "自检核验配置和实际规则状态。代理断线时保持阻断，不会因此关闭保护。"
+
+msgid "Self-hosted Cloudflare heartbeat"
+msgstr "自建 Cloudflare 心跳"
+
+msgid "Send this UUID in the Authorization header. It grants access to the local API."
+msgstr "在 Authorization 请求头中发送此 UUID。持有者可以调用内网 API。"
 
 msgid "Sender attribution is unknown"
 msgstr "无法确认发送者归属"
@@ -1715,11 +2063,20 @@ msgstr "已跳过部分损坏的日志记录："
 msgid "Specify IPv6 addresses or prefixes"
 msgstr "指定 IPv6 地址或前缀"
 
+msgid "Standard heartbeat (%s)"
+msgstr "普通心跳（%s）"
+
 msgid "Start time"
 msgstr "开始时间"
 
 msgid "Startup"
 msgstr "开机启动"
+
+msgid "Startup and recovery verification is off"
+msgstr "开机与恢复核验已关闭"
+
+msgid "Startup and recovery verification source"
+msgstr "开机与恢复核验来源"
 
 msgid "Startup completed"
 msgstr "本轮启动已完成"
@@ -1775,17 +2132,41 @@ msgstr "系统时间尚未有效，无法确认定时窗口；保持外网阻断
 msgid "TCP, UDP and DNS are running; boot protection delay started"
 msgstr "TCP、UDP、DNS 已全部运行，开始开机保护等待"
 
+msgid "Test current proxy"
+msgstr "测试当前代理"
+
+msgid "Testing the proxy with the current settings..."
+msgstr "正在用当前设置测试代理…"
+
+msgid "Tests the current form through SOCKS. Apply the settings separately to change protection."
+msgstr "通过 SOCKS 测试当前表单中的连接设置。要更改保护，请另行保存并应用。"
+
+msgid "The API is disabled"
+msgstr "API 已关闭"
+
 msgid "The Worker did not confirm this update."
 msgstr "Worker 未确认本次更新。"
 
 msgid "The Worker observed the proxy exit. Configure a direct connection before synchronizing."
 msgstr "Worker 识别到了代理出口，请配置直连后再同步。"
 
+msgid "The basic endpoint does not require a nonce. Full verification sends a fresh nonce to the diagnostics endpoint and checks its echo."
+msgstr "基础接口无需 nonce。完整核验向诊断接口发送新的 nonce，并校验响应中的回显。"
+
+msgid "The detailed diagnostic could not run"
+msgstr "无法运行详细诊断"
+
+msgid "The diagnostics endpoint returns this heartbeat response in the same request."
+msgstr "诊断接口在本次请求中返回所选的心跳响应。"
+
 msgid "The effective timeout also allows for a complete check round and the access permit lifetime, so it may exceed this minimum."
 msgstr "实际超时阈值还会覆盖一轮完整检测及联网许可的有效期，因此可能长于此下限。"
 
 msgid "The listener list is limited; unlisted inbound traffic remains subject to the configured policy."
 msgstr "监听列表有显示上限；其余入站流量仍按配置策略处理。"
+
+msgid "The official HTTPS request used TLS 1.2. TLS 1.3 is recommended."
+msgstr "官方 HTTPS 请求使用了 TLS 1.2，建议使用 TLS 1.3。"
 
 msgid "The original 06:00 maintenance window is prefilled. Blocking requires the main switch and protection mode. DNS, LAN and management remain available. After the window, consecutive successful checks are required again."
 msgstr "已预填原六点维护窗口。仅在总开关开启且为保护模式时阻断受保护外网；DNS、局域网和管理访问继续保留。窗口结束后重新满足连续恢复轮数才放行。"
@@ -1796,17 +2177,29 @@ msgstr "之前的配置已载入表单。请核对后点击“保存并应用”
 msgid "The proxy has remained stable; restoring access and gradually reducing check frequency"
 msgstr "代理已连续稳定，恢复放行并逐步降低检测频率"
 
+msgid "The proxy test could not run"
+msgstr "无法运行代理测试"
+
 msgid "The router restores the previous configuration if you do not confirm. Closing this page does not stop the rollback timer."
 msgstr "未按时确认将自动恢复之前的配置；关闭网页不会停止回退计时。"
 
 msgid "The service monitor was interrupted; revalidating proxy stability"
 msgstr "快速检查进程曾中断，重新确认稳定状态"
 
+msgid "The test time limit was reached before all checks finished"
+msgstr "已达到测试时限，部分检查未完成"
+
 msgid "These legacy options are ignored:"
 msgstr "以下旧选项不生效： "
 
 msgid "These networks remain reachable during failures. Do not enter 0.0.0.0/0."
 msgstr "故障时仍可访问这些网段；不要填写 0.0.0.0/0。"
+
+msgid "Third-party HTTPS"
+msgstr "第三方 HTTPS"
+
+msgid "Third-party HTTPS settings"
+msgstr "第三方 HTTPS 设置"
 
 msgid "This configuration could not be read. A default template is shown for review."
 msgstr "无法读取此配置。当前显示默认模板，请仔细检查。"
@@ -1831,6 +2224,12 @@ msgstr "按所选 UTC 偏移计算时间和星期；不会修改路由器时区�
 
 msgid "Time zone"
 msgstr "时区"
+
+msgid "Timed API block"
+msgstr "API 限时断网"
+
+msgid "Timeout per HTTPS request (seconds)"
+msgstr "单次 HTTPS 请求超时（秒）"
 
 msgid "Timeout per target (seconds)"
 msgstr "每个目标的超时（秒）"
@@ -1874,6 +2273,9 @@ msgstr "UDP 检查需要匹配固件的 luci-lib-nixio，请先安装或关闭 U
 msgid "UDP proxy path check"
 msgstr "UDP 代理通路检测"
 
+msgid "UDP proxy path check failed"
+msgstr "UDP 代理通路检测失败"
+
 msgid "UDP proxy path check is disabled"
 msgstr "UDP 代理通路检测未启用"
 
@@ -1901,6 +2303,12 @@ msgstr "不可用"
 msgid "Unavailable; routine exit verification continues"
 msgstr "暂时不可用；日常出口验证继续运行"
 
+msgid "Unexpected HTTP status"
+msgstr "HTTP 状态码不符合预期"
+
+msgid "Unexpected heartbeat response body"
+msgstr "心跳响应正文不符合预期"
+
 msgid "Unknown"
 msgstr "未知"
 
@@ -1922,11 +2330,20 @@ msgstr "不支持的入口设备类型："
 msgid "Unsupported proxy client"
 msgstr "不支持的代理客户端"
 
+msgid "Up to %s seconds remaining"
+msgstr "最长剩余 %s 秒"
+
 msgid "Use 192.0.2.100/32 for a single-device trial, or 192.0.2.0/24 for the subnet."
 msgstr "单设备试验可填写 192.0.2.100/32；整网段可填写 192.0.2.0/24。"
 
 msgid "Use HH:MM:SS in the selected time zone. Overnight windows are supported. Keep the router clock accurate; start and end must differ."
 msgstr "格式 HH:MM:SS，使用上方所选时区，支持跨午夜。需确保路由器系统时间准确；开始和结束时间不能相同。"
+
+msgid "Use a dedicated Worker protected by Cloudflare Access Service Auth. Configure any country restrictions in the same Access policy. Requests always use local SOCKS."
+msgstr "使用独立的 Worker，并由 Cloudflare Access Service Auth 保护。国家限制在同一 Access 策略中设置；请求始终经过本机 SOCKS。"
+
+msgid "Use credentials dedicated to this heartbeat. Configuration backups contain these secrets; share only redacted copies."
+msgstr "使用此心跳专用的凭据。配置备份包含密钥；分享前请脱敏。"
 
 msgid "Use detected client listener ports"
 msgstr "使用识别到的客户端监听端口"
@@ -1939,6 +2356,9 @@ msgstr "使用此地址"
 
 msgid "Use verified SOCKS, proxy listener and DNS redirect exception ports for this plugin. Keep this off to use manual ports. Client, DNS, route and NAT settings are not changed."
 msgstr "为本插件使用已核实的 SOCKS、代理入口及 DNS 重定向例外端口。关闭后使用手动端口；不修改客户端、DNS、路由或 NAT 配置。"
+
+msgid "Used when an authorized API request asks to refresh the heartbeat."
+msgstr "授权的 API 请求主动刷新心跳时使用此地址。"
 
 msgid "User cleared the plugin logs"
 msgstr "用户清空插件日志"
@@ -1970,6 +2390,12 @@ msgstr "正在验证代理，验证通过后恢复联网"
 msgid "Verify UDP through the proxy"
 msgstr "通过代理验证 UDP"
 
+msgid "Verify after startup or an interruption"
+msgstr "开机或中断恢复后核验"
+
+msgid "Verify once when the proxy first becomes ready and once after each interruption. This does not add another recurring detection mode. An unavailable event service does not replace routine checks; a confirmed exit mismatch requires new verification."
+msgstr "代理首次就绪及每次中断恢复时各核验一次，不新增周期性检测模式。事件服务不可用不替代常规检测；确认出口不符后需要重新核验。"
+
 msgid "Verify proxy exit IPv4"
 msgstr "校验代理出口 IPv4"
 
@@ -1994,6 +2420,15 @@ msgstr "等待 PassWall 本轮启动完成及三项服务恢复"
 msgid "Waiting for TCP, UDP and DNS to start"
 msgstr "等待 TCP、UDP、DNS 全部启动"
 
+msgid "Waiting for a check after the scheduled window"
+msgstr "等待定时保护结束后的检测"
+
+msgid "Waiting for a matching exit IPv4"
+msgstr "出口 IPv4 曾不符，等待匹配的地址"
+
+msgid "Waiting for a new access permit"
+msgstr "等待新的联网许可"
+
 msgid "Waiting for client startup and configured services to recover"
 msgstr "等待客户端本轮启动及已配置服务恢复"
 
@@ -2003,6 +2438,9 @@ msgstr "等待已配置的代理服务启动"
 msgid "Waiting for local proxy service protection"
 msgstr "本地代理服务保护等待中"
 
+msgid "Waiting for proxy client services"
+msgstr "等待代理客户端服务"
+
 msgid "Waiting for proxy startup"
 msgstr "等待代理启动"
 
@@ -2011,6 +2449,9 @@ msgstr "等待代理验证通过后恢复联网"
 
 msgid "Waiting for startup"
 msgstr "等待开机服务"
+
+msgid "Waiting for the API UUID after settings are confirmed"
+msgstr "确认设置后将显示 API UUID"
 
 msgid "Waiting for the required successful proxy checks"
 msgstr "等待代理检测达到恢复条件"
@@ -2032,6 +2473,12 @@ msgstr "监视 PassWall 运行日志"
 
 msgid "Watch proxy client runtime log"
 msgstr "监视代理客户端运行日志"
+
+msgid "Website and Cloudflare heartbeat"
+msgstr "网页与 Cloudflare 心跳"
+
+msgid "Website checks"
+msgstr "网页检测"
 
 msgid "Wednesday"
 msgstr "星期三"

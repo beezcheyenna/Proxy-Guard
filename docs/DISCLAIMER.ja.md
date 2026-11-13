@@ -6,4 +6,4 @@
 
 [第三者のライセンス説明](LICENSING.ja.md)
 
-脆弱性は[セキュリティ方針](SECURITY.ja.md)に従い、[beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com) へ非公開で報告してください。
+脆弱性はセキュリティ方針に従い非公開で報告してください。一般的な不具合は機密情報を除いて報告できます。 [セキュリティ方針](SECURITY.ja.md)

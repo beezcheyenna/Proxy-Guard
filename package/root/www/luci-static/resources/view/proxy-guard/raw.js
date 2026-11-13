@@ -5,17 +5,14 @@
 'require ui';
 'require proxy_guard_i18n as pgI18n';
 'require proxy_guard_setup as pgSetup';
-'require proxy_guard_remote_trial as pgRemoteTrial';
-const isPro=window.location.pathname.replace(/\/$/,'').endsWith('proxy-guard-access-raw');
-const name=isPro?'proxy_guard_access':'proxy_guard';
-const object=isPro?'proxy_guard_access':'proxy_guard';
+const name='proxy_guard';
+const object='proxy_guard';
 const infoCall=rpc.declare({object,method:'raw_info',expect:{'':{}},reject:true,nobatch:true});
 const parseCall=rpc.declare({object,method:'raw_parse',params:['text','token'],expect:{'':{}},reject:true,nobatch:true});
-const applyCall=rpc.declare({object,method:'apply',params:isPro?['raw_token']:['confirm_flow','raw_token'],expect:{'':{}},reject:true,nobatch:true});
+const applyCall=rpc.declare({object,method:'apply',params:['confirm_flow','raw_token'],expect:{'':{}},reject:true,nobatch:true});
 function result(r){if(!r||r.ok!==true)throw new Error(r&&r.error||'raw_validation_failed');return r;}
 function diagnostic(error){
  const code=error&&error.message||'';
- if(code.includes('policy_trial_storage_invalid'))return _('Policy confirmation data could not be read. Review saved settings and VPS state.');
  if(code.includes('session_permissions_updated'))return _('Sign out of LuCI and sign in again to use updated permissions.');
  if(/access denied|permission denied/i.test(code))return _('Sign out and sign in again to load raw editor permissions.');
  if(code.includes('raw_configuration_changed')||code.includes('raw_staged_configuration_changed'))return _('Configuration changed elsewhere. Reload it before saving.');
@@ -36,16 +33,15 @@ return view.extend({
    E('div',{class:'right'},[E('button',{type:'button',class:'cbi-button',click:ui.hideModal},[_('Cancel')]),' ',E('button',{type:'button',class:'cbi-button cbi-button-action',click:()=>{this.editor.value=this.info.template;this.feedback.textContent='';this.validationFeedback.replaceChildren();this.updateDraftIndicator();ui.hideModal();}},[_('Use template')])])]);
   const download=()=>{const url=URL.createObjectURL(new Blob([this.editor.value],{type:'text/plain;charset=utf-8'}));const link=E('a',{href:url,download:name+'.uci'});document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);};
   const root=E('div',{class:'pg-guard'},[
-   E('h2',{},[(isPro?_('VPS access rules'):_('Proxy Guard'))+' · '+_('Raw UCI configuration')]),
+   E('h2',{},[_('Proxy Guard')+' · '+_('Raw UCI configuration')]),
    E('p',{},[_('Edit the complete UCI configuration for this plugin. Save stages changes; Save & Apply validates and activates them. Existing secret values are preserved by placeholders.')]),
-   E('p',{},[E('a',{href:isPro?'proxy-guard-access':'proxy-guard'},[isPro?_('VPS access rules'):_('Proxy Guard')])]),
+   E('p',{},[E('a',{href:'proxy-guard'},[_('Proxy Guard')])]),
    info.template_loaded?E('p',{class:'alert-message warning'},[_('This configuration could not be read. A default template is shown for review.')]):'',
-   isPro?E('p',{class:'alert-message warning'},[_('Changes take effect after Save & Apply. Stopping synchronization does not remove VPS rules. Dynamic authorizations expire; configured resource limits and SSH rescue remain in effect.')]):'',
    this.editor,this.feedback,this.validationFeedback,E('div',{class:'cbi-page-actions'},[
     E('button',{type:'button',class:'cbi-button',click:()=>this.runAction(()=>this.validate())},[_('Validate configuration')]),' ',
     E('button',{type:'button',class:'cbi-button',click:template},[_('Load default template')]),' ',
     E('button',{type:'button',class:'cbi-button',click:download},[_('Download configuration')])])]);
-  if(!isPro)setTimeout(()=>pgSetup.attach(this,{raw:true}),0);else setTimeout(()=>pgRemoteTrial.attach(this),0);
+  setTimeout(()=>pgSetup.attach(this,{raw:true}),0);
   this.root=root;return pgI18n.decorate(root);
  },
  showValidation:function(value){
@@ -103,8 +99,8 @@ return view.extend({
  },
  handleSave:function(){return this.runAction(()=>this.stage());},
  handleReset:function(){return this.runAction(()=>this.reloadRaw().then(()=>ui.changes.init()));},
- handleSaveApply:function(){return this.runAction(()=>this.stage().then(()=>isPro?applyCall(this.info.token):applyCall(true,this.info.token)).then(result).then(r=>{
-  if(!isPro)pgSetup.begin(r);else pgRemoteTrial.begin(r.policy_trial);
+ handleSaveApply:function(){return this.runAction(()=>this.stage().then(()=>applyCall(true,this.info.token)).then(result).then(r=>{
+  pgSetup.begin(r);
   return Promise.all([this.reloadRaw(),ui.changes.init()]);
  }));}
 });

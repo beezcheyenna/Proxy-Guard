@@ -5,5 +5,3 @@
 ルートの [LICENSE](../LICENSE) は独自コードの MIT ライセンスです。本ディレクトリは [第三者通知](../docs/THIRD_PARTY_NOTICES.ja.md) と [一覧](../docs/THIRD_PARTY_COMPONENTS.json) に対応します。著作権、NOTICE、ファイルごとの例外、対応ソースの義務は各コンポーネントの原文に従います。
 
 `UPSTREAM/` は上流の原文を保存し、[SOURCES.json](SOURCES.json) に URL と SHA256 を記録します。ハッシュはそのライセンスファイルに対応します。`GPL-2.0-only.txt` と `GPL-3.0-only.txt` はそれぞれの原文です。後の版を選べるかは上流の許諾に従います。
-
-LGPL-3.0-or-later、0BSD、CC0 などは Worker 開発依存関係の参照用です。実依存関係を配布する場合は全通知とソース条件を保持します。通常版と Pro は各自のファイルを導入します。共有する参照原文はここにあり、互換通常版は引き続き Pro と使用できます。

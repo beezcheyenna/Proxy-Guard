@@ -64,22 +64,28 @@ let log_cursor = state && state.log_cursor;
 let boot_id = trim(readfile('/proc/sys/kernel/random/boot_id') || '');
 let generation = trim(readfile('/proc/sys/kernel/random/uuid') || '');
 if (!length(generation)) die('Cannot identify fast protection generation');
-let cleared = false;
+function monotonic_ms() {
+    let t = clock(true);
+    return t[0] * 1000 + int(t[1] / 1000000);
+}
+
+let cleared_stamp;
 while (readfile(run + '/removing') == null) {
     if (!lock.lock('xn')) { sleep(100); continue; }
+    let started = monotonic_ms();
+    let control = trim(readfile(run + '/control-generation') || 'initial');
     let snapshot = read_json(run + '/status.json');
     let c = snapshot && snapshot.fast_config;
     let up = clock(true)[0];
+    let retry = false;
     if (!c || !c.enabled || !snapshot.enabled) {
-        state = null; cleared = false;
+        state = null; cleared_stamp = null;
         log_cursor = null;
         unlink(run + '/fast.json'); unlink(run + '/fast-poll');
     }
     else {
         c.stamp = snapshot.config_stamp;
         let observed = c.services_watch == false ? {tcp:true,udp:true,dns:true,identities:{}} : services(c.dns_mode,c.client_profile);
-        observed.remote_ok = !snapshot.remote_health || !snapshot.remote_health.required || snapshot.remote_health.ok == true;
-        observed.manual_block = snapshot.maintenance && snapshot.maintenance.active == true;
         if (c.log_watch) {
             if (!log_cursor || up - log_cursor.checked_uptime >= c.log_interval)
                 log_cursor = poll_log(log_cursor, time(), up, boot_id, c.client_profile && c.client_profile.log_path, c.client_profile && c.client_profile.client);
@@ -92,8 +98,12 @@ while (readfile(run + '/removing') == null) {
         observed.probe = snapshot.last_probe || 0;
         observed.probe_started = snapshot.probe_started || 0;
         observed.probe_ok = snapshot.last_probe_ok == true;
-        observed.network_blocked = snapshot.phase == 'blocked';
-        observed.network_healthy = snapshot.phase == 'healthy';
+        let heartbeat = snapshot.heartbeat && snapshot.heartbeat.enabled ? snapshot.heartbeat : null;
+        observed.heartbeat_probe = heartbeat && heartbeat.checked_uptime || 0;
+        observed.heartbeat_ok = heartbeat && heartbeat.last_ok == true;
+        observed.heartbeat_allowed = !heartbeat || heartbeat.allowed == true;
+        observed.network_blocked = snapshot.phase == 'blocked' || !observed.heartbeat_allowed;
+        observed.network_healthy = snapshot.phase == 'healthy' && observed.heartbeat_allowed;
         observed.schedule_release = snapshot.schedule_release || 0;
         let stale = readfile(run + '/recovery-hold.json') != null || snapshot.updated_uptime == null || up - snapshot.updated_uptime > c.probe_freshness;
         observed.stale = stale;
@@ -108,15 +118,31 @@ while (readfile(run + '/removing') == null) {
         if (stale) state.holding = true;
         let allow = !state.holding;
         state.gate_ok = true;
-        if (c.mode == 'guard' && c.services_watch != false && (allow || !cleared)) {
-            // A configuration change may replace the gate before the slow
-            // worker publishes its next snapshot. Never renew a different
-            // policy using the old snapshot, and do not race fw4 reload.
-            // Nonblocking: a busy firewall must not delay service monitoring.
+        state.gate_busy = false;
+        if (c.mode == 'guard' && c.services_watch != false && (allow || cleared_stamp != c.stamp)) {
+            // Only the service gate is ours. A shared lock excludes fw4 and
+            // policy replacements while allowing the independent heartbeat.
+            // Retry short exclusive operations without extending the lease.
+            let deadline = monotonic_ms() + 320;
+            let acquired = firewall_lock.lock('sn');
+            while (!acquired && monotonic_ms() < deadline) {
+                sleep(20);
+                acquired = firewall_lock.lock('sn');
+            }
             state.gate_ok = false;
-            if (firewall_lock.lock('xn')) {
+            state.gate_busy = !acquired;
+            retry = !acquired;
+            if (acquired) {
                 let policy = read_json(run + '/firewall.json');
-                if (policy && policy.stamp == c.stamp) {
+                if (policy && policy.stamp == c.stamp && snapshot.control_generation == control &&
+                    control == trim(readfile(run + '/control-generation') || 'initial') &&
+                    readfile(run + '/stopped') == null && readfile(run + '/removing') == null &&
+                    readfile(run + '/update-guard.active') == null) {
+                    if (allow && (readfile(run + '/recovery-hold.json') != null ||
+                        clock(true)[0] - snapshot.updated_uptime > c.probe_freshness)) {
+                        allow = false;
+                        state.holding = true;
+                    }
                     let script = 'flush set inet proxy_guard service_ifaces\n';
                     if (allow) {
                         let names = [];
@@ -129,14 +155,14 @@ while (readfile(run + '/removing') == null) {
                 }
                 firewall_lock.lock('u');
             }
-            cleared = !allow && state.gate_ok;
+            cleared_stamp = !allow && state.gate_ok ? c.stamp : null;
         }
-        else if (c.mode != 'guard' || c.services_watch == false) cleared = false;
+        else if (c.mode != 'guard' || c.services_watch == false) cleared_stamp = null;
         event(state, c);
         write(run + '/fast.json', sprintf('%J\n', state));
         if (state.phase != 'normal' || (snapshot.schedule && snapshot.schedule.active)) { if (readfile(run + '/fast-poll') == null) write(run + '/fast-poll', '1\n'); }
         else unlink(run + '/fast-poll');
     }
     lock.lock('u');
-    sleep(1000);
+    sleep(retry ? 180 : max(100, started + 1000 - monotonic_ms()));
 }

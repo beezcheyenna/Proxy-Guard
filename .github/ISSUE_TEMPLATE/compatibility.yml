@@ -5,8 +5,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Public issue: use sanitized data only. Security vulnerabilities go to beezcheyenna268@gmail.com.
-        公开反馈请脱敏；安全漏洞请先私下发邮件。不要提交完整配置、真实部署 IP 或凭据。
+        Public issue: use sanitized data only. Security vulnerabilities go to https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md.
+        公开反馈请脱敏；安全漏洞请按安全政策私下报告。不要提交完整配置、真实部署 IP 或凭据。
   - type: dropdown
     id: kind
     attributes:
@@ -22,7 +22,7 @@ body:
     id: versions
     attributes:
       label: Exact versions / 精确版本
-      description: System, kernel, architecture, package manager, Standard/Pro, proxy client and running core; Agent/Worker commit if relevant.
+      description: System, kernel, architecture, package manager, Proxy Guard version, proxy client and running core.
     validations:
       required: true
   - type: textarea

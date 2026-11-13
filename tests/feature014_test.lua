@@ -5,8 +5,8 @@ local udp=require 'proxy-guard.udp'
 local incidents=require 'proxy-guard.incidents'
 local n=0
 local function check(ok,name) assert(ok,name);n=n+1 end
-local c=core.config({enabled='1',expected_exit4='203.0.113.7',schedule_enabled='0',passwall_watch='1',self_heal_stale='15',self_heal_cooldown='30',self_heal_limit='2',self_heal_window='60'})
-local function o(t,good) return {up=t,started=0,boot_id='a',main_updated=good and t or 0,fast_updated=good and t or 0,probe_budget=5,lease_seconds=10} end
+local c=core.config({check_mode='web',enabled='1',expected_exit4='203.0.113.7',schedule_enabled='0',passwall_watch='1',self_heal_stale='15',self_heal_cooldown='30',self_heal_limit='2',self_heal_window='60'})
+local function o(t,good) return {up=t,started=0,boot_id='a',main_updated=good and t or 0,fast_updated=good and t or 0,heartbeat_updated=good and t or 0,probe_budget=5,lease_seconds=10} end
 local s=machine.step(c,nil,o(10,false));check(s.state=='starting','startup grace prevents false recovery')
 s=machine.step(c,s,o(100,true));check(s.state=='healthy','healthy heartbeat')
 s=machine.step(c,s,o(101,false));check(s.state=='suspect' and not s.action,'two observations required')
@@ -16,7 +16,7 @@ s=machine.step(c,s,o(136,false));check(s.action=='restart' and s.restart_count==
 s=machine.step(c,s,o(137,false));s=machine.step(c,s,o(138,false));check(s.state=='cooldown','budget also respects cooldown')
 s=machine.step(c,s,o(166,false));check(s.action=='restart' and s.restart_count==2,'sliding window expires first recovery at exact boundary')
 c.self_heal_limit=1;s=machine.step(c,s,o(196,false));s=machine.step(c,s,o(197,false));check(s.state=='limited' and not s.action,'rolling restart budget enforced')
-c.self_heal_window=5;s=machine.step(c,{boot_id="a",restarts={190},last_restart=190,failures=2},o(198,false));check(s.state=='healthy' or s.state=='cooldown','independent last restart preserves cooldown after window expires')
+c.self_heal_window=5;s=machine.step(c,{boot_id="a",restarts={190},last_restart=190,failures=2,heartbeat_enabled=true},o(198,false));check(s.state=='cooldown','independent last restart preserves cooldown after window expires')
 local fresh=machine.step(c,s,{up=10,started=0,boot_id='new',main_updated=10,fast_updated=10});check(fresh.restart_count==0,'new boot resets monotonic restart budget')
 c.self_heal=false;s=machine.step(c,nil,o(200,false));check(s.state=='watching' and not s.action,'explicit self-heal off')
 c.self_heal=true;c.enabled=false;s=machine.step(c,nil,o(200,false));check(s.state=='disabled' and not s.action,'disabled never recovered')
@@ -34,7 +34,7 @@ end
 check(core.config({udp_query='a-b.Example.com'}).udp_query=='a-b.Example.com','valid domain')
 check(not pcall(core.config,{udp_check='1'}),'UDP requires explicit target')
 check(not core.config().udp_check,'UDP default off')
-local d=core.config({udp_check='1',udp_server='203.0.113.53'});check(d.lease_seconds==core.config().lease_seconds+d.udp_timeout,'UDP included in bounded permit budget')
+local d=core.config({udp_check='1',udp_server='203.0.113.53'});check(d.probe_budget==core.config().probe_budget+d.udp_timeout,'UDP included in bounded permit budget')
 local id='\18\52';local question='\7example\3com\0\0\1\0\1';local packet=id..'\129\128\0\1\0\0\0\0\0\0'..question
 check(udp.valid_dns(packet,id,'EXAMPLE.COM'),'DNS ID and question match')
 for _,bad in ipairs({packet:sub(1,-2),'xx'..packet:sub(3),id..'\1'..packet:sub(4),id..'\131'..packet:sub(4),packet:sub(1,3)..'\131'..packet:sub(5),packet:sub(1,12)..'\192\12'}) do
@@ -63,18 +63,18 @@ check(history[1].summary.completed_uptime==nil,'missing completion is not fabric
 check(history[2].summary.completed_uptime==394 and not history[2].summary.superseded,'completed later incident stays authoritative')
 local live=incidents.group({{incident={id='live',started_uptime=10,holding=true}}})
 check(live[1].summary.holding and not live[1].summary.superseded,'latest incomplete incident remains pending')
-local recovery_config=core.config({enabled='1',expected_exit4='203.0.113.7',self_heal_stale='15',self_heal_cooldown='30',self_heal_limit='2',self_heal_window='60'})
+local recovery_config=core.config({check_mode='web',enabled='1',expected_exit4='203.0.113.7',self_heal_stale='15',self_heal_cooldown='30',self_heal_limit='2',self_heal_window='60'})
 local fault={up=100,started=0,boot_id='history',main_updated=0,fast_updated=100,probe_budget=1,lease_seconds=1,wall_time=1800000000}
 local history_state=machine.step(recovery_config,nil,fault);history_state=machine.step(recovery_config,history_state,fault)
 check(history_state.last_reason=='main_heartbeat' and history_state.last_restart_at==1800000000 and history_state.last_restart_result=='queued','restart cause and wall time are recorded without command or configuration data')
-local healthy={up=110,started=0,boot_id='history',main_updated=110,fast_updated=110,probe_budget=1,lease_seconds=1}
+local healthy={up=110,started=0,boot_id='history',main_updated=110,fast_updated=110,heartbeat_updated=110,probe_budget=1,lease_seconds=1}
 history_state=machine.step(recovery_config,history_state,healthy)
 check(history_state.last_restart_result=='recovered' and history_state.last_reason=='main_heartbeat','successful recovery preserves the cause for diagnosis')
 check(history_state.restart_count==1 and history_state.restart_limit==2,'recovered monitors retain their rolling restart budget')
 healthy.boot_id='next-boot';healthy.up=1;healthy.main_updated=1;healthy.fast_updated=1
 history_state=machine.step(recovery_config,history_state,healthy)
 check(history_state.last_reason==nil and history_state.restart_count==0,'restart history cannot leak across a new monotonic boot')
-local enable_config=core.config({enabled='0',passwall_watch='1',self_heal_stale='15'})
+local enable_config=core.config({check_mode='web',enabled='0',passwall_watch='1',self_heal_stale='15'})
 local enable_state=machine.step(enable_config,nil,o(500,false))
 enable_config.enabled=true;local enable_obs=o(501,true);enable_obs.fast_updated=nil
 enable_state=machine.step(enable_config,enable_state,enable_obs)

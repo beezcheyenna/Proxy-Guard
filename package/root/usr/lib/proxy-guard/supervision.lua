@@ -50,7 +50,7 @@ local function resources(previous,now)
         rss=rss+p.rss;ticks=ticks+p.ticks;count=count+1
         for _,child in ipairs(children[pid] or {}) do walk(child) end
     end
-    for _,role in ipairs({'daemon','fast_watch','supervisor'}) do
+    for _,role in ipairs({'daemon','fast_watch','supervisor','heartbeat_watch'}) do
         local pid=(read(run..'/'..role..'.pid') or ''):match('^(%d+)')
         local command=pid and read('/proc/'..pid..'/cmdline') or ''
         local argv={};for word in (command or ''):gmatch('[^%z]+') do argv[#argv+1]=word end
@@ -60,7 +60,7 @@ local function resources(previous,now)
     end
     table.sort(roots);local identity=table.concat(roots,',')
     local sizes=0
-    for _,name in ipairs({'events.jsonl','events.jsonl.1','checks.jsonl','checks.jsonl.1','fast-events.jsonl','fast-events.jsonl.1','supervision-events.jsonl','supervision-events.jsonl.1'}) do
+    for _,name in ipairs({'events.jsonl','events.jsonl.1','checks.jsonl','checks.jsonl.1','fast-events.jsonl','fast-events.jsonl.1','supervision-events.jsonl','supervision-events.jsonl.1','heartbeat-events.jsonl','heartbeat-events.jsonl.1','api-events.jsonl','api-events.jsonl.1','diagnostic-events.jsonl','diagnostic-events.jsonl.1'}) do
         local f=io.open(run..'/'..name,'r');if f then sizes=sizes+(f:seek('end') or 0);f:close() end
     end
     local system_ticks,cores=metrics.cpu_snapshot(read('/proc/stat'))
@@ -99,6 +99,7 @@ function M.tick()
         if not start or start<0 or start>now then start=now end
     end
     local health=decoded(run..'/worker-health.json') or {}
+    local heartbeat_health=decoded(run..'/heartbeat-health.json') or {}
     local request=decoded(run..'/recovery-hold.json')
     -- Samples can advance while client discovery reads configuration.
     now=up()
@@ -106,7 +107,7 @@ function M.tick()
         (not request or type(request.queued_uptime)~='number' or request.queued_uptime>now or now-request.queued_uptime>30 or request.generation~=control())
     local s=machine.step(c,previous,{up=now,wall_time=os.time(),boot_id=boot,recovery_expired=recovery_expired,
         started=start,stopped=read(run..'/stopped')~=nil,main_updated=health.updated_uptime,
-        fast_updated=fast.updated_uptime,runtime_errors=health.errors,probe_budget=c.probe_budget,lease_seconds=c.lease_seconds})
+        fast_updated=fast.updated_uptime,heartbeat_updated=heartbeat_health.updated_uptime,heartbeat_errors=heartbeat_health.errors,runtime_errors=health.errors,probe_budget=c.probe_budget,lease_seconds=c.lease_seconds})
     s.first_seen=start
     if c.resource_monitor then s.resources=resources(previous and previous.resources,now) else s.resources=nil end
     if s.action=='restart' then

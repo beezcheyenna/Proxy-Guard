@@ -16,7 +16,7 @@ for ipk in a.packages.glob('*.ipk'):
   files={Path(m.name).name:ctl.extractfile(m).read()for m in ctl if m.isfile()}
   name=next(line.split(': ',1)[1]for line in files['control'].decode().splitlines()if line.startswith('Package: '))
  packages[name]=(blobs['data.tar.gz'],files)
-assert set(packages)=={'luci-app-proxy-guard','luci-app-proxy-guard-pro'}
+assert set(packages)=={'luci-app-proxy-guard'}
 with tempfile.TemporaryDirectory(prefix='pg-sdk-stage-')as raw:
  D=Path(raw);sdk=D/'sdk';(sdk/'include').mkdir(parents=True)
  (sdk/'rules.mk').write_text('CP:=cp -fpR\nINCLUDE_DIR:=$(TOPDIR)/include\n')

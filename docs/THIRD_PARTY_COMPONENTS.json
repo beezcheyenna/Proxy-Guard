@@ -2,7 +2,7 @@
   "schema": 1,
   "checked_on": "2026-11-07",
   "own_code_license": "MIT",
-  "scope": "Application source and component provenance; original code MIT, upstream material retains its terms; no runtime restructuring or blanket legal clearance.",
+  "scope": "Router application and component provenance. Original code uses MIT. Upstream material retains its terms.",
   "components": [
     {
       "name": "LuCI, luci-lib-jsonc, luci-lib-nixio",
@@ -69,37 +69,15 @@
       "distribution": "Provided by firmware; not bundled"
     },
     {
-      "name": "Python 3 standard library",
-      "role": "VPS Agent interpreter/runtime",
-      "license_declared": "Python license agreement and incorporated upstream notices",
-      "evidence_url": "https://docs.python.org/3/license.html",
-      "distribution": "Provided by Linux distribution; no interpreter or pip package bundled"
-    },
-    {
-      "name": "systemd / OpenRC / iproute2",
-      "role": "external Linux service and network utilities",
-      "license_declared": "See actual component/version and per-file terms",
-      "evidence_url": "https://github.com/systemd/systemd",
-      "distribution": "Provided by Linux distribution; not bundled"
-    },
-    {
-      "name": "cloudflared",
-      "role": "optional separate tunnel connector",
-      "license_declared": "Apache-2.0",
-      "evidence_url": "https://github.com/cloudflare/cloudflared/blob/master/LICENSE",
-      "distribution": "Installed separately; no connector binary bundled"
-    },
-    {
-      "name": "Xray / sing-box / Mihomo / 3x-ui",
-      "role": "configuration, status and authorized management integration targets",
+      "name": "Xray / sing-box / Mihomo",
+      "role": "Proxy cores for supported router clients",
       "license_declared": "Each upstream retains its own license; no blanket application of MIT",
       "evidence_urls": [
         "https://github.com/XTLS/Xray-core",
         "https://github.com/SagerNet/sing-box",
-        "https://github.com/MetaCubeX/mihomo",
-        "https://github.com/MHSanaei/3x-ui"
+        "https://github.com/MetaCubeX/mihomo"
       ],
-      "distribution": "Separate programs/panels; source and binaries not bundled in LuCI IPKs"
+      "distribution": "Supplied separately by the firmware or proxy client"
     },
     {
       "name": "firewall4",
@@ -269,7 +247,6 @@
       "upstream_archive_provenance": []
     }
   ],
-  "worker_lockfile_inventory": "companion/worker/THIRD_PARTY_DEPENDENCIES.json",
   "license_sources": "LICENSES/SOURCES.json",
   "runtime_evidence_note": "References fetched from named upstreams; firmware-installed versions were not queried."
 }

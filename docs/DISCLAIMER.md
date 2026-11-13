@@ -6,4 +6,4 @@
 
 [第三方许可说明](LICENSING.md)
 
-安全漏洞请按[安全反馈政策](SECURITY.md)，私下发送至 [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com)。
+安全漏洞请按安全政策私下报告。普通问题可在脱敏后公开反馈。 [安全问题报告](SECURITY.md)

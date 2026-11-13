@@ -9,16 +9,16 @@
 - [機能の提案](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=feature_request.yml)
 - [文書へのフィードバック](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=documentation.yml)
 
-**セキュリティ問題は先に非公開で報告してください。** VPS、認証、SSH、保護回避は [beezcheyenna268@gmail.com](mailto:beezcheyenna268@gmail.com) に連絡します。[セキュリティ方針](SECURITY.ja.md) を参照してください。公開報告では秘密情報、鍵、実運用設定、HAR、実アドレスを除きます。
+脆弱性はセキュリティ方針に従い非公開で報告してください。一般的な不具合は機密情報を除いて報告できます。 [セキュリティ方針](SECURITY.ja.md)
 
 ## 動作を変更する前に
 
 1. 発生条件、期待結果、実結果を示します。文書用アドレスと最小限の匿名化した構成を使います。
-2. ファームウェアやディストリビューション、カーネル、アーキテクチャ、形式、通常版と Pro、稼働コア、転送モードを記録します。パッケージ情報と実行バイナリを区別します。
+2. ファームウェア、カーネル、アーキテクチャ、形式、インストール済みの Proxy Guard のバージョン、稼働コア、転送モードを記録します。パッケージ情報と実行バイナリを区別します。
 3. 許可された隔離環境を使います。サービス、経路、ファイアウォールを変更する試験は使い捨て VM 内で実行します。
 4. 変更を対象に絞り、ACL、証明書検証、無関係な NAT/DNS/ネットワーク設定を保持します。
 
-[ビルド](BUILDING.ja.md)、[テストマトリクス](TEST-MATRIX.ja.md)、[エディション比較](EDITION-MATRIX.ja.md) を参照してください。実インストールと通信経路は別に検証します。
+[ビルド](BUILDING.ja.md) と[テストマトリクス](TEST-MATRIX.ja.md) を参照してください。実インストールと通信経路は別に検証します。
 
 ## 文書と翻訳
 

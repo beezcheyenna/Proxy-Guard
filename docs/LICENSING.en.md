@@ -1,8 +1,8 @@
 # Licensing scope and third-party material
 
 [English](LICENSING.en.md) · [简体中文](LICENSING.md) · [日本語](LICENSING.ja.md) · [Русский](LICENSING.ru.md) · [فارسی](LICENSING.fa.md)
+Original project code and documentation use the [MIT license](../LICENSE). Third-party components and upstream-derived material keep their applicable terms.
 
-Original project code and documentation use the root [MIT license](../LICENSE). That policy applies to Standard, Pro, and original companion code. Third-party material keeps its applicable authorship, terms, and distribution conditions.
 
 ## License records
 
@@ -24,10 +24,6 @@ Messages and translations are taken from pinned upstream revisions. The exact ca
 - The HomeProxy source init script declares GPL-2.0-only.
 
 The parser and control logic are original. Copyrightable upstream-derived material retains its upstream terms. Assess short functional strings, translations, and arrangement individually. Log monitoring runs in a separate ucode process and exchanges JSON state files with the Lua backend. Distribution obligations depend on the files, dependencies, and actual combination.
-
-## Companions
-
-The VPS Agent uses Python's standard library and external Linux tools. The Worker uses hosted platform APIs. Its [dependency inventory](../companion/worker/THIRD_PARTY_DEPENDENCIES.json) lists 91 non-root lockfile entries including development and platform-specific optional dependencies. Cloudflare operates its hosted service under its own terms.
 
 ## Distribution
 

@@ -9,12 +9,14 @@ p=argparse.ArgumentParser()
 p.add_argument("--apk-tool",type=Path,required=True)
 p.add_argument("--apks",type=Path,required=True)
 p.add_argument("--ipks",type=Path,required=True)
+p.add_argument("--standard-only",action="store_true")
 a=p.parse_args()
 S=Path(__file__).resolve().parents[1]
 make=(S/"package/Makefile").read_text()
-values=dict(re.findall(r"^(PKG_VERSION|PKG_RELEASE|PG_PRO_VERSION|PG_PRO_RELEASE|PG_PRO_MIN_BASE_APK):=(\S+)$",make,re.M))
+values=dict(re.findall(r"^(PKG_VERSION|PKG_RELEASE):=(\S+)$",make,re.M))
 counts={}
-for name,prefix in [("luci-app-proxy-guard","PKG"),("luci-app-proxy-guard-pro","PG_PRO")]:
+specs=[("luci-app-proxy-guard","PKG")]
+for name,prefix in (specs[:1] if a.standard_only else specs):
     version=values[prefix+"_VERSION"]+"-r"+values[prefix+"_RELEASE"]
     apk=a.apks/(name+"-"+version+".apk")
     ipk=next(x for x in a.ipks.glob(name+"_*.ipk"))
@@ -38,7 +40,6 @@ for name,prefix in [("luci-app-proxy-guard","PKG"),("luci-app-proxy-guard-pro","
     assert actual==expected,(name,"APK/IPK content or permission mismatch",sorted(set(actual)^set(expected)))
     deps=next(x.removeprefix("Depends: ")for x in control["control"].decode().splitlines()if x.startswith("Depends: "))
     expected_deps=set(deps.split(", "))|{"libc"}
-    if name.endswith("-pro"):expected_deps={"libc","luci-app-proxy-guard>="+values["PG_PRO_MIN_BASE_APK"]}
     assert set(meta["info"]["depends"])==expected_deps,(name,meta["info"]["depends"],expected_deps)
     mapping={"preinst":"pre-install","postinst":"post-install","prerm":"pre-deinstall","postrm":"post-deinstall"}
     for hook,native in mapping.items():
