@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Keep live deployment addresses, secrets and unpatched vulnerability details out of public requests. [Security policy](https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md)
+        Keep live deployment addresses, secrets and unpatched vulnerability details out of public requests.
         请勿填写实际部署地址、密钥或未修复的漏洞细节。
   - type: textarea
     id: problem

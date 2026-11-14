@@ -8,7 +8,7 @@ body:
 
 
       Use this form for ordinary bugs. Keep unpatched vulnerability details, live deployment IPs
-      and credentials out of public reports. See the [security policy](https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md).
+      and credentials out of public reports.
 
 
       这里用于反馈普通问题。请勿公开未修复的漏洞细节、实际部署 IP 或凭据。
@@ -22,7 +22,7 @@ body:
 
 
       This form creates a public issue in a public repository. Checking a box does not make it private.
-      See `docs/SECURITY.en.md` and its translations. / 公开仓库中的此表单会生成公开 Issue，勾选确认不会让它变为私密。'
+      / 公开仓库中的此表单会生成公开 Issue，勾选确认不会让它变为私密。'
 - type: checkboxes
   id: public-safety
   attributes:

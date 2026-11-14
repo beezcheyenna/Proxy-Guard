@@ -20,7 +20,7 @@ The API UUID is stored in runtime memory and regenerated on reboot if the API is
 
 ## Sharing reports and screenshots
 
-Share redacted evidence when reporting ordinary issues. Keep unpatched vulnerability details out of public reports. [Security policy](SECURITY.en.md)
+Share redacted evidence when reporting ordinary issues. Keep unpatched vulnerability details out of public reports.
 
 Check IP addresses, domains, account names, device IDs, tokens, SOCKS authentication, panel and subscription URLs, query parameters, Cookies, Authorization headers, HAR files and private keys before sharing. Documentation can use `192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24` and `2001:db8::/32` as example networks.
 

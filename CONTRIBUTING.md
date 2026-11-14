@@ -9,7 +9,7 @@ Proxy Guard welcomes reproducible bug reports, compatibility results, documentat
 - [Feature request](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=feature_request.yml)
 - [Documentation feedback](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=documentation.yml)
 
-Use public issues for ordinary problems and share redacted evidence. Keep unpatched vulnerability details out of public issues. [Security policy](docs/SECURITY.en.md)
+Use public issues for ordinary problems and share redacted evidence. Keep unpatched vulnerability details out of public issues.
 
 ## Before changing behavior
 

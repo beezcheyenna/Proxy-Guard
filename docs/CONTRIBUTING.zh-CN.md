@@ -9,7 +9,7 @@
 - [建议功能](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=feature_request.yml)
 - [反馈文档](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=documentation.yml)
 
-普通问题可在脱敏后公开反馈。请勿公开未修复的漏洞细节。 [安全问题报告](SECURITY.md)
+普通问题可在脱敏后公开反馈。请勿公开未修复的漏洞细节。
 
 ## 修改行为前
 

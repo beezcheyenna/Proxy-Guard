@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        This form creates a public issue. Use redacted data and keep unpatched vulnerability details out of the report. [Security policy](https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md)
+        This form creates a public issue. Use redacted data and keep unpatched vulnerability details out of the report.
         公开反馈请脱敏。请勿提交未修复的漏洞细节、完整配置、实际部署 IP 或凭据。
   - type: dropdown
     id: kind

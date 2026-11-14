@@ -46,7 +46,7 @@ DOCUMENTS = (
     CONTRIBUTING,
     *(localized_pages(f"docs/{name}", "zh-CN") for name in (
         "BUILDING", "COMPATIBILITY", "DISCLAIMER", "GUIDED-SETUP", "LICENSING",
-        "PGHB", "PRIVACY", "RECOVERY", "SECURITY", "TEST-MATRIX",
+        "PGHB", "PRIVACY", "RECOVERY", "TEST-MATRIX",
         "USAGE", "USER-GUIDE",
     )),
     *(localized_pages(name, "en") for name in (

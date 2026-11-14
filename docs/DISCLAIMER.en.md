@@ -6,4 +6,4 @@
 
 [Third-party licensing](LICENSING.en.md)
 
-Share redacted evidence for ordinary issues. Keep unpatched vulnerability details out of public reports. [Security policy](SECURITY.en.md)
+Share redacted evidence for ordinary issues. Keep unpatched vulnerability details out of public reports.
