@@ -8,7 +8,7 @@ Only traffic that actually crosses the router can be protected. Verify your sele
 
 Official HTTPS is selected by default and uses a fixed address through local SOCKS. Third-party HTTPS is selectable and has independent timing and thresholds. Exit IPv4 verification is off initially. When enabled, the official response supplies the IPv4 by default. A third-party IP lookup retries its backup only after the primary times out.
 
-Use the client’s supported forwarding modes and check both IP families on the devices you plan to protect. The [test matrix](TEST-MATRIX.en.md) lists the firmware and scenarios verified with this release.
+Use the client’s supported forwarding modes and check both IP families on the devices you plan to protect. The [test matrix](TEST-MATRIX.en.md) lists the firmware, proxy clients and forwarding combinations, along with targeted results for the 1.0 packages.
 
 | Proxy client | Forwarding modes | What to check |
 | --- | --- | --- |

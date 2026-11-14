@@ -35,6 +35,7 @@ jobs:
         with:
           # A release event must also validate the current homepage, not only the tag.
           ref: main
+          fetch-depth: 0
           persist-credentials: false
       - name: Compare default branch with latest stable release
         env:

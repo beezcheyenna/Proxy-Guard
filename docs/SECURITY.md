@@ -2,8 +2,6 @@
 
 [English](SECURITY.en.md) · [简体中文](SECURITY.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
 
-仓库启用 GitHub 私密漏洞报告后，通过该入口提交简要说明和脱敏证据。普通问题使用公开的 Issue 表单。报告中请避免包含有效凭据和生产地址。
-
-[私密漏洞报告](https://github.com/beezcheyenna/Proxy-Guard/security/advisories/new)
+项目目前没有公开提供私密漏洞报告渠道。公开 Issue 表单用于普通问题和文档反馈。请勿在公开报告中附上未修复的漏洞细节、有效凭据或实际部署地址。
 
 [隐私](PRIVACY.md)

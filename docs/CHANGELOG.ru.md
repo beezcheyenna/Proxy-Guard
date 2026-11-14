@@ -1,6 +1,8 @@
 # Changelog
 
-[Home](../README.md) · [User guide](USER-GUIDE.en.md)
+[Главная проекта](README.ru.md) · [Руководство пользователя](USER-GUIDE.ru.md)
+
+Список изменений ведётся на английском. [Основной список изменений](CHANGELOG.md)
 
 ## 1.0.0
 

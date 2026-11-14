@@ -1,6 +1,8 @@
 # Changelog
 
-[Home](../README.md) · [User guide](USER-GUIDE.en.md)
+[プロジェクトの概要](README.ja.md) · [ユーザーガイド](USER-GUIDE.ja.md)
+
+更新履歴の本文は英語で掲載しています。 [英語版の更新履歴](CHANGELOG.md)
 
 ## 1.0.0
 

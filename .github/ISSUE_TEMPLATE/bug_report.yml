@@ -1,25 +1,24 @@
 name: Non-security bug / 普通问题
-description: Report a non-security problem with sanitized information. 安全漏洞请按安全政策私下报告。
+description: Report an ordinary bug with redacted information. 此表单用于已脱敏的普通问题反馈。
 title: '[Bug] '
 body:
 - type: markdown
   attributes:
-    value: '**Security reports are private / 安全漏洞请先私下反馈**
+    value: '**Public bug report / 公开问题反馈**
 
 
-      Follow the [security policy](https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md) for authentication or
-      protection-bypass vulnerabilities. Do not post unpatched exploit details, live deployment IPs
-      or credentials here.
+      Use this form for ordinary bugs. Keep unpatched vulnerability details, live deployment IPs
+      and credentials out of public reports. See the [security policy](https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md).
 
 
-      涉及认证或保护绕过的漏洞，请按安全政策私下报告，不要在此公开未修复利用细节、真实部署 IP 或凭据。
+      这里用于反馈普通问题。请勿公开未修复的漏洞细节、实际部署 IP 或凭据。
 
 
-      **日本語:** 脆弱性の詳細は公開せず、セキュリティ方針に記載された報告方法を使ってください。
+      **日本語:** 未修正の脆弱性の詳細、認証情報、実際の運用環境の IP アドレスは公開しないでください。
 
-      **Русский:** Об уязвимостях сначала сообщайте непублично по правилам политики безопасности.
+      **Русский:** Не публикуйте подробности неисправленных уязвимостей, учётные данные и IP-адреса рабочих систем.
 
-      **فارسی:** آسیب‌پذیری را طبق سیاست امنیتی به‌صورت خصوصی گزارش دهید.
+      **فارسی:** جزئیات آسیب‌پذیری‌های رفع‌نشده، اطلاعات احراز هویت و نشانی IP سامانه‌های عملیاتی را منتشر نکنید.
 
 
       This form creates a public issue in a public repository. Checking a box does not make it private.

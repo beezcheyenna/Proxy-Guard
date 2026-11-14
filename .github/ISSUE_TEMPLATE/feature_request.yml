@@ -5,13 +5,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        Do not include live deployment addresses or secrets. Report vulnerabilities privately to https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md.
-        请勿填写真实部署地址或密钥；漏洞请先私下反馈。
+        Keep live deployment addresses, secrets and unpatched vulnerability details out of public requests. [Security policy](https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md)
+        请勿填写实际部署地址、密钥或未修复的漏洞细节。
   - type: textarea
     id: problem
     attributes:
       label: User problem / 使用场景与问题
-      description: Which edition and workflow are affected? Explain the practical need.
+      description: Include the installed Proxy Guard version, the affected workflow and the practical need.
     validations:
       required: true
   - type: textarea

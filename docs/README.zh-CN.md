@@ -46,7 +46,7 @@ Proxy Guard 是 OpenWrt 和 iStoreOS 的 LuCI 插件。启用保护后，确认�
 
 ## 使用说明
 
-[用户指南](USER-GUIDE.md) · [安装与卸载](USAGE.md) · [故障救援](RECOVERY.md) · [源码构建](BUILDING.md) · [隐私说明](PRIVACY.md)
+[用户指南](USER-GUIDE.md) · [安装与卸载](USAGE.md) · [故障救援](RECOVERY.md) · [源码构建](BUILDING.md) · [隐私说明](PRIVACY.md) · [PGHB 心跳与诊断说明](PGHB.md)
 
 [MIT 许可证](../LICENSE) · [第三方声明](THIRD_PARTY_NOTICES.zh-CN.md) · [免责声明](DISCLAIMER.md) · [参与贡献](CONTRIBUTING.zh-CN.md)
 

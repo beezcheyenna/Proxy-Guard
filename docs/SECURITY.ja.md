@@ -2,8 +2,6 @@
 
 [English](SECURITY.en.md) · [简体中文](SECURITY.md) · [日本語](SECURITY.ja.md) · [Русский](SECURITY.ru.md) · [فارسی](SECURITY.fa.md)
 
-リポジトリで GitHub の非公開報告が有効になったら、その窓口から概要と機密情報を除いた資料を提出してください。通常の不具合には公開 Issue を使えます。認証情報や運用中のアドレスは記載しないでください。
-
-[非公開の脆弱性報告](https://github.com/beezcheyenna/Proxy-Guard/security/advisories/new)
+現在、このプロジェクトでは脆弱性を非公開で報告するための窓口を案内していません。公開 Issue は一般的な不具合やドキュメントへの意見に使用できます。未修正の脆弱性の詳細、認証情報、実際の運用環境のアドレスは公開しないでください。
 
 [プライバシー](PRIVACY.ja.md)

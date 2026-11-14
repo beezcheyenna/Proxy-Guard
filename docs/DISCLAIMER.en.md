@@ -6,4 +6,4 @@
 
 [Third-party licensing](LICENSING.en.md)
 
-Report security issues privately according to the security policy. Share redacted evidence in public issues. [Security policy](SECURITY.en.md)
+Share redacted evidence for ordinary issues. Keep unpatched vulnerability details out of public reports. [Security policy](SECURITY.en.md)

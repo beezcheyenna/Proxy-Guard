@@ -2,6 +2,7 @@
 """Read-only, dependency-free documentation checks; no services or network by default."""
 import argparse
 from collections import Counter
+from hashlib import sha256
 from html import unescape
 from html.parser import HTMLParser
 import json
@@ -9,6 +10,7 @@ import os
 from posixpath import relpath
 from pathlib import Path
 import re
+import subprocess
 import sys
 import unicodedata
 from urllib.parse import unquote, urlsplit
@@ -44,7 +46,7 @@ DOCUMENTS = (
     CONTRIBUTING,
     *(localized_pages(f"docs/{name}", "zh-CN") for name in (
         "BUILDING", "COMPATIBILITY", "DISCLAIMER", "GUIDED-SETUP", "LICENSING",
-        "PRIVACY", "RECOVERY", "SECURITY", "TEST-MATRIX",
+        "PGHB", "PRIVACY", "RECOVERY", "SECURITY", "TEST-MATRIX",
         "USAGE", "USER-GUIDE",
     )),
     *(localized_pages(name, "en") for name in (
@@ -55,8 +57,11 @@ DOCUMENTS = (
 CHANGELOGS = {"docs/CHANGELOG.md", *(
     f"docs/CHANGELOG.{lang}.md" for lang in ("en", "ja", "ru", "fa")
 )}
-# These copies ship with the router packages or the VPS installer. Repository
-# navigation uses the localized notices without relying on installed-file layout.
+LOCALIZED_CHANGELOGS = {
+    f"docs/CHANGELOG.{lang}.md": lang for lang in ("ja", "ru", "fa")
+}
+# These copies ship with the router packages. Repository navigation uses the
+# localized notices without relying on installed-file layout.
 PACKAGE_NOTICES = {
     "package/root/usr/share/proxy-guard/LICENSES/README.md",
     "package/root/usr/share/proxy-guard/LICENSING.md",
@@ -310,30 +315,19 @@ def check_languages(root, groups=DOCUMENTS):
     return errors
 
 
-def versions(root):
-    text = (Path(root) / "package/Makefile").read_text(encoding="utf-8")
+def package_versions(make):
     def value(key):
-        match = re.search(r"^" + key + r"\s*:?=\s*(\S+)", text, re.M)
-        if not match:
-            raise ValueError(f"Missing {key} in package/Makefile")
+        version = r"\d+\.\d+\.\d+" if key.endswith("_VERSION") else r"\d+"
+        match = re.search(rf"^{key}[ \t]*:?=[ \t]*({version})[ \t]*$", make, re.M)
+        if match is None:
+            raise ValueError(f"Missing or invalid {key} in package/Makefile")
         return match[1]
-    published = re.findall(r"^PG_DOC_RELEASE_(STANDARD|EXTENSION|PRO):=(\S+)$", text, re.M)
-    if published:
-        pair = {("PRO" if key == "EXTENSION" else key): value for key,value in published}
-        if len(published) != 2 or set(pair) != {"STANDARD", "PRO"} or any(not re.fullmatch(r"\d+\.\d+\.\d+-\d+", v) for v in pair.values()):
-            raise ValueError("Invalid documented published release pair")
-        return pair["STANDARD"], pair["PRO"]
-    return value("PKG_VERSION") + "-" + value("PKG_RELEASE"), value("PG_PRO_VERSION") + "-" + value("PG_PRO_RELEASE")
 
-
-def standalone_version(make):
-    if not re.search(r"^PG_DOC_RELEASE_STANDARD:=", make, re.M):
-        return None
-    version = re.search(r"^PKG_VERSION:=(\d+\.\d+\.\d+)$", make, re.M)
-    release = re.search(r"^PKG_RELEASE:=(\d+)$", make, re.M)
-    if not version or not release:
-        raise ValueError("Invalid standalone package version")
-    return version[1], release[1]
+    version, revision = value("PKG_VERSION"), value("PKG_RELEASE")
+    pro = None
+    if re.search(r"^PG_PRO_(?:VERSION|RELEASE)[ \t]*:?=", make, re.M):
+        pro = f"{value('PG_PRO_VERSION')}-{value('PG_PRO_RELEASE')}"
+    return version, revision, pro
 
 
 def standalone_assets(version, release):
@@ -361,65 +355,88 @@ def expected_assets(standard, pro):
 
 def check_versions(root):
     root = Path(root)
-    standard, pro = versions(root)
+    version, revision, pro = package_versions((root / "package/Makefile").read_text(encoding="utf-8"))
+    standard = f"{version}-{revision}"
+    revisions = {("IPK", standard), ("APK", f"{version}-r{revision}")}
     errors = []
-    make = (root / "package/Makefile").read_text()
-    candidate = standalone_version(make)
     for rel in (*HOMEPAGES.values(), ENGLISH_HOME_ALIAS):
         file = root / rel
         if not file.is_file():
             errors.append(f"Missing language document: {rel}")
             continue
         content = file.read_text()
-        if candidate:
-            if candidate[0] not in content:
-                errors.append(f"{rel}: missing current standalone source version")
+        if not pro:
+            shown = set(re.findall(r"\b(IPK|APK)\s*[(（]?\s*`(\d+\.\d+\.\d+-r?\d+)`", prose(content)))
+            if shown != revisions:
+                errors.append(f"{rel}: package revisions must be {standard} (IPK) and {version}-r{revision} (APK)")
         else:
             rows = [line for line in content.splitlines()
                     if line.startswith("|") and re.search(r"\d+\.\d+\.\d+-\d+", line)]
             if not rows or not all(f"\x60{x}\x60" in rows[0] for x in (standard, pro)):
                 errors.append(f"{rel}: current edition table must show {standard} / {pro}")
+    release_heading = re.compile(r"^## " + re.escape(version) + r"(?: \(unreleased\))?$", re.M)
+    canonical = root / "docs/CHANGELOG.md"
+    english_notes = release_heading.split(canonical.read_text(encoding="utf-8"), maxsplit=1)[-1] if canonical.is_file() else ""
     for rel in sorted(CHANGELOGS):
         file = root / rel
         if not file.is_file():
             errors.append(f"Missing changelog: {rel}")
             continue
         content = file.read_text()
-        if candidate:
-            if not re.search(r"^## " + re.escape(candidate[0]) + r"(?: \(unreleased\))?$", content, re.M):
-                errors.append(f"{rel}: missing changelog for {candidate[0]}")
+        if not pro:
+            if not release_heading.search(content):
+                errors.append(f"{rel}: missing changelog for {version}")
         else:
             heading = re.search(r"^## (?!Unreleased(?:\s|$))(.+)$", content, re.M)
             if not heading or not all(x in heading[1] for x in (standard, pro)):
                 errors.append(f"{rel}: first release heading must show {standard} / {pro}")
-        problem = check_prose_language(content, "en")
+        if not pro and rel in LOCALIZED_CHANGELOGS:
+            lang = LOCALIZED_CHANGELOGS[rel]
+            partitions = release_heading.split(content, maxsplit=1)
+            intro, notes = partitions if len(partitions) == 2 else (content, "")
+            if not notes.strip() or notes != english_notes:
+                errors.append(f"{rel}: release entries must match the English changelog")
+            if f"(README.{lang}.md)" not in intro or f"(USER-GUIDE.{lang}.md)" not in intro:
+                errors.append(f"{rel}: changelog navigation must point to the {lang} homepage and guide")
+            problem = check_prose_language(notes, "en")
+        else:
+            problem = check_prose_language(content, "en")
         if problem:
             errors.append(f"{rel}: {problem}")
     pages = sorted(root.glob("docs/USAGE*.md")) + sorted(root.glob("docs/LINUX-AGENT-INSTALL*.md"))
-    legacy_assets = expected_assets(standard, pro)
+    valid = expected_assets(standard, pro) if pro else standalone_assets(version, revision)
+    binary_names = {name for name in valid if name.endswith((".ipk", ".apk"))}
     artifact = re.compile(r"(?:luci-app-proxy-guard(?:-pro)?[_-][0-9][A-Za-z0-9._-]*\.(?:ipk|apk)|proxy-guard-source-[0-9][A-Za-z0-9._-]*\.tar\.gz)")
     for file in pages:
         if file.exists():
-            current = candidate and file.name.startswith("USAGE")
-            valid = standalone_assets(*candidate) if current else legacy_assets
             names = set(artifact.findall(file.read_text()))
-            if current and not {name for name in valid if name.endswith((".ipk", ".apk"))} <= names:
+            if not pro and file.name.startswith("USAGE") and not binary_names <= names:
                 errors.append(f"{file.relative_to(root)}: missing current installation examples")
             for name in sorted(names - valid):
                 errors.append(f"{file.relative_to(root)}: stale artifact example {name}")
     return errors
 
 
+def release_document(root, ref, rel):
+    if ref == "main":
+        path = (root / rel).resolve()
+        return path.read_text(encoding="utf-8") if path.is_relative_to(root) and path.is_file() else None
+    # Release links can use a tag or a full commit ID. Read the exact Git
+    # object so a newer document in main cannot satisfy an old link.
+    revision = ref if re.fullmatch(r"[0-9a-f]{40}", ref) else f"refs/tags/{ref}"
+    result = subprocess.run(
+        ["git", "-C", str(root), "cat-file", "blob", f"{revision}:{rel}"],
+        capture_output=True, text=True, encoding="utf-8",
+    )
+    return result.stdout if result.returncode == 0 else None
+
+
 def check_release(root, release):
-    standard, pro = versions(root)
-    candidate = standalone_version((Path(root) / "package/Makefile").read_text())
-    historical_tag = f"v{standard}-pro-{pro}"
-    tag = f"v{candidate[0]}" if candidate else historical_tag
-    # A standalone candidate can be reviewed while the previous family is
-    # still the latest public release.
-    if candidate and release.get("tag_name") == historical_tag:
-        tag = historical_tag
-    valid = standalone_assets(*candidate) if candidate and tag != historical_tag else expected_assets(standard, pro)
+    root = Path(root).resolve()
+    version, revision, pro = package_versions((root / "package/Makefile").read_text(encoding="utf-8"))
+    standard = f"{version}-{revision}"
+    tag = f"v{standard}-pro-{pro}" if pro else f"v{version}"
+    valid = expected_assets(standard, pro) if pro else standalone_assets(version, revision)
     errors = []
     if release.get("tag_name") != tag:
         errors.append(f"Latest stable Release must be {tag}; found {release.get('tag_name')!r}")
@@ -428,12 +445,9 @@ def check_release(root, release):
     names = {a.get("name") for a in release.get("assets", []) if isinstance(a, dict)}
     for missing in sorted(valid - names):
         errors.append(f"Stable Release missing asset: {missing}")
-    if candidate and tag != historical_tag:
+    if not pro:
         for extra in sorted(names - valid):
             errors.append(f"Unexpected standalone Release asset: {extra}")
-    # Historical release notes refer to the source tree in the archive.
-    if candidate and tag == historical_tag:
-        return errors
     locales = page_locales()
     locales[ENGLISH_HOME_ALIAS] = "en"
     for target in link_targets(release.get("body") or ""):
@@ -443,12 +457,27 @@ def check_release(root, release):
             ref, rel = link
             if locales.get(rel) != "en" and rel not in CHANGELOGS:
                 errors.append(f"English Release links to a non-English document: {target}")
-            if ref == "main":
-                path = Path(root) / rel
-                if not path.is_file():
-                    errors.append(f"Release links to missing document: {target}")
-                elif url.fragment and unquote(url.fragment) not in anchor_ids(path.read_text()):
-                    errors.append(f"Release links to missing anchor: {target}")
+            content = release_document(root, ref, rel)
+            if content is None:
+                errors.append(f"Release links to missing document or Git ref: {target}")
+            elif url.fragment and unquote(url.fragment) not in anchor_ids(content):
+                errors.append(f"Release links to missing anchor: {target}")
+    return errors
+
+
+def check_license_manifest(directory):
+    directory = directory.resolve()
+    manifest = directory / "LICENSES/SOURCES.json"
+    errors = []
+    for item in json.loads(manifest.read_text(encoding="utf-8"))["sources"]:
+        rel = item["path"]
+        path = (directory / rel).resolve()
+        if not path.is_relative_to(directory / "LICENSES") or not path.is_file():
+            errors.append(f"{manifest}: missing license file {rel!r}")
+            continue
+        content = path.read_bytes()
+        if len(content) != item["bytes"] or sha256(content).hexdigest() != item["sha256"]:
+            errors.append(f"{manifest}: unexpected license file contents for {rel!r}")
     return errors
 
 
@@ -463,6 +492,9 @@ def main(argv=None):
         errors, count = check_links(args.root)
         errors += check_languages(args.root)
         errors += check_versions(args.root)
+        root = args.root.resolve()
+        errors += check_license_manifest(root)
+        errors += check_license_manifest(root / "package/root/usr/share/proxy-guard")
         if args.release_json:
             errors += check_release(args.root, json.loads(args.release_json.read_text()))
         if args.latest_release:
@@ -485,7 +517,7 @@ def main(argv=None):
         print("ERROR:", error)
     print(
         f"Checked {len(DOCUMENTS)} five-language document sets, {count} local references, "
-        f"and source versions. {len(errors)} error(s)."
+        f"source versions, and license manifests. {len(errors)} error(s)."
     )
     return 1 if errors else 0
 

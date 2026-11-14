@@ -4,9 +4,6 @@ PKG_NAME:=luci-app-proxy-guard
 PKG_VERSION:=1.0.0
 PKG_RELEASE:=8
 
-# The repository still links to historical releases until 1.0.0 is published.
-PG_DOC_RELEASE_STANDARD:=0.3.0-21
-PG_DOC_RELEASE_EXTENSION:=0.3.1-5
 PKG_LICENSE:=MIT
 PKG_MAINTAINER:=Proxy Guard contributors
 

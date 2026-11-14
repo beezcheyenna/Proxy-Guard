@@ -5,8 +5,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Public issue: use sanitized data only. Security vulnerabilities go to https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md.
-        公开反馈请脱敏；安全漏洞请按安全政策私下报告。不要提交完整配置、真实部署 IP 或凭据。
+        This form creates a public issue. Use redacted data and keep unpatched vulnerability details out of the report. [Security policy](https://github.com/beezcheyenna/Proxy-Guard/blob/main/docs/SECURITY.en.md)
+        公开反馈请脱敏。请勿提交未修复的漏洞细节、完整配置、实际部署 IP 或凭据。
   - type: dropdown
     id: kind
     attributes:

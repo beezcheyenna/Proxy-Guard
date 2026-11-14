@@ -9,6 +9,12 @@ The ZIP contains the complete tracked source tree at commit `987ff38a25c1a00f2c0
 - [GitHub source at commit 987ff38](https://github.com/beezcheyenna/Proxy-Guard/tree/987ff38a25c1a00f2c05753f7503e134391a4a3a)
 - [Standard 0.3.0-21 and Pro 0.3.1-5 packages](https://github.com/beezcheyenna/Proxy-Guard/releases/tag/v0.3.0-21-pro-0.3.1-5)
 
+## Maintenance status
+
+Proxy Guard 0.3 is a previously released series. The source, installation packages and original guides remain available for existing deployments and development reference. Maintenance continues in the 1.0 series. The 0.3 series no longer receives maintenance support.
+
+[Moving from 0.3 to 1.0](../../docs/USAGE.en.md#from-0-3)
+
 ## Archived documentation
 
 - [User guide](https://github.com/beezcheyenna/Proxy-Guard/blob/987ff38a25c1a00f2c05753f7503e134391a4a3a/docs/USER-GUIDE.en.md) · [Installation and checksums](https://github.com/beezcheyenna/Proxy-Guard/blob/987ff38a25c1a00f2c05753f7503e134391a4a3a/docs/USAGE.en.md)

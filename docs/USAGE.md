@@ -27,7 +27,7 @@ SHA256 用于核对文件与清单是否一致。发布者身份需另行确认�
 
 ## 安装与卸载
 
-根据固件选择对应的安装和卸载命令。测试保护前，保留一条独立的管理通路。
+根据固件选择对应的安装和卸载命令。下方 APK 安装示例使用 `--no-network`，需要依赖已安装或可从本地软件源获取。要从匹配当前固件的已配置软件源在线安装缺少的依赖，去掉 `--no-network`。测试保护前，保留一条独立的管理通路。
 
 ```sh
 opkg install /tmp/luci-app-proxy-guard_1.0.0-8_all.ipk
@@ -39,17 +39,36 @@ opkg remove luci-app-proxy-guard
 apk --no-network del luci-app-proxy-guard
 ```
 
+<a id="from-0-3"></a>
+
+## 从 0.3 迁移到 1.0
+
+请用 1.0 的全新配置开始。已发布的 0.3 安装包直接覆盖到 1.0，以及从 1.0 降回 0.3，均未作为受支持的迁移路径验收。两代路由器安装包均将 `/etc/config/proxy_guard` 声明为配置文件，包管理器可能保留修改过的 0.3 文件。安装程序会调整部分已识别的旧检测默认值，并补齐部分缺失选项。旧文件即使保留，也要重新核对设置是否适用。
+
+先保留独立管理通路，备份 0.3 配置，并妥善保存恢复旧部署所需的凭据和对应安装包。明确关闭旧路由器保护。已安装 0.3 Pro 时，在处理好下文的远端策略后先卸载 Pro，再卸载 0.3 普通版并安装 1.0。如果旧设置仍在，在「配置与诊断」选择「恢复默认并重新引导」。手动录入已核对的保护范围、例外、SOCKS 设置和定时规则。
+
+1.0 全新配置默认使用官方 HTTPS，出口 IPv4 校验关闭。保留下来的旧配置若未指定检测方式，1.0 会使用官方 HTTPS。想继续使用原来的 gstatic 和 Ubuntu 目标，可在「连接检测」选择第三方 HTTPS。
+
+若 0.3 Pro 还在管理 VPS，趁控制通路可用，通过 0.3 Pro 撤回需要移除的策略，并从 VPS 核对结果。1.0 未集成 0.3 Pro。远端规则、Agent 和 Cloudflare 资源需要通过独立管理通路另行处理。 [归档救援说明](https://github.com/beezcheyenna/Proxy-Guard/blob/987ff38a25c1a00f2c05753f7503e134391a4a3a/docs/RECOVERY.md)
+
+[0.3 源码、安装包和文档](../archive/0.3/README.md)
+
+
 <a id="guide-setup"></a>
 
 ## 首次设置
+
+**停止 Proxy Guard 服务后，防火墙规则可能仍在阻断。** 需要解除阻断时，请明确关闭保护或按[故障救援步骤](RECOVERY.md)操作。
+
+**「测试当前代理」通过仅说明本次探测成功。** 定时保护、API 限时断网或另一路检测故障仍可能阻断外网。
 
 打开「服务 → 代理连接保护」。通过引导核对入口设备、IPv4 和 IPv6 范围、局域网例外及 SOCKS 端口。先使用「仅监测」，保存并应用后系统自检，通过后有 30 秒确认。自检失败或未确认时会回退配置。
 
 默认通过本机 SOCKS 请求固定的官方 HTTPS 地址。第三方 HTTPS 可单独选择，间隔与阈值独立。出口 IPv4 校验初始关闭，开启后默认读取官方响应里的地址。使用第三方 IP 服务时，主地址超时才尝试备用地址。
 
-官方 HTTPS 默认每 3 秒检查一次，超时 2 秒，连续失败 2 次才阻断、连续成功 2 次才恢复。第三方 HTTPS 默认间隔 10 秒，每个目标超时 4 秒，连续失败 3 轮阻断、成功 2 轮恢复。默认检测 gstatic 和 Ubuntu，常规轮至少需要一个站点成功。
+官方 HTTPS 默认在检测完成后等待 3 秒，单次请求超时 2 秒。第三方 HTTPS 默认在每轮结束后等待 10 秒，每个目标超时 4 秒。默认检测 gstatic 和 Ubuntu，常规轮至少需要一个站点成功。启用保护且处于常规检测时，官方模式默认连续失败 2 次确认故障，第三方模式默认连续失败 3 轮确认故障。两种模式默认连续成功 2 次或 2 轮确认恢复。敏感检测期间，一次失败就可能触发阻断。
 
-第三方文本 IP 的主、备用地址都超时，而连通性仍正常时，可以继续放行。若此前已确认出口地址不符，仍需取得匹配的 IPv4 才能恢复。
+第三方文本 IP 的主、备用地址都超时，且连通性仍正常、没有待解除的出口地址不匹配时，本次出口校验不会单独触发阻断。默认主地址 `https://api.ipify.org/` 超时后使用 `https://4.ident.me/`。自定义主地址且未设备用地址时，主地址超时会记为「无法校验」，并按当前模式和故障阈值处理。若此前已确认出口地址不符，仍需取得匹配的 IPv4 才能恢复。
 
 若规则待核验，「确认保留此配置」暂不可用，原倒计时继续。超时后路由器会自动恢复之前的配置，即使网页已经关闭。
 
@@ -57,7 +76,7 @@ apk --no-network del luci-app-proxy-guard
 
 ## 测试当前代理
 
-在 LuCI 点击「测试当前代理」，可以用尚未保存的表单参数通过 SOCKS 检测，查看连通性、耗时和取得的出口 IPv4。保护设置在点「保存并应用」后生效。
+在 LuCI 点击「测试当前代理」，可以用尚未保存的表单参数通过 SOCKS 检测，查看连通性、耗时和取得的出口 IPv4。同一弹窗中的「运行详细诊断」使用已应用的代理设置。保护设置在点「保存并应用」后生效。
 
 主页显示连续失败次数和当前生效的阻断原因。一次失败尚未达到阈值时仍可能放行。定时保护、API 限时断网和代理检测故障可以同时存在。
 
@@ -71,33 +90,183 @@ apk --no-network del luci-app-proxy-guard
 
 ## 内网 API
 
-在 LuCI 的「内网控制 API」启用接口，点「保存并应用」，如有提示再确认保留设置。同一页会显示可复制的 **API UUID**。这个 UUID 是四个接口共用的凭据。关闭接口后再开启会生成新的 UUID。
+在 LuCI 的「内网控制 API」启用接口，点「保存并应用」，如有提示再确认保留设置。同一页会显示可复制的 **API UUID**。每次请求都要带 `Authorization: Bearer YOUR_UUID`。
 
-从内网访问路由器原有的 HTTPS 管理地址。用「API 刷新地址」选择普通心跳或详细诊断 `/f`。
+**UUID 是访问凭据。** 关闭接口后重新启用，或在 API 启用时重启路由器，都会生成新 UUID。调用程序需要更新凭据。调用程序只需提供 API UUID。通过认证和来源检查的请求，响应会带上 UUID，管理员也可在 LuCI 事件日志查看。分享响应或日志前请遮盖 UUID。
 
-| HTTP 方法 | `/cgi-bin/proxy-guard-api` 后的路径 | 用途 |
+**请求路由器原有的 HTTPS 管理地址。** API 接受本机回环，或能经名为 `lan` 的防火墙区域内的设备直接回程的来源。必须经其他网关才能到达的来源会被拒绝。其他内网区域、三层 VLAN 或 VPN 来源可能返回 `403 lan_required`。请使用证书对应的主机名。若路由器使用私有 CA 或自签证书，可用 curl 的 `--cacert` 指定可信的 CA 或路由器证书。
+
+将 `router.example` 换成路由器的 HTTPS 管理主机名，将 `YOUR_UUID` 换成当前 API UUID。下方 JSON 使用示例值。两个 POST 操作会改变保护范围内的外网访问，请按需调用。
+
+| 方法 | 路径 | 用途 |
 | --- | --- | --- |
-| GET | `/status` | 查询保护状态和生效的 API 阻断 |
-| GET | `/diagnostics` | 经 SOCKS 执行所选心跳检测并直接返回结果 |
-| POST | `/block` | 发起限时断网 |
-| POST | `/cancel` | 根据请求 ID 撤回限时断网 |
+| GET | [`/status`](#api-status) | 查询保护状态 |
+| GET | [`/diagnostics`](#api-diagnostics) | 执行单次诊断 |
+| POST | [`/block`](#api-block) | 发起限时断网 |
+| POST | [`/cancel`](#api-cancel) | 撤回限时断网 |
 
-将 `router.example` 换成路由器 HTTPS 管理地址，将 `YOUR_UUID` 换成页面显示的 UUID。
+<a id="api-status"></a>
 
-```http
-GET /cgi-bin/proxy-guard-api/diagnostics HTTP/1.1
-Host: router.example
-Authorization: Bearer YOUR_UUID
+### 查询保护状态
+
+`GET /status` 读取当前防火墙状态和正在生效的 API 断网请求。示例显示已有一项限时断网。程序请读取 `enforcement` 和 `block_reasons`，`reason` 是显示用文本。`last_check` 是最近一次完成检测的 Unix 秒级时间戳，无记录时可省略。防火墙状态未知、规则缺失或尚未核实时，`blocked` 也可省略，此时应根据 `enforcement` 判断状态是否已确认。
+
+```sh
+curl -H 'Authorization: Bearer YOUR_UUID' 'https://router.example/cgi-bin/proxy-guard-api/status'
 ```
+
+HTTP 200
+
+```json
+{
+  "ok": true,
+  "api_version": 2,
+  "uuid": "YOUR_UUID",
+  "enabled": true,
+  "mode": "guard",
+  "check_mode": "web",
+  "phase": "blocked",
+  "enforcement": "blocked",
+  "blocked": true,
+  "reason": "API 限时断网生效中",
+  "block_reasons": [
+    "api"
+  ],
+  "failure_progress": {
+    "count": 0,
+    "threshold": 3
+  },
+  "last_check": 1794628800,
+  "stale": false,
+  "heartbeat": {
+    "enabled": false,
+    "allowed": true
+  },
+  "api": {
+    "enabled": true,
+    "count": 1,
+    "remaining": 95
+  },
+  "requests": [
+    {
+      "request_id": "example-block-01",
+      "remaining": 95
+    }
+  ],
+  "default_seconds": 300,
+  "max_seconds": 3600,
+  "exit_check": {
+    "enabled": false
+  }
+}
+```
+
+<a id="api-diagnostics"></a>
+
+### 执行诊断
+
+`GET /diagnostics` 通过本机 SOCKS 发起一次检测，并在同一次请求中返回结果。「API 刷新地址」默认使用 PGHB `/`。要取得示例里的详细标头，请先在设置里选择 `/f` 并应用。 [PGHB 响应说明](PGHB.md)
 
 ```sh
 curl -H 'Authorization: Bearer YOUR_UUID' 'https://router.example/cgi-bin/proxy-guard-api/diagnostics'
 ```
 
-两个 POST 接口均使用 `Content-Type: application/json`。`/block` 的正文可以是 `{"seconds":120,"request_id":"sample-block-01"}`，`/cancel` 的正文是 `{"request_id":"sample-block-01"}`。省略时长或填 0 使用设置中的默认时长。省略请求 ID 由路由器生成。限时断网需要已启用保护模式。使用相同 ID 和相同时长重试生效中的请求，保留原到期时间。撤回请求后，其他生效的保护规则继续决定是否放行。
+HTTP 200
 
-认证成功的响应带 `uuid`。诊断成功时，`diagnostics.headers` 按顺序返回 `X-PGHB-*` 标头的 `name` 和 `value`，保留同名标头和字符串原值。非 UTF-8 值带 `encoding: "base64"`。HTTP 401 表示 UUID 缺失或无效，403 表示 API 关闭或当前网络无法使用接口，429 表示冷却中或达到请求上限，502/504 表示心跳检测失败或超时。
+```json
+{
+  "ok": true,
+  "uuid": "YOUR_UUID",
+  "diagnostics": {
+    "ok": true,
+    "source": "https://hb.pghb.app/f",
+    "checked_at": 1794628800,
+    "http_code": 200,
+    "curl_code": 0,
+    "milliseconds": 117,
+    "nonce_verified": true,
+    "headers": [
+      {
+        "name": "x-pghb-ip",
+        "value": "203.0.113.10"
+      },
+      {
+        "name": "x-pghb-tls",
+        "value": "TLSv1.3"
+      },
+      {
+        "name": "x-pghb-nonce",
+        "value": "0123456789abcdef0123456789abcdef"
+      }
+    ]
+  }
+}
+```
 
-有插件配置权限的 LuCI 用户能在事件日志中看到已认证请求的完整 UUID。分享日志前请遮盖 UUID。
+`diagnostics.headers` 按响应顺序列出 `X-PGHB-*` 的名称和值。值以字符串返回。重复的 `X-PGHB-IP` 或 `X-PGHB-Nonce` 会使校验失败，其他同名标头可以分项返回。非 UTF-8 值带有 `"encoding":"base64"`。`checked_at` 是 Unix 秒级时间戳。
+
+<a id="api-block"></a>
+
+### 发起限时断网
+
+`POST /block` 要求保护模式已启用，断网作用于配置的保护范围。默认时长 300 秒，初始上限 3600 秒。省略 `seconds` 或填 `0` 使用配置的默认时长。省略 `request_id` 时由路由器生成。自定义 ID 使用 8 至 64 个字母、数字、连字符或下划线。相同 ID 和时长重试仍在生效的请求，会保留原到期时间。时长不同会返回 `409 request_conflict`。
+
+```sh
+curl -H 'Authorization: Bearer YOUR_UUID' \
+  -H 'Content-Type: application/json' \
+  --data '{"seconds":120,"request_id":"example-block-01"}' \
+  'https://router.example/cgi-bin/proxy-guard-api/block'
+```
+
+HTTP 200
+
+```json
+{
+  "ok": true,
+  "uuid": "YOUR_UUID",
+  "request_id": "example-block-01",
+  "effective": true,
+  "remaining": 120,
+  "seconds": 120
+}
+```
+
+<a id="api-cancel"></a>
+
+### 撤回限时断网
+
+`POST /cancel` 需要提供待撤回的请求 ID。归属按通过认证的 UUID 和请求 ID 匹配。使用同一 UUID 的设备或程序共享身份。有效的 ID 已过期或没有对应请求时，接口仍可返回 `cancelled: true`。`effective` 和 `remaining` 描述仍生效的 API 断网。定时保护和检测故障仍可继续阻断。
+
+```sh
+curl -H 'Authorization: Bearer YOUR_UUID' \
+  -H 'Content-Type: application/json' \
+  --data '{"request_id":"example-block-01"}' \
+  'https://router.example/cgi-bin/proxy-guard-api/cancel'
+```
+
+HTTP 200
+
+```json
+{
+  "ok": true,
+  "uuid": "YOUR_UUID",
+  "request_id": "example-block-01",
+  "cancelled": true,
+  "effective": false,
+  "remaining": 0
+}
+```
+
+### 常见错误
+
+| HTTP 状态及错误 | 处理方法 |
+| --- | --- |
+| 401 `authentication_required` | UUID 缺失或无效，核对 LuCI 显示的当前值。 |
+| 403 `https_required`、`api_disabled` 或 `lan_required` | 检查 HTTPS、API 开关或调用端到 `lan` 防火墙区域的路径。 |
+| 409 `configuration_pending`、`configuration_changed`、`protection_not_active` 或 `request_conflict` | 完成并确认设置后重试诊断，或核对保护模式及请求 ID 对应的时长。 |
+| 429 | 诊断仍在冷却，或有效请求数达到上限。有 `Retry-After` 时按响应给的时间等待。 |
+| 502 / 504 | 诊断检测失败或超时。有 `diagnostics` 时可查看其中的详情。 |
+| 503 `busy` | 另一个操作正在进行。按 `Retry-After` 给出的秒数等待后重试。 |
+| 503 `policy_not_ready`、`request_state_unavailable` 或 `firewall_failed` | 防火墙策略未就绪、断网请求状态不可用或更新规则失败。先查看保护状态和事件日志，再重试同一请求 ID。 |
 
 [使用指南](USER-GUIDE.md) · [故障救援](RECOVERY.md)

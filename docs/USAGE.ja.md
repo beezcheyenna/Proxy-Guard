@@ -27,7 +27,7 @@ SHA256 でファイルと一覧の一致を確認します。配布元の本人�
 
 ## インストールと削除
 
-ファームウェアに対応するコマンドを使います。保護の確認中は独立した管理経路を確保してください。
+ファームウェアに対応するコマンドを使います。以下の APK インストール例は `--no-network` を使用します。依存パッケージは事前にインストールするか、ローカルリポジトリに用意してください。設定済みの対応フィードから不足する依存パッケージを取得する場合は、`--no-network` を外します。保護を確認する前に、独立した管理経路を確保してください。
 
 ```sh
 opkg install /tmp/luci-app-proxy-guard_1.0.0-8_all.ipk
@@ -39,17 +39,36 @@ opkg remove luci-app-proxy-guard
 apk --no-network del luci-app-proxy-guard
 ```
 
+<a id="from-0-3"></a>
+
+## 0.3 から 1.0 への移行
+
+1.0 は新しい設定で使い始めてください。公開済みの 0.3 パッケージから 1.0 への上書き更新と、1.0 から 0.3 へのダウングレードは、サポート対象の移行手順として検証されていません。どちらのパッケージも `/etc/config/proxy_guard` を設定ファイルとして扱うため、変更済みの 0.3 のファイルが残る場合があります。インストーラーは判別できる一部の旧既定値を更新し、一部の不足項目を補います。残った設定を 1.0 で使う前に内容を確認してください。
+
+独立した管理経路を確保し、0.3 の設定をバックアップしてください。旧環境を復元するために必要な認証情報と対応するパッケージは安全な場所に保管します。旧版のルーター保護を明示的に無効にし、Pro を導入している場合は下記の VPS ポリシーを処理してから先に Pro を削除します。その後で 0.3 Standard を削除し、1.0 をインストールします。旧設定が残っている場合は「設定と診断 → 初期設定に戻して再設定」を選びます。確認済みの保護範囲、例外、SOCKS 設定、スケジュールだけを入力し直してください。
+
+1.0 の初期設定では公式 HTTPS が選ばれ、出口 IPv4 の照合は無効です。残った旧設定に接続確認方式がなければ、1.0 は公式 HTTPS を使います。以前の gstatic と Ubuntu を継続して使う場合は、接続確認の設定でサードパーティー HTTPS を選択します。
+
+0.3 Pro が VPS を管理している場合は、制御できるうちに削除したいポリシーを 0.3 Pro で解除し、VPS 上で結果を確認します。1.0 には 0.3 Pro との連携機能がありません。VPS のルール、Agent、Cloudflare リソースは個別に扱ってください。 [旧版の復旧ガイド](https://github.com/beezcheyenna/Proxy-Guard/blob/987ff38a25c1a00f2c05753f7503e134391a4a3a/docs/RECOVERY.ja.md)
+
+[0.3 のソース、パッケージ、ドキュメント](../archive/0.3/README.md)
+
+
 <a id="guide-setup"></a>
 
 ## 初回設定
+
+**Proxy Guard のサービスを停止しても、ファイアウォールによる遮断は続くことがあります。** 遮断を解除するには、保護を明示的に無効にするか、[復旧手順](RECOVERY.ja.md)に従ってください。
+
+**「現在のプロキシをテスト」が成功しても、確認できるのはそのテストの通信です。** スケジュール、API による一時遮断、別の稼働確認の失敗によって、遮断が続くことがあります。
 
 「サービス → プロキシ接続保護」でウィザードを開き、入口インターフェース、IPv4 と IPv6 の範囲、ローカル例外、SOCKS ポートを確認します。最初は監視専用で試します。保存して適用すると自己検査が実行され、確認時間は 30 秒です。検査に失敗した場合や確認しなかった場合は元の設定に戻ります。
 
 既定の公式 HTTPS はローカル SOCKS 経由で固定アドレスへ接続します。外部 HTTPS には独立した間隔としきい値があります。出口 IPv4 の照合は初期状態では無効で、有効にすると既定で公式応答のアドレスを使います。外部 IP サービスは主アドレスがタイムアウトした場合だけ予備を試します。
 
-公式 HTTPS の既定値は、間隔 3 秒、タイムアウト 2 秒、失敗と成功の判定がそれぞれ連続 2 回です。外部 HTTPS の既定値は間隔 10 秒、各接続先のタイムアウト 4 秒、連続失敗 3 回と連続成功 2 回です。既定で gstatic と Ubuntu を使い、通常時は各回で少なくとも一方の応答が必要です。
+既定では、公式 HTTPS は検査終了後に 3 秒待ち、リクエストは 2 秒でタイムアウトします。外部 HTTPS は 1 ラウンドの検査終了後に 10 秒待ち、接続先ごとのタイムアウトは 4 秒です。既定の接続先は gstatic と Ubuntu で、通常時は各ラウンドで少なくとも一方の検査に成功する必要があります。保護モードの通常監視では、公式は 2 回、外部は 3 ラウンドの連続失敗で障害と判定します。復旧の既定値は、どちらも 2 回または 2 ラウンドの連続成功です。重点監視中は、1 回の失敗で遮断されることがあります。
 
-外部のテキスト IP 取得先が両方タイムアウトしても、接続確認に合格していれば通信を継続できます。すでに不一致を確認した場合は、一致する IPv4 を取得して復旧します。
+外部のテキスト IP 取得先が両方タイムアウトしても、接続検査が成功し、未解消の IP 不一致がなければ、今回の IP 照合だけを理由に遮断することはありません。既定の `https://api.ipify.org/` がタイムアウトした場合は `https://4.ident.me/` を使用します。主アドレスを変更して予備を設定していない場合、タイムアウトは照合不能として設定中のモードと失敗しきい値で処理されます。確認済みの不一致から復旧するには、期待値と一致する IPv4 が必要です。
 
 ルールの確認が済むまで「この設定を維持」ボタンは無効です。元のカウントダウンは続きます。時間切れになると、ページを閉じていてもルーターが以前の設定に戻します。
 
@@ -57,7 +76,7 @@ apk --no-network del luci-app-proxy-guard
 
 ## 現在のプロキシをテスト
 
-「現在のプロキシをテスト」は保存前のフォームの設定で SOCKS 経由の接続を試し、結果、応答時間、取得できた出口 IPv4 を表示します。保護設定は「保存して適用」で反映されます。
+「現在のプロキシをテスト」は保存前のフォームの設定で SOCKS 経由の接続を試し、結果、応答時間、取得できた出口 IPv4 を表示します。同じダイアログの「詳細診断を実行」は適用済みのプロキシ設定を使用します。保護設定は「保存して適用」で反映されます。
 
 状態欄には連続失敗回数と有効な遮断理由が表示されます。しきい値未満の失敗では通信が継続する場合があります。定時保護、API による一時遮断、接続障害は同時に起こり得ます。
 
@@ -71,33 +90,183 @@ apk --no-network del luci-app-proxy-guard
 
 ## ローカル API
 
-LuCI の「LAN 制御 API」を有効にし、「保存して適用」を選びます。確認画面が表示された場合は設定を確定してください。同じタブに表示される **API UUID** をコピーします。この UUID は 4 つのエンドポイントの認証に使用します。API を無効にして再び有効にすると UUID が変わります。
+LuCI の「LAN 制御 API」で API を有効にし、「保存して適用」を選びます。確認が表示されたら設定を確定し、同じタブの **API UUID** をコピーします。各リクエストに `Authorization: Bearer YOUR_UUID` を付けます。
 
-LAN 内からルーターの既存の管理用 HTTPS アドレスにリクエストを送ります。「API 更新先」で標準ハートビートまたは詳細診断の `/f` を選択できます。
+**UUID はアクセス用の認証情報です。** API を無効にして再度有効にすると、新しい UUID が生成されます。API を有効にしたままルーターを再起動した場合も変わります。呼び出し元の設定を更新してください。呼び出しに LuCI へのログインは不要です。認証と送信元の確認を通過した応答には UUID が含まれ、管理者は LuCI のイベントログでも確認できます。応答やログを共有する前に UUID を伏せてください。
 
-| HTTP メソッド | `/cgi-bin/proxy-guard-api` に続くパス | 用途 |
+**ルーターで既に使っている管理用 HTTPS アドレスにアクセスします。** ループバック、または `lan` という名前のファイアウォールゾーンに属するデバイスから送信元へ直接戻れる通信を受け付けます。戻り経路に別のゲートウェイが必要な送信元は拒否されます。別の LAN ゾーン、ルーティングされた VLAN、VPN からの通信には `403 lan_required` が返る場合があります。証明書に記載されたホスト名を使ってください。プライベート CA または自己署名証明書を使う場合は、curl の `--cacert` で信頼する CA またはルーターの証明書を指定できます。
+
+`router.example` をルーターの管理用 HTTPS ホスト名、`YOUR_UUID` を現在の API UUID に置き換えます。以下の JSON は例です。POST は設定した保護範囲のインターネット接続を変更するため、必要なときだけ実行してください。
+
+| メソッド | パス | 用途 |
 | --- | --- | --- |
-| GET | `/status` | 保護状態と有効な API 遮断を取得 |
-| GET | `/diagnostics` | 選択したハートビートを SOCKS 経由で確認し、結果を返す |
-| POST | `/block` | 時間制限付き遮断を開始 |
-| POST | `/cancel` | リクエスト ID を指定して遮断を取り消す |
+| GET | [`/status`](#api-status) | 保護状態を取得 |
+| GET | [`/diagnostics`](#api-diagnostics) | 一度だけ診断 |
+| POST | [`/block`](#api-block) | 一時遮断を開始 |
+| POST | [`/cancel`](#api-cancel) | 一時遮断を取り消す |
 
-`router.example` をルーターの管理用 HTTPS アドレスに、`YOUR_UUID` を LuCI に表示された UUID に置き換えます。
+<a id="api-status"></a>
 
-```http
-GET /cgi-bin/proxy-guard-api/diagnostics HTTP/1.1
-Host: router.example
-Authorization: Bearer YOUR_UUID
+### 保護状態を取得する
+
+`GET /status` はファイアウォールによる現在の遮断状態と有効な API 遮断要求を返します。以下は一件の一時遮断が有効な例です。プログラムでは `enforcement` と `block_reasons` を使います。`reason` は表示用です。`last_check` は直近の完了した検査の Unix 時刻（秒）で、検査の記録がなければ省略される場合があります。状態が不明、ルールが欠落、または未確認の場合は `blocked` も省略される場合があります。これらの状態は `enforcement` で判別します。
+
+```sh
+curl -H 'Authorization: Bearer YOUR_UUID' 'https://router.example/cgi-bin/proxy-guard-api/status'
 ```
+
+HTTP 200
+
+```json
+{
+  "ok": true,
+  "api_version": 2,
+  "uuid": "YOUR_UUID",
+  "enabled": true,
+  "mode": "guard",
+  "check_mode": "web",
+  "phase": "blocked",
+  "enforcement": "blocked",
+  "blocked": true,
+  "reason": "API 限时断网生效中",
+  "block_reasons": [
+    "api"
+  ],
+  "failure_progress": {
+    "count": 0,
+    "threshold": 3
+  },
+  "last_check": 1794628800,
+  "stale": false,
+  "heartbeat": {
+    "enabled": false,
+    "allowed": true
+  },
+  "api": {
+    "enabled": true,
+    "count": 1,
+    "remaining": 95
+  },
+  "requests": [
+    {
+      "request_id": "example-block-01",
+      "remaining": 95
+    }
+  ],
+  "default_seconds": 300,
+  "max_seconds": 3600,
+  "exit_check": {
+    "enabled": false
+  }
+}
+```
+
+<a id="api-diagnostics"></a>
+
+### 診断を実行する
+
+`GET /diagnostics` はローカル SOCKS を経由して検査を実行し、同じリクエストの応答に結果を返します。「API 更新先」は既定で PGHB `/` です。例の詳細ヘッダーを取得するには、先に `/f` を選んで適用してください。 [PGHB の応答仕様](PGHB.ja.md)
 
 ```sh
 curl -H 'Authorization: Bearer YOUR_UUID' 'https://router.example/cgi-bin/proxy-guard-api/diagnostics'
 ```
 
-両方の POST で `Content-Type: application/json` を指定します。`/block` の本文は `{"seconds":120,"request_id":"sample-block-01"}`、`/cancel` の本文は `{"request_id":"sample-block-01"}` です。時間を省略するか 0 を指定すると既定値を使用します。ID を省略するとルーターが発行します。時間制限付き遮断には保護モードが必要です。有効な ID を同じ時間で再送しても当初の終了時刻を維持します。取り消し後も他の遮断条件は適用されます。
+HTTP 200
 
-認証済みの応答には `uuid` が含まれます。診断に成功すると `diagnostics.headers` に `X-PGHB-*` の `name` と `value` が順に入り、同名のヘッダーと文字列の値も保持されます。UTF-8 以外の値には `encoding: "base64"` が付きます。HTTP 401 は UUID がないか無効、403 は無効化または現在のネットワークから利用不可、429 は待機時間中または要求数の上限、502/504 は検査失敗またはタイムアウトを表します。
+```json
+{
+  "ok": true,
+  "uuid": "YOUR_UUID",
+  "diagnostics": {
+    "ok": true,
+    "source": "https://hb.pghb.app/f",
+    "checked_at": 1794628800,
+    "http_code": 200,
+    "curl_code": 0,
+    "milliseconds": 117,
+    "nonce_verified": true,
+    "headers": [
+      {
+        "name": "x-pghb-ip",
+        "value": "203.0.113.10"
+      },
+      {
+        "name": "x-pghb-tls",
+        "value": "TLSv1.3"
+      },
+      {
+        "name": "x-pghb-nonce",
+        "value": "0123456789abcdef0123456789abcdef"
+      }
+    ]
+  }
+}
+```
 
-プラグインの設定権限を持つ LuCI ユーザーは、イベントログで認証済みリクエストの UUID を確認できます。ログを共有するときは UUID を伏せてください。
+`diagnostics.headers` は `X-PGHB-*` の名前と値を応答の順序で返します。値は文字列です。`X-PGHB-IP` または `X-PGHB-Nonce` が重複すると検証に失敗します。その他の重複ヘッダーは別の項目として返せます。UTF-8 以外の値には `"encoding":"base64"` が付きます。`checked_at` は Unix 時刻（秒）です。
 
-[ユーザーガイド](USER-GUIDE.ja.md) · [復旧](RECOVERY.ja.md)
+<a id="api-block"></a>
+
+### 一時遮断を開始する
+
+`POST /block` は保護モードが有効な状態で、設定した保護範囲を遮断します。既定は 300 秒、初期上限は 3600 秒です。`seconds` の省略または `0` で設定済みの既定値を使います。`request_id` の省略時はルーターが ID を生成します。指定する場合は英数字、ハイフン、アンダースコアの 8〜64 文字を使います。有効な ID を同じ時間で再送しても期限は変わりません。時間が異なると `409 request_conflict` になります。
+
+```sh
+curl -H 'Authorization: Bearer YOUR_UUID' \
+  -H 'Content-Type: application/json' \
+  --data '{"seconds":120,"request_id":"example-block-01"}' \
+  'https://router.example/cgi-bin/proxy-guard-api/block'
+```
+
+HTTP 200
+
+```json
+{
+  "ok": true,
+  "uuid": "YOUR_UUID",
+  "request_id": "example-block-01",
+  "effective": true,
+  "remaining": 120,
+  "seconds": 120
+}
+```
+
+<a id="api-cancel"></a>
+
+### 一時遮断を取り消す
+
+`POST /cancel` には取り消す要求の ID が必要です。所有者は認証済み UUID と要求 ID の組み合わせで識別します。同じ UUID を使う端末やプログラムは同じ所有者として扱われます。有効な形式の ID で、要求が期限切れまたは見つからない場合も、`cancelled: true` が返ることがあります。`effective` と `remaining` は残っている API の遮断を表します。スケジュールや稼働確認の失敗による遮断は継続する場合があります。
+
+```sh
+curl -H 'Authorization: Bearer YOUR_UUID' \
+  -H 'Content-Type: application/json' \
+  --data '{"request_id":"example-block-01"}' \
+  'https://router.example/cgi-bin/proxy-guard-api/cancel'
+```
+
+HTTP 200
+
+```json
+{
+  "ok": true,
+  "uuid": "YOUR_UUID",
+  "request_id": "example-block-01",
+  "cancelled": true,
+  "effective": false,
+  "remaining": 0
+}
+```
+
+### よくあるエラー
+
+| HTTP ステータスとエラー | 確認項目 |
+| --- | --- |
+| 401 `authentication_required` | UUID がないか無効です。LuCI に表示される現在の値を確認してください。 |
+| 403 `https_required`、`api_disabled`、`lan_required` | HTTPS、API の有効化、または `lan` ゾーンへの経路を確認してください。 |
+| 409 `configuration_pending`、`configuration_changed`、`protection_not_active`、`request_conflict` | 設定を確定してから診断をやり直すか、保護モードと要求 ID に対応する遮断時間を確認してください。 |
+| 429 | 診断の間隔制限か有効な要求数の上限です。`Retry-After` があれば指定された時間だけ待ってください。 |
+| 502 / 504 | 診断の検査に失敗したかタイムアウトしました。`diagnostics` があれば詳細を確認してください。 |
+| 503 `busy` | 別の処理を実行中です。`Retry-After` で指定された秒数を待ってから再試行してください。 |
+| 503 `policy_not_ready`、`request_state_unavailable`、`firewall_failed` | ファイアウォールのポリシーが未準備、要求の状態が取得不能、またはルールの更新に失敗しました。保護状態とイベントログを確認してから、同じ要求 ID で再試行してください。 |
+
+[ユーザーガイド](USER-GUIDE.ja.md) · [障害からの復旧](RECOVERY.ja.md)

@@ -46,7 +46,7 @@ Use LuCI with firewall4/nftables. Only traffic that actually crosses this router
 
 ## Documentation
 
-[User guide](USER-GUIDE.en.md) · [Installation and removal](USAGE.en.md) · [Recovery](RECOVERY.en.md) · [Build from source](BUILDING.en.md) · [Privacy](PRIVACY.en.md)
+[User guide](USER-GUIDE.en.md) · [Installation and removal](USAGE.en.md) · [Recovery](RECOVERY.en.md) · [Build from source](BUILDING.en.md) · [Privacy](PRIVACY.en.md) · [PGHB heartbeat and diagnostics](PGHB.en.md)
 
 [MIT License](../LICENSE) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Disclaimer](DISCLAIMER.en.md) · [Contributing](../CONTRIBUTING.md)
 

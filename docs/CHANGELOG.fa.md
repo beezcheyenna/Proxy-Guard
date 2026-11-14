@@ -1,6 +1,8 @@
 # Changelog
 
-[Home](../README.md) · [User guide](USER-GUIDE.en.md)
+[صفحهٔ پروژه](README.fa.md) · [راهنمای کاربر](USER-GUIDE.fa.md)
+
+متن تاریخچهٔ تغییرات به انگلیسی نگهداری می‌شود. [تاریخچهٔ اصلی تغییرات](CHANGELOG.md)
 
 ## 1.0.0
 

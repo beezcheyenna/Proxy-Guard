@@ -2,7 +2,7 @@
 
 [English](LOG_COMPATIBILITY.md) · [简体中文](LOG_COMPATIBILITY.zh-CN.md) · [日本語](LOG_COMPATIBILITY.ja.md) · [Русский](LOG_COMPATIBILITY.ru.md) · [فارسی](LOG_COMPATIBILITY.fa.md)
 
-LuCI は簡体字中国語、英語、日本語、ロシア語、ペルシャ語に対応します。ログの認識は、各クライアントで確認した元のメッセージと形式に基づきます。
+LuCI は簡体字中国語、英語、日本語、ロシア語、ペルシャ語に対応します。ログの認識は、各クライアントで確認した元のメッセージと形式に基づき、画面の言語には依存しません。
 
 ## 確認したクライアントとメッセージ
 
@@ -22,9 +22,11 @@ LuCI は簡体字中国語、英語、日本語、ロシア語、ペルシャ語
 - [Nikki — 78e1a751](https://github.com/nikkinikki-org/OpenWrt-nikki/tree/78e1a751d55ed0762811f054ee699049473da7b8)
 - [HomeProxy — fadaa676](https://github.com/immortalwrt/homeproxy/tree/fadaa676104f59ff6ace480a780a258d846d0aec)
 
-PassWall と PassWall2 の辞書は **26.11.3-1** のソースでも再生成しました。完全一致する 55 件のシグネチャと 74 件の回帰ケースは同じです。OpenClash 0.48.002 と今回の HomeProxy ソースは上記のリビジョンに対応します。Nikki 1.26.2 も同じメッセージを出力します。日本語 UI でも対応する中国語や英語の上流メッセージを認識します。未確認のフォーク、訳文、新しい文言は別途検証が必要です。
+PassWall と PassWall2 の辞書は **26.11.3-1** のソースでも再生成しました。完全一致で認識する 55 件のパターンと 74 件の回帰テストケースに変更はありません。
 
 [PassWall 0b969d5a](https://github.com/Openwrt-Passwall/openwrt-passwall/tree/0b969d5a49743a9725c8dc283b01753c5217dd0d) · [PassWall2 176e27cb](https://github.com/Openwrt-Passwall/openwrt-passwall2/tree/176e27cb8d9852ce9b30d2e180810b544d8fc9dc)
+
+互換性テストで使用したクライアントは OpenClash `0.48.002` と HomeProxy `0.261002.28698` です。HomeProxy のログパターンは上流のリビジョン `fadaa676` に基づきます。Nikki `1.26.2` は、確認したリビジョンと同じ認識対象のメッセージを出力します。派生版、新しい訳文、上流の文言の変更は個別に確認が必要です。 [テストマトリクス](TEST-MATRIX.ja.md)
 
 ## 保護を開始する条件と復旧
 

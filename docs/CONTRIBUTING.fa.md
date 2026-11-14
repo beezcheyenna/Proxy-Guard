@@ -11,7 +11,7 @@
 - [پیشنهاد قابلیت](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=feature_request.yml)
 - [بازخورد مستندات](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=documentation.yml)
 
-آسیب‌پذیری‌ها را طبق سیاست امنیتی به‌صورت خصوصی گزارش کنید. برای اشکالات عادی، گزارش عمومی را پاک‌سازی کنید. [سیاست امنیتی](SECURITY.fa.md)
+اشکال‌های عادی را پس از حذف اطلاعات حساس در Issue عمومی ثبت کنید. جزئیات آسیب‌پذیری‌های رفع‌نشده را منتشر نکنید. [سیاست امنیتی](SECURITY.fa.md)
 
 ## پیش از تغییر رفتار
 

@@ -22,9 +22,11 @@ LuCI 提供简体中文、英语、日语、俄语和波斯语。日志识别取
 - [Nikki — 78e1a751](https://github.com/nikkinikki-org/OpenWrt-nikki/tree/78e1a751d55ed0762811f054ee699049473da7b8)
 - [HomeProxy — fadaa676](https://github.com/immortalwrt/homeproxy/tree/fadaa676104f59ff6ace480a780a258d846d0aec)
 
-PassWall 和 PassWall2 的词库也对照 **26.11.3-1** 版重新生成。55 条精确签名和 74 个回归用例保持一致。OpenClash 0.48.002 和本轮使用的 HomeProxy 源码对应上述修订。Nikki 1.26.2 发出相同的已识别消息。日语界面可以识别受支持的中文、英语等上游原始消息。其他分支、新译法和后续版本需单独核验。
+PassWall 和 PassWall2 的词库也对照 **26.11.3-1** 版重新生成。55 条精确签名和 74 个回归用例保持一致。
 
 [PassWall 0b969d5a](https://github.com/Openwrt-Passwall/openwrt-passwall/tree/0b969d5a49743a9725c8dc283b01753c5217dd0d) · [PassWall2 176e27cb](https://github.com/Openwrt-Passwall/openwrt-passwall2/tree/176e27cb8d9852ce9b30d2e180810b544d8fc9dc)
+
+兼容性矩阵记录的客户端版本是 OpenClash `0.48.002` 和 HomeProxy `0.261002.28698`。HomeProxy 的日志签名取自上游修订 `fadaa676`。Nikki `1.26.2` 与所核查的修订输出相同的已识别消息。衍生分支、新译文和上游日志文案变动需另行验证。 [测试矩阵](TEST-MATRIX.md)
 
 ## 触发与恢复
 

@@ -9,7 +9,7 @@ Proxy Guard welcomes reproducible bug reports, compatibility results, documentat
 - [Feature request](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=feature_request.yml)
 - [Documentation feedback](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=documentation.yml)
 
-Report security issues privately according to the security policy. Share redacted evidence in public issues. [Security policy](docs/SECURITY.en.md)
+Use public issues for ordinary problems and share redacted evidence. Keep unpatched vulnerability details out of public issues. [Security policy](docs/SECURITY.en.md)
 
 ## Before changing behavior
 
@@ -31,9 +31,9 @@ python3 tools/check_docs.py
 python3 -m unittest discover -s tools/tests -p 'test_check_docs.py'
 ```
 
-These checks read repository files only. They validate translation files, navigation, the destination language of Markdown links, anchors, version tables, changelog headings, and package filenames. They do not replace semantic translation review or VM tests.
+These checks read repository files only. They validate translation files, navigation, link languages and anchors, package revisions and filenames, changelogs, and license-manifest checksums. Review translations and runtime behavior separately.
 
-CI also compares the latest stable GitHub Release with the versions in the source and five READMEs. Pull requests run offline checks; publication and default-branch checks add the live Release comparison. A planned version bump can pass PR checks before publication, but the default-branch Release check will remain failing until the matching stable Release is published. Re-run the workflow after publication if needed.
+Pull requests run offline checks. Publication and default-branch checks also compare the latest stable GitHub Release with the versions in the source and five READMEs, and check links against the tag or commit they reference. After a version bump reaches the default branch, publish the matching stable Release to make the Release check pass.
 
 ## Pull requests and evidence
 

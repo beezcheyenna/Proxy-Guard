@@ -34,36 +34,12 @@
       "path": "LICENSES/LGPL-2.1-only.txt"
     },
     {
-      "name": "LGPL-3.0-or-later.txt",
-      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/LGPL-3.0-or-later.txt",
-      "bytes": 42098,
-      "sha256": "996af0513df21f7496288951c41428a03c174e9e4a9d63665c57d670f845ccb1",
-      "ok": true,
-      "path": "LICENSES/LGPL-3.0-or-later.txt"
-    },
-    {
       "name": "ISC.txt",
       "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/ISC.txt",
       "bytes": 737,
       "sha256": "521c6f0ed8e64736684f89843d16a4df6b4b7449acbcfc6ca6630a3037ca8c53",
       "ok": true,
       "path": "LICENSES/ISC.txt"
-    },
-    {
-      "name": "0BSD.txt",
-      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/0BSD.txt",
-      "bytes": 643,
-      "sha256": "e3f18c71e10d673590eb9856c1d79dd3b4b0d65404efb5e8584dbede7edd608b",
-      "ok": true,
-      "path": "LICENSES/0BSD.txt"
-    },
-    {
-      "name": "CC0-1.0.txt",
-      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/CC0-1.0.txt",
-      "bytes": 7048,
-      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
-      "ok": true,
-      "path": "LICENSES/CC0-1.0.txt"
     },
     {
       "name": "OpenClash-LICENSE.txt",

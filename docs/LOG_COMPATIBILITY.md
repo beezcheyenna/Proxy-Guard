@@ -22,9 +22,9 @@ The reviewed upstream revisions are:
 - [Nikki — 78e1a751](https://github.com/nikkinikki-org/OpenWrt-nikki/tree/78e1a751d55ed0762811f054ee699049473da7b8)
 - [HomeProxy — fadaa676](https://github.com/immortalwrt/homeproxy/tree/fadaa676104f59ff6ace480a780a258d846d0aec)
 
-The PassWall and PassWall2 catalogs were also regenerated against the **26.11.3-1** release sources ([PassWall 0b969d5a](https://github.com/Openwrt-Passwall/openwrt-passwall/tree/0b969d5a49743a9725c8dc283b01753c5217dd0d), [PassWall2 176e27cb](https://github.com/Openwrt-Passwall/openwrt-passwall2/tree/176e27cb8d9852ce9b30d2e180810b544d8fc9dc)). The 55 exact lifecycle signatures and 74 regression fixtures are unchanged. OpenClash 0.48.002 and the HomeProxy source used in this compatibility round match the revisions above. Nikki 1.26.2 and the reviewed revision emit the same recognized lifecycle messages.
+The PassWall and PassWall2 catalogs were also regenerated against the **26.11.3-1** release sources. The 55 exact lifecycle signatures and 74 regression fixtures were unchanged. [PassWall 0b969d5a](https://github.com/Openwrt-Passwall/openwrt-passwall/tree/0b969d5a49743a9725c8dc283b01753c5217dd0d) · [PassWall2 176e27cb](https://github.com/Openwrt-Passwall/openwrt-passwall2/tree/176e27cb8d9852ce9b30d2e180810b544d8fc9dc)
 
-A Japanese interface can recognize supported Chinese, English or other upstream messages. It does not require an invented Japanese translation of backend messages. Unreviewed forks, translated log formats and future wording require separate verification; this is not a promise to recognize arbitrary messages in every language.
+The compatibility matrix records OpenClash `0.48.002` and HomeProxy `0.261002.28698`. The HomeProxy log signatures come from upstream revision `fadaa676`. Nikki `1.26.2` emits the same recognized messages as the reviewed revision. Forks, new translations and changes to upstream messages need separate verification. [Test matrix](TEST-MATRIX.en.md)
 
 ## Triggers and recovery
 

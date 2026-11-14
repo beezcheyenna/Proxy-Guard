@@ -11,10 +11,11 @@ python3 -B tools/build_translations.py /path/to/po2lmo
 python3 -B tools/build_ipk.py
 ```
 
-برای ساخت APK، پوشهٔ package را در SDK هم‌نسخهٔ OpenWrt به package/proxy-guard کپی کنید. خوراک وابستگی‌ها را آماده و از ریشهٔ SDK افزونه را بسازید.
+برای ساخت APK، پوشهٔ `package` را در SDK متناسب با نسخهٔ OpenWrt در مسیر `package/proxy-guard` کپی کنید. مخزن‌های وابستگی‌ها را آماده کنید و از ریشهٔ SDK فرمان `make menuconfig` را اجرا کنید. در بخش «LuCI → 3. Applications» بررسی کنید که `luci-app-proxy-guard` انتخاب شده باشد. در صورت انتخاب نبودن، آن را روی `<M>` بگذارید، پیکربندی را ذخیره کنید و بسته را بسازید.
 
 ```sh
 make package/proxy-guard/compile V=s
+find bin/packages -name 'luci-app-proxy-guard-*.apk'
 ```
 
 LuCI، firewall4 و nftables لازم‌اند. OpenWrt 24 از IPK و OpenWrt 25.12 از APK استفاده می‌کند. در iStoreOS و ImmortalWrt، مدیر بسته و وابستگی‌های کرنل همان میان‌افزار را بررسی کنید.

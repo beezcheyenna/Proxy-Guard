@@ -10,7 +10,7 @@
 
 ## UCI 与系统依赖
 
-插件依赖固件提供的 Lua、ucode、LuCI、UCI、rpcd、firewall4、curl 等，没有把这些系统库/解释器打进应用 IPK。
+Lua、ucode、LuCI、UCI、rpcd、firewall4 和 curl 等由固件提供。应用的 IPK 和 APK 声明这些运行依赖，包内包含插件文件和随包许可说明。
 
 已核对 UCI 修订 16ff0badbde7e17ec3bd1f827ffe45922956cf86：libuci.c 文件头标 LGPL v2.1，lua/uci.c 标 GPL v2；缓存包元数据统一写 LGPL-2.1，与逐文件声明存在差异。Lua 后端会直接加载该 Lua 绑定；前端 JavaScript UCI 模块和 ucode 的 UCI 模块是不同组件。
 

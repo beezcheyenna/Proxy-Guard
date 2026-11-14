@@ -11,10 +11,11 @@ python3 -B tools/build_translations.py /path/to/po2lmo
 python3 -B tools/build_ipk.py
 ```
 
-For an APK, copy the package directory into the matching OpenWrt SDK as package/proxy-guard. Prepare the SDK feeds for the listed dependencies, then build the application from the SDK root.
+For an APK, copy the `package` directory into the matching OpenWrt SDK as `package/proxy-guard`. Prepare the feeds for the listed dependencies. From the SDK root, run `make menuconfig` and confirm that `luci-app-proxy-guard` is selected under **LuCI → 3. Applications**. Select `<M>` if it is unset, save the configuration, then build the package.
 
 ```sh
 make package/proxy-guard/compile V=s
+find bin/packages -name 'luci-app-proxy-guard-*.apk'
 ```
 
 Use firewall4 and nftables with LuCI. OpenWrt 24 uses IPK and OpenWrt 25.12 uses APK. For iStoreOS and ImmortalWrt, match the firmware’s package manager and kernel dependencies.

@@ -9,7 +9,7 @@
 - [機能の提案](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=feature_request.yml)
 - [文書へのフィードバック](https://github.com/beezcheyenna/Proxy-Guard/issues/new?template=documentation.yml)
 
-脆弱性はセキュリティ方針に従い非公開で報告してください。一般的な不具合は機密情報を除いて報告できます。 [セキュリティ方針](SECURITY.ja.md)
+一般的な不具合は機密情報を除いて公開 Issue に投稿できます。未修正の脆弱性の詳細は公開しないでください。 [セキュリティ方針](SECURITY.ja.md)
 
 ## 動作を変更する前に
 

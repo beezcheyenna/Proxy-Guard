@@ -48,7 +48,7 @@ LuCI و firewall4/nftables لازم‌اند. محافظت فقط شامل تر�
 
 ## مستندات
 
-[راهنمای کاربر](USER-GUIDE.fa.md) · [نصب و حذف](USAGE.fa.md) · [بازیابی](RECOVERY.fa.md) · [ساخت از کد منبع](BUILDING.fa.md) · [حریم خصوصی](PRIVACY.fa.md)
+[راهنمای کاربر](USER-GUIDE.fa.md) · [نصب و حذف](USAGE.fa.md) · [بازیابی](RECOVERY.fa.md) · [ساخت از کد منبع](BUILDING.fa.md) · [حریم خصوصی](PRIVACY.fa.md) · [ضربان PGHB و عیب‌یابی](PGHB.fa.md)
 
 [مجوز MIT](../LICENSE) · [اعلامیه‌های اجزای ثالث](THIRD_PARTY_NOTICES.fa.md) · [سلب ضمانت](DISCLAIMER.fa.md) · [مشارکت](CONTRIBUTING.fa.md)
 

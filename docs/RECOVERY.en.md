@@ -2,11 +2,15 @@
 
 [English](RECOVERY.en.md) · [简体中文](RECOVERY.md) · [日本語](RECOVERY.ja.md) · [Русский](RECOVERY.ru.md) · [فارسی](RECOVERY.fa.md)
 
+**Stopping the Proxy Guard service can leave its firewall rules blocking traffic.** Use the explicit disable procedure below to release the plugin’s block.
+
+**A passing “Test current proxy” result confirms the test traffic only.** A schedule, API request or separate failed health check can still keep protection blocking.
+
 ## Read the recovery status
 
 The status panel shows current enforcement separately from the latest completed probe. If the firewall rules need verification, use **Check settings and runtime environment** before relying on the status. Use **Test current proxy** to check the SOCKS route.
 
-If the proxy connection fails, check whether your client still exposes its local SOCKS listener. After a firewall reload or proxy restart, allow the configured checks to confirm recovery. If the Proxy Guard service has stopped, its firewall rules can continue blocking. Use the explicit disable procedure below when the goal is to remove the plugin's block.
+If the proxy connection fails, check whether your client still exposes its local SOCKS listener. After a firewall reload or proxy restart, allow the configured checks to confirm recovery.
 
 Use the router console or a separate management route before testing recovery. If a new configuration loses connectivity, let the confirmation window expire. The previous configuration is restored after timeout or reboot during an unconfirmed trial.
 
