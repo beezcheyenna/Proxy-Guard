@@ -84,4 +84,4 @@ Under **Event log**, you can expand recent connection checks and recovery histor
 
 <a id="guide-docs"></a>
 
-[Installation and use](USAGE.en.md) · [First configuration](GUIDED-SETUP.en.md) · [Compatibility and limits](COMPATIBILITY.en.md) · [Recovery](RECOVERY.en.md)
+[Installation and use](USAGE.en.md) · [First configuration](GUIDED-SETUP.en.md) · [Compatibility and limits](COMPATIBILITY.en.md) · [Troubleshooting and recovery](RECOVERY.en.md)

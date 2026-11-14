@@ -58,7 +58,7 @@ apk --no-network del luci-app-proxy-guard
 
 ## 首次设置
 
-**停止 Proxy Guard 服务后，防火墙规则可能仍在阻断。** 需要解除阻断时，请明确关闭保护或按[故障救援步骤](RECOVERY.md)操作。
+**停止 Proxy Guard 服务后，防火墙规则可能仍在阻断。** 需要解除阻断时，请明确关闭保护或按[恢复步骤](RECOVERY.md)操作。
 
 **「测试当前代理」通过仅说明本次探测成功。** 定时保护、API 限时断网或另一路检测故障仍可能阻断外网。
 
@@ -269,4 +269,4 @@ HTTP 200
 | 503 `busy` | 另一个操作正在进行。按 `Retry-After` 给出的秒数等待后重试。 |
 | 503 `policy_not_ready`、`request_state_unavailable` 或 `firewall_failed` | 防火墙策略未就绪、断网请求状态不可用或更新规则失败。先查看保护状态和事件日志，再重试同一请求 ID。 |
 
-[使用指南](USER-GUIDE.md) · [故障救援](RECOVERY.md)
+[使用指南](USER-GUIDE.md) · [故障排查与恢复](RECOVERY.md)

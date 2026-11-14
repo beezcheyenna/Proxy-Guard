@@ -46,7 +46,7 @@ Proxy Guard — приложение LuCI для OpenWrt и iStoreOS. При в�
 
 ## Документация
 
-[Руководство пользователя](USER-GUIDE.ru.md) · [Установка и удаление](USAGE.ru.md) · [Восстановление](RECOVERY.ru.md) · [Сборка из исходников](BUILDING.ru.md) · [Конфиденциальность](PRIVACY.ru.md) · [Сигнал PGHB и диагностика](PGHB.ru.md)
+[Руководство пользователя](USER-GUIDE.ru.md) · [Установка и удаление](USAGE.ru.md) · [Устранение неполадок и восстановление](RECOVERY.ru.md) · [Сборка из исходников](BUILDING.ru.md) · [Конфиденциальность](PRIVACY.ru.md) · [Сигнал PGHB и диагностика](PGHB.ru.md)
 
 [Лицензия MIT](../LICENSE) · [Сторонние компоненты](THIRD_PARTY_NOTICES.ru.md) · [Отказ от гарантий](DISCLAIMER.ru.md) · [Участие в проекте](CONTRIBUTING.ru.md)
 

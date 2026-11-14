@@ -46,7 +46,7 @@ LuCI と firewall4/nftables が必要です。対象はルーターを実際に�
 
 ## ドキュメント
 
-[ユーザーガイド](USER-GUIDE.ja.md) · [インストールと削除](USAGE.ja.md) · [障害からの復旧](RECOVERY.ja.md) · [ソースからのビルド](BUILDING.ja.md) · [プライバシー](PRIVACY.ja.md) · [PGHB ハートビートと診断](PGHB.ja.md)
+[ユーザーガイド](USER-GUIDE.ja.md) · [インストールと削除](USAGE.ja.md) · [トラブルシューティングと復旧](RECOVERY.ja.md) · [ソースからのビルド](BUILDING.ja.md) · [プライバシー](PRIVACY.ja.md) · [PGHB ハートビートと診断](PGHB.ja.md)
 
 [MIT ライセンス](../LICENSE) · [第三者ソフトウェアの表示](THIRD_PARTY_NOTICES.ja.md) · [免責事項](DISCLAIMER.ja.md) · [貢献方法](CONTRIBUTING.ja.md)
 

@@ -1,4 +1,4 @@
-# 故障救援
+# 故障排查与恢复
 
 [English](RECOVERY.en.md) · [简体中文](RECOVERY.md) · [日本語](RECOVERY.ja.md) · [Русский](RECOVERY.ru.md) · [فارسی](RECOVERY.fa.md)
 

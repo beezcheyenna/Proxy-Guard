@@ -84,4 +84,4 @@ API محلی به‌طور پیش‌فرض خاموش است. پس از فعال
 
 <a id="guide-docs"></a>
 
-[نصب و استفاده](USAGE.fa.md) · [پیکربندی نخست](GUIDED-SETUP.fa.md) · [سازگاری و محدودیت‌ها](COMPATIBILITY.fa.md) · [بازیابی](RECOVERY.fa.md)
+[نصب و استفاده](USAGE.fa.md) · [پیکربندی نخست](GUIDED-SETUP.fa.md) · [سازگاری و محدودیت‌ها](COMPATIBILITY.fa.md) · [عیب‌یابی و بازیابی](RECOVERY.fa.md)

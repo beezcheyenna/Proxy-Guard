@@ -17,4 +17,4 @@ Open Services → Proxy Guard. Use the wizard to review ingress devices, the IPv
 
 Only traffic that actually crosses the router can be protected. Verify your selected ingress, IPv4 and IPv6 paths, DNS and management access on one client before expanding the scope. Same-subnet routing may return directly around the router.
 
-[Installation and use](USAGE.en.md#test-current-proxy) · [Recovery](RECOVERY.en.md)
+[Installation and use](USAGE.en.md#test-current-proxy) · [Troubleshooting and recovery](RECOVERY.en.md)

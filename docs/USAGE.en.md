@@ -269,4 +269,4 @@ HTTP 200
 | 503 `busy` | Another operation is in progress. Wait the number of seconds in `Retry-After` before retrying. |
 | 503 `policy_not_ready`, `request_state_unavailable` or `firewall_failed` | The firewall policy is not ready, request state is unavailable, or a rule update failed. Check protection status and the event log before retrying the same request ID. |
 
-[User guide](USER-GUIDE.en.md) · [Recovery](RECOVERY.en.md)
+[User guide](USER-GUIDE.en.md) · [Troubleshooting and recovery](RECOVERY.en.md)

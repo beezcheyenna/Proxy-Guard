@@ -84,4 +84,4 @@ LuCI、firewall4、nftables が必要です。OpenWrt 24 は IPK、25.12 は APK
 
 <a id="guide-docs"></a>
 
-[インストールと使用](USAGE.ja.md) · [初回設定](GUIDED-SETUP.ja.md) · [互換性と制限](COMPATIBILITY.ja.md) · [復旧](RECOVERY.ja.md)
+[インストールと使用](USAGE.ja.md) · [初回設定](GUIDED-SETUP.ja.md) · [互換性と制限](COMPATIBILITY.ja.md) · [トラブルシューティングと復旧](RECOVERY.ja.md)

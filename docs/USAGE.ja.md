@@ -269,4 +269,4 @@ HTTP 200
 | 503 `busy` | 別の処理を実行中です。`Retry-After` で指定された秒数を待ってから再試行してください。 |
 | 503 `policy_not_ready`、`request_state_unavailable`、`firewall_failed` | ファイアウォールのポリシーが未準備、要求の状態が取得不能、またはルールの更新に失敗しました。保護状態とイベントログを確認してから、同じ要求 ID で再試行してください。 |
 
-[ユーザーガイド](USER-GUIDE.ja.md) · [障害からの復旧](RECOVERY.ja.md)
+[ユーザーガイド](USER-GUIDE.ja.md) · [トラブルシューティングと復旧](RECOVERY.ja.md)

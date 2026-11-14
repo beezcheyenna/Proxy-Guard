@@ -84,4 +84,4 @@
 
 <a id="guide-docs"></a>
 
-[Установка и использование](USAGE.ru.md) · [Первичная настройка](GUIDED-SETUP.ru.md) · [Совместимость и ограничения](COMPATIBILITY.ru.md) · [Восстановление](RECOVERY.ru.md)
+[Установка и использование](USAGE.ru.md) · [Первичная настройка](GUIDED-SETUP.ru.md) · [Совместимость и ограничения](COMPATIBILITY.ru.md) · [Устранение неполадок и восстановление](RECOVERY.ru.md)

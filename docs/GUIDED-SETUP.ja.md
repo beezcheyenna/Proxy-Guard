@@ -17,4 +17,4 @@ LuCI の「サービス → プロキシ接続保護」を開き、ウィザー�
 
 保護の対象は実際にルーターを経由する通信です。範囲を広げる前に一台で入口、IPv4 と IPv6、DNS、管理経路を確認します。同一サブネットでは戻りの通信がルーターを迂回する場合があります。
 
-[インストールと使用](USAGE.ja.md#test-current-proxy) · [復旧](RECOVERY.ja.md)
+[インストールと使用](USAGE.ja.md#test-current-proxy) · [トラブルシューティングと復旧](RECOVERY.ja.md)

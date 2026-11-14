@@ -17,4 +17,4 @@
 
 保护覆盖实际经过路由器的流量。扩大范围前先用一台设备核对入口、IPv4 和 IPv6 路径、DNS 和管理访问。同网段旁路由的回程可能绕开本机。
 
-[安装与使用](USAGE.md#test-current-proxy) · [故障救援](RECOVERY.md)
+[安装与使用](USAGE.md#test-current-proxy) · [故障排查与恢复](RECOVERY.md)

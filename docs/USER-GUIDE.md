@@ -12,7 +12,7 @@
 
 ## 首次设置
 
-**停止 Proxy Guard 服务后，防火墙规则可能仍在阻断。** 需要解除阻断时，请明确关闭保护或按[故障救援步骤](RECOVERY.md)操作。
+**停止 Proxy Guard 服务后，防火墙规则可能仍在阻断。** 需要解除阻断时，请明确关闭保护或按[恢复步骤](RECOVERY.md)操作。
 
 **「测试当前代理」通过仅说明本次探测成功。** 定时保护、API 限时断网或另一路检测故障仍可能阻断外网。
 
@@ -84,4 +84,4 @@
 
 <a id="guide-docs"></a>
 
-[安装与使用](USAGE.md) · [首次设置](GUIDED-SETUP.md) · [兼容范围与限制](COMPATIBILITY.md) · [故障救援](RECOVERY.md)
+[安装与使用](USAGE.md) · [首次设置](GUIDED-SETUP.md) · [兼容范围与限制](COMPATIBILITY.md) · [故障排查与恢复](RECOVERY.md)
